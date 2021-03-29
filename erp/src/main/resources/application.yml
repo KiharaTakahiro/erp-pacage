@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: &dbURL jdbc:postgresql://localhost:5432/company
+    username: &dbUser postgres
+    password: &dbPassword Madb45pk
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8081
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate: DEBUG
+  file: "./application.log"
+app:
+  security:
+    exptration_time: 100000
+    app_key: "APP_KEY"

@@ -1,0 +1,58 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.0-M3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.erp.main'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'io.jsonwebtoken:jjwt:0.9.0'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+	testImplementation 'org.mockito:mockito-core:3.6.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter:3.6.0'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task npmRunBuild() {
+
+    if (!file("${rootDir}/web/node_modules").exists()) {
+        "npm --prefix ${rootDir}/web install ${rootDir}/web"
+                .execute()
+                .waitForProcessOutput(System.out, System.err)
+    }
+	   // TODO: ビルドできない・・・
+	   // "npm --prefix ${rootDir}/web run build"
+	   // 	.execute()
+	   // 	.waitForProcessOutput(System.out, System.err)
+}
+processResources {
+    dependsOn npmRunBuild
+}
