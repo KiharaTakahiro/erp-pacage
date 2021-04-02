@@ -1,8 +1,8 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
@@ -13,7 +13,7 @@ import com.erp.main.domain.services.UserService;
  * @author 木原
  *
  */
-@Controller
+@RestController
 public class SystemController {
 
 	/**

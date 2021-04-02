@@ -1,93 +1,225 @@
-# vue-admin-template
+<p align="center">
+  <img width="120" src="public/img/icons/android-chrome-512x512.png">
+</p>
 
-> 这是一个极简的 vue admin 管理后台。它只包含了 Element UI & axios & iconfont & permission control & lint，这些搭建后台必要的东西。
+<p align="center">
+  <a href="https://github.com/vuejs/vue">
+    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
+  </a>
+  <a href="https://github.com/ElemeFE/element">
+    <img src="https://img.shields.io/badge/element--ui-2.12.0-brightgreen.svg" alt="element-ui">
+  </a>
+  <a href="https://circleci.com/gh/Armour/vue-typescript-admin-template/tree/master">
+    <img src="https://circleci.com/gh/Armour/vue-typescript-admin-template/tree/master.svg?style=shield" alt="CircleCI">
+  </a>
+  <a href="http://makeapullrequest.com">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+  </a>
+  <a href="https://github.com/Armour/Jarvis">
+    <img src="https://img.shields.io/badge/Hi-Jarvis-ff69b4.svg" alt="Template from jarvis">
+  </a>
+</p>
 
-[线上地址](http://panjiachen.github.io/vue-admin-template)
+[English](./README.md) | 简体中文
 
-[国内访问](https://panjiachen.gitee.io/vue-admin-template)
+## 总览
 
-目前版本为 `v4.0+` 基于 `vue-cli` 进行构建，若你想使用旧版本，可以切换分支到[tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0)，它不依赖 `vue-cli`。
+[vue-typescript-admin-template](http://armour.github.io/vue-typescript-admin-template) 是一个后台前端解决方案，它基于 [vue](https://github.com/vuejs/vue), [typescript](https://www.typescriptlang.org/) 和 [element-ui](https://github.com/ElemeFE/element)实现。原始的 Javascript 版本的代码是由 [PanJiaChen](https://github.com/PanJiaChen) 开发维护的 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)， 十分感谢大佬对开源社区做出的贡献 :)
 
-## Extra
+如果你想从一个十分简单的基础模版开始，而不是直接使用这个功能丰富的集成方案的话，你可以看一看本项目的 [minimal](https://github.com/Armour/vue-typescript-admin-template/tree/minimal) 分支.
 
-如果你想要根据用户角色来动态生成侧边栏和 router，你可以使用该分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
+## 线上文档
+
+[文档](https://armour.github.io/vue-typescript-admin-docs/zh)
+
+## 线上地址
+
+[示例](https://armour.github.io/vue-typescript-admin-template)
+
+## 截图
+
+![主页](./demo/dashboard.png))
 
 ## 相关项目
 
-- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+[Armour/vue-typescript-admin-mock-server](https://github.com/armour/vue-typescript-admin-mock-server) (mock server for this project)
 
-- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
+[Armour/vue-typescript-admin-docs](https://github.com/armour/vue-typescript-admin-docs) (documentation source for this project)
 
-- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
+Javascript 版本:
 
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
+[PanJiaChen/vue-admin-template](https://github.com/PanJiaChen/vue-admin-template) (a vue2.0 minimal admin template)
 
-写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
+[PanJiaChen/vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) (full features supported vue admin)
 
-- [手摸手，带你用 vue 撸后台 系列一(基础篇)](https://juejin.im/post/59097cd7a22b9d0065fb61d2)
-- [手摸手，带你用 vue 撸后台 系列二(登录权限篇)](https://juejin.im/post/591aa14f570c35006961acac)
-- [手摸手，带你用 vue 撸后台 系列三 (实战篇)](https://juejin.im/post/593121aa0ce4630057f70d35)
-- [手摸手，带你用 vue 撸后台 系列四(vueAdmin 一个极简的后台基础模板,专门针对本项目的文章,算作是一篇文档)](https://juejin.im/post/595b4d776fb9a06bbe7dba56)
-- [手摸手，带你封装一个 vue component](https://segmentfault.com/a/1190000009090836)
+[PanJiaChen/electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin) (a vue electron admin project)
 
-## Build Setup
+## 功能
 
-```bash
-# 克隆项目
-git clone https://github.com/PanJiaChen/vue-admin-template.git
+```txt
+- 登录 / 注销
 
-# 进入项目目录
-cd vue-admin-template
+- 权限验证
+  - 页面权限
+  - 指令权限
+  - 权限配置
+  - 二步登录
 
-# 安装依赖
-npm install
+- 多环境发布
+  - Dev / Stage / Prod
 
-# 建议不要直接使用 cnpm 安装以来，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
-npm install --registry=https://registry.npm.taobao.org
+- 全局功能
+  - 国际化多语言
+  - 动态换肤
+  - 动态侧边栏（支持多级路由嵌套）
+  - 动态面包屑
+  - 快捷导航(支持右键操作)
+  - 粘贴板
+  - Svg 图标
+  - 搜索
+  - 全屏
+  - 设置
+  - Mock 数据 / Mock 服务器
+  - 支持 PWA
 
-# 启动服务
-npm run dev
+- 组件
+  - 编辑器
+    - 富文本编辑器
+    - Markdown 编辑器
+    - JSON 编辑器
+  - 头像上传
+  - 返回顶部
+  - CountTo
+  - 拖放区
+  - 拖拽弹窗
+  - 拖拽看板
+  - 拖拽列表
+  - 拖拽选择
+  - ECharts 图表
+  - Mixin
+  - 拆分窗格
+  - 黏性组件
+
+- 表格
+  - 动态表格
+  - 拖拽表格
+  - 内联编辑表格
+  - 复杂表格
+
+- Excel
+  - 导出excel
+  - 导入excel
+  - 前端可视化excel
+
+- Zip
+  - 导出zip
+
+- PDF
+  - 下载 pdf
+
+- 控制台
+- 引导页
+- 综合实例
+- 错误日志
+- 错误页面
+  - 401
+  - 404
 ```
 
-浏览器访问 [http://localhost:9528](http://localhost:9528)
+## 前序准备
 
-## 发布
+你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [typescript](https://www.typescriptlang.org/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-cli](https://github.com/vuejs/vue-cli) 、[axios](https://github.com/axios/axios) 和 [element-ui](https://github.com/ElemeFE/element)，所有的请求数据都使用[faker.js](https://github.com/Marak/Faker.js)进行模拟，提前了解和学习这些知识会对使用本项目有很大的帮助。
 
-```bash
-# 构建测试环境
-npm run build:stage
+## 目录结构
 
-# 构建生产环境
-npm run build:prod
-```
-
-## 其它
+本项目已经为你生成了一个完整的开发框架，提供了涵盖后台开发的各类功能和坑位，下面是整个项目的目录结构。
 
 ```bash
-# 预览发布环境效果
-npm run preview
-
-# 预览发布环境效果 + 静态资源分析
-npm run preview -- --report
-
-# 代码格式检查
-npm run lint
-
-# 代码格式检查并自动修复
-npm run lint -- --fix
+├── mock                       # mock 服务器 与 模拟数据
+├── public                     # 静态资源 (会被直接复制)
+│   │── favicon.ico            # favicon图标
+│   │── manifest.json          # PWA 配置文件
+│   └── index.html             # html模板
+├── src                        # 源代码
+│   ├── api                    # 所有请求
+│   ├── assets                 # 主题 字体等静态资源 (由 webpack 处理加载)
+│   ├── components             # 全局组件
+│   ├── directive              # 全局指令
+│   ├── filters                # 全局过滤函数
+│   ├── icons                  # svg 图标
+│   ├── lang                   # 国际化
+│   ├── layout                 # 全局布局
+│   ├── pwa                    # PWA service worker 相关的文件
+│   ├── router                 # 路由
+│   ├── store                  # 全局 vuex store
+│   ├── styles                 # 全局样式
+│   ├── utils                  # 全局方法
+│   ├── views                  # 所有页面
+│   ├── App.vue                # 入口页面
+│   ├── main.js                # 入口文件 加载组件 初始化等
+│   ├── permission.ts          # 权限管理
+│   ├── settings.ts            # 设置文件
+│   └── shims.d.ts             # 模块注入
+├── tests                      # 测试
+├── .circleci/                 # 自动化 CI 配置
+├── .browserslistrc            # browserslistrc 配置文件 (用于支持 Autoprefixer)
+├── .editorconfig              # 编辑相关配置
+├── .env.xxx                   # 环境变量配置
+├── .eslintrc.js               # eslint 配置
+├── babel.config.js            # babel-loader 配置
+├── jest.config.js             # jest 单元测试配置
+├── package.json               # package.json 依赖
+├── postcss.config.js          # postcss 配置
+├── tsconfig.json              # typescript 配置
+└── vue.config.js              # vue-cli 配置
 ```
 
-更多信息请参考 [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
+## 如何设置以及启动项目
 
-## 购买贴纸
+### 安装依赖
 
-你也可以通过 购买[官方授权的贴纸](https://smallsticker.com/product/vue-element-admin) 的方式来支持 vue-element-admin - 每售出一张贴纸，我们将获得 2 元的捐赠。
+```bash
+yarn install
+```
 
-## Demo
+### 启动本地开发环境（自带热启动）
 
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
+```bash
+yarn serve
+```
 
-## Browsers support
+### 构建生产环境 (自带压缩)
+
+```bash
+yarn build:prod
+```
+
+### 代码格式检查以及自动修复
+
+```bash
+yarn lint
+```
+
+### 运行单元测试
+
+```bash
+yarn test:unit
+```
+
+### 自动生成 svg 组件
+
+```bash
+yarn run svg
+```
+
+### 自定义 Vue 配置
+
+请看 [Configuration Reference](https://cli.vuejs.org/config/).
+
+## 浏览器支持
 
 Modern browsers and Internet Explorer 10+.
 
@@ -95,8 +227,10 @@ Modern browsers and Internet Explorer 10+.
 | --------- | --------- | --------- | --------- |
 | IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
 
+## 参与贡献
+
+请看 [CONTRIBUTING.md](https://github.com/Armour/vue-typescript-admin-template/blob/master/.github/CONTRIBUTING.md)
+
 ## License
 
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
+[MIT License](https://github.com/Armour/vue-typescript-admin-template/blob/master/LICENSE)

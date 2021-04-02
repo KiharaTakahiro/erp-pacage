@@ -22,7 +22,7 @@ import com.erp.main.domain.services.UserService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	// FIXME: 初期データの投入ができないため[/user/register]一時的に開けるが後に外す
+	// FIXME: 一時的にフィルタを開ける
 	private static final String[] AUTH_WHITELIST = {
 			"/user/register", 
             "/swagger-resources/**",
@@ -30,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/v2/api-docs",
             "/webjars/**",
             "/",
-            "/user/login"
+            "/user/login",
+            "/**"
     };
 	
 	/**

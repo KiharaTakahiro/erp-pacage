@@ -1,137 +1,236 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="title-container">
-        <h3 class="title">ログイン</h3>
+        <h3 class="title">
+          {{ $t('login.title') }}
+        </h3>
+        <lang-select class="set-language" />
       </div>
 
-      <el-form-item prop="userId">
+      <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon name="user" />
         </span>
         <el-input
-          ref="userId"
-          v-model="loginForm.userId"
-          placeholder="ユーザID"
-          name="userId"
+          ref="username"
+          v-model="loginForm.username"
+          :placeholder="$t('login.username')"
+          name="username"
           type="text"
           tabindex="1"
-          auto-complete="on"
+          autocomplete="on"
         />
       </el-form-item>
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="パスワード"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        placement="right"
+        manual
+      >
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon name="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            :placeholder="$t('login.password')"
+            name="password"
+            tabindex="2"
+            autocomplete="on"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
+            <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
+          </span>
+        </el-form-item>
+      </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%; margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >
+        {{ $t('login.logIn') }}
+      </el-button>
 
+      <div style="position:relative">
+        <div class="tips">
+          <span>{{ $t('login.username') }} : admin </span>
+          <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
+        </div>
+        <div class="tips">
+          <span>{{ $t('login.username') }} : editor </span>
+          <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
+        </div>
+
+        <el-button
+          class="thirdparty-button"
+          type="primary"
+          @click="showDialog=true"
+        >
+          {{ $t('login.thirdparty') }}
+        </el-button>
+      </div>
     </el-form>
+
+    <el-dialog
+      :title="$t('login.thirdparty')"
+      :visible.sync="showDialog"
+    >
+      {{ $t('login.thirdpartyTips') }}
+      <br>
+      <br>
+      <br>
+      <social-sign />
+    </el-dialog>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { Dictionary } from 'vue-router/types/router'
+import { Form as ElForm, Input } from 'element-ui'
+import { UserModule } from '@/store/modules/user'
+import { isValidUsername } from '@/utils/validate'
+import LangSelect from '@/components/LangSelect/index.vue'
+import SocialSign from './components/SocialSignin.vue'
 
-export default {
+@Component({
   name: 'Login',
-  data() {
-    const validateUserId = (rule, value, callback) => {
-      // TODO: 簡単にできるバリデーションがあれば追記する
+  components: {
+    LangSelect,
+    SocialSign
+  }
+})
+export default class extends Vue {
+  private validateUsername = (rule: any, value: string, callback: Function) => {
+    if (!isValidUsername(value)) {
+      callback(new Error('Please enter the correct user name'))
+    } else {
       callback()
     }
-    const validatePassword = (rule, value, callback) => {
-      // HACK: 6桁より多く入力する
-      if (value.length < 6) {
-        callback(new Error('パスワードは6桁より多く入力してください。'))
+  }
+
+  private validatePassword = (rule: any, value: string, callback: Function) => {
+    if (value.length < 6) {
+      callback(new Error('The password can not be less than 6 digits'))
+    } else {
+      callback()
+    }
+  }
+
+  private loginForm = {
+    username: 'admin',
+    password: '111111'
+  }
+
+  private loginRules = {
+    username: [{ validator: this.validateUsername, trigger: 'blur' }],
+    password: [{ validator: this.validatePassword, trigger: 'blur' }]
+  }
+
+  private passwordType = 'password'
+  private loading = false
+  private showDialog = false
+  private capsTooltip = false
+  private redirect?: string
+  private otherQuery: Dictionary<string> = {}
+
+  @Watch('$route', { immediate: true })
+  private onRouteChange(route: Route) {
+    // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
+    // See https://github.com/vuejs/vue-router/pull/2050 for details
+    const query = route.query as Dictionary<string>
+    if (query) {
+      this.redirect = query.redirect
+      this.otherQuery = this.getOtherQuery(query)
+    }
+  }
+
+  mounted() {
+    if (this.loginForm.username === '') {
+      (this.$refs.username as Input).focus()
+    } else if (this.loginForm.password === '') {
+      (this.$refs.password as Input).focus()
+    }
+  }
+
+  private checkCapslock(e: KeyboardEvent) {
+    const { key } = e
+    this.capsTooltip = key !== null && key.length === 1 && (key >= 'A' && key <= 'Z')
+  }
+
+  private showPwd() {
+    if (this.passwordType === 'password') {
+      this.passwordType = ''
+    } else {
+      this.passwordType = 'password'
+    }
+    this.$nextTick(() => {
+      (this.$refs.password as Input).focus()
+    })
+  }
+
+  private handleLogin() {
+    (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
+      if (valid) {
+        this.loading = true
+        await UserModule.Login(this.loginForm)
+        this.$router.push({
+          path: this.redirect || '/',
+          query: this.otherQuery
+        }).catch(err => {
+          console.warn(err)
+        })
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.loading = false
+        }, 0.5 * 1000)
       } else {
-        callback()
+        return false
       }
-    }
-    return {
-      loginForm: {
-        userId: '',
-        password: ''
-      },
-      loginRules: {
-        userId: [{ required: true, trigger: 'blur', validator: validateUserId }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
+    })
+  }
+
+  private getOtherQuery(query: Dictionary<string>) {
+    return Object.keys(query).reduce((acc, cur) => {
+      if (cur !== 'redirect') {
+        acc[cur] = query[cur]
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    }
+      return acc
+    }, {} as Dictionary<string>)
   }
 }
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
+// References: https://www.zhangxinxu.com/wordpress/2018/01/css-caret-color-first-line/
+@supports (-webkit-mask: none) and (not (cater-color: $loginCursorColor)) {
+  .login-container .el-input {
+    input { color: $loginCursorColor; }
+    input::first-line { color: $lightGray; }
   }
 }
 
-/* reset element-ui css */
 .login-container {
   .el-input {
     display: inline-block;
@@ -139,18 +238,18 @@ $cursor: #fff;
     width: 85%;
 
     input {
+      height: 47px;
       background: transparent;
       border: 0px;
-      -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
+      color: $lightGray;
+      caret-color: $loginCursorColor;
+      -webkit-appearance: none;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0px 1000px $loginBg inset !important;
+        -webkit-text-fill-color: #fff !important;
       }
     }
   }
@@ -165,15 +264,11 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
-
 .login-container {
-  min-height: 100%;
+  height: 100%;
   width: 100%;
-  background-color: $bg;
   overflow: hidden;
+  background-color: $loginBg;
 
   .login-form {
     position: relative;
@@ -198,7 +293,7 @@ $light_gray:#eee;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    color: $darkGray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -209,10 +304,19 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $lightGray;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+    }
+
+    .set-language {
+      color: #fff;
+      position: absolute;
+      top: 3px;
+      font-size: 18px;
+      right: 0px;
+      cursor: pointer;
     }
   }
 
@@ -221,9 +325,21 @@ $light_gray:#eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
+    color: $darkGray;
     cursor: pointer;
     user-select: none;
+  }
+
+  .thirdparty-button {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
+  }
+
+  @media only screen and (max-width: 470px) {
+    .thirdparty-button {
+      display: none;
+    }
   }
 }
 </style>

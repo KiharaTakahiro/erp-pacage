@@ -1,54 +1,63 @@
-'use strict'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
-const defaultSettings = require('./src/settings.js')
-
-function resolve(dir) {
-  return path.join(__dirname, dir)
-}
-
-const name = defaultSettings.title || 'vue Admin Template' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
-// For example, Mac: sudo npm run
-// You can change the port by the following methods:
-// port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+// For example, on Mac: sudo npm run / sudo yarn
+const devServerPort = 9527 // TODO: get this variable from setting.ts
+const mockServerPort = 9528 // TODO: get this variable from setting.ts
+const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
 
-// All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
-   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
-   * In most cases please use '/' !!!
-   * Detail: https://cli.vuejs.org/config/#publicpath
-   */
-  publicPath: '/',
-  outputDir: 'dist',
-  assetsDir: 'static',
+  publicPath: process.env.NODE_ENV === 'production' ? '/vue-typescript-admin-template/' : '/',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: port,
+    port: devServerPort,
     open: true,
     overlay: {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
-  },
-  configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
-    name: name,
-    resolve: {
-      alias: {
-        '@': resolve('src')
+    progress: false,
+    proxy: {
+      // change xxx-api/login => /mock-api/v1/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:${mockServerPort}/mock-api/v1`,
+        changeOrigin: true, // needed for virtual hosted sites
+        ws: true, // proxy websockets
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
       }
     }
   },
+  pwa: {
+    name: name,
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: path.resolve(__dirname, 'src/pwa/service-worker.js')
+    }
+  },
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      patterns: [
+        path.resolve(__dirname, 'src/styles/_variables.scss'),
+        path.resolve(__dirname, 'src/styles/_mixins.scss')
+      ]
+    }
+  },
   chainWebpack(config) {
+    // provide the app's title in html-webpack-plugin's options list so that
+    // it can be accessed in index.html to inject the correct title.
+    // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
+    config.plugin('html').tap(args => {
+      args[0].title = name
+      return args
+    })
+
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {
@@ -63,34 +72,17 @@ module.exports = {
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 
-    // set svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
-    config.module
-      .rule('icons')
-      .test(/\.svg$/)
-      .include.add(resolve('src/icons'))
-      .end()
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
-      .options({
-        symbolId: 'icon-[name]'
-      })
-      .end()
+    // https://webpack.js.org/configuration/devtool/#development
+    // Change development env source map if you want.
+    // The default in vue-cli is 'eval-cheap-module-source-map'.
+    // config
+    //   .when(process.env.NODE_ENV === 'development',
+    //     config => config.devtool('eval-cheap-source-map')
+    //   )
 
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
-            }])
-            .end()
           config
             .optimization.splitChunks({
               chunks: 'all',
@@ -108,14 +100,14 @@ module.exports = {
                 },
                 commons: {
                   name: 'chunk-commons',
-                  test: resolve('src/components'), // can customize your rules
+                  test: path.resolve(__dirname, 'src/components'),
                   minChunks: 3, //  minimum common number
                   priority: 5,
                   reuseExistingChunk: true
                 }
               }
             })
-          // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
+          // https://webpack.js.org/configuration/optimization/#optimizationruntimechunk
           config.optimization.runtimeChunk('single')
         }
       )
