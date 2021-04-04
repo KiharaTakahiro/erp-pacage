@@ -2,8 +2,6 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
 
-axios.defaults.withCredentials = true; 
-
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000
@@ -36,7 +34,7 @@ service.interceptors.response.use(
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
     const res = response.data
-    if (res.code !== 20000) {
+    if (response.status !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',

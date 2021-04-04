@@ -1,10 +1,11 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout, getUserInfo } from '@/api/users'
+import { login, logout } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import { Console } from 'node:console'
 
 export interface IUserState {
   token: string
@@ -58,9 +59,9 @@ class User extends VuexModule implements IUserState {
   public async Login(userInfo: { username: string, password: string}) {
     let { username, password } = userInfo
     username = username.trim()
-    const { headers } = await login({ userId: username, password: password })
-    setToken(headers['X-Access-Token'])
-    this.SET_TOKEN(headers['X-Access-Token'])
+    const { data } = await login({ userId: username, password: password })
+    setToken(data.token)
+    this.SET_TOKEN(data.token)
   }
 
   @Action
@@ -75,20 +76,21 @@ class User extends VuexModule implements IUserState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
-    const { data } = await getUserInfo({ /* Your params here */ })
-    if (!data) {
-      throw Error('Verification failed, please Login again.')
-    }
-    const { roles, name, avatar, introduction, email } = data.user
-    // roles must be a non-empty array
-    if (!roles || roles.length <= 0) {
-      throw Error('GetUserInfo: roles must be a non-null array!')
-    }
-    this.SET_ROLES(roles)
-    this.SET_NAME(name)
-    this.SET_AVATAR(avatar)
-    this.SET_INTRODUCTION(introduction)
-    this.SET_EMAIL(email)
+    // TODO: 一時的にこの処理をつぶす
+    // const { data } = await getUserInfo({ /* Your params here */ })
+    // if (!data) {
+    //   throw Error('Verification failed, please Login again.')
+    // }
+    // const { roles, name, avatar, introduction, email } = data.user
+    // // roles must be a non-empty array
+    // if (!roles || roles.length <= 0) {
+    //   throw Error('GetUserInfo: roles must be a non-null array!')
+    // }
+    this.SET_ROLES(['admin'])
+    this.SET_NAME('')
+    this.SET_AVATAR('')
+    this.SET_INTRODUCTION('')
+    this.SET_EMAIL('')
   }
 
   @Action

@@ -1,8 +1,11 @@
 package com.erp.main.app.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -96,6 +99,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS512, "APP_KEY")
                 .compact();
         res.addHeader(WebSecurityConfig.AUTH_KEY_NAME,  WebSecurityConfig.TOKEN_PREFIX + token);
-
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> resMap = new HashMap<>();
+        resMap.put("token", WebSecurityConfig.TOKEN_PREFIX + token);
+        String resJson = mapper.writeValueAsString(resMap);
+        out.print(resJson);
     }
 }
