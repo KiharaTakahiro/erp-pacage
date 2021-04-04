@@ -41,11 +41,7 @@ export default class extends Vue {
   // https://github.com/dai-siki/vue-image-crop-upload#language-package
   private languageTypeList: { [key: string]: string } = {
     en: 'en',
-    zh: 'zh',
-    es: 'es-MX',
-    ja: 'ja',
-    ko: 'ko',
-    it: 'it'
+    ja: 'ja'
   }
 
   get show() {
