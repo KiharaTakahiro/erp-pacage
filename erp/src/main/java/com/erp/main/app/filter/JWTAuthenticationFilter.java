@@ -51,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.authenticationManager = authenticationManager;
 
         // ログイン用のpathを変更する
-        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("user/login", "POST"));
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/users/login", "POST"));
 
         // ログイン用のID/PWのパラメータ名を変更する
         setUsernameParameter(WebSecurityConfig.USER_ID_KEY);
@@ -93,7 +93,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = Jwts.builder()
                 .setSubject(((AuthUserVo)auth.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + this.exptrationTime))
-                .signWith(SignatureAlgorithm.HS512, this.appKey)
+                .signWith(SignatureAlgorithm.HS512, "APP_KEY")
                 .compact();
         res.addHeader(WebSecurityConfig.AUTH_KEY_NAME,  WebSecurityConfig.TOKEN_PREFIX + token);
 

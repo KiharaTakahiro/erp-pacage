@@ -27,10 +27,11 @@ public class SystemController {
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/user/register")
+	@PostMapping("/users/register")
 	private CreateUserResponse createUser(CreateUserRequest request) {
 		this.userService.registerUser(request.mapTo());
 		CreateUserResponse response = new CreateUserResponse();
 		return response;
 	}
+
 }

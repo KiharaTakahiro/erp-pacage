@@ -10,7 +10,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 8081
+  port: 9529
 logging:
   level:
     root: INFO
@@ -20,4 +20,3 @@ logging:
 app:
   security:
     exptration_time: 100000
-    app_key: "APP_KEY"

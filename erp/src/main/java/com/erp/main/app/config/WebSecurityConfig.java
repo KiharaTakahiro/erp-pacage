@@ -10,9 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.erp.main.app.filter.JWTAuthenticationFilter;
 import com.erp.main.app.filter.JWTAuthorizationFilter;
@@ -20,7 +19,7 @@ import com.erp.main.domain.services.UserService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer  {
 
 	// FIXME: 一時的にフィルタを開ける
 	private static final String[] AUTH_WHITELIST = {
@@ -30,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/v2/api-docs",
             "/webjars/**",
             "/",
-            "/user/login",
+            "/users/login",
             "/**"
     };
 	
@@ -63,9 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-        		.cors()
-        		.configurationSource(this.corsConfigurationSource())
-        		.and()
         		.authorizeRequests()
         		.antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest()
@@ -85,18 +81,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(this.passwordEncoder());
     }
     
-    private CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
-        corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
-        corsConfiguration.addExposedHeader("Authorization");
-        corsConfiguration.addAllowedOrigin("http://localhost:9528/"); 
-        corsConfiguration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
-        corsSource.registerCorsConfiguration("/**", corsConfiguration);
-
-        return corsSource;
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:9527");
     }
     
 }
