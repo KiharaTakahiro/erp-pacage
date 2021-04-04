@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * responseに詰めるAuthののkey名
 	 */
-	public static final String AUTH_KEY_NAME = "X-Token";
+	public static final String AUTH_KEY_NAME = "X-Access-Token";
 	
 	public static final String TOKEN_PREFIX = "Bearer ";
 	
