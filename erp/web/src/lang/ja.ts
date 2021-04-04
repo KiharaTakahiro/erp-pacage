@@ -1,6 +1,13 @@
 export default {
   route: {
     dashboard: 'トップ',
+    sales: '販売管理',
+    receivedOrder: '受注管理',
+    quotation: '見積管理',
+    invoice: '請求管理',
+    system: 'システム設定',
+    users: 'ユーザ管理',
+    client: '取引先管理',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',

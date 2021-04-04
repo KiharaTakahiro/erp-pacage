@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
 import Layout from '@/layout/index.vue'
-import tableRouter from './modules/table'
+import salesRouter from './modules/sales'
+import systemRoutes from './modules/system';
 
 Vue.use(VueRouter)
 
@@ -126,7 +127,8 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   /** when your routing map is too long, you can split it into small modules **/
-  tableRouter,
+  salesRouter,
+  systemRoutes,
   {
     path: '*',
     redirect: '/404',

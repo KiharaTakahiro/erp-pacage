@@ -1,6 +1,13 @@
 export default {
   route: {
     dashboard: 'Dashboard',
+    sales: 'Sales',
+    receivedOrder: 'Received Order',
+    quotation: 'Quotation',
+    invoice: 'Invoice',
+    system: 'Setting',
+    users: 'User Setting',
+    client: 'Client Setting',
     documentation: 'Documentation',
     guide: 'Guide',
     permission: 'Permission',
