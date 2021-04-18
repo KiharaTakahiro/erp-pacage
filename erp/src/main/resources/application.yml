@@ -13,8 +13,8 @@ server:
   port: 9529
 logging:
   level:
-    root: INFO
-    org.springframework: INFO
+    root: DEBUG
+    org.springframework: DEBUG
     org.hibernate: DEBUG
   file: "./application.log"
 app:

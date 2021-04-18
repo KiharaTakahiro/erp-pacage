@@ -60,6 +60,11 @@ public class UserService implements UserDetailsService{
 	@Transactional
 	public AuthUserVo loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UsersEntity loginUser = usersRepository.findByUserId(userId);
+		
+		// ユーザがいないときはエラーメッセージを表示して終了する
+		if(loginUser == null) {
+			throw new AppException(String.format("該当のユーザを取得できませんでした。 userId: %s", userId));
+		}
 		return new AuthUserVo(loginUser);
 	}
 

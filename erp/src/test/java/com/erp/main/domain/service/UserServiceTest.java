@@ -70,8 +70,8 @@ public class UserServiceTest {
 	/**
 	 * 異常系1
 	 * 
-	 * テスト結果: 登録ができずエラーとなること
 	 * テスト観点: 既に登録済みのユーザがいる場合
+	 * テスト結果: 登録ができずエラーとなること
 	 */
 	@Test
 	public void registerUserErroCase1() {
@@ -95,6 +95,7 @@ public class UserServiceTest {
 	/**
 	 * 正常系1
 	 * 
+	 * テスト観点: User認証処理が呼ばれた場合
 	 * テスト結果: ユーザの認証Voを返却すること
 	 */
 	@Test
@@ -103,6 +104,19 @@ public class UserServiceTest {
 		Mockito.when(this.usersRepository.findByUserId("userId")).thenReturn(loginUser);		
 		AuthUserVo authUser = userService.loadUserByUsername("userId");
 		Assertions.assertEquals(authUser, new AuthUserVo(loginUser));
-		
 	}
+	
+
+	/**
+	 * 異常系1
+	 * 
+	 * テスト観点: ユーザがDBに存在しない場合はエラーが発生すること
+	 * テスト結果: ユーザの認証Voを返却すること
+	 */
+	@Test
+	public void loadUserByUsernameSuccessCase2() {
+		Mockito.when(this.usersRepository.findByUserId("userId")).thenReturn(null);		
+		Assertions.assertThrows(AppException.class, () -> userService.loadUserByUsername("userId"));
+	}
+	
 }

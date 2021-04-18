@@ -2,6 +2,7 @@ package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.system.request.CreateUserRequest;
@@ -28,10 +29,11 @@ public class SystemController {
 	 * @return
 	 */
 	@PostMapping("/users/register")
-	private CreateUserResponse createUser(CreateUserRequest request) {
+	private CreateUserResponse createUser(@RequestBody CreateUserRequest request) {
 		this.userService.registerUser(request.mapTo());
 		CreateUserResponse response = new CreateUserResponse();
 		return response;
 	}
+	
 
 }
