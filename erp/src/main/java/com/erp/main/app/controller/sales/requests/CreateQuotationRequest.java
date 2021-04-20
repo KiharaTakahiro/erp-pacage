@@ -36,8 +36,13 @@ public class CreateQuotationRequest {
 	
 	private List<CreateDetailRequest> details;
 	
+	/**
+	 * 見積詳細のための修正
+	 * @author takah
+	 *
+	 */
 	@Data
-	public static class CreateDetailRequest {
+	public class CreateDetailRequest {
 
 		// 商品SEQ
 		private Long productSeq;
