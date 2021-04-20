@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.ProductEntityFileds;
+import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 
 
 /**
@@ -15,6 +16,13 @@ import com.erp.main.domain.objects.entity.fields.ProductEntityFileds;
 @Entity
 @Table(name="Product")
 public class ProductEntity extends ProductEntityFileds {
-
 	
+	public static ProductEntity create(CreateProductVo vo) {
+		ProductEntity entity = new ProductEntity();
+		// 商品名
+		entity.setName(vo.getProductName());
+		// 金額
+		entity.setUnitPrice(vo.getUnitPrice());
+		return entity;
+	}
 }

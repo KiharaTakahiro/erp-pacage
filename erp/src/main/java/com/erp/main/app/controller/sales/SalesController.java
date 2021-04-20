@@ -25,7 +25,7 @@ public class SalesController {
 	 */
 	@PostMapping("/quotation/register")
 	public void createQuotation(@RequestBody CreateQuotationRequest request) {
-		quotationService.createQuotation(request.mapTo());
+		this.quotationService.createQuotation(request.mapTo());
 	}
-
+	
 }

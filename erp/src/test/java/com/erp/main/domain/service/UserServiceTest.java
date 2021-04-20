@@ -33,7 +33,7 @@ public class UserServiceTest {
 	private UserService userService = new UserService();
 	
 	@Mock
-	private UsersRepository usersRepository; 
+	private UsersRepository usersRepository;
 	
 	@Mock 
 	private PasswordEncoder passwordEncorder;

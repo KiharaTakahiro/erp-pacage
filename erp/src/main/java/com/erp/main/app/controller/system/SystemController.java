@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
+import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
 /**
@@ -24,6 +26,12 @@ public class SystemController {
 	private UserService userService;
 	
 	/**
+	 * マスタ関連サービス
+	 */
+	@Autowired
+	private MasterService masterService;
+	
+	/**
 	 * ユーザ作成用のエントリーポイント
 	 * @param request
 	 * @return
@@ -35,5 +43,12 @@ public class SystemController {
 		return response;
 	}
 	
-
+	/**
+	 * 商品作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/product/register")
+	private void createProduct(@RequestBody CreateProductRequest request) {
+		this.masterService.createProduct(request.mapTo());
+	}
 }

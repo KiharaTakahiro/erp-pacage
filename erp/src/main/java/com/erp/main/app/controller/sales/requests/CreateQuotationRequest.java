@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
+import com.sun.istack.NotNull;
 
 import lombok.Data;
 
@@ -17,21 +18,25 @@ import lombok.Data;
 public class CreateQuotationRequest {
 	
 	// 取引先SEQ
+	@NotNull
 	private Long clientsSeq;
 	
 	// 会社SEQ
 	private Long companySeq;
 	
 	// 見積番号
+	@NotNull
 	private String quotationNo;
 	
 	// 作成日
 	private String createDate;
 	
 	// 件名
+	@NotNull
 	private String subject;
 	
 	// 値引合計
+	@NotNull
 	private Long discountTotal;
 	
 	private List<CreateDetailRequest> details;
@@ -45,12 +50,15 @@ public class CreateQuotationRequest {
 	public class CreateDetailRequest {
 
 		// 商品SEQ
+		@NotNull
 		private Long productSeq;
 		
 		// 数量
+		@NotNull
 		private Integer quantity;
 		
 		// 値引
+		@NotNull
 		private Long discount;
 	}
 	

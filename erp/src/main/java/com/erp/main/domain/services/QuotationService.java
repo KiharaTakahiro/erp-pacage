@@ -38,7 +38,7 @@ public class QuotationService {
 	@Transactional
 	public void createQuotation(CreateQuotationVo createQuotationVo) {
 		QuotationEntity quotation = createQuotationVo.create();
-		quotation = quotationRepository.save(quotation);
+		quotation = this.quotationRepository.save(quotation);
 		for(CreateQuotationDetailVo createQuotationDetail: createQuotationVo.getDetails()) {
 			QuotationDetailEntity detail = createQuotationDetail.create(quotation.getQuotationSeq());
 			quotationDetailRepository.save(detail);
