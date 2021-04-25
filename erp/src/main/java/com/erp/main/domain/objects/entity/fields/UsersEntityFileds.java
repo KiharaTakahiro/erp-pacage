@@ -39,7 +39,12 @@ public class UsersEntityFileds extends BaseEntityFields {
 	@Column(name = "USER_ID")
 	private String userId;
 	
-
+	/**
+	 * 部署SEQ
+	 */
+	@Column(name = "DEPARTMENT_SEQ")
+	private Long departmentSeq;
+	
 	/**
 	 * パスワード
 	 */

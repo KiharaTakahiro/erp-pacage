@@ -3,11 +3,11 @@ package com.erp.main.domain.service;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
@@ -22,7 +22,7 @@ import com.erp.main.domain.services.MasterService;
  *
  */
 @MockitoSettings(strictness = Strictness.LENIENT)
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MasterServiceTest {
 	
 	/**

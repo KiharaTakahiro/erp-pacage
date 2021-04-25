@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 見積詳細を管理する
+ * 発注詳細
  * 
  * @author 木原
  *
@@ -21,30 +21,30 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
-public class QuotationDetailEntityFileds extends BaseEntityFields {
+public class OrderDetailEntityFileds extends BaseEntityFields {
 
 	/**
-	 * 見積詳細SEQ
+	 * 発注詳細SEQ
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "quotation_detail_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
-	@Column(name = "QUOTATION_DETAIL_SEQ")
-	private Long quotationDetailSeq;
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "order_detail_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+	@Column(name = "ORDER_DETAIL_SEQ")
+	private Long orderDetailSeq;
+	
+	/**
+	 * 発注SEQ
+	 */
+	@Column(name = "ORDER_SEQ")
+	private Long orderSeq;
 
 	/**
-	 * 見積SEQ
+	 * 発注ステータス
 	 */
-	@NotNull
-	@Column(name = "QUOTATION_SEQ")
-	private Long quotationSeq;
-	
-	/**
-	 * 商品SEQ
-	 */
-	@Column(name = "PRODUCT_SEQ")
-	private Long productSeq;
-	
+	// TODO: Enumに変更する
+	@Column(name = "STATUS")
+	private Long status;
+
 	/**
 	 * 数量
 	 */
@@ -59,4 +59,10 @@ public class QuotationDetailEntityFileds extends BaseEntityFields {
 	@Column(name="DISCOUNT")
 	private Long discount;
 	
+	/**
+	 * 納期
+	 */
+	@NotNull
+	@Column(name="DERIVERY_DATE")
+	private String deriveryDate;
 }

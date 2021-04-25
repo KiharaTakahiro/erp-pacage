@@ -1,4 +1,4 @@
-package com.erp.main.domain.objects.entity.fields;
+	package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -40,10 +40,26 @@ public class ProductEntityFileds extends BaseEntityFields {
 	private String name;
 	
 	/**
-	 * 単価
+	 * 販売単価
 	 */
 	@NotNull
 	@Column(name="UNIT_PRICE")
 	private Long unitPrice;
 	
+	/**
+	 * 仕入単価
+	 */
+	@NotNull
+	@Column(name="PURCHASE_UNIT_PRICE")
+	private Long purchaseUnitPrice;
+	
+	/**
+	 * 税区分
+	 */
+	// TODO: 後でEnumにする
+	@NotNull
+	@Column(name="TAX_TYPE")
+	private String taxType;
+	
+
 }

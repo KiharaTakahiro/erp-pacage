@@ -7,13 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
 
-import com.sun.istack.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 取引先を管理する
+ * 倉庫
  * 
  * @author 木原
  *
@@ -21,21 +19,21 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
-public class ClientsEntityFileds extends BaseEntityFields {
+public class WarehouseEntityFileds extends BaseEntityFields {
 
 	/**
-	 * 取引先SEQ
+	 * 倉庫SEQ
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "clients_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
-	@Column(name = "CLIENTS_SEQ")
-	private Long clientsSeq;
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "warehouse_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+	@Column(name = "WAREHOUSE_SEQ")
+	private Long warehouseSeq;
 
 	/**
-	 * 取引先名称
+	 * 倉庫名
 	 */
-	@NotNull
 	@Column(name = "NAME")
-	private Long name;
+	private String name;
+	
 }

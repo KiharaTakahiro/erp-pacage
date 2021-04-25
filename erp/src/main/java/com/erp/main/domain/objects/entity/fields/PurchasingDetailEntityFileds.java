@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 見積詳細を管理する
+ * 仕入詳細
  * 
  * @author 木原
  *
@@ -21,29 +21,41 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
-public class QuotationDetailEntityFileds extends BaseEntityFields {
+public class PurchasingDetailEntityFileds extends BaseEntityFields {
 
 	/**
-	 * 見積詳細SEQ
+	 * 仕入詳細SEQ
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "quotation_detail_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
-	@Column(name = "QUOTATION_DETAIL_SEQ")
-	private Long quotationDetailSeq;
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "purchasing_detail_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+	@Column(name = "PURCHASING_DETAIL_SEQ")
+	private Long purchasingDetailSeq;
 
 	/**
-	 * 見積SEQ
+	 * 仕入SEQ
 	 */
 	@NotNull
-	@Column(name = "QUOTATION_SEQ")
-	private Long quotationSeq;
+	@Column(name = "PURCHASING_SEQ")
+	private Long purchasingSeq;
 	
 	/**
 	 * 商品SEQ
 	 */
 	@Column(name = "PRODUCT_SEQ")
 	private Long productSeq;
+
+	/**
+	 * 仕入商品名
+	 */
+	@Column(name = "NAME")
+	private String name;
+	
+	/**
+	 * ロット番号
+	 */
+	@Column(name = "LOT_NO")
+	private String lotNo;
 	
 	/**
 	 * 数量
