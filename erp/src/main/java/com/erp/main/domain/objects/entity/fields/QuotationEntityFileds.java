@@ -40,6 +40,12 @@ public class QuotationEntityFileds extends BaseEntityFields {
 	private Long clientsSeq;
 
 	/**
+	 * 部門SEQ
+	 */
+	@Column(name = "DEPARTMENT_SEQ")
+	private Long departmentSeq;
+
+	/**
 	 * 会社SEQ
 	 */
 	@Column(name = "COMPANY_SEQ")

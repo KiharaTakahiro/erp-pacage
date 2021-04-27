@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 取引先を管理する
+ * 仕入先を管理する
  * 
  * @author 木原
  *
@@ -21,19 +21,19 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
-public class ClientsEntityFileds extends BaseEntityFields {
+public class SupplierEntityFileds extends BaseEntityFields {
 
 	/**
-	 * 取引先SEQ
+	 * 仕入先SEQ
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "clients_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
-	@Column(name = "CLIENTS_SEQ")
-	private Long clientsSeq;
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "supplier_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+	@Column(name = "SUPPLIER_SEQ")
+	private Long supplierSeq;
 
 	/**
-	 * 取引先名称
+	 * 仕入先名称
 	 */
 	@NotNull
 	@Column(name = "NAME")

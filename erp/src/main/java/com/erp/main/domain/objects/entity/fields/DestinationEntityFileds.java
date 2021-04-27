@@ -7,13 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
 
-import com.sun.istack.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 取引先を管理する
+ * 出荷先
  * 
  * @author 木原
  *
@@ -21,21 +19,34 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
-public class ClientsEntityFileds extends BaseEntityFields {
+public class DestinationEntityFileds extends BaseEntityFields {
+
+	/**
+	 * 出荷先SEQ
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "destination_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+	@Column(name = "DESTINATION_SEQ")
+	private Long destinationSeq;
 
 	/**
 	 * 取引先SEQ
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "clients_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
 	@Column(name = "CLIENTS_SEQ")
 	private Long clientsSeq;
 
+	
 	/**
-	 * 取引先名称
+	 * 出荷先名称
 	 */
-	@NotNull
 	@Column(name = "NAME")
-	private Long name;
+	private String name;
+
+	/**
+	 * 出荷先住所
+	 */
+	@Column(name = "ADDRESS")
+	private String address;
+	
 }
