@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.system.request.CreateProductRequest;
+import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
 import com.erp.main.domain.services.MasterService;
@@ -50,5 +51,14 @@ public class SystemController {
 	@PostMapping("/product/register")
 	private void createProduct(@RequestBody CreateProductRequest request) {
 		this.masterService.createProduct(request.mapTo());
+	}
+	
+	/**
+	 * 取引先作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/supplier/register")
+	private void createSupplier(@RequestBody CreateSupplierRequest request) {
+		this.masterService.createSupplier(request.mapTo());
 	}
 }

@@ -13,5 +13,5 @@ import com.erp.main.domain.objects.entity.ProductEntity;
  */
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
-	
+
 }
