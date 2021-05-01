@@ -58,6 +58,8 @@ public class QuotationService {
 		
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
+			
+			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
 			if(product.isEmpty()) {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
@@ -83,11 +85,9 @@ public class QuotationService {
 		
 		// 小計
 		quotation.setSubTotal(subtotal);
-
 		// 消費税
 		long tax = this.moneyComponent.computeTax(subtotal);
 		quotation.setTax(tax);
-		
 		// 合計(小計 + 消費税)
 		quotation.setTotal(subtotal + tax);
 		
