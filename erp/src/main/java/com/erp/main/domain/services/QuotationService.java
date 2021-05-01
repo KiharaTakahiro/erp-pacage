@@ -92,7 +92,7 @@ public class QuotationService {
 		quotation.setTotal(subtotal + tax);
 		
 		// 見積詳細をセットする
-		quotation.setQuotationDetail(detailEntities);
+		quotation.setQuotationDetailEntity(detailEntities);
 		
 		// 見積の保存
 		quotation = this.quotationRepository.save(quotation);
