@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.QuotationEntityFileds;
@@ -36,10 +37,10 @@ public class QuotationEntity extends QuotationEntityFileds {
 		entity.setClientsSeq(vo.getClientsSeq());
 		// 会社SEQ
 		entity.setCompanySeq(vo.getCompanySeq());
-		// 作成日
-		entity.setCreateDate(vo.getCreateDate());
 		// 部署SEQ
 		entity.setDepartmentSeq(vo.getDepartmentSeq());
+		// 作成日
+		entity.setCreateDate(vo.getCreateDate());
 		// 見積番号
 		entity.setQuotationNo(vo.getQuotationNo());
 		// 件名
@@ -49,12 +50,36 @@ public class QuotationEntity extends QuotationEntityFileds {
 	}
 	
 	/**
-	 * 見積詳細のテーブル取得
+	 * 見積詳細
 	 */
 	@Getter
 	@Setter
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "QUOTATION_SEQ", insertable = true, updatable = true)
-	private  Set<QuotationDetailEntity> quotationDetail;
+	private  Set<QuotationDetailEntity> quotationDetailEntity;
 	
+	/**
+	 * 取引先
+	 */
+	@Getter
+	@OneToOne
+	@JoinColumn(name="CLIENTS_SEQ", insertable = false, updatable = false)
+	private ClientsEntity clientsEntity;
+
+	/**
+	 * 会社
+	 */
+	@Getter
+	@OneToOne
+	@JoinColumn(name="COMPANY_SEQ", insertable = false, updatable = false)
+	private CompanyEntity companyEntity;
+
+	/**
+	 * 部署
+	 */
+	@Getter
+	@OneToOne
+	@JoinColumn(name="DEPARTMENT_SEQ", insertable = false, updatable = false)
+	private DepartmentEntity departmentEntity;
+
 }
