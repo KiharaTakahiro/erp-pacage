@@ -58,5 +58,12 @@ public class QuotationDetailEntityFileds extends BaseEntityFields {
 	@NotNull
 	@Column(name="DISCOUNT")
 	private Long discount;
+
+	/**
+	 * 金額
+	 */
+	@NotNull
+	@Column(name="PRICE")
+	private Long price;
 	
 }
