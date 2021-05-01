@@ -55,6 +55,8 @@ public class QuotationService {
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
 		// 小計
 		long subtotal = 0L;
+		// 値引合計
+		long discountTotal = 0L;
 		
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
@@ -75,9 +77,22 @@ public class QuotationService {
 			// 小計を加算する
 			subtotal += price;
 			
+			// 値引を加算する
+			discountTotal += detailVo.getDiscount();
+			
 			// 見積詳細の追加
 			detailEntities.add(detailEntity);
 			
+		}
+		
+		// 値引が設定されていない場合は詳細内の値引の合計額を設定する
+		if(createQuotationVo.getDiscountTotal() == null) {
+			createQuotationVo.setDiscountTotal(discountTotal);
+		}
+		
+		// 詳細内の値引合計額が合計の値引額を下回っている場合はエラー
+		if(discountTotal > createQuotationVo.getDiscountTotal()) {
+			throw new AppException(String.format("値引合計額が、個別の商品の値引の合計額より少ないです。値引合計額: %s 個別商品の値引の合計: %s",createQuotationVo.getDiscountTotal(),discountTotal));
 		}
 		
 		// VOからマッピング可能な部分をマッピング
