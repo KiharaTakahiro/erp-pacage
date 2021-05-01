@@ -45,7 +45,7 @@ public class QuotationService {
 	private MoneyComponent moneyComponent;
 	
 	/**
-	 * 見積詳細作成
+	 * 見積作成処理
 	 * @param createQuotationVo
 	 */
 	@Transactional
