@@ -47,7 +47,7 @@ public class CreateQuotationRequest {
 	 *
 	 */
 	@Data
-	public class CreateDetailRequest {
+	public static class CreateDetailRequest {
 
 		// 商品SEQ
 		@NotNull
@@ -80,7 +80,7 @@ public class CreateQuotationRequest {
 		// 値引詳細
 		List<CreateQuotationDetailVo> detailVos = new ArrayList<>();
 		for(CreateDetailRequest detail: this.getDetails()) {
-			CreateQuotationDetailVo detailVo = (new CreateQuotationVo()).new CreateQuotationDetailVo();
+			CreateQuotationDetailVo detailVo = new CreateQuotationDetailVo();
 			// 商品SEQ
 			detailVo.setProductSeq(detail.getProductSeq());
 			// 数量

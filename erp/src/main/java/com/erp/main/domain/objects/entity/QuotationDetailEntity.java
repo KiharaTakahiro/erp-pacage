@@ -7,6 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.QuotationDetailEntityFileds;
+import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
 
 import lombok.Getter;
 
@@ -20,6 +21,22 @@ import lombok.Getter;
 @Table(name="QuotationDetail")
 public class QuotationDetailEntity extends QuotationDetailEntityFileds {
 
+	/**
+	 * 登録用のエンティティ生成
+	 * @param vo
+	 * @return
+	 */
+	public static QuotationDetailEntity create(CreateQuotationDetailVo vo) {
+		QuotationDetailEntity entity = new QuotationDetailEntity();
+		// 商品SEQ
+		entity.setProductSeq(vo.getProductSeq());
+		// 数量
+		entity.setQuantity(vo.getQuantity());
+		// 値引
+		entity.setDiscount(vo.getDiscount());
+		return entity;
+	}
+	
 	/**
 	 * 見積テーブルの取得
 	 */
