@@ -92,7 +92,8 @@ public class QuotationService {
 		
 		// 詳細内の値引合計額が合計の値引額を下回っている場合はエラー
 		if(discountTotal > createQuotationVo.getDiscountTotal()) {
-			throw new AppException(String.format("値引合計額が、個別の商品の値引の合計額より少ないです。値引合計額: %s 個別商品の値引の合計: %s",createQuotationVo.getDiscountTotal(),discountTotal));
+			String message = String.format("値引合計額が、個別の商品の値引の合計額より少ないです。値引合計額: %s 個別商品の値引の合計: %s", createQuotationVo.getDiscountTotal(), discountTotal);
+			throw new AppException(message);
 		}
 		
 		// VOからマッピング可能な部分をマッピング
