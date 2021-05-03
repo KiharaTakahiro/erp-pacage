@@ -48,21 +48,6 @@ public class CreateQuotationVo {
 	private Long discountTotal;
 	
 	/**
-	 * 小計
-	 */
-	private Long subTotal;
-	
-	/**
-	 * 消費税
-	 */
-	private Long tax;
-	
-	/**
-	 * 合計金額
-	 */
-	private Long total;
-
-	/**
 	 * 見積詳細のVo
 	 */
 	private List<CreateQuotationDetailVo> details;
