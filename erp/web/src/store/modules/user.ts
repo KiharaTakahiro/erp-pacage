@@ -5,6 +5,7 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import request from '@/utils/request'
 import { Console } from 'node:console'
 
 export interface IUserState {
@@ -60,7 +61,7 @@ class User extends VuexModule implements IUserState {
     let { username, password } = userInfo
     username = username.trim()
     // FIXME: 試してみる
-    const { data } = await login({ userId: username, password: password }).then(response => {return response;})
+    const { data } = await login({ userId: username, password: password })
     setToken(data.token)
     this.SET_TOKEN(data.token)
   }
