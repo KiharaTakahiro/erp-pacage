@@ -37,5 +37,5 @@ public class ClientsEntityFileds extends BaseEntityFields {
 	 */
 	@NotNull
 	@Column(name = "NAME")
-	private Long name;
+	private String name;
 }

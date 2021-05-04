@@ -1,10 +1,15 @@
 package com.erp.main.domain.services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +20,11 @@ import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
+import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
+import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
+import com.erp.main.domain.specification.QuotationSpec;
 
 /**
  * 見積のサービス
@@ -113,4 +121,65 @@ public class QuotationService {
 		// 見積の保存
 		quotation = this.quotationRepository.save(quotation);
 	}
+	
+	
+	/**
+	 * 見積取得処理
+	 * @param condition
+	 * @return
+	 */
+	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {
+		
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<QuotationEntity> spec = Specification.where(
+				QuotationSpec.quotationSeqEquals(condition.getQuotationSeq()))
+				.and(QuotationSpec.clientsSeqEquals(condition.getClientsSeq()))
+				.and(QuotationSpec.departmentSeqEquals(condition.getDepartmentSeq()))
+				.and(QuotationSpec.quotationNoLike(condition.getQuotationNo()))
+				.and(QuotationSpec.createDateFrom(condition.getCreateDateFrom()))
+				.and(QuotationSpec.createDateTo(condition.getCreateDateTo()));
+
+		
+		// FIXME: サイズはymlで設定できるようにする
+		Page<QuotationEntity> pages = this.quotationRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 30));
+		
+		// HACK: 下記の書き方は可読性を落とすと思うため辞めたいが、速度を考えるとこちらの方が早くなる
+		// ような気がするため一度実装して見て著しい処理速度の差がない場合は通常の拡張Forで書く予定
+		List<GetQuotationVo.Quotation> quotations = pages.get().map(e -> {
+			GetQuotationVo.Quotation quotation = new GetQuotationVo.Quotation();
+			// 取引先SEQ
+			quotation.setClientsSeq(e.getClientsSeq());
+			// 取引先名
+			quotation.setClientsName(e.getClientsEntity().getName());				
+			// 会社SEQ
+			quotation.setCompanySeq(e.getCompanySeq());
+			// 会社名
+			quotation.setCompanyName(e.getCompanyEntity().getName());
+			// 作成日
+			quotation.setCreateDate(e.getCreateDate());
+			// 部署SEQ
+			quotation.setDepartmentSeq(e.getDepartmentSeq());
+			// 部署名
+			quotation.setDepartmentName(e.getDepartmentEntity().getName());				
+			// 見積番号
+			quotation.setQuotationNo(e.getQuotationNo());
+			// 件名
+			quotation.setSubject(e.getSubject());			
+			return quotation;
+		}).collect(Collectors.toList());
+
+		GetQuotationVo vo = new GetQuotationVo();
+		// トータルページ数の設定
+		vo.setMaxpage(pages.getTotalPages());
+		// 見積リストの設定
+		vo.setQuotations(quotations);
+		
+		return vo;
+	}
+	
 }

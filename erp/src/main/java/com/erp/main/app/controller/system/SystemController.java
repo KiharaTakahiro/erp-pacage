@@ -38,7 +38,7 @@ public class SystemController {
 	 * @return
 	 */
 	@PostMapping("/users/register")
-	private CreateUserResponse createUser(@RequestBody CreateUserRequest request) {
+	public CreateUserResponse createUser(@RequestBody CreateUserRequest request) {
 		this.userService.registerUser(request.mapTo());
 		CreateUserResponse response = new CreateUserResponse();
 		return response;
@@ -49,7 +49,7 @@ public class SystemController {
 	 * @param req
 	 */
 	@PostMapping("/product/register")
-	private void createProduct(@RequestBody CreateProductRequest request) {
+	public void createProduct(@RequestBody CreateProductRequest request) {
 		this.masterService.createProduct(request.mapTo());
 	}
 	
@@ -58,7 +58,7 @@ public class SystemController {
 	 * @param req
 	 */
 	@PostMapping("/supplier/register")
-	private void createSupplier(@RequestBody CreateSupplierRequest request) {
+	public void createSupplier(@RequestBody CreateSupplierRequest request) {
 		this.masterService.createSupplier(request.mapTo());
 	}
 }

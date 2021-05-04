@@ -67,5 +67,5 @@ public class UserService implements UserDetailsService{
 		}
 		return new AuthUserVo(loginUser);
 	}
-
+	
 }

@@ -1,6 +1,7 @@
 package com.erp.main.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -12,6 +13,6 @@ import com.erp.main.domain.objects.entity.QuotationEntity;
  *
  */
 @Repository
-public interface QuotationRepository extends JpaRepository<QuotationEntity, Long> {
+public interface QuotationRepository extends JpaRepository<QuotationEntity, Long>, JpaSpecificationExecutor<QuotationEntity> {
 	
 }

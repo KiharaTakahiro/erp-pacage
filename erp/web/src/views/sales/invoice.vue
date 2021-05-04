@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>受注管理</div>
+    <div>請求管理</div>
   </div>
 </template>
 
