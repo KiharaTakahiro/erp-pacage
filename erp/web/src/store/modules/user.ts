@@ -5,9 +5,6 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
-import request from '@/utils/request'
-import { Console } from 'node:console'
-
 export interface IUserState {
   token: string
   name: string
