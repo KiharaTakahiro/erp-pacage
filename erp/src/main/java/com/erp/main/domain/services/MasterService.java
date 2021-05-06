@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 
@@ -39,6 +42,12 @@ public class MasterService {
 	 */
 	@Autowired
 	private ClientsRepository clientsRepository;
+	
+	/**
+	 * 会社マスタのリポジトリ
+	 */
+	@Autowired
+	private CompanyRepository companyRepository;
 	
 	
 	/**
@@ -71,6 +80,17 @@ public class MasterService {
 	public void createClients(CreateClientsVo vo) {
 		ClientsEntity entity = ClientsEntity.create(vo);
 		this.clientsRepository.save(entity);
+		
+	}
+	
+	/**
+	 * 会社マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createCompany(CreateCompanyVo vo) {
+		CompanyEntity entity = CompanyEntity.create(vo);
+		this.companyRepository.save(entity);
 		
 	}
 	
