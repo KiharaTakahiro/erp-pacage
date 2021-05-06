@@ -11,7 +11,7 @@ public class CreateSupplierRequest {
 	 * 取引先名
 	 */
 	@NotNull
-	private Long supplierName;
+	private String supplierName;
 	
 	public CreateSupplierVo mapTo() {
 		CreateSupplierVo vo = new CreateSupplierVo();

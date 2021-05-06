@@ -1,17 +1,18 @@
 package com.erp.main.domain.objects.valueObjects;
+
 import lombok.Data;
 
 /**
- * 仕入れ先作成Vo
+ * 取引先作成Vo
  * @author 永戸
  *
  */
 
 @Data
-public class CreateSupplierVo {
+public class CreateClientsVo {
 	/**
-	 * 仕入れ先名
+	 * 取引先名
 	 */
-	private String supplierName;
+	private String clientsName;
 
 }

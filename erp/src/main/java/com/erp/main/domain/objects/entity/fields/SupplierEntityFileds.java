@@ -37,5 +37,5 @@ public class SupplierEntityFileds extends BaseEntityFields {
 	 */
 	@NotNull
 	@Column(name = "NAME")
-	private Long name;
+	private String name;
 }
