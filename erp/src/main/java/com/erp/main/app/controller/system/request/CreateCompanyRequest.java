@@ -37,13 +37,13 @@ public class CreateCompanyRequest {
 		CreateCompanyVo vo = new CreateCompanyVo();
 		
 		// 会社名
-		vo.setName(this.getName());
+		vo.setCompanyName(this.getName());
 		// 会社郵便番号
-		vo.setZip(this.getZip());
+		vo.setCompanyZip(this.getZip());
 		// 会社住所
-		vo.setAddress(this.getAddress());
+		vo.setCompanyAddress(this.getAddress());
 		// 会社電話番号
-		vo.setPhone(this.getPhone());
+		vo.setCompanyPhone(this.getPhone());
 		return vo;
 	}
 	

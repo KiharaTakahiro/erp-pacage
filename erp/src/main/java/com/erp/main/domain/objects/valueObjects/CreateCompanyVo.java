@@ -13,20 +13,20 @@ public class CreateCompanyVo {
 	/**
 	 * 会社名
 	 */
-	private String name;
+	private String companyName;
 	
 	/**
 	 * 会社郵便番号
 	 */
-	private String zip;
+	private String companyZip;
 	
 	/**
 	 * 会社住所
 	 */
-	private String address;
+	private String companyAddress;
 
 	/**
 	 * 	会社電話番号
 	 */
-	private String phone;
+	private String companyPhone;
 }
