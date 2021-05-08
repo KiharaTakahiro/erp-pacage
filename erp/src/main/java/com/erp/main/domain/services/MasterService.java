@@ -4,10 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
+import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 
@@ -26,6 +32,25 @@ public class MasterService {
 	private ProductRepository productRepository;
 	
 	/**
+	 * 仕入れ先マスタのリポジトリ
+	 */
+	@Autowired
+	private SupplierRepository supplierRepository;
+	
+	/**
+	 * 取引先マスタのリポジトリ
+	 */
+	@Autowired
+	private ClientsRepository clientsRepository;
+	
+	/**
+	 * 会社マスタのリポジトリ
+	 */
+	@Autowired
+	private CompanyRepository companyRepository;
+	
+	
+	/**
 	 * 商品マスタ作成処理
 	 * @param vo
 	 */
@@ -37,13 +62,7 @@ public class MasterService {
 	}
 	
 	/**
-	 * 取引先マスタのリポジトリ
-	 */
-	@Autowired
-	private SupplierRepository supplierRepository;
-	
-	/**
-	 * 取引先マスタ作成処理
+	 * 仕入れ先マスタ作成処理
 	 * @param vo
 	 */
 	@Transactional
@@ -52,4 +71,28 @@ public class MasterService {
 		this.supplierRepository.save(entity);
 		
 	}
+	
+	/**
+	 * 取引先マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createClients(CreateClientsVo vo) {
+		ClientsEntity entity = ClientsEntity.create(vo);
+		this.clientsRepository.save(entity);
+		
+	}
+	
+	/**
+	 * 会社マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createCompany(CreateCompanyVo vo) {
+		CompanyEntity entity = CompanyEntity.create(vo);
+		this.companyRepository.save(entity);
+		
+	}
+	
 }
+
