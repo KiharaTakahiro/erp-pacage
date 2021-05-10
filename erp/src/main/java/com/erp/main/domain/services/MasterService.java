@@ -6,14 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
+import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 
@@ -49,6 +52,11 @@ public class MasterService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	/**
+	 * 部署のリポジトリ
+	 */
+	@Autowired
+	private DepartmentRepository departmentRepository;
 	
 	/**
 	 * 商品マスタ作成処理
@@ -94,5 +102,15 @@ public class MasterService {
 		
 	}
 	
+	/**
+	 * 部署マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createDepartment(CreateDepartmentVo vo) {
+		DepartmentEntity entity = DepartmentEntity.create(vo);
+		this.departmentRepository.save(entity);
+		
+	}
 }
 

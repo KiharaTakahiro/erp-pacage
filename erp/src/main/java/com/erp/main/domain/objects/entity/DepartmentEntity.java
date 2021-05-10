@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.DepartmentEntityFileds;
+import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 
 
 /**
@@ -16,5 +17,16 @@ import com.erp.main.domain.objects.entity.fields.DepartmentEntityFileds;
 @Table(name="Department")
 public class DepartmentEntity extends DepartmentEntityFileds {
 
+public static DepartmentEntity create(CreateDepartmentVo vo) {
+		
+	DepartmentEntity entity = new DepartmentEntity();
+		
+	// 会社Seq
+	entity.setCompanySeq(vo.getDepartmentCompanySeq());
+	// 部署名
+	entity.setName(vo.getDepartmentName());
 	
+	return entity;
+	
+	}
 }

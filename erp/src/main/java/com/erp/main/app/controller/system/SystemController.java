@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
+import com.erp.main.app.controller.system.request.CreateDepartmentRequest;
 import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
@@ -80,5 +81,14 @@ public class SystemController {
 	@PostMapping("/company/register")
 	public void createCompany(@RequestBody CreateCompanyRequest request) {
 		this.masterService.createCompany(request.mapTo());
+	}
+	
+	/**
+	 * 部署作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/department/register")
+	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
+		this.masterService.createDepartment(request.mapTo());
 	}
 }
