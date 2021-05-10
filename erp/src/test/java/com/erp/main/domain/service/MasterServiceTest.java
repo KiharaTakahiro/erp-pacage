@@ -12,12 +12,15 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.MasterService;
@@ -54,6 +57,14 @@ public class MasterServiceTest {
 	 */
 	@Mock
 	private ClientsRepository clientsRepository;
+	
+	/**
+	 *会社リポジトリ
+	 */
+	@Mock
+	private CompanyRepository companyRepository;
+	
+	
 	
 	/**
 	 * 商品作成用のテスト
@@ -116,4 +127,37 @@ public class MasterServiceTest {
 		
 		Mockito.verify(this.clientsRepository, times(1)).save(entity);
 	}
+	
+	/**
+	 * 会社作成用のテスト
+	 */
+	@Test
+	public void registeCompanySuccessCase1() {
+		
+		// 実行用のデータ作成
+		CreateCompanyVo vo = new CreateCompanyVo();
+		
+		vo.setCompanyName("test社");
+		vo.setCompanyZip("123-4567");
+		vo.setCompanyAddress("三重県四日市市桜花台1-2-3");
+		vo.setCompanyPhone("090-0000-0000");
+		
+		
+		// 処理実行
+		this.masterService.createCompany(vo);
+		
+		// 検証用のデータ作成
+		CompanyEntity entity = new CompanyEntity();
+		// 会社名
+		entity.setName("test社");
+		// 会社郵便番号
+		entity.setZip("123-4567");
+		// 会社住所
+		entity.setAddress("三重県四日市市桜花台1-2-3");
+		// 会社電話番号
+		entity.setPhone("090-0000-0000");
+		
+		Mockito.verify(this.companyRepository, times(1)).save(entity);
+	}
+	
 }
