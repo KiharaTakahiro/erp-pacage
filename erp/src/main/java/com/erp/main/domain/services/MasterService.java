@@ -1,9 +1,12 @@
 package com.erp.main.domain.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
@@ -108,6 +111,11 @@ public class MasterService {
 	 */
 	@Transactional
 	public void createDepartment(CreateDepartmentVo vo) {
+		Optional<DepartmentEntity> product = this.departmentRepository.findById(vo.getDepartmentCompanySeq());
+		if(product.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getDepartmentCompanySeq()));
+		}
+		
 		DepartmentEntity entity = DepartmentEntity.create(vo);
 		this.departmentRepository.save(entity);
 		
