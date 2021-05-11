@@ -2,6 +2,8 @@ package com.erp.main.domain.service;
 
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,14 +15,17 @@ import org.mockito.quality.Strictness;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
+import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.MasterService;
@@ -63,6 +68,12 @@ public class MasterServiceTest {
 	 */
 	@Mock
 	private CompanyRepository companyRepository;
+	
+	/**
+	 *部署リポジトリ
+	 */
+	@Mock
+	private DepartmentRepository departmentRepository;
 	
 	
 	
@@ -160,4 +171,42 @@ public class MasterServiceTest {
 		Mockito.verify(this.companyRepository, times(1)).save(entity);
 	}
 	
+	@Test
+	public void registeDepartmentSuccessCase1() {
+		
+		// 実行用のデータ作成
+		CreateDepartmentVo vo = new CreateDepartmentVo();
+		// 取得処理をモック化
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultCompanyData();
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		
+		// 会社Seq
+		vo.setDepartmentCompanySeq(2L);
+		// 部署名
+		vo.setDepartmentName("test部");
+		
+		
+		// 処理実行
+		this.masterService.createDepartment(vo);
+		
+		// 検証用のデータ作成
+		DepartmentEntity entity = new DepartmentEntity();
+		// 会社Seq
+		entity.setCompanySeq(2L);
+		// 部署名
+		entity.setName("test部");
+		
+		Mockito.verify(this.departmentRepository, times(1)).save(entity);
+	}
+	/**
+	 * デフォルトの会社データ生成
+	 * @return
+	 */
+	private Optional<DepartmentEntity> createDefaultCompanyData() {
+		// 	取得する会社Seqの設定
+		DepartmentEntity department = new DepartmentEntity();
+		department.setCompanySeq(2L);
+		return Optional.of(department);
+		
+	}
 }
