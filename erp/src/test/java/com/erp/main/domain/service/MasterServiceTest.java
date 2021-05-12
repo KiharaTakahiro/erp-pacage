@@ -182,10 +182,10 @@ public class MasterServiceTest {
 		CreateDepartmentVo vo = new CreateDepartmentVo();
 		// 取得処理をモック化
 		Optional<DepartmentEntity> departmentOpt = this.createDefaultCompanyData();
-		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		Mockito.when(this.cRepository.findById(1L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
-		vo.setDepartmentCompanySeq(2L);
+		vo.setDepartmentCompanySeq(1L);
 		// 部署名
 		vo.setDepartmentName("test部");
 		
@@ -196,7 +196,7 @@ public class MasterServiceTest {
 		// 検証用のデータ作成
 		DepartmentEntity entity = new DepartmentEntity();
 		// 会社Seq
-		entity.setCompanySeq(2L);
+		entity.setCompanySeq(1L);
 		// 部署名
 		entity.setName("test部");
 		
@@ -209,7 +209,7 @@ public class MasterServiceTest {
 	private Optional<DepartmentEntity> createDefaultCompanyData() {
 		// 	取得する会社Seqの設定
 		DepartmentEntity department = new DepartmentEntity();
-		department.setCompanySeq(2L);
+		department.setCompanySeq(1L);
 		return Optional.of(department);
 		
 	}
