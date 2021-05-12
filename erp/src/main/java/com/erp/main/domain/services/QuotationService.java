@@ -52,6 +52,24 @@ public class QuotationService {
 	@Autowired
 	private MoneyComponent moneyComponent;
 	
+//	/**
+//	 * 取引先マスタのリポジトリ
+//	 */
+//	@Autowired
+//	private ClientsRepository clientsRepository;
+//	
+//	/**
+//	 * 会社マスタのリポジトリ
+//	 */
+//	@Autowired
+//	private CompanyRepository companyRepository;
+//	
+//	/**
+//	 * 部署のリポジトリ
+//	 */
+//	@Autowired
+//	private DepartmentRepository departmentRepository;
+//	
 	/**
 	 * 見積作成処理
 	 * @param createQuotationVo
@@ -129,6 +147,7 @@ public class QuotationService {
 	 * @return
 	 */
 	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {
+		//TODO:ここにIF文を追加
 		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
