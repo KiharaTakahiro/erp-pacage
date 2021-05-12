@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
+import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -22,6 +25,9 @@ import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
+import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.specification.QuotationSpec;
@@ -52,24 +58,24 @@ public class QuotationService {
 	@Autowired
 	private MoneyComponent moneyComponent;
 	
-//	/**
-//	 * 取引先マスタのリポジトリ
-//	 */
-//	@Autowired
-//	private ClientsRepository clientsRepository;
-//	
-//	/**
-//	 * 会社マスタのリポジトリ
-//	 */
-//	@Autowired
-//	private CompanyRepository companyRepository;
-//	
-//	/**
-//	 * 部署のリポジトリ
-//	 */
-//	@Autowired
-//	private DepartmentRepository departmentRepository;
-//	
+	/**
+	 * 取引先マスタのリポジトリ
+	 */
+	@Autowired
+	private ClientsRepository clientsRepository;
+	
+	/**
+	 * 会社マスタのリポジトリ
+	 */
+	@Autowired
+	private CompanyRepository companyRepository;
+	
+	/**
+	 * 部署のリポジトリ
+	 */
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	
 	/**
 	 * 見積作成処理
 	 * @param createQuotationVo
@@ -147,7 +153,22 @@ public class QuotationService {
 	 * @return
 	 */
 	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {
-		//TODO:ここにIF文を追加
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(condition.getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",condition.getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(condition.getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",condition.getCompanySeq()));
+		}
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(condition.getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",condition.getDepartmentSeq()));
+		}
+		
 		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
