@@ -1,3 +1,4 @@
+
 package com.erp.main.domain.service;
 
 import static org.mockito.Mockito.*;
@@ -143,6 +144,7 @@ public class MasterServiceTest {
 	
 	/**
 	 * 会社作成用のテスト
+	 * 成功例
 	 */
 	@Test
 	public void registeCompanySuccessCase1() {
@@ -211,7 +213,11 @@ public class MasterServiceTest {
 		return Optional.of(department);
 		
 	}
-	
+
+	/**
+	 * 会社作成用のテスト
+	 * 失敗例
+	 */
 	@Test
 	public void registeDepartmentErrorCase1() {
 		
