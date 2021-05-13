@@ -106,6 +106,11 @@ public class QuotationService {
 			// 見積詳細用のエンティティ生成
 			QuotationDetailEntity detailEntity = QuotationDetailEntity.create(detailVo);
 			
+			// 値引がマイナスの場合はエラー
+			if(detailVo.getDiscount() < 0) {
+				throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+			}
+			
 			// 数量がマイナスの場合はエラー
 			if(detailVo.getQuantity() < 0) {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
