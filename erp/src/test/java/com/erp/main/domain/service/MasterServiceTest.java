@@ -181,8 +181,8 @@ public class MasterServiceTest {
 		// 実行用のデータ作成
 		CreateDepartmentVo vo = new CreateDepartmentVo();
 		// 取得処理をモック化
-		Optional<DepartmentEntity> departmentOpt = this.createDefaultCompanyData();
-		Mockito.when(this.cRepository.findById(1L)).thenReturn(departmentOpt);
+		Optional<CompanyEntity> departmentOpt = this.createDefaultCompanyData();
+		Mockito.when(this.companyRepository.findById(1L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
 		vo.setDepartmentCompanySeq(1L);
@@ -206,9 +206,9 @@ public class MasterServiceTest {
 	 * デフォルトの会社データ生成
 	 * @return
 	 */
-	private Optional<DepartmentEntity> createDefaultCompanyData() {
+	private Optional<CompanyEntity> createDefaultCompanyData() {
 		// 	取得する会社Seqの設定
-		DepartmentEntity department = new DepartmentEntity();
+		CompanyEntity department = new CompanyEntity();
 		department.setCompanySeq(1L);
 		return Optional.of(department);
 		
