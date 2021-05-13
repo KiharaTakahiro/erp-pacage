@@ -26,7 +26,6 @@ import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
-import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.specification.QuotationSpec;
@@ -69,11 +68,6 @@ public class QuotationService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
-	/**
-	 * 部署のリポジトリ
-	 */
-	@Autowired
-	private DepartmentRepository departmentRepository;
 	
 	/**
 	 * 見積作成処理
@@ -111,6 +105,12 @@ public class QuotationService {
 			
 			// 見積詳細用のエンティティ生成
 			QuotationDetailEntity detailEntity = QuotationDetailEntity.create(detailVo);
+			
+			// 数量がマイナスの場合はエラー
+			if(detailVo.getQuantity() < 0) {
+				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+			}
+
 			
 			// 金額 (単金 × 数量 - 値引)
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
