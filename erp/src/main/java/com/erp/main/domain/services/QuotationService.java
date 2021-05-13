@@ -82,6 +82,21 @@ public class QuotationService {
 	 */
 	@Transactional
 	public void createQuotation(CreateQuotationVo createQuotationVo) {
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(createQuotationVo.getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",createQuotationVo.getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(createQuotationVo.getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createQuotationVo.getCompanySeq()));
+		}
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(createQuotationVo.getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",createQuotationVo.getDepartmentSeq()));
+		}
 		
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
@@ -152,24 +167,7 @@ public class QuotationService {
 	 * @param condition
 	 * @return
 	 */
-	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {
-		//取引先の有無の確認		
-		Optional<ClientsEntity> clients = this.clientsRepository.findById(condition.getClientsSeq());
-		if(clients.isEmpty()) {
-			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",condition.getClientsSeq()));
-		}
-		//会社の有無の確認
-		Optional<CompanyEntity> company = this.companyRepository.findById(condition.getCompanySeq());
-		if(company.isEmpty()) {
-			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",condition.getCompanySeq()));
-		}
-		//部署の有無の確認
-		Optional<DepartmentEntity> department = this.departmentRepository.findById(condition.getDepartmentSeq());
-		if(department.isEmpty()) {
-			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",condition.getDepartmentSeq()));
-		}
-		
-		
+	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
