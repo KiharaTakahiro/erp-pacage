@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
+import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -22,6 +24,8 @@ import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
+import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.specification.QuotationSpec;
@@ -53,11 +57,35 @@ public class QuotationService {
 	private MoneyComponent moneyComponent;
 	
 	/**
+	 * 取引先マスタのリポジトリ
+	 */
+	@Autowired
+	private ClientsRepository clientsRepository;
+	
+	/**
+	 * 会社マスタのリポジトリ
+	 */
+	@Autowired
+	private CompanyRepository companyRepository;
+	
+	
+	/**
 	 * 見積作成処理
 	 * @param createQuotationVo
 	 */
 	@Transactional
 	public void createQuotation(CreateQuotationVo createQuotationVo) {
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(createQuotationVo.getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",createQuotationVo.getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(createQuotationVo.getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createQuotationVo.getCompanySeq()));
+		}
+		
 		
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
@@ -77,6 +105,17 @@ public class QuotationService {
 			
 			// 見積詳細用のエンティティ生成
 			QuotationDetailEntity detailEntity = QuotationDetailEntity.create(detailVo);
+			
+			// 値引がマイナスの場合はエラー
+			if(detailVo.getDiscount() < 0) {
+				throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+			}
+			
+			// 数量がマイナスの場合はエラー
+			if(detailVo.getQuantity() < 0) {
+				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+			}
+
 			
 			// 金額 (単金 × 数量 - 値引)
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
@@ -128,8 +167,7 @@ public class QuotationService {
 	 * @param condition
 	 * @return
 	 */
-	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {
-		
+	public GetQuotationVo getQuotationVo(GetQuotationConditionsVo condition) {		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);

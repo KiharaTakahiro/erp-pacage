@@ -1,9 +1,11 @@
+
 package com.erp.main.domain.service;
 
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
@@ -141,6 +144,7 @@ public class MasterServiceTest {
 	
 	/**
 	 * 会社作成用のテスト
+	 * 成功例
 	 */
 	@Test
 	public void registeCompanySuccessCase1() {
@@ -177,11 +181,11 @@ public class MasterServiceTest {
 		// 実行用のデータ作成
 		CreateDepartmentVo vo = new CreateDepartmentVo();
 		// 取得処理をモック化
-		Optional<DepartmentEntity> departmentOpt = this.createDefaultCompanyData();
-		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		Optional<CompanyEntity> departmentOpt = this.createDefaultCompanyData();
+		Mockito.when(this.companyRepository.findById(1L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
-		vo.setDepartmentCompanySeq(2L);
+		vo.setDepartmentCompanySeq(1L);
 		// 部署名
 		vo.setDepartmentName("test部");
 		
@@ -192,7 +196,7 @@ public class MasterServiceTest {
 		// 検証用のデータ作成
 		DepartmentEntity entity = new DepartmentEntity();
 		// 会社Seq
-		entity.setCompanySeq(2L);
+		entity.setCompanySeq(1L);
 		// 部署名
 		entity.setName("test部");
 		
@@ -202,11 +206,45 @@ public class MasterServiceTest {
 	 * デフォルトの会社データ生成
 	 * @return
 	 */
-	private Optional<DepartmentEntity> createDefaultCompanyData() {
+	private Optional<CompanyEntity> createDefaultCompanyData() {
+		// 	取得する会社Seqの設定
+		CompanyEntity department = new CompanyEntity();
+		department.setCompanySeq(1L);
+		return Optional.of(department);
+		
+	}
+
+	/**
+	 * 会社作成用のテスト
+	 * 失敗例
+	 */
+	@Test
+	public void registeDepartmentErrorCase1() {
+		
+		// 実行用のデータ作成
+		CreateDepartmentVo vo = new CreateDepartmentVo();
+		// 取得処理をモック化
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultCompanyData2();
+		Mockito.when(this.departmentRepository.findById(1L)).thenReturn(departmentOpt);
+		
+		// 会社Seq
+		vo.setDepartmentCompanySeq(1L);
+		// 部署名
+		vo.setDepartmentName("test部");
+		
+		Assertions.assertThrows(AppException.class, () -> masterService.createDepartment(vo));
+		
+
+	}
+	/**
+	 * デフォルトの会社データ生成
+	 * @return
+	 */
+	private Optional<DepartmentEntity> createDefaultCompanyData2() {
 		// 	取得する会社Seqの設定
 		DepartmentEntity department = new DepartmentEntity();
-		department.setCompanySeq(2L);
-		return Optional.of(department);
+		department.setCompanySeq(null);
+		return Optional.empty();
 		
 	}
 }

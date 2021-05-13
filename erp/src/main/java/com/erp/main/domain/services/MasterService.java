@@ -111,7 +111,7 @@ public class MasterService {
 	 */
 	@Transactional
 	public void createDepartment(CreateDepartmentVo vo) {
-		Optional<DepartmentEntity> product = this.departmentRepository.findById(vo.getDepartmentCompanySeq());
+		Optional<CompanyEntity> product = this.companyRepository.findById(vo.getDepartmentCompanySeq());
 		if(product.isEmpty()) {
 			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getDepartmentCompanySeq()));
 		}
