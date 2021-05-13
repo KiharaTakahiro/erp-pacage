@@ -17,7 +17,6 @@ import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
-import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -92,11 +91,7 @@ public class QuotationService {
 		if(company.isEmpty()) {
 			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createQuotationVo.getCompanySeq()));
 		}
-		//部署の有無の確認
-		Optional<DepartmentEntity> department = this.departmentRepository.findById(createQuotationVo.getDepartmentSeq());
-		if(department.isEmpty()) {
-			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",createQuotationVo.getDepartmentSeq()));
-		}
+		
 		
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
