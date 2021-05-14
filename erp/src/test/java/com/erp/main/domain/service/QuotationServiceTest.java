@@ -328,7 +328,33 @@ public class QuotationServiceTest {
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
 	}
 	
-	
+	/**
+	 * 異常系7
+	 * 詳細内の値引合計額が合計の値引額を下回っている場合
+	 */
+	@Test
+	public void createQuotationSuccessCase7() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createErrorInputData3();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
+	}
 	
 	/**
 	 * デフォルトの取引先データ生成
@@ -552,6 +578,42 @@ public class QuotationServiceTest {
 		createQuotationDetailVo.setDiscount(100L);
 		// 数量
 		createQuotationDetailVo.setQuantity(-4);
+		
+		List<CreateQuotationDetailVo> details = new ArrayList<>();
+		details.add(createQuotationDetailVo);
+		createQuotationVo.setDetails(details);
+		return createQuotationVo;
+	}
+	
+	/**
+	 * 	エラー用の商品データ生成
+	 *  詳細内の値引合計額が合計の値引額を下回っている場合
+	 * @return
+	 */
+	private CreateQuotationVo createErrorInputData3() {
+		CreateQuotationVo createQuotationVo = new CreateQuotationVo();
+		// 取引先SEQ
+		createQuotationVo.setClientsSeq(2L);
+		// 部門SEQ
+		createQuotationVo.setDepartmentSeq(2L);
+		// 会社SEQ
+		createQuotationVo.setCompanySeq(2L);
+		// 見積番号
+		createQuotationVo.setQuotationNo("mitsumori-1");
+		// 作成日
+		createQuotationVo.setCreateDate("20210503");
+		// 件名
+		createQuotationVo.setSubject("subject");
+		// 値引合計
+		createQuotationVo.setDiscountTotal(10L);
+		
+		CreateQuotationDetailVo createQuotationDetailVo = new CreateQuotationDetailVo();
+		// 商品SEQ
+		createQuotationDetailVo.setProductSeq(2L);
+		// 値引
+		createQuotationDetailVo.setDiscount(100L);
+		// 数量
+		createQuotationDetailVo.setQuantity(4);
 		
 		List<CreateQuotationDetailVo> details = new ArrayList<>();
 		details.add(createQuotationDetailVo);
