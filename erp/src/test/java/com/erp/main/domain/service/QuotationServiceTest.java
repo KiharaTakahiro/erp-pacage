@@ -16,11 +16,17 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.erp.main.domain.component.MoneyComponent;
+import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
+import com.erp.main.domain.repository.ClientsRepository;
+import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.services.QuotationService;
@@ -50,6 +56,24 @@ public class QuotationServiceTest {
 	private QuotationRepository quotationRepository;
 	
 	/**
+	 * 取引先リポジトリ
+	 */
+	@Mock
+	private ClientsRepository clientsRepository;
+	
+	/**
+	 * 会社リポジトリ
+	 */
+	@Mock
+	private CompanyRepository companyRepository;
+	
+	/**
+	 * 部署リポジトリ
+	 */
+	@Mock
+	private DepartmentRepository departmentRepository;
+	
+	/**
 	 * 金額コンポーネント
 	 * 
 	 */
@@ -64,9 +88,18 @@ public class QuotationServiceTest {
 	public void createQuotationSuccessCase1() {
 		// 実行用テストデータの作成
 		CreateQuotationVo createQuotationVo = this.createDefaultInputData();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
 		Optional<ProductEntity> productOpt = this.createDefaultProductData();
 		
-		// 取得処理をモック化
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
@@ -86,6 +119,41 @@ public class QuotationServiceTest {
 	
 	// TODO: テストケースが足りていないため今後追加する
 	
+	/**
+	 * デフォルトの取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createDefaultClientsData() {
+		// 	取得する商品の設定
+		ClientsEntity clients = new ClientsEntity();
+		clients.setClientsSeq(2L);
+		return Optional.of(clients);
+		
+	}
+	
+	/**
+	 * デフォルトの会社データ生成
+	 * @return
+	 */
+	private Optional<CompanyEntity> createDefaultCompanyData() {
+		// 	取得する商品の設定
+		CompanyEntity company = new CompanyEntity();
+		company.setCompanySeq(2L);
+		return Optional.of(company);
+		
+	}
+	
+	/**
+	 * デフォルトの部署データ生成
+	 * @return
+	 */
+	private Optional<DepartmentEntity> createDefaultDepartmentData() {
+		// 	取得する商品の設定
+		DepartmentEntity department = new DepartmentEntity();
+		department.setDepartmentSeq(2L);
+		return Optional.of(department);
+		
+	}
 	
 	/**
 	 * デフォルトの商品データ生成
@@ -98,6 +166,7 @@ public class QuotationServiceTest {
 		return Optional.of(product);
 		
 	}
+	
 
 	/**
 	 * デフォルトの商品データ生成
