@@ -83,7 +83,7 @@ public class QuotationServiceTest {
 	private MoneyComponent moneyComponent;
 	
 	/**
-	 * 正常系
+	 * 正常系1
 	 * 通常の登録ケース
 	 */
 	@Test
@@ -119,7 +119,45 @@ public class QuotationServiceTest {
 		Mockito.verify(this.quotationRepository, times(1)).save(entity);
 	}
 	
-	// TODO: テストケースが足りていないため今後追加する
+	
+	
+	/**
+	 * 正常系2
+	 * 値引がNull
+	 */
+	@Test
+	public void createQuotationSuccessCase2() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createDefaultInputData2();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		this.quotationService.createQuotation(createQuotationVo);
+		
+		// 検証用データの作成
+		QuotationEntity entity = this.createVerifyDataByDefaltInput2();
+		// 消費税
+		entity.setTax(70L);
+		// 合計金額
+		entity.setTotal(770L);
+		// 値の検証
+		Mockito.verify(this.quotationRepository, times(1)).save(entity);
+	}
+	
 	
 
 	/**
@@ -233,6 +271,65 @@ public class QuotationServiceTest {
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
 	}
+	
+	/**
+	 * 異常系5
+	 * 値引がマイナスのケース
+	 */
+	@Test
+	public void createQuotationSuccessCase5() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createErrorInputData1();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
+	}
+	
+	/**
+	 * 異常系6
+	 * 数量がマイナスのケース
+	 */
+	@Test
+	public void createQuotationSuccessCase6() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createErrorInputData2();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
+	}
+	
+	
+	
 	/**
 	 * デフォルトの取引先データ生成
 	 * @return
@@ -355,6 +452,113 @@ public class QuotationServiceTest {
 	}
 	
 	/**
+	 * デフォルトの商品データ生成
+	 * 値引がNull
+	 * @return
+	 */
+	private CreateQuotationVo createDefaultInputData2() {
+		CreateQuotationVo createQuotationVo = new CreateQuotationVo();
+		// 取引先SEQ
+		createQuotationVo.setClientsSeq(2L);
+		// 部門SEQ
+		createQuotationVo.setDepartmentSeq(2L);
+		// 会社SEQ
+		createQuotationVo.setCompanySeq(2L);
+		// 見積番号
+		createQuotationVo.setQuotationNo("mitsumori-1");
+		// 作成日
+		createQuotationVo.setCreateDate("20210503");
+		// 件名
+		createQuotationVo.setSubject("subject");
+		// 値引合計
+		createQuotationVo.setDiscountTotal(null);
+		
+		CreateQuotationDetailVo createQuotationDetailVo = new CreateQuotationDetailVo();
+		// 商品SEQ
+		createQuotationDetailVo.setProductSeq(2L);
+		// 値引
+		createQuotationDetailVo.setDiscount(100L);
+		// 数量
+		createQuotationDetailVo.setQuantity(4);
+		
+		List<CreateQuotationDetailVo> details = new ArrayList<>();
+		details.add(createQuotationDetailVo);
+		createQuotationVo.setDetails(details);
+		return createQuotationVo;
+	}
+	
+	/**
+	 * 	エラー用の商品データ生成
+	 *  値引がマイナス
+	 * @return
+	 */
+	private CreateQuotationVo createErrorInputData1() {
+		CreateQuotationVo createQuotationVo = new CreateQuotationVo();
+		// 取引先SEQ
+		createQuotationVo.setClientsSeq(2L);
+		// 部門SEQ
+		createQuotationVo.setDepartmentSeq(2L);
+		// 会社SEQ
+		createQuotationVo.setCompanySeq(2L);
+		// 見積番号
+		createQuotationVo.setQuotationNo("mitsumori-1");
+		// 作成日
+		createQuotationVo.setCreateDate("20210503");
+		// 件名
+		createQuotationVo.setSubject("subject");
+		// 値引合計
+		createQuotationVo.setDiscountTotal(100L);
+		
+		CreateQuotationDetailVo createQuotationDetailVo = new CreateQuotationDetailVo();
+		// 商品SEQ
+		createQuotationDetailVo.setProductSeq(2L);
+		// 値引
+		createQuotationDetailVo.setDiscount(-100L);
+		// 数量
+		createQuotationDetailVo.setQuantity(4);
+		
+		List<CreateQuotationDetailVo> details = new ArrayList<>();
+		details.add(createQuotationDetailVo);
+		createQuotationVo.setDetails(details);
+		return createQuotationVo;
+	}
+	
+	/**
+	 * 	エラー用の商品データ生成
+	 *  数量がマイナス
+	 * @return
+	 */
+	private CreateQuotationVo createErrorInputData2() {
+		CreateQuotationVo createQuotationVo = new CreateQuotationVo();
+		// 取引先SEQ
+		createQuotationVo.setClientsSeq(2L);
+		// 部門SEQ
+		createQuotationVo.setDepartmentSeq(2L);
+		// 会社SEQ
+		createQuotationVo.setCompanySeq(2L);
+		// 見積番号
+		createQuotationVo.setQuotationNo("mitsumori-1");
+		// 作成日
+		createQuotationVo.setCreateDate("20210503");
+		// 件名
+		createQuotationVo.setSubject("subject");
+		// 値引合計
+		createQuotationVo.setDiscountTotal(100L);
+		
+		CreateQuotationDetailVo createQuotationDetailVo = new CreateQuotationDetailVo();
+		// 商品SEQ
+		createQuotationDetailVo.setProductSeq(2L);
+		// 値引
+		createQuotationDetailVo.setDiscount(100L);
+		// 数量
+		createQuotationDetailVo.setQuantity(-4);
+		
+		List<CreateQuotationDetailVo> details = new ArrayList<>();
+		details.add(createQuotationDetailVo);
+		createQuotationVo.setDetails(details);
+		return createQuotationVo;
+	}
+	/**
 	 * デフォルトのテストデータの場合の検証データ
 	 * @return
 	 */
@@ -374,6 +578,43 @@ public class QuotationServiceTest {
 		entity.setSubject("subject");
 		// 値引合計
 		entity.setDiscountTotal(100L);
+		// 小計
+		entity.setSubTotal(700L);
+		
+		QuotationDetailEntity detailEntity = new QuotationDetailEntity();
+		// 商品SEQ
+		detailEntity.setProductSeq(2L);
+		// 値引
+		detailEntity.setDiscount(100L);
+		// 数量
+		detailEntity.setQuantity(4);
+		// 金額 (単金200円 × 数量4個 - 値引100円のため)
+		detailEntity.setPrice(700L);
+		
+		return entity;
+	}
+	
+	/**
+	 * デフォルトのテストデータの場合の検証データ
+	 * 値引がNull
+	 * @return
+	 */
+	private QuotationEntity createVerifyDataByDefaltInput2() {
+		QuotationEntity entity = new QuotationEntity();
+		// 取引先SEQ
+		entity.setClientsSeq(2L);
+		// 部門SEQ
+		entity.setDepartmentSeq(2L);
+		// 会社SEQ
+		entity.setCompanySeq(2L);
+		// 見積番号
+		entity.setQuotationNo("mitsumori-1");
+		// 作成日
+		entity.setCreateDate("20210503");
+		// 件名
+		entity.setSubject("subject");
+		// 値引合計
+		entity.setDiscountTotal(null);
 		// 小計
 		entity.setSubTotal(700L);
 		
