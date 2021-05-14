@@ -24,6 +24,9 @@ public class CreateQuotationRequest {
 	// 会社SEQ
 	private Long companySeq;
 	
+	// 部署SEQ
+	private Long departmentSeq;
+	
 	// 見積番号
 	@NotNull
 	private String quotationNo;
@@ -68,6 +71,8 @@ public class CreateQuotationRequest {
 		vo.setClientsSeq(this.getClientsSeq());
 		// 会社SEQ
 		vo.setCompanySeq(this.getCompanySeq());
+		// 部署SEQ
+		vo.setDepartmentSeq(this.getDepartmentSeq());
 		// 見積番号
 		vo.setQuotationNo(this.getQuotationNo());
 		// 作成日
