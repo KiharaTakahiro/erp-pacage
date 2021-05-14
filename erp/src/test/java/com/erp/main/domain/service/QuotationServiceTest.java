@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
@@ -145,16 +147,7 @@ public class QuotationServiceTest {
 		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
 		
 		// 処理の実行
-		this.quotationService.createQuotation(createQuotationVo);
-		
-		// 検証用データの作成
-		QuotationEntity entity = this.createVerifyDataByDefaltInput();
-		// 消費税
-		entity.setTax(70L);
-		// 合計金額
-		entity.setTotal(770L);
-		// 値の検証
-		Mockito.verify(this.quotationRepository, times(1)).save(entity);
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
 	}
 	
 	
