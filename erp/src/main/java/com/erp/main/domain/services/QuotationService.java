@@ -17,6 +17,7 @@ import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -26,6 +27,7 @@ import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.specification.QuotationSpec;
@@ -68,6 +70,12 @@ public class QuotationService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	/**
+	 * 部署マスタのリポジトリ
+	 */
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	
 	
 	/**
 	 * 見積作成処理
@@ -84,6 +92,12 @@ public class QuotationService {
 		Optional<CompanyEntity> company = this.companyRepository.findById(createQuotationVo.getCompanySeq());
 		if(company.isEmpty()) {
 			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createQuotationVo.getCompanySeq()));
+		}
+		
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(createQuotationVo.getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",createQuotationVo.getDepartmentSeq()));
 		}
 		
 		
