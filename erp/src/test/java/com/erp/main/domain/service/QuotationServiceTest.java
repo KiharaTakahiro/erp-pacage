@@ -67,7 +67,7 @@ public class QuotationServiceTest {
 		Optional<ProductEntity> productOpt = this.createDefaultProductData();
 		
 		// 取得処理をモック化
-		Mockito.when(this.productRepository.findById(3L)).thenReturn(productOpt);
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
 		
@@ -106,9 +106,9 @@ public class QuotationServiceTest {
 	private CreateQuotationVo createDefaultInputData() {
 		CreateQuotationVo createQuotationVo = new CreateQuotationVo();
 		// 取引先SEQ
-		createQuotationVo.setClientsSeq(0L);
+		createQuotationVo.setClientsSeq(2L);
 		// 部門SEQ
-		createQuotationVo.setDepartmentSeq(1L);
+		createQuotationVo.setDepartmentSeq(2L);
 		// 会社SEQ
 		createQuotationVo.setCompanySeq(2L);
 		// 見積番号
@@ -122,7 +122,7 @@ public class QuotationServiceTest {
 		
 		CreateQuotationDetailVo createQuotationDetailVo = new CreateQuotationDetailVo();
 		// 商品SEQ
-		createQuotationDetailVo.setProductSeq(3L);
+		createQuotationDetailVo.setProductSeq(2L);
 		// 値引
 		createQuotationDetailVo.setDiscount(100L);
 		// 数量
@@ -141,9 +141,9 @@ public class QuotationServiceTest {
 	private QuotationEntity createVerifyDataByDefaltInput() {
 		QuotationEntity entity = new QuotationEntity();
 		// 取引先SEQ
-		entity.setClientsSeq(0L);
+		entity.setClientsSeq(2L);
 		// 部門SEQ
-		entity.setDepartmentSeq(1L);
+		entity.setDepartmentSeq(2L);
 		// 会社SEQ
 		entity.setCompanySeq(2L);
 		// 見積番号
@@ -159,7 +159,7 @@ public class QuotationServiceTest {
 		
 		QuotationDetailEntity detailEntity = new QuotationDetailEntity();
 		// 商品SEQ
-		detailEntity.setProductSeq(3L);
+		detailEntity.setProductSeq(2L);
 		// 値引
 		detailEntity.setDiscount(100L);
 		// 数量

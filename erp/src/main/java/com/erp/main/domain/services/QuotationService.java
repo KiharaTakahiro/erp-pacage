@@ -93,9 +93,15 @@ public class QuotationService {
 		long subtotal = 0L;
 		// 値引合計
 		long discountTotal = 0L;
-		
+//		
+//		List<CreateQuotationDetailVo> detail = createQuotationVo.getDetails();
+//		if(detail == null) {
+//			throw new AppException(String.format("商品詳細を入力してください"));
+//		}
+//		
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
+			
 			
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
