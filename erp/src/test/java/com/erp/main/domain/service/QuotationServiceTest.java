@@ -119,6 +119,45 @@ public class QuotationServiceTest {
 	
 	// TODO: テストケースが足りていないため今後追加する
 	
+
+	/**
+	 * 異常系
+	 * 取引先情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase1() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createDefaultInputData();
+		Optional<ClientsEntity> clientsOpt = this.createErrorClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		this.quotationService.createQuotation(createQuotationVo);
+		
+		// 検証用データの作成
+		QuotationEntity entity = this.createVerifyDataByDefaltInput();
+		// 消費税
+		entity.setTax(70L);
+		// 合計金額
+		entity.setTotal(770L);
+		// 値の検証
+		Mockito.verify(this.quotationRepository, times(1)).save(entity);
+	}
+	
+	
 	/**
 	 * デフォルトの取引先データ生成
 	 * @return
@@ -128,6 +167,16 @@ public class QuotationServiceTest {
 		ClientsEntity clients = new ClientsEntity();
 		clients.setClientsSeq(2L);
 		return Optional.of(clients);
+		
+	}
+	
+	/**
+	 * エラー用の取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createErrorClientsData() {
+		// 	取得する商品の設定
+		return Optional.empty();
 		
 	}
 	
