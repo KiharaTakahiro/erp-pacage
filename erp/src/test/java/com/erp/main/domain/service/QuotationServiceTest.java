@@ -178,7 +178,61 @@ public class QuotationServiceTest {
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
 	}
 	
+	/**
+	 * 異常系3
+	 * 部署情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase3() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createDefaultInputData();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createErrorDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
+	}
 	
+	/**
+	 * 異常系4
+	 * 商品情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase4() {
+		// 実行用テストデータの作成
+		CreateQuotationVo createQuotationVo = this.createDefaultInputData();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createErrorProductData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
+	}
 	/**
 	 * デフォルトの取引先データ生成
 	 * @return
@@ -230,7 +284,16 @@ public class QuotationServiceTest {
 		// 	取得する商品の設定
 		DepartmentEntity department = new DepartmentEntity();
 		department.setDepartmentSeq(2L);
-		return Optional.of(department);
+		return Optional.of(department);	
+	}
+	
+	/**
+	 * エラー用の部署データ生成
+	 * @return
+	 */
+	private Optional<DepartmentEntity> createErrorDepartmentData() {
+		// 	取得する商品の設定
+		return Optional.empty();
 		
 	}
 	
@@ -242,7 +305,16 @@ public class QuotationServiceTest {
 		// 	取得する商品の設定
 		ProductEntity product = new ProductEntity();
 		product.setUnitPrice(200L);
-		return Optional.of(product);
+		return Optional.of(product);	
+	}
+	
+	/**
+	 * エラー用の商品データ生成
+	 * @return
+	 */
+	private Optional<ProductEntity> createErrorProductData() {
+		// 	取得する商品の設定
+		return Optional.empty();
 		
 	}
 	
