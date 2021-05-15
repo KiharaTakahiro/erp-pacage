@@ -23,6 +23,10 @@ public class ProductEntity extends ProductEntityFileds {
 		entity.setName(vo.getProductName());
 		// 金額
 		entity.setUnitPrice(vo.getUnitPrice());
+		// 仕入れ単価
+		entity.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
+		// 税区分
+		entity.setTaxType(vo.getTaxType());
 		return entity;
 	}
 }

@@ -83,6 +83,7 @@ public class QuotationService {
 	 */
 	@Transactional
 	public void createQuotation(CreateQuotationVo createQuotationVo) {
+		
 		//取引先の有無の確認		
 		Optional<ClientsEntity> clients = this.clientsRepository.findById(createQuotationVo.getClientsSeq());
 		if(clients.isEmpty()) {
