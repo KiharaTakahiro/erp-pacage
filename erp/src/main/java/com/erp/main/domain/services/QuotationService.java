@@ -17,6 +17,7 @@ import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
@@ -26,6 +27,7 @@ import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
+import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.specification.QuotationSpec;
@@ -68,6 +70,12 @@ public class QuotationService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	/**
+	 * 部署マスタのリポジトリ
+	 */
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	
 	
 	/**
 	 * 見積作成処理
@@ -86,6 +94,12 @@ public class QuotationService {
 			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createQuotationVo.getCompanySeq()));
 		}
 		
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(createQuotationVo.getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",createQuotationVo.getDepartmentSeq()));
+		}
+		
 		
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
@@ -93,9 +107,15 @@ public class QuotationService {
 		long subtotal = 0L;
 		// 値引合計
 		long discountTotal = 0L;
-		
+//		
+//		List<CreateQuotationDetailVo> detail = createQuotationVo.getDetails();
+//		if(detail == null) {
+//			throw new AppException(String.format("商品詳細を入力してください"));
+//		}
+//		
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
+			
 			
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
