@@ -38,6 +38,12 @@ public class RecivedOrderEntityFileds extends BaseEntityFields {
 	@NotNull
 	@Column(name = "QUOTATION_SEQ")
 	private Long quotationSeq;
+	
+	/**
+	 * 会社SEQ
+	 */
+	@Column(name = "COMPANY_SEQ")
+	private Long companySeq;
 
 	/**
 	 * 部門SEQ
