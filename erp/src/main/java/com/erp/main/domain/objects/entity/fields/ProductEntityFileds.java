@@ -1,12 +1,17 @@
 	package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
 
+import com.erp.main.domain.common.enums.TaxType;
+import com.erp.main.domain.common.enums.TaxType.TaxTypeConverter;
 import com.sun.istack.NotNull;
 
 import lombok.Getter;
@@ -56,10 +61,11 @@ public class ProductEntityFileds extends BaseEntityFields {
 	/**
 	 * 税区分
 	 */
-	// TODO: 後でEnumにする
 	@NotNull
 	@Column(name="TAX_TYPE")
-	private String taxType;
+	@Convert(converter = TaxTypeConverter.class)
+	@Enumerated(EnumType.ORDINAL)
+	private TaxType taxType;
 	
 
 }
