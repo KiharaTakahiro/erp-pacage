@@ -1,9 +1,18 @@
 package com.erp.main.domain.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
+import com.erp.main.domain.objects.entity.ClientsEntity;
+import com.erp.main.domain.objects.entity.CompanyEntity;
+import com.erp.main.domain.objects.entity.DepartmentEntity;
+import com.erp.main.domain.objects.entity.QuotationEntity;
+import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -59,6 +68,40 @@ public class RecivedOrderService {
 	 */
 	@Autowired
 	private DepartmentRepository departmentRepository;
+	
+	
+	/**
+	 * 受注作成処理
+	 * @param createRecivedOrderVo
+	 */
+	@Transactional
+	public void  createRecivedOrder(CreateRecivedOrderVo createRecivedOrderVo) {
+		
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(createRecivedOrderVo.getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",createRecivedOrderVo.getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(createRecivedOrderVo.getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",createRecivedOrderVo.getCompanySeq()));
+		}
+		
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(createRecivedOrderVo.getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",createRecivedOrderVo.getDepartmentSeq()));
+		}	
+		
+		//見積の有無の確認
+		Optional<QuotationEntity> quotation = this.quotationRepository.findById(createRecivedOrderVo.getQuotationSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
+		}	
+		
+		
+	}
 	
 
 }
