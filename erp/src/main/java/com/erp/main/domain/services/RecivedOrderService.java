@@ -13,12 +13,16 @@ import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
-import com.erp.main.domain.objects.entity.QuotationDetailEntity;
+import com.erp.main.domain.objects.entity.LotEntity;
+import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
+import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
+import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
+import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
@@ -72,6 +76,12 @@ public class RecivedOrderService {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 	
+	/**
+	 * ロットマスタのリポジトリ
+	 */
+	@Autowired
+	private LotRepository lotRepository;
+	
 	
 	/**
 	 * 受注作成処理
@@ -103,8 +113,41 @@ public class RecivedOrderService {
 			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
 		}	
 		
-		// 見積詳細の作成
-		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
+		// 受注詳細の作成
+		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
+		// 値引合計
+		long discountTotal = 0L;
+		
+		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {
+			// 商品の取得
+			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+			if(product.isEmpty()) {
+				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+			}
+			
+			// 商品の取得
+			Optional<LotEntity> lot = this.lotRepository.findById(detailVo.getLotSeq());
+			if(lot.isEmpty()) {
+				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getLotSeq()));
+			}
+				
+			// 受注詳細用のエンティティ生成
+			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);
+			
+			
+			// 値引がマイナスの場合はエラー
+			if(detailVo.getDiscount() < 0) {
+				throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+			}
+			
+			// 数量がマイナスの場合はエラー
+			if(detailVo.getQuantity() < 0) {
+				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+			}
+			
+		}
+		
+		
 		
 		
 	}
