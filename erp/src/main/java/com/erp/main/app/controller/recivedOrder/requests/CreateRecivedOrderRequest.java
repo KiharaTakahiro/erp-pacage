@@ -3,9 +3,8 @@ package com.erp.main.app.controller.recivedOrder.requests;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.erp.main.app.controller.sales.requests.CreateQuotationRequest.CreateDetailRequest;
-import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
+import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.sun.istack.NotNull;
 
 import lombok.Data;
@@ -17,7 +16,6 @@ import lombok.Data;
  */
 @Data
 public class CreateRecivedOrderRequest {
-	
 
 	// 取引先SEQ
 	@NotNull
@@ -85,19 +83,22 @@ public class CreateRecivedOrderRequest {
 		vo.setCompanySeq(this.getCompanySeq());
 		// 部署SEQ
 		vo.setDepartmentSeq(this.getDepartmentSeq());
-		// 見積番号
+		// 見積SEQ
 		vo.setQuotationSeq(this.getQuotationSeq());
-		// 作成日
+		// 受注日
 		vo.setRecivedOrderDate(this.getRecivedOrderDate());
-		// 件名
+		// 消費税
 		vo.setTax(this.getTax());
-		// 値引合計
+		// 合計金額
 		vo.setTotal(this.getTotal());
 		
 		// 値引詳細
-		List<CreateQuotationDetailVo> detailVos = new ArrayList<>();
-		for(CreateDetailRequest detail: this.getDetails()) {
-			CreateQuotationDetailVo detailVo = new CreateQuotationDetailVo();
+		List<CreateRecivedOrderDetailVo> detailVos = new ArrayList<>();
+		for(CreateRecivedOrderDetailRequest detail: this.getDetails()) {
+			CreateRecivedOrderDetailVo detailVo = new CreateRecivedOrderDetailVo();
+			
+			//配送日
+			detailVo.setDeriveryDate(detail.getDeriveryDate());		
 			// 商品SEQ
 			detailVo.setProductSeq(detail.getProductSeq());
 			// 数量

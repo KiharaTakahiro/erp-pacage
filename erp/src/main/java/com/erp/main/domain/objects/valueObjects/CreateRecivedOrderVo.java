@@ -32,7 +32,7 @@ public class CreateRecivedOrderVo {
 	// 合計金額
 	private Long total;
 	
-	private List<CreateRecivedOrderDetailRequest> details;
+	private List<CreateRecivedOrderDetailVo> details;
 	
 	/**
 	 * 受注詳細作成用のVo
@@ -40,7 +40,7 @@ public class CreateRecivedOrderVo {
 	 *
 	 */
 	@Data
-	public static class CreateRecivedOrderDetailRequest {
+	public static class CreateRecivedOrderDetailVo {
 
 		// 配送日
 		private String deriveryDate;
