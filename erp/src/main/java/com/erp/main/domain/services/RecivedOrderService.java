@@ -1,6 +1,8 @@
 package com.erp.main.domain.services;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
+import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -96,9 +99,12 @@ public class RecivedOrderService {
 		
 		//見積の有無の確認
 		Optional<QuotationEntity> quotation = this.quotationRepository.findById(createRecivedOrderVo.getQuotationSeq());
-		if(department.isEmpty()) {
+		if(quotation.isEmpty()) {
 			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
 		}	
+		
+		// 見積詳細の作成
+		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
 		
 		
 	}
