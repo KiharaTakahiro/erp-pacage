@@ -58,7 +58,7 @@ public class CreateRecivedOrderVo {
 		private Integer quantity;
 		
 		// 受注SEQ
-		private String recivedOrderSeq;
+		private Long recivedOrderSeq;
 		
 	}
 		
