@@ -17,6 +17,7 @@ import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
+import com.erp.main.domain.objects.entity.RecivedOrderEntity;
 import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -38,7 +39,7 @@ public class RecivedOrderService {
 	 * 受注レポジトリ
 	 */
 	@Autowired
-	private RecivedOrderRepository recivedOrderReposoitory; 
+	private RecivedOrderRepository recivedOrderRepository; 
 	
 	/**
 	 * 見積リポジトリ
@@ -115,6 +116,8 @@ public class RecivedOrderService {
 		
 		// 受注詳細の作成
 		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
+		// 合計金額
+		long totalPrice = 0L;
 		// 値引合計
 		long discountTotal = 0L;
 		
@@ -145,15 +148,33 @@ public class RecivedOrderService {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
 			
+			// 合計金額を加算する
+			totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
 			
+			// 見積詳細の追加
+			detailEntities.add(detailEntity);
 			
 		}
 		
+		RecivedOrderEntity recivedOrder = RecivedOrderEntity.create(createRecivedOrderVo);
 		
+		// 値引適応
+		totalPrice -= discountTotal;
 		
+		// 消費税
+		long tax = this.moneyComponent.computeTax(totalPrice);
+		recivedOrder.setTax(tax);
 		
+		// 合計金額
+		recivedOrder.setTotal(totalPrice + tax);
+		
+		// 受注詳細をセット
+		recivedOrder.setRecivedOrderDetailEntity(detailEntities);
+		
+		// 受注の保存
+		recivedOrder = this.recivedOrderRepository.save(recivedOrder);
 	}
 	
 
