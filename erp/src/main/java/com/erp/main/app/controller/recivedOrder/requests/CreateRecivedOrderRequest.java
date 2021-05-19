@@ -71,7 +71,7 @@ public class CreateRecivedOrderRequest {
 		private Integer quantity;
 		
 		// 受注SEQ
-		private String recivedOrderSeq;
+		private Long recivedOrderSeq;
 		
 	}
 	

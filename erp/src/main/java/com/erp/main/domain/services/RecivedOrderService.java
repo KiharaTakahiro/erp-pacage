@@ -125,7 +125,7 @@ public class RecivedOrderService {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
 			}
 			
-			// 商品の取得
+			// 商品ロットの取得
 			Optional<LotEntity> lot = this.lotRepository.findById(detailVo.getLotSeq());
 			if(lot.isEmpty()) {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getLotSeq()));
@@ -144,6 +144,10 @@ public class RecivedOrderService {
 			if(detailVo.getQuantity() < 0) {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
+			
+			// 値引を加算する
+			discountTotal += detailVo.getDiscount();
+			
 			
 		}
 		
