@@ -57,6 +57,9 @@ public class CreateRecivedOrderVo {
 		// 数量
 		private Integer quantity;
 		
+		// 状態
+		private Integer status;
+		
 		// 受注SEQ
 //		private Long recivedOrderSeq;
 		

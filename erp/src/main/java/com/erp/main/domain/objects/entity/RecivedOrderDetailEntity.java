@@ -40,6 +40,8 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		entity.setProductSeq(vo.getProductSeq());
 		// 数量
 		entity.setQuantity(vo.getQuantity());
+		// 状態
+		entity.setStatus(vo.getStatus());	
 		// 受注SEQ
 //		entity.setRecivedOrderDetailSeq(vo.getRecivedOrderSeq());
 		return entity;

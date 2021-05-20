@@ -13,7 +13,6 @@ import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
-import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
@@ -23,7 +22,6 @@ import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo.CreateReciv
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
-import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
@@ -80,8 +78,8 @@ public class RecivedOrderService {
 	/**
 	 * ロットマスタのリポジトリ
 	 */
-	@Autowired
-	private LotRepository lotRepository;
+//	@Autowired
+//	private LotRepository lotRepository;
 	
 	
 	/**
@@ -129,10 +127,10 @@ public class RecivedOrderService {
 			}
 			
 			// 商品ロットの取得
-			Optional<LotEntity> lot = this.lotRepository.findById(detailVo.getLotSeq());
-			if(lot.isEmpty()) {
-				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getLotSeq()));
-			}
+//			Optional<LotEntity> lot = this.lotRepository.findById(detailVo.getLotSeq());
+//			if(lot.isEmpty()) {
+//				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getLotSeq()));
+//			}
 				
 			// 受注詳細用のエンティティ生成
 			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);

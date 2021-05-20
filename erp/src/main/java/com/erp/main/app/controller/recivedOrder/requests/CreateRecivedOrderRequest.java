@@ -70,6 +70,10 @@ public class CreateRecivedOrderRequest {
 		@NotNull
 		private Integer quantity;
 		
+		// 状態
+		@NotNull
+		private Integer status;
+		
 		// 受注SEQ
 //		private Long recivedOrderSeq;
 		
@@ -105,6 +109,8 @@ public class CreateRecivedOrderRequest {
 			detailVo.setQuantity(detail.getQuantity());
 			// 値引
 			detailVo.setDiscount(detail.getDiscount());
+			// 状態
+			detailVo.setStatus(detail.getStatus());
 			detailVos.add(detailVo);
 		}
 		
