@@ -1,6 +1,6 @@
 package com.erp.main.domain.objects.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -56,7 +56,7 @@ public class QuotationEntity extends QuotationEntityFileds {
 	@Setter
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "QUOTATION_SEQ", insertable = true, updatable = true)
-	private  Set<QuotationDetailEntity> quotationDetailEntity;
+	private  List<QuotationDetailEntity> quotationDetailEntity;
 	
 	/**
 	 * 取引先
