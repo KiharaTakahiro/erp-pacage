@@ -41,7 +41,7 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		// 数量
 		entity.setQuantity(vo.getQuantity());
 		// 受注SEQ
-		entity.setRecivedOrderDetailSeq(vo.getRecivedOrderSeq());
+//		entity.setRecivedOrderDetailSeq(vo.getRecivedOrderSeq());
 		return entity;
 		
 	}

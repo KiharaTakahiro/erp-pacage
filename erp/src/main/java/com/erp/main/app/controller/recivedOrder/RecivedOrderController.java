@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.recivedOrder.requests.CreateRecivedOrderRequest;
-import com.erp.main.domain.services.QuotationService;
+import com.erp.main.domain.services.RecivedOrderService;
 
 /*
  * 受注コントローラー
@@ -15,7 +15,7 @@ import com.erp.main.domain.services.QuotationService;
 @RestController
 public class RecivedOrderController {
 	@Autowired
-	private QuotationService recivedOrderService;
+	private RecivedOrderService recivedOrderService;
 	/**
 	 * 見積作成
 	 * @param request
