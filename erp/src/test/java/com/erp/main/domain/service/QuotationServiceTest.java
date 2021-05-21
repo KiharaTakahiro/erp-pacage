@@ -34,7 +34,7 @@ import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.services.QuotationService;
 
 /**
- * UserServiceのパターン網羅用のテスト
+ * QuotationServiceのパターン網羅用のテスト
  * @author takah
  *
  */
