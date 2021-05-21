@@ -1,8 +1,9 @@
 package com.erp.main.domain.services;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class QuotationService {
 		
 		
 		// 見積詳細の作成
-		List<QuotationDetailEntity> detailEntities = new ArrayList<>();
+		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
 		// 小計
 		long subtotal = 0L;
 		// 値引合計
