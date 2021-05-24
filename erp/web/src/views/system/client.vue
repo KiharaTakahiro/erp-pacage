@@ -5,7 +5,7 @@
         :loading="loading"
         type="primary"
         style="width:20%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="toSaveClient"
+        @click.native.prevent="onClickButton"
       >
         {{ $t('clients.add') }}
       </el-button>
@@ -16,15 +16,24 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
+
 @Component({
   name: 'Client'
 })
 export default class extends Vue {
+  private redirect?: string
 
-
-  private toSaveClient() {
-    this.$router.push('/save-client')
+  onClickButton() {
+    // ボタンが押されたときの処理
+    console.log('hello')
+    this.$router.push({
+    path:'/',
+    }).catch(err => {
+      console.warn(err)
+    })
+    
   }
+
 }
 </script>
 
