@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
-    <div>取引先管理</div>
-    <el-button
-        :loading="loading"
-        type="primary"
-        style="width:20%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="toSaveClient"
-      >
-        {{ $t('clients.add') }}
-      </el-button>
+    <div>取引先追加</div>
+    
   </div>
 </template>
 
@@ -20,11 +13,6 @@ import '@/assets/custom-theme/index.css'
   name: 'Client'
 })
 export default class extends Vue {
-
-
-  private toSaveClient() {
-    this.$router.push('/save-client')
-  }
 }
 </script>
 
