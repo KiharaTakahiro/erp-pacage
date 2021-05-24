@@ -1,6 +1,14 @@
 <template>
   <div class="app-container">
     <div>取引先管理</div>
+    <el-button
+        :loading="loading"
+        type="primary"
+        style="width:20%; margin-bottom:30px; margin-top:30px;"
+        @click.native.prevent="handleLogin"
+      >
+        {{ $t('clients.add') }}
+      </el-button>
   </div>
 </template>
 

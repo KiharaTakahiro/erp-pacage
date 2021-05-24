@@ -92,6 +92,10 @@ export default {
     documentation: 'ドキュメント',
     github: 'Github Link'
   },
+  clients: {
+    title: '取引先管理',
+    add: '取引先新規登録'
+  },
   permission: {
     createRole: 'ロール追加',
     editPermission: 'ロール変更',
