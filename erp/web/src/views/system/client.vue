@@ -21,13 +21,11 @@ import '@/assets/custom-theme/index.css'
   name: 'Client'
 })
 export default class extends Vue {
-  private redirect?: string
-
   onClickButton() {
     // ボタンが押されたときの処理
     console.log('hello')
     this.$router.push({
-    path:'/',
+    path:'save-client'
     }).catch(err => {
       console.warn(err)
     })

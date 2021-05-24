@@ -24,7 +24,7 @@ const systemRoutes: RouteConfig = {
       meta: { title: 'client' }
     },
     {
-      path: 'save-cline',
+      path: 'save-client',
       component: () => import('@/views/system/save-client.vue'),
       name: 'save-client',
       meta: { hidden: true }
