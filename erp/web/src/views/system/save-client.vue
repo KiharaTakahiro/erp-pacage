@@ -12,7 +12,7 @@
     <el-form-item prop="client">
       <el-input
         ref="client"
-        v-model="input"
+        v-model="name"
         :placeholder="$t('client.name')"
         name="clientName"
         type="text"
@@ -25,7 +25,7 @@
         :loading="loading"
         type="primary"
         style="width:10%; margin-bottom:30px;"
-        @click.native.prevent=""
+        @click.native.prevent="createClient"
       >
         {{ $t('client.complete') }}
     </el-button>
@@ -49,15 +49,13 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-  private client = {
-    clientName: ''
+  name = ""
+  
+  private createClient(){
+    
   }
 
-  data() {
-    return {
-      input: ''
-    }
-  }
+
 }
 
 </script>
