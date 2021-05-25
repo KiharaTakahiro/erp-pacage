@@ -7,7 +7,7 @@
         style="width:10%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="onClickButton"
       >
-        {{ $t('clients.add') }}
+        {{ $t('client.add') }}
       </el-button>
   </div>
 </template>

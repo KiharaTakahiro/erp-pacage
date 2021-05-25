@@ -4,14 +4,17 @@
     <br>
     <br>
     <el-form
-      
+      ref="client"
+      autocomplete="on"
+      label-position="left"
     >
 
-    <el-form-item prop="username">
+    <el-form-item prop="client">
       <el-input
-        ref="username"
+        ref="client"
+        v-model="input"
         :placeholder="$t('client.name')"
-        name="username"
+        name="clientName"
         type="text"
         tabindex="1"
         autocomplete="on"
@@ -22,7 +25,7 @@
         :loading="loading"
         type="primary"
         style="width:10%; margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
+        @click.native.prevent=""
       >
         {{ $t('client.complete') }}
     </el-button>
@@ -45,7 +48,18 @@ import '@/assets/custom-theme/index.css'
   name: 'Client'
 })
 export default class extends Vue {
+
+  private client = {
+    clientName: ''
+  }
+
+  data() {
+    return {
+      input: ''
+    }
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>
