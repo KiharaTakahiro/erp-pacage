@@ -27,7 +27,7 @@ const systemRoutes: RouteConfig = {
       path: 'save-client',
       component: () => import('@/views/system/save-client.vue'),
       name: 'save-client',
-      meta: { hidden: true }
+      meta: {title: 'newClient', hidden: true },
     },
 
   ]

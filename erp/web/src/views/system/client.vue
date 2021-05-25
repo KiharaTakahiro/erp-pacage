@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <div>取引先管理</div>
+    <div>{{ $t("route.client") }}</div>
     <el-button
         :loading="loading"
         type="primary"
-        style="width:20%; margin-bottom:30px; margin-top:30px;"
+        style="width:10%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="onClickButton"
       >
         {{ $t('clients.add') }}
@@ -15,6 +15,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
+
 
 
 @Component({
@@ -31,7 +32,6 @@ export default class extends Vue {
     })
     
   }
-
 }
 </script>
 
