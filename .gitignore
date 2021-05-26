@@ -23,9 +23,3 @@
 hs_err_pid*
 /.metadata/
 /.metadata/
-
-*.project
-*.gradle
-*.settings
-*erp/java
-*erp/javac

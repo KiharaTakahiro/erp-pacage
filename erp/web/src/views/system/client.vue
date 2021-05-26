@@ -1,6 +1,14 @@
 <template>
   <div class="app-container">
-    <div>取引先管理</div>
+    <div>{{ $t("route.client") }}</div>
+    <el-button
+        :loading="loading"
+        type="primary"
+        style="width:13%; margin-bottom:30px; margin-top:30px;"
+        @click.native.prevent="onClickButton"
+      >
+        {{ $t('client.add') }}
+      </el-button>
   </div>
 </template>
 
@@ -8,10 +16,21 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
+
+
 @Component({
   name: 'Client'
 })
 export default class extends Vue {
+  onClickButton() {
+    // ボタンが押されたときの処理
+    this.$router.push({
+    path:'save-client'
+    }).catch(err => {
+      console.warn(err)
+    })
+    
+  }
 }
 </script>
 

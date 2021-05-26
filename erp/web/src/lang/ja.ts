@@ -8,6 +8,7 @@ export default {
     system: 'システム設定',
     users: 'ユーザ管理',
     client: '取引先管理',
+    newClient: '取引先追加',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -91,6 +92,12 @@ export default {
   documentation: {
     documentation: 'ドキュメント',
     github: 'Github Link'
+  },
+  client: {
+    title: '取引先管理',
+    add: '取引先新規登録',
+    complete: '完了',
+    name: '会社名'
   },
   permission: {
     createRole: 'ロール追加',

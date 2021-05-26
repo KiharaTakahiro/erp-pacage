@@ -12,16 +12,19 @@ import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
+import com.erp.main.domain.repository.WarehouseRepository;
 
 /**
  * マスターの管理用のサービス
@@ -60,6 +63,12 @@ public class MasterService {
 	 */
 	@Autowired
 	private DepartmentRepository departmentRepository;
+
+	/**
+	 * 倉庫のリポジトリ
+	 */
+	@Autowired
+	private WarehouseRepository warehouseRepository;
 	
 	/**
 	 * 商品マスタ作成処理
@@ -118,6 +127,16 @@ public class MasterService {
 		
 		DepartmentEntity entity = DepartmentEntity.create(vo);
 		this.departmentRepository.save(entity);
+		
+	}
+	/**
+	 * 倉庫マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createWarehouse(CreateWarehouseVo vo) {
+		WarehouseEntity entity = WarehouseEntity.create(vo);
+		this.warehouseRepository.save(entity);
 		
 	}
 }

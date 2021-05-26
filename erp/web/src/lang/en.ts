@@ -8,6 +8,7 @@ export default {
     system: 'Setting',
     users: 'User Setting',
     client: 'Client Setting',
+    newClient: 'New Client',
     documentation: 'Documentation',
     guide: 'Guide',
     permission: 'Permission',
@@ -87,6 +88,12 @@ export default {
     any: 'any',
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
+  },
+  client: {
+    title: 'Manage Clients',
+    add: 'New Clients',
+    complete: 'complete',
+    name: 'Company Name'
   },
   documentation: {
     documentation: 'Documentation',

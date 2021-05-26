@@ -11,6 +11,7 @@ import com.erp.main.app.controller.system.request.CreateDepartmentRequest;
 import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
+import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
@@ -90,5 +91,14 @@ public class SystemController {
 	@PostMapping("/department/register")
 	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
 		this.masterService.createDepartment(request.mapTo());
+	}
+	
+	/**
+	 * 倉庫作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/warehouse/register")
+	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
+		this.masterService.createWarehouse(request.mapTo());
 	}
 }
