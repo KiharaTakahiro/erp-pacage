@@ -5,6 +5,7 @@
     <br>
     <el-form
       ref="client"
+      :model="client"
       autocomplete="on"
       label-position="left"
     >
@@ -12,7 +13,7 @@
     <el-form-item prop="client">
       <el-input
         ref="client"
-        v-model="name"
+        v-model="client.name"
         :placeholder="$t('client.name')"
         name="clientName"
         type="text"
@@ -41,6 +42,9 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Form as ElForm, Input } from 'element-ui'
+import { Dictionary } from 'vue-router/types/router'
+import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 
 
@@ -49,14 +53,25 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-  name = ""
-  
-  private createClient(){
-    
+  private client = {
+    name: ''
   }
+  private otherQuery: Dictionary<string> = {}
 
-
+  private createClient(){
+    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+      await ClientModule.Create(this.client)
+      this.$router.push({
+          path: '/create',
+          query: this.client
+        }).catch(err => {
+          console.warn(err)
+        })
+  })
+  }
 }
+
+
 
 </script>
 
