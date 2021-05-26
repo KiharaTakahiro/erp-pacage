@@ -24,7 +24,6 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue {
   onClickButton() {
     // ボタンが押されたときの処理
-    console.log('hello')
     this.$router.push({
     path:'save-client'
     }).catch(err => {

@@ -62,8 +62,7 @@ export default class extends Vue {
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       await ClientModule.Create(this.client)
       this.$router.push({
-          path: '/create',
-          query: this.client
+          path: 'clinet'
         }).catch(err => {
           console.warn(err)
         })
