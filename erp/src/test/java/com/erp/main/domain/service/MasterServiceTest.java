@@ -21,16 +21,19 @@ import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
+import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.services.MasterService;
 
 /**
@@ -78,6 +81,12 @@ public class MasterServiceTest {
 	@Mock
 	private DepartmentRepository departmentRepository;
 	
+	/**
+	 * 倉庫のリポジトリ
+	 */
+	@Mock
+	private WarehouseRepository warehouseRepository;
+	
 	
 	
 	/**
@@ -103,6 +112,26 @@ public class MasterServiceTest {
 	}
 	
 	/**
+	 * 倉庫作成用のテスト
+	 */
+	@Test
+	public void registeWarehouseSuccessCase1() {
+		
+		// 実行用のデータ作成
+		CreateWarehouseVo vo = new CreateWarehouseVo();
+		vo.setWarehouseName("teszon");
+		
+		// 処理実行
+		this.masterService.createWarehouse(vo);
+		
+		// 検証用のデータ作成
+		WarehouseEntity entity = new WarehouseEntity();
+		entity.setName("teszon");
+		
+		Mockito.verify(this.warehouseRepository, times(1)).save(entity);
+	}
+	
+	/**
 	 * 仕入れ先作成用のテスト
 	 */
 	@Test
@@ -121,6 +150,7 @@ public class MasterServiceTest {
 		
 		Mockito.verify(this.supplierRepository, times(1)).save(entity);
 	}
+	
 	
 	/**
 	 * 取引先作成用のテスト
