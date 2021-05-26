@@ -4,7 +4,7 @@
     <el-button
         :loading="loading"
         type="primary"
-        style="width:10%; margin-bottom:30px; margin-top:30px;"
+        style="width:13%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="onClickButton"
       >
         {{ $t('client.add') }}
