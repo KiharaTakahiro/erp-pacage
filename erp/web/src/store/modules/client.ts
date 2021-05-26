@@ -15,7 +15,6 @@ class Client extends VuexModule implements IClientState {
   public async Create(clientInfo: { name: string}) {
     let { name } = clientInfo
     name = name.trim()
-    // FIXME: 試してみる
     await createClient({clientsName: name})
   }
 }
