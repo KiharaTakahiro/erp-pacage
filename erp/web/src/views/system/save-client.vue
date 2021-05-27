@@ -89,6 +89,10 @@ export default class extends Vue {
       type: 'success'
     })
       }else {
+        this.$message({
+        message: this.$t('components.validation').toString(),
+        type: 'error'
+        })
         return false
       }
     })

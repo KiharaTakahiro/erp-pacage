@@ -121,7 +121,8 @@ export default {
     backToTopTips2: 'ボタンのスタイルはカスタマイズできます。例えば、show/hide、height、position。 またはElementのel-tooltipを使って、ツールチップを実装できます。',
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
     changeLanguageTips: '言語切り替えの成功',
-    createClients :'取引先の登録に成功'
+    createClients :'取引先の登録に成功',
+    validation :'入力内容を確認してください'
   },
   table: {
     dynamicTips1: '先頭は固定、最後に追加',

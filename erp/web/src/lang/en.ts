@@ -121,7 +121,8 @@ export default {
     backToTopTips2: 'You can customize the style of the button, show / hide, height of appearance, height of the return. If you need a text prompt, you can use element-ui el-tooltip elements externally',
     imageUploadTips: 'Since I was using only the vue@1 version, and it is not compatible with mockjs at the moment, I modified it myself, and if you are going to use it, it is better to use official version.',
     changeLanguageTips: 'Switch Language Success',
-    createClients :'Create Client Success'
+    createClients :'Create Client Success',
+    validation :'Please check your entries'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',
