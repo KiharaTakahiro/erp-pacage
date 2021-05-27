@@ -19,17 +19,19 @@
         type="text"
         tabindex="1"
         autocomplete="on"
-        style="width:50%; margin-bottom:30px;"
+        style="width:100%; margin-bottom:30px;"
       />
     </el-form-item>
-    <el-button
-        :loading="loading"
-        type="primary"
-        style="width:10%; margin-bottom:30px;"
-        @click.native.prevent="createClient"
-      >
-        {{ $t('client.complete') }}
-    </el-button>
+    <div class="complete-btn">
+      <el-button
+          :loading="loading"
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="createClient"
+        >
+          {{ $t('client.complete') }}
+      </el-button>
+    </div>
 
 
     </el-form>
@@ -49,7 +51,7 @@ import '@/assets/custom-theme/index.css'
 
 
 @Component({
-  name: 'Client'
+  name: 'Client-save'
 })
 export default class extends Vue {
 
@@ -79,6 +81,10 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
+.app-container{
+  width: 50%;
+}
+
 .box-card {
   width: 400px;
   max-width: 100%;
@@ -92,4 +98,9 @@ export default class extends Vue {
 .tag-item {
   margin-right: 15px;
 }
+
+.complete-btn{
+  float: right;
+}
+
 </style>
