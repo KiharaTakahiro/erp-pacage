@@ -19,6 +19,7 @@
           type="text"
           tabindex="1"
           autocomplete="on"
+          max="50"
           style="width:100%; margin-bottom:30px;"
         />
       </el-form-item>
@@ -57,7 +58,9 @@ export default class extends Vue {
   private validateClientName = (rule: any, value: string, callback: Function) => {
     if (value.length < 1) {
       callback(new Error('取引先会社名を入力してください。'))
-    } else {
+    } else if(value.length > 50){
+      callback(new Error('文字数は50文字以内で入力してください。'))
+    }else {
       callback()
     }
   }
@@ -74,13 +77,17 @@ export default class extends Vue {
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      await ClientModule.Create(this.client)
-      this.$router.push({
+      if(valid){
+        await ClientModule.Create(this.client)
+        this.$router.push({
           path: 'clinet'
         }).catch(err => {
           console.warn(err)
         })
-  })
+      }else {
+        return false
+      }
+    })
   }
 }
 
