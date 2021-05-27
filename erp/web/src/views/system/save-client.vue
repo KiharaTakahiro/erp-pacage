@@ -6,6 +6,7 @@
     <el-form
       ref="client"
       :model="client"
+      :rules="clientRules"
       autocomplete="on"
       label-position="left"
     >
@@ -55,21 +56,39 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-  private client = {
-    name: ''
+  data(){
+    return{
+      client: {
+      name: ''
+    },rules:{
+      name: [
+        {required: true, message: '会社名は必ず入力してください。' },
+        { max: 50, message: '50文字以内で入力してください。' }
+        ]
+      }
+    }
   }
+
+
   private otherQuery: Dictionary<string> = {}
 
   private createClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      await ClientModule.Create(this.client)
-      this.$router.push({
+    // (this.$refs.client as ElForm).validate((valid) => {
+    //   if (valid) {
+        (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+        await ClientModule.Create(this.data)
+        this.$router.push({
           path: 'clinet'
         }).catch(err => {
           console.warn(err)
         })
-  })
-  }
+        })
+      }
+  //   });
+
+
+    
+  // }
 }
 
 
