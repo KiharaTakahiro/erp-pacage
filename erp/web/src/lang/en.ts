@@ -7,6 +7,7 @@ export default {
     invoice: 'Invoice',
     system: 'Setting',
     users: 'User Setting',
+    createUsre:"New User",
     client: 'Client Setting',
     newClient: 'New Client',
     documentation: 'Documentation',
@@ -88,6 +89,15 @@ export default {
     any: 'any',
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
+  },
+  user: {
+    add:'New User',
+    name: 'User Name',
+    id: 'User ID',
+    email: 'email',
+    password: 'Password',
+    password2: 'Confirmation Password',
+    complete: 'complete',
   },
   client: {
     title: 'Manage Clients',

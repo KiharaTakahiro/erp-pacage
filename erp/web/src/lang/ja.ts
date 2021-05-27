@@ -7,6 +7,7 @@ export default {
     invoice: '請求管理',
     system: 'システム設定',
     users: 'ユーザ管理',
+    createUsre:"ユーザー登録",
     client: '取引先管理',
     newClient: '取引先追加',
     documentation: 'ドキュメント',
@@ -92,6 +93,16 @@ export default {
   documentation: {
     documentation: 'ドキュメント',
     github: 'Github Link'
+  },
+  user:
+  {
+    add :'ユーザー新規登録',
+    name: 'ユーザー名',
+    id: 'ユーザーID',
+    email: 'メールアドレス',
+    password: 'パスワード',
+    password2: 'パスワード（確認用）',
+    complete: '完了',
   },
   client: {
     title: '取引先管理',
