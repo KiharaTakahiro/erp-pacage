@@ -10,29 +10,28 @@
       autocomplete="on"
       label-position="left"
     >
-
-    <el-form-item prop="client">
-      <el-input
-        ref="client"
-        v-model="client.name"
-        :placeholder="$t('client.name')"
-        name="clientName"
-        type="text"
-        tabindex="1"
-        autocomplete="on"
-        style="width:100%; margin-bottom:30px;"
-      />
-    </el-form-item>
-    <div class="complete-btn">
-      <el-button
-          :loading="loading"
-          type="primary"
-          style="width:100%;"
-          @click.native.prevent="createClient"
-        >
-          {{ $t('client.complete') }}
-      </el-button>
-    </div>
+      <el-form-item prop="name">
+        <el-input
+          ref="client"
+          v-model="client.name"
+          :placeholder="$t('client.name')"
+          name="name"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
+      <div class="complete-btn">
+        <el-button
+            :loading="loading"
+            type="primary"
+            style="width:100%;"
+            @click.native.prevent="createClient"
+          >
+            {{ $t('client.complete') }}
+        </el-button>
+      </div>
 
 
     </el-form>
@@ -55,40 +54,34 @@ import '@/assets/custom-theme/index.css'
   name: 'Client-save'
 })
 export default class extends Vue {
-
-  data(){
-    return{
-      client: {
-      name: ''
-    },rules:{
-      name: [
-        {required: true, message: '会社名は必ず入力してください。' },
-        { max: 50, message: '50文字以内で入力してください。' }
-        ]
-      }
+  private validateClientName = (rule: any, value: string, callback: Function) => {
+    if (value.length < 1) {
+      callback(new Error('取引先会社名を入力してください。'))
+    } else {
+      callback()
     }
   }
 
+  private client = {
+    name: ''
+  }
+
+  private clientRules = {
+    name: [{validator: this.validateClientName, trigger: 'blur' }]
+  }
 
   private otherQuery: Dictionary<string> = {}
 
   private createClient(){
-    // (this.$refs.client as ElForm).validate((valid) => {
-    //   if (valid) {
-        (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-        await ClientModule.Create(this.data)
-        this.$router.push({
+    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+      await ClientModule.Create(this.client)
+      this.$router.push({
           path: 'clinet'
         }).catch(err => {
           console.warn(err)
         })
-        })
-      }
-  //   });
-
-
-    
-  // }
+  })
+  }
 }
 
 
