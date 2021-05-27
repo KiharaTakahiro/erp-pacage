@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.newClient") }}</div>
+    <div>{{ $t("route.createUsre") }}</div>
     <br>
     <br>
     <el-form
@@ -10,11 +10,63 @@
       autocomplete="on"
       label-position="left"
     >
+      <el-form-item prop="userId">
+        <el-input
+          ref="client"
+          v-model="client.name"
+          :placeholder="$t('user.id')"
+          name="name"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          max="50"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
       <el-form-item prop="name">
         <el-input
           ref="client"
           v-model="client.name"
-          :placeholder="$t('client.name')"
+          :placeholder="$t('user.name')"
+          name="name"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          max="50"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
+      <el-form-item prop="email">
+        <el-input
+          ref="client"
+          v-model="client.name"
+          :placeholder="$t('user.email')"
+          name="email"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          max="50"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input
+          ref="client"
+          v-model="client.name"
+          :placeholder="$t('user.password')"
+          name="password"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          max="50"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
+      <el-form-item prop="password2">
+        <el-input
+          ref="client"
+          v-model="client.name"
+          :placeholder="$t('user.password2')"
           name="name"
           type="text"
           tabindex="1"

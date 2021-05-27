@@ -16,6 +16,11 @@ const systemRoutes: RouteConfig = {
       component: () => import('@/views/system/users.vue'),
       name: 'users',
       meta: { title: 'users' }
+    },{
+      path: 'save-users',
+      component: () => import('@/views/system/save-users.vue'),
+      name: 'users',
+      meta: { title: 'createUsre', hidden: true  }
     },
     {
       path: 'clinet',

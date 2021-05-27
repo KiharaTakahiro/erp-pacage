@@ -7,6 +7,7 @@ export default {
     invoice: 'Invoice',
     system: 'Setting',
     users: 'User Setting',
+    createUsre:"New User",
     client: 'Client Setting',
     newClient: 'New Client',
     documentation: 'Documentation',
@@ -89,6 +90,15 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
+  user: {
+    add:'New User',
+    name: 'User Name',
+    id: 'User ID',
+    email: 'email',
+    password: 'Password',
+    password2: 'Confirmation Password',
+    complete: 'complete',
+  },
   client: {
     title: 'Manage Clients',
     add: 'New Clients',
@@ -120,7 +130,9 @@ export default {
     backToTopTips1: 'When the page is scrolled to the specified position, the Back to Top button appears in the lower right corner',
     backToTopTips2: 'You can customize the style of the button, show / hide, height of appearance, height of the return. If you need a text prompt, you can use element-ui el-tooltip elements externally',
     imageUploadTips: 'Since I was using only the vue@1 version, and it is not compatible with mockjs at the moment, I modified it myself, and if you are going to use it, it is better to use official version.',
-    changeLanguageTips: 'Switch Language Success'
+    changeLanguageTips: 'Switch Language Success',
+    createClients :'Create Client Success',
+    validation :'Please check your entries'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',

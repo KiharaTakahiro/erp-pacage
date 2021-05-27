@@ -7,6 +7,7 @@ export default {
     invoice: '請求管理',
     system: 'システム設定',
     users: 'ユーザ管理',
+    createUsre:"ユーザー登録",
     client: '取引先管理',
     newClient: '取引先追加',
     documentation: 'ドキュメント',
@@ -93,6 +94,16 @@ export default {
     documentation: 'ドキュメント',
     github: 'Github Link'
   },
+  user:
+  {
+    add :'ユーザー新規登録',
+    name: 'ユーザー名',
+    id: 'ユーザーID',
+    email: 'メールアドレス',
+    password: 'パスワード',
+    password2: 'パスワード（確認用）',
+    complete: '完了',
+  },
   client: {
     title: '取引先管理',
     add: '取引先新規登録',
@@ -120,7 +131,9 @@ export default {
     backToTopTips1: 'トップへスクロールが表示されます。',
     backToTopTips2: 'ボタンのスタイルはカスタマイズできます。例えば、show/hide、height、position。 またはElementのel-tooltipを使って、ツールチップを実装できます。',
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
-    changeLanguageTips: '言語切り替えの成功'
+    changeLanguageTips: '言語切り替えの成功',
+    createClients :'取引先の登録に成功',
+    validation :'入力内容を確認してください'
   },
   table: {
     dynamicTips1: '先頭は固定、最後に追加',

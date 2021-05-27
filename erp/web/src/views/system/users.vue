@@ -1,6 +1,14 @@
 <template>
   <div class="app-container">
-    <div>ユーザ管理</div>
+    <div>{{ $t("route.createUsre") }}</div>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:25%; margin-bottom:30px; margin-top:30px;"
+        @click.native.prevent="onClickButton"
+      >
+        {{ $t('user.add') }}
+      </el-button>
   </div>
 </template>
 
@@ -12,6 +20,14 @@ import '@/assets/custom-theme/index.css'
   name: 'Users'
 })
 export default class extends Vue {
+  onClickButton() {
+    // ボタンが押されたときの処理
+    this.$router.push({
+    path:'save-users'
+    }).catch(err => {
+      console.warn(err)
+    })
+  }
 }
 </script>
 
