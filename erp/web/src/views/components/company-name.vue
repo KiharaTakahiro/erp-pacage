@@ -17,13 +17,16 @@
 </template>
 
 <script>
-import { component } from 'node_modules/vue/types/umd'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-@component({
-  name: 'Company-name'
-})
+import { Form as ElForm, Input } from 'element-ui'
+import { Dictionary } from 'vue-router/types/router'
+import { ClientModule } from '@/store/modules/client'
+import '@/assets/custom-theme/index.css'
 
-export default class extends Vue ({
+@Component({
+  name: 'ClientSave'
+})
+export default class extends Vue {
   private validateClientName = (rule: any, value: string, callback: Function) => {
     if (value.length < 1) {
       callback(new Error('取引先会社名を入力してください。'))
@@ -41,7 +44,7 @@ export default class extends Vue ({
   private clientRules = {
     name: [{validator: this.validateClientName, trigger: 'blur' }]
   }
+}
 
-})
 
 </script>

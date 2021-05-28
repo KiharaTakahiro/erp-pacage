@@ -48,6 +48,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
 import { ClientModule } from '@/store/modules/client'
+import { CientSave } from '@/view/compornents/company'
 import '@/assets/custom-theme/index.css'
 
 
@@ -55,26 +56,6 @@ import '@/assets/custom-theme/index.css'
   name: 'Client-save'
 })
 export default class extends Vue {
-  private validateClientName = (rule: any, value: string, callback: Function) => {
-    if (value.length < 1) {
-      callback(new Error('取引先会社名を入力してください。'))
-    } else if(value.length > 50){
-      callback(new Error('文字数は50文字以内で入力してください。'))
-    }else {
-      callback()
-    }
-  }
-
-  private client = {
-    name: ''
-  }
-
-  private clientRules = {
-    name: [{validator: this.validateClientName, trigger: 'blur' }]
-  }
-
-  private otherQuery: Dictionary<string> = {}
-
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
