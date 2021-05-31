@@ -1,7 +1,14 @@
 <template>
   <el-form-item 
     :rules="[
-      { required: true, message: '会社名を入力してください'},
+      { required: true, 
+      trigger: 'blur',
+      message: '会社名を入力してください'},
+      {
+        max: 50,
+        trigger: 'blur',
+        message: '会社名は50文字以内にしてください'
+      }
       ]"
       prop="name"
     >
@@ -17,7 +24,7 @@
       autocomplete="on"
       max="50"
       style="width:100%; margin-bottom:30px;"
-      v-on:blur='companyRules'
+
     />
   </el-form-item>
 
@@ -35,11 +42,13 @@ import '@/assets/custom-theme/index.css'
   name: 'CompanyName'
 })
 export default class extends Vue {
-  
-  private company = {
-    name: ''
+  data() {
+    return {
+      company:{
+        name: ''
+      }
+    }
   }
-
 }
 
 
