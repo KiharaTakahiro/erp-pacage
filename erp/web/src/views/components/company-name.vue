@@ -24,7 +24,7 @@ import '@/assets/custom-theme/index.css'
 
 
 @Component({
-  name: 'CompanySave'
+  name: 'CompanyName'
 })
 export default class extends Vue {
   private validateClientName = (rule: any, value: string, callback: Function) => {

@@ -10,7 +10,9 @@
       autocomplete="on"
       label-position="left"
     >
-    <company-save/>
+    <company-name
+    
+    />
     <div class="complete-btn">
         <el-button
             :loading="loading"
@@ -34,33 +36,21 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
 import { ClientModule } from '@/store/modules/client'
-import CompanySave from '@/views/components/company-name.vue'
+import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'Client-save',
   components: {
-    CompanySave
+    CompanyName
   }
 })
 export default class extends Vue {
-  private validateClientName = (rule: any, value: string, callback: Function) => {
-    if (value.length < 1) {
-      callback(new Error('取引先会社名を入力してください。'))
-    } else if(value.length > 50){
-      callback(new Error('文字数は50文字以内で入力してください。'))
-    }else {
-      callback()
-    }
-  }
 
-  private client = {
+    private client = {
     name: ''
   }
 
-  private clientRules = {
-    name: [{validator: this.validateClientName, trigger: 'blur' }]
-  }
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
