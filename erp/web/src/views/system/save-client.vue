@@ -6,14 +6,11 @@
     <el-form
       ref="client"
       :model="client"
-      :rules="clientRules"
       autocomplete="on"
       label-position="left"
     >
-    <company-name
-    
-    />
-    <div class="complete-btn">
+      <company-name/>
+      <div class="complete-btn">
         <el-button
             :loading="loading"
             type="primary"
@@ -47,9 +44,10 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-    private client = {
+  private client = {
     name: ''
   }
+
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
