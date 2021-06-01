@@ -13,8 +13,6 @@
       prop="name"
     >
     <el-input
-      ref="client"
-      :rules="companyRules"
       :model="company"
       v-model="company.name"
       :placeholder="$t('client.name')"
@@ -22,7 +20,6 @@
       type="text"
       tabindex="1"
       autocomplete="on"
-      max="50"
       style="width:100%; margin-bottom:30px;"
 
     />
@@ -42,13 +39,12 @@ import '@/assets/custom-theme/index.css'
   name: 'CompanyName'
 })
 export default class extends Vue {
-  data() {
-    return {
-      company:{
-        name: ''
-      }
+
+  private company = {
+    name: ''
     }
-  }
+
+
 }
 
 
