@@ -1,0 +1,10 @@
+diff a/erp/web/src/views/components/company-name.vue b/erp/web/src/views/components/company-name.vue	(rejected hunks)
+@@ -1,5 +1,8 @@
+ <template>
+   <el-form-item 
++    :rules="[
++      { required: true, message: '会社名を入力してください'},
++      ]"
+       prop="name"
+     >
+     <el-input

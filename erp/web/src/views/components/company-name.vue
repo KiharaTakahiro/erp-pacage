@@ -1,7 +1,6 @@
 <template>
   <el-form-item 
       prop="name"
-      @submit="submit"
     >
     <el-input
       :model="company"
@@ -11,7 +10,7 @@
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      v-on:blur='input'
+      v-on:blur='validateClientName'
       style="width:100%; margin-bottom:30px;"
     />
   </el-form-item>
@@ -33,6 +32,15 @@ export default class extends Vue {
 
   @Prop({ default: '' })
   companyName!: string;
+  private validateClientName = (rule: any, value: string, callback: Function) => {
+    if (value.length < 1) {
+      callback(new Error('取引先会社名を入力してください。'))
+    } else if(value.length > 50){
+      callback(new Error('文字数は50文字以内で入力してください。'))
+    }else {
+      callback()
+    }
+  }
 
   private input(): void {
     this.$emit('value', this.companyName)
