@@ -1,5 +1,6 @@
 <template>
   <el-form-item 
+    :rules="clientRules"
       prop="name"
     >
     <el-input
@@ -10,7 +11,7 @@
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      v-on:blur='validateClientName'
+      v-on:blur='input'
       style="width:100%; margin-bottom:30px;"
     />
   </el-form-item>
@@ -40,6 +41,10 @@ export default class extends Vue {
     }else {
       callback()
     }
+  }
+
+  private clientRules = {
+  name: [{validator: this.validateClientName, trigger: 'blur' }]
   }
 
   private input(): void {
