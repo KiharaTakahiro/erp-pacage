@@ -48,23 +48,18 @@ import { log } from 'node:console'
 })
 export default class extends Vue {
 
-  // name = ''
-
-  // private value(value: any): void {
-  //   this.name = value
-  //   console.log(this.name)
-  // }
-
   client = {
-    name: 'this.name'
+  name: ''
   }
-  
-  
+
+  private value(value: any): void {
+    this.client.name = value
+  }
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.Create(client.name)
+        await ClientModule.Create(this.client)
         this.$router.push({
           path: 'clinet' 
         }).catch(err => {
