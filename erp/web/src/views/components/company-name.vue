@@ -1,26 +1,18 @@
 <template>
   <el-form-item 
-    :rules="[
-      { required: true, 
-      trigger: 'blur',
-      message: '会社名を入力してください'},
-      {
-        max: 50,
-        trigger: 'blur',
-        message: '会社名は50文字以内にしてください'
-      }
-      ]"
       prop="name"
+      @submit="submit"
     >
     <el-input
       :model="company"
-      v-model="company.name"
+      v-model='companyName'
       :placeholder="$t('client.name')"
-      name="name"
       type="text"
+      maxlength="50"
       tabindex="1"
       autocomplete="on"
       style="width:100%; margin-bottom:30px;"
+
 
     />
   </el-form-item>
@@ -28,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 // import { CientSave } from '@/view/compornents/company'
@@ -40,9 +32,15 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-  private company = {
-    name: ''
-    }
+  @Prop({ default: '' })
+  companyName!: string;
+
+  @Emit()
+  submit() {
+    return this.companyName;
+  }
+
+
 
 
 }

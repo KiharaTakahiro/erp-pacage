@@ -9,7 +9,9 @@
       autocomplete="on"
       label-position="left"
     >
-      <company-name/>
+      <company-name
+        :companyName="client.name"
+        />
       <div class="complete-btn">
         <el-button
             :loading="loading"
@@ -44,17 +46,18 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue {
 
-  private client = {
+  client = {
     name: ''
   }
-
+  
+  
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
         await ClientModule.Create(this.client)
         this.$router.push({
-          path: 'clinet'
+          path: 'clinet' 
         }).catch(err => {
           console.warn(err)
         })
@@ -71,7 +74,6 @@ export default class extends Vue {
       }
     })
   }
-  
 }
 
 
