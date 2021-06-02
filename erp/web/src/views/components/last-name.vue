@@ -1,21 +1,21 @@
 <template>
 <el-form-item 
   :rules="[
-      { required: true, message: 'ユーザーIDは必ず入力してください', trigger: 'blur'}
-    ]"
-  prop="userId"
->
+    { required: true, message: '名字は必ず入力してください', trigger: 'blur'}
+  ]"
+  prop="lastName"
+  >
   <el-input
-    v-model="userId"
-    :placeholder="$t('user.id')"
-    name="userId"
+    v-model="lastName"
+    :placeholder="$t('user.lastName')"
+    name="lastName"
     type="text"
     tabindex="1"
     autocomplete="on"
-    maxlength="50"
+    max="50"
     v-on:blur="submit"
     style="width:100%; margin-bottom:30px;"
-  />
+    />
 </el-form-item>
 
 </template>
@@ -23,16 +23,17 @@
 <script lang='ts'>
 import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
+
 @Component({
-  name: 'UserId'
+  name: 'LastName'
 })
 
 export default class extends Vue{
   @Prop({ default: '' })
-  userId!: string;
+  lastName!: string;
 
   private submit(): void {
-    this.$emit('userIdSubmit', this.userId)
+    this.$emit('lastNameSubmit', this.lastName)
   }
 
 }

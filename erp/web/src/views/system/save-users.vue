@@ -9,58 +9,22 @@
       autocomplete="on"
       label-position="left"
     >
-      <el-form-item prop="userId">
-        <el-input
-          ref="user"
-          v-model="user.userId"
-          :placeholder="$t('user.id')"
-          name="userId"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-          maxlength="50"
-          style="width:100%; margin-bottom:30px;"
+      <user-id
+        :userId="user.userId"
+        @userIdSubmit="userIdRecive"
+      />
+      <first-name
+        :firstName="user.firstName"
+        @firstNameSubmit="firstNameRecive"
+      />
+      <last-name
+        :lastName="user.lastName"
+        @lastaNameSubmit="firstNameRecive"
         />
-      </el-form-item>
-      <el-form-item prop="firstName">
-        <el-input
-          ref="user"
-          v-model="user.firstName"
-          :placeholder="$t('user.firstName')"
-          name="firstName"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
-        />
-      </el-form-item>
-      <el-form-item prop="lastName">
-        <el-input
-          ref="user"
-          v-model="user.lastName"
-          :placeholder="$t('user.lastName')"
-          name="lastName"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
-        />
-      </el-form-item>
-      <el-form-item prop="email">
-        <el-input
-          ref="user"
-          v-model="user.email"
-          :placeholder="$t('user.email')"
-          name="email"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
-        />
-      </el-form-item>
+      <email
+        :email="user.email"
+        @emailSubmit="emailRecive"
+      />
       <el-form-item prop="password">
         <el-input
           ref="user"
@@ -113,10 +77,22 @@ import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
 import { UserModule } from '@/store/modules/user'
 import '@/assets/custom-theme/index.css'
+import UserId  from "@/views/components/user-id.vue"
+import FirstName from "@/views/components/first-name.vue"
+import LastName from "@/views/components/last-name.vue"
+import Email from "@/views/components/email.vue"
+import { component } from 'node_modules/vue/types/umd'
+
 
 
 @Component({
-  name: 'user-save'
+  name: 'user-save',
+  components :{
+    UserId,
+    FirstName,
+    LastName,
+    Email
+  }
 })
 export default class extends Vue {
 
@@ -128,6 +104,22 @@ export default class extends Vue {
     email: '',
     password: '',
     password2: ''
+  }
+
+  private userIdRecive(userId: any): void {
+    this.user.userId = userId
+  }
+
+  private firstNameRecive(firstName: any): void {
+    this.user.firstName = firstName
+  }
+
+  private lastNameRecive(lastName: any): void {
+    this.user.lastName = lastName
+  }
+
+  private emailRecive(email: any): void {
+    this.user.email = email
   }
 
 
