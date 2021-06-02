@@ -11,7 +11,7 @@
     >
       <company-name
         :companyName="client.name"
-        @value='input'
+        @conpanyNameValue='conpanyName'
         />
       <div class="complete-btn">
         <el-button
@@ -39,6 +39,7 @@ import { ClientModule } from '@/store/modules/client'
 import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
 import { log } from 'node:console'
+import { toNamespacedPath } from 'node:path'
 
 @Component({
   name: 'Client-save',
@@ -52,8 +53,8 @@ export default class extends Vue {
   name: ''
   }
 
-  private value(value: any): void {
-    this.client.name = value
+  private conpanyName(name: any): void {
+    this.client.name = name
   }
 
 
