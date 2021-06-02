@@ -1,7 +1,10 @@
 <template>
   <el-form-item 
-    :rules="clientRules"
-      prop="name"
+    prop="name"
+    :rules="[
+      { required: true, message: '会社名は必ず入力してください', trigger: 'blur'},
+      { max: 50, message: '文字数は50文字までにしてください'}
+    ]"
     >
     <el-input
       :model="company"
@@ -33,21 +36,8 @@ export default class extends Vue {
 
   @Prop({ default: '' })
   companyName!: string;
-  private validateClientName = (rule: any, value: string, callback: Function) => {
-    if (value.length < 1) {
-      callback(new Error('取引先会社名を入力してください。'))
-    } else if(value.length > 50){
-      callback(new Error('文字数は50文字以内で入力してください。'))
-    }else {
-      callback()
-    }
-  }
 
-  private clientRules = {
-  name: [{validator: this.validateClientName, trigger: 'blur' }]
-  }
-
-  private input(): void {
+  private CompanyName(): void {
     this.$emit('value', this.companyName)
   }
 
