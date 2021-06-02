@@ -38,7 +38,7 @@ export default class extends Vue {
   companyName!: string;
 
   private CompanyName(): void {
-    this.$emit('value', this.companyName)
+    this.$emit('company-name', this.companyName)
   }
 
 }

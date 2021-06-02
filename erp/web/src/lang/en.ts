@@ -92,7 +92,8 @@ export default {
   },
   user: {
     add:'New User',
-    name: 'User Name',
+    firstName: 'Firstname',
+    lastName: 'Lastname',
     id: 'User ID',
     email: 'email',
     password: 'Password',

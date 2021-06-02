@@ -4,18 +4,30 @@
     <br>
     <br>
     <el-form
-      ref="client"
-      :model="client"
-      :rules="clientRules"
+      ref="user"
+      :model="user"
       autocomplete="on"
       label-position="left"
     >
       <el-form-item prop="userId">
         <el-input
-          ref="client"
-          v-model="client.name"
+          ref="user"
+          v-model="user.userId"
           :placeholder="$t('user.id')"
-          name="name"
+          name="userId"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          maxlength="50"
+          style="width:100%; margin-bottom:30px;"
+        />
+      </el-form-item>
+      <el-form-item prop="firstName">
+        <el-input
+          ref="user"
+          v-model="user.firstName"
+          :placeholder="$t('user.firstName')"
+          name="firstName"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -23,12 +35,12 @@
           style="width:100%; margin-bottom:30px;"
         />
       </el-form-item>
-      <el-form-item prop="name">
+      <el-form-item prop="lastName">
         <el-input
-          ref="client"
-          v-model="client.name"
-          :placeholder="$t('user.name')"
-          name="name"
+          ref="user"
+          v-model="user.lastName"
+          :placeholder="$t('user.lastName')"
+          name="lastName"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -38,8 +50,8 @@
       </el-form-item>
       <el-form-item prop="email">
         <el-input
-          ref="client"
-          v-model="client.name"
+          ref="user"
+          v-model="user.email"
           :placeholder="$t('user.email')"
           name="email"
           type="text"
@@ -51,8 +63,8 @@
       </el-form-item>
       <el-form-item prop="password">
         <el-input
-          ref="client"
-          v-model="client.name"
+          ref="user"
+          v-model="user.password"
           :placeholder="$t('user.password')"
           name="password"
           type="text"
@@ -64,10 +76,10 @@
       </el-form-item>
       <el-form-item prop="password2">
         <el-input
-          ref="client"
-          v-model="client.name"
+          ref="user"
+          v-model="user.password2"
           :placeholder="$t('user.password2')"
-          name="name"
+          name="password2"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -80,7 +92,7 @@
             :loading="loading"
             type="primary"
             style="width:100%;"
-            @click.native.prevent="createClient"
+            @click.native.prevent="createUser"
           >
             {{ $t('client.complete') }}
         </el-button>
@@ -99,40 +111,32 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
-import { ClientModule } from '@/store/modules/client'
+import { UserModule } from '@/store/modules/user'
 import '@/assets/custom-theme/index.css'
 
 
 @Component({
-  name: 'Client-save'
+  name: 'user-save'
 })
 export default class extends Vue {
-  private validateClientName = (rule: any, value: string, callback: Function) => {
-    if (value.length < 1) {
-      callback(new Error('取引先会社名を入力してください。'))
-    } else if(value.length > 50){
-      callback(new Error('文字数は50文字以内で入力してください。'))
-    }else {
-      callback()
-    }
+
+  private user = {
+    userId: '',
+    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    password2: ''
   }
 
-  private client = {
-    name: ''
-  }
 
-  private clientRules = {
-    name: [{validator: this.validateClientName, trigger: 'blur' }]
-  }
-
-  private otherQuery: Dictionary<string> = {}
-
-  private createClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+  private createUser(){
+    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.Create(this.client)
+        await UserModule.Create(this.user)
         this.$router.push({
-          path: 'clinet'
+          path: 'users'
         }).catch(err => {
           console.warn(err)
         })
