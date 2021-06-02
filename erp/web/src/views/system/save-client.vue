@@ -11,7 +11,7 @@
     >
       <company-name
         :companyName="client.name"
-        @value='company-name'
+        @value='input'
         />
       <div class="complete-btn">
         <el-button

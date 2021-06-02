@@ -69,7 +69,7 @@
           name="password"
           type="text"
           tabindex="1"
-          autocomplete="on"
+          autocomplete="of"
           max="50"
           style="width:100%; margin-bottom:30px;"
         />
@@ -82,7 +82,7 @@
           name="password2"
           type="text"
           tabindex="1"
-          autocomplete="on"
+          autocomplete="of"
           max="50"
           style="width:100%; margin-bottom:30px;"
         />
