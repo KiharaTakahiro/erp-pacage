@@ -134,7 +134,7 @@ export default class extends Vue {
   private createUser(){
     (this.$refs.user as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await UserModule.Create(this.user)
+        await UserModule.CreateUser(this.user)
         this.$router.push({
           path: 'users'
         }).catch(err => {

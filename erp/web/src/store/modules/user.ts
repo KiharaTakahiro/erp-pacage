@@ -136,7 +136,7 @@ class User extends VuexModule implements IUserState {
   }
 
   @Action
-  public async Create(userInfo:{userId: string, firstName: string, lastName:string, email: string, password: string}){
+  public async CreateUser(userInfo:{userId: string, firstName: string, lastName:string, email: string, password: string}){
     let {userId, firstName,lastName, email, password} = userInfo
     userId = userId.trim()
     firstName = firstName.trim()
