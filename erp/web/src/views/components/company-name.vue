@@ -14,7 +14,7 @@
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      v-on:blur='input'
+      v-on:blur='companyNameSend'
       style="width:100%; margin-bottom:30px;"
     />
   </el-form-item>
@@ -37,8 +37,8 @@ export default class extends Vue {
   @Prop({ default: '' })
   companyName!: string;
 
-  private input(): void {
-    this.$emit('value', this.companyName)
+  private companyNameSend(): void {
+    this.$emit('conpanyNameValue', this.companyName)
   }
 
 }
