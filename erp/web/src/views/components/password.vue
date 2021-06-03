@@ -18,6 +18,7 @@
       label="確認"
       prop="password2"
       :rules="[ 
+          { validator: validatePass2, trigger: 'blur' },
           { required: true, message: '確認用パスワードは必ず入力してください', trigger: 'blur'}
           ]"
       >
@@ -68,15 +69,15 @@ export default class extends Vue{
   //     callback();
   //   }
   // }
-  // private validatePass2 = (rule: any, value: string, callback: Function) => {
-  //   if (value === '') {
-  //     callback(new Error('Please input the password again'));
-  //   } else if (value !== this.pass) {
-  //     callback(new Error('Two inputs don\'t match!'));
-  //   } else {
-  //     callback();
-  //   }
-  // }
+  private validatePass2 = (rule: any, value: string, callback: Function) => {
+    if (value === '') {
+      callback(new Error('確認用パスワードを入力してください'));
+    } else if (value !== this.password) {
+      callback(new Error('パスワードが一致しません'));
+    } else {
+      callback();
+    }
+  }
 
 
 }
