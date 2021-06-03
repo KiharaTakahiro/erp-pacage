@@ -19,14 +19,19 @@
       />
       <last-name
         :lastName="user.lastName"
-        @lastaNameSubmit="firstNameRecive"
+        @lastNameSubmit="lastNameRecive"
         />
       <email
         :email="user.email"
         @emailSubmit="emailRecive"
       />
 
-      <password/>
+      <password
+      :pass="user.password"
+      :checkPass="user.password2"
+      @passSubmit='passRecive'
+      @checkPassSubmit='checkPassRecive'
+      />
       
       <div class="complete-btn">
         <el-button

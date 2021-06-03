@@ -1,5 +1,6 @@
 <template>
-<el-form-item 
+<el-form-item
+  label="名字"
   :rules="[
     { required: true, message: '名字は必ず入力してください', trigger: 'blur'}
   ]"
