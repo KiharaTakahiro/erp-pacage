@@ -106,6 +106,15 @@ export default class extends Vue {
     this.user.email = email
   }
 
+  
+  private passRecive(password: any): void {
+    this.user.password = password
+  }
+
+  
+  private passCheckRecive(password2: any): void {
+    this.user.password2 = password2
+  }
 
   private createUser(){
     (this.$refs.user as ElForm).validate(async(valid: boolean) => {
