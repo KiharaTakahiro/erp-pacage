@@ -25,32 +25,9 @@
         :email="user.email"
         @emailSubmit="emailRecive"
       />
-      <el-form-item prop="password">
-        <el-input
-          ref="user"
-          v-model="user.password"
-          :placeholder="$t('user.password')"
-          name="password"
-          type="text"
-          tabindex="1"
-          autocomplete="of"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
-        />
-      </el-form-item>
-      <el-form-item prop="password2">
-        <el-input
-          ref="user"
-          v-model="user.password2"
-          :placeholder="$t('user.password2')"
-          name="password2"
-          type="text"
-          tabindex="1"
-          autocomplete="of"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
-        />
-      </el-form-item>
+
+      <password/>
+      
       <div class="complete-btn">
         <el-button
             :loading="loading"
@@ -81,6 +58,7 @@ import UserId  from "@/views/components/user-id.vue"
 import FirstName from "@/views/components/first-name.vue"
 import LastName from "@/views/components/last-name.vue"
 import Email from "@/views/components/email.vue"
+import Password from "@/views/components/password.vue"
 import { component } from 'node_modules/vue/types/umd'
 
 
@@ -91,7 +69,8 @@ import { component } from 'node_modules/vue/types/umd'
     UserId,
     FirstName,
     LastName,
-    Email
+    Email,
+    Password
   }
 })
 export default class extends Vue {
