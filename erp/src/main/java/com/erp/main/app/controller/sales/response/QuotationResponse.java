@@ -10,7 +10,7 @@ import lombok.Data;
  *
  */
 @Data
-public class QuotationResponse {
+public class QuotationResponse  {
 
 	// 最大ページ数
 	private Integer maxpage;

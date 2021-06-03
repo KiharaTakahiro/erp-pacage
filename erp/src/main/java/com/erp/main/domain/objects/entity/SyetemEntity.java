@@ -1,5 +1,8 @@
 package com.erp.main.domain.objects.entity;
 
-public class SyetemEntity extends SystemEntitryFildes {
+import com.erp.main.domain.objects.entity.fields.SystemEntityFields;
+
+public class SyetemEntity extends SystemEntityFields {
+	
 
 }
