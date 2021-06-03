@@ -112,7 +112,7 @@ export default class extends Vue {
   }
 
   
-  private passCheckRecive(password2: any): void {
+  private checkPassRecive(password2: any): void {
     this.user.password2 = password2
   }
 
