@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.erp.main.domain.objects.entity.SystemEntity;
 
 @Repository
-public interface SystemRepository extends JpaRepository<SystemEntity, Long> {
+public interface SystemRepository extends JpaRepository<SystemEntity, String> {
 
 }
