@@ -33,7 +33,9 @@ public class MoneyComponent extends BaseResponse {
 		 * Keyは変数にして大文字にする
 		 * private static string final クラスに書く
 		 */
-		Optional<SystemEntity> tax = this.systemRepository.findById(TAX);
+		Optional<SystemEntity> taxVal = this.systemRepository.findById(TAX);
+//		int tax = (int) taxVal;
+		
 		
 		return Double.doubleToLongBits(target * 0.1);
 	}
