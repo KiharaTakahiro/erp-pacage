@@ -6,23 +6,13 @@
     <el-form
       ref="client"
       :model="client"
-      :rules="clientRules"
       autocomplete="on"
       label-position="left"
     >
-      <el-form-item prop="name">
-        <el-input
-          ref="client"
-          v-model="client.name"
-          :placeholder="$t('client.name')"
-          name="name"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-          max="50"
-          style="width:100%; margin-bottom:30px;"
+      <company-name
+        :companyName="client.name"
+        @conpanyNameValue='conpanyName'
         />
-      </el-form-item>
       <div class="complete-btn">
         <el-button
             :loading="loading"
@@ -33,8 +23,6 @@
             {{ $t('client.complete') }}
         </el-button>
       </div>
-
-
     </el-form>
 
     
@@ -48,39 +36,34 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
 import { ClientModule } from '@/store/modules/client'
+import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
-
+import { log } from 'node:console'
+import { toNamespacedPath } from 'node:path'
 
 @Component({
-  name: 'Client-save'
+  name: 'Client-save',
+  components: {
+    CompanyName
+  }
 })
 export default class extends Vue {
-  private validateClientName = (rule: any, value: string, callback: Function) => {
-    if (value.length < 1) {
-      callback(new Error('取引先会社名を入力してください。'))
-    } else if(value.length > 50){
-      callback(new Error('文字数は50文字以内で入力してください。'))
-    }else {
-      callback()
-    }
+
+  client = {
+  name: ''
   }
 
-  private client = {
-    name: ''
+  private conpanyName(name: any): void {
+    this.client.name = name
   }
 
-  private clientRules = {
-    name: [{validator: this.validateClientName, trigger: 'blur' }]
-  }
-
-  private otherQuery: Dictionary<string> = {}
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.Create(this.client)
+        await ClientModule.CreateClient(this.client)
         this.$router.push({
-          path: 'clinet'
+          path: 'clinet' 
         }).catch(err => {
           console.warn(err)
         })
@@ -97,7 +80,6 @@ export default class extends Vue {
       }
     })
   }
-  
 }
 
 

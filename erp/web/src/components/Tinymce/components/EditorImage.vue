@@ -76,7 +76,7 @@ export default class extends Vue {
       this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
       return
     }
-    this.$emit('success-callback', arr)
+    this.$('success-callback', arr)
     this.listObj = {}
     this.defaultFileList = []
     this.dialogVisible = false

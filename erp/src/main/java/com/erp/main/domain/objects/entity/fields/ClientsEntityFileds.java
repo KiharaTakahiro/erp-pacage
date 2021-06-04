@@ -26,10 +26,10 @@ public class ClientsEntityFileds extends BaseEntityFields {
 	/**
 	 * 取引先SEQ
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
+	@Id //PK
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable") //自動SEQ システムは不要
     @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "clients_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
-	@Column(name = "CLIENTS_SEQ")
+	@Column(name = "CLIENTS_SEQ") //テーブルの名前
 	private Long clientsSeq;
 
 	/**

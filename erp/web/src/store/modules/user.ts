@@ -1,27 +1,39 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout } from '@/api/users'
+import { login, logout, register } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import { createSecureServer } from 'node:http2'
 export interface IUserState {
   token: string
+  userId: string
   name: string
+  firstName: string
+  lastName: string
   avatar: string
   introduction: string
   roles: string[]
   email: string
+  password: string
+  password2: string
 }
 
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule implements IUserState {
   public token = getToken() || ''
+  public userId = ''
   public name = ''
+  public firstName = ''
+  public lastName = ''
   public avatar = ''
   public introduction = ''
   public roles: string[] = []
   public email = ''
+  public password = ''
+  public password2 = ''
+
 
   @Mutation
   private SET_TOKEN(token: string) {
@@ -121,6 +133,18 @@ class User extends VuexModule implements IUserState {
     TagsViewModule.delAllViews()
     this.SET_TOKEN('')
     this.SET_ROLES([])
+  }
+
+  @Action
+  public async CreateUser(userInfo:{userId: string, firstName: string, lastName:string, email: string, password: string}){
+    let {userId, firstName,lastName, email, password} = userInfo
+    userId = userId.trim()
+    firstName = firstName.trim()
+    lastName = lastName.trim()
+    email = email.trim()
+    password = password.trim()
+    await register({email: email, firstName: firstName, password: password, userId: userId})
+    
   }
 }
 
