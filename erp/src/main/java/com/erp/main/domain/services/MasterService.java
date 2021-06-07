@@ -3,6 +3,7 @@ package com.erp.main.domain.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +20,15 @@ import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueObjects.GetClientsConditionsVo;
+import com.erp.main.domain.objects.valueObjects.GetClientsVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
+import com.erp.main.domain.specification.ClientsSpec;
 
 /**
  * マスターの管理用のサービス
@@ -139,5 +143,27 @@ public class MasterService {
 		this.warehouseRepository.save(entity);
 		
 	}
+	
+	/*
+	 * 取引先取得
+	 * @param condition
+	 * @return
+	 */
+	public GetClientsVo getClientsVo(GetClientsConditionsVo condition) {
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		Specification<ClientsEntity> spec = Specification.where(
+				// TODO:多分ここに対象のIDが入ると思う
+				
+				
+				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
+						);
+		
+		
+				
+	}
+	
 }
 
