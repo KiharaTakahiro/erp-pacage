@@ -1,14 +1,17 @@
 package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
 import com.sun.istack.NotNull;
 
-@Entity
-@Table(name="System")
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+@MappedSuperclass
 public class SystemEntityFields extends BaseEntityFields {
 	
 	/*
