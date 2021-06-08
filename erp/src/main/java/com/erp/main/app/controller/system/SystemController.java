@@ -1,7 +1,6 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,10 +12,7 @@ import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
-import com.erp.main.app.controller.system.request.GetClientsRequest;
-import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
-import com.erp.main.domain.objects.valueObjects.GetClientsVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -107,15 +103,15 @@ public class SystemController {
 	}
 	
 	/*
-	 * 取引先取得処理
+	 * 取引先一覧処理
 	 */
 	// TODO:ID指定できるように変更すること
-	@GetMapping("/clients/info")
-	public ClientsResponse getClients(@RequestBody GetClientsRequest request) {
-		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
-		ClientsResponse response = new ClientsResponse();
-		return response
-	}
+//	@GetMapping("/clients/info")
+//	public ClientsResponse getClients(@RequestBody GetClientsRequest request) {
+//		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
+//		ClientsResponse response = new ClientsResponse();
+//		return response
+//	}
 	
 	
 }
