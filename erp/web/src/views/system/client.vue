@@ -9,6 +9,14 @@
       >
         {{ $t('client.add') }}
       </el-button>
+        <el-button
+        :loading="loading"
+        type="primary"
+        style="width:13%; margin-bottom:30px; margin-top:30px;"
+        @click.native.prevent="onClickButton2"
+      >
+        {{ $t('client.edit') }}
+      </el-button>
   </div>
 </template>
 
@@ -26,6 +34,15 @@ export default class extends Vue {
     // ボタンが押されたときの処理
     this.$router.push({
     path:'save-client'
+    }).catch(err => {
+      console.warn(err)
+    })
+    
+  }
+  onClickButton2() {
+    // ボタンが押されたときの処理
+    this.$router.push({
+    path:'edit-client'
     }).catch(err => {
       console.warn(err)
     })
