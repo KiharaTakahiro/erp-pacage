@@ -19,7 +19,7 @@ import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
-import com.erp.main.domain.objects.valueObjects.GetClientsVo;
+import com.erp.main.domain.objects.valueObjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -142,14 +142,17 @@ public class MasterService {
 	}
 	
 	@Transactional
-	public void loadClientsByClientsId(Long clientsSeq){
+	public GetClientVo getClientVo(Long clientsSeq){
 		Optional<ClientsEntity> client = clientsRepository.findById(clientsSeq);
-		if(client == null ) {
+		if(client.isEmpty()) {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 clientsSeq: %s", clientsSeq));
 		}
 		
-		GetClientsVo vo = new GetClientsVo();
-		vo.setClients(client);
+		ClientsEntity clientEntity = client.get();
+		
+		GetClientVo vo = GetClientVo.mapTo(clientEntity);
+		
+		return vo;
 	
 	}
 	

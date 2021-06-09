@@ -1,6 +1,7 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,10 @@ import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
+import com.erp.main.app.controller.system.request.GetClientRequest;
+import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
+import com.erp.main.domain.objects.valueObjects.GetClientVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -101,6 +105,18 @@ public class SystemController {
 	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
 		this.masterService.createWarehouse(request.mapTo());
 	}
+
+	
+	@GetMapping("/clients/id/edit")
+	public ClientResponse getClient(@RequestBody GetClientRequest request) {
+		Long id = 2L; 
+		GetClientVo vo = this.masterService.getClientVo(id);
+		ClientResponse response = new ClientResponse();
+		response.setClientsName(vo.getClient().getClientsName());
+		response.setClientsSeq(vo.getClient().getClientsSeq());
+		return response;
+		
+	}
 	
 	/*
 	 * 取引先一覧処理
@@ -112,6 +128,10 @@ public class SystemController {
 //		ClientsResponse response = new ClientsResponse();
 //		return response
 //	}
+	
+	
+	
+	
 	
 	
 }

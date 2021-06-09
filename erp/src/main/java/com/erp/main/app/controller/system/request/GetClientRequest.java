@@ -10,7 +10,7 @@ import lombok.Data;
  */
 
 @Data
-public class GetClientsRequest {
+public class GetClientRequest {
 	private Long clientsSeq;
 	private String clientsName;
 	

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ClientModel {
+	
 	private Long clientsSeq;
 	private String clientsName;
 }
