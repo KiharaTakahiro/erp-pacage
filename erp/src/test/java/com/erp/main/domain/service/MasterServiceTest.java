@@ -173,6 +173,27 @@ public class MasterServiceTest {
 	}
 	
 	/**
+	 * 取引先詳細のテスト
+	 * 通常パターン
+	 */
+	@Test
+	public void getClientsSuccessCase1() {
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+	}
+	
+	/**
+	 * 取引先詳細のテスト
+	 * 失敗パターン
+	 */
+//	@Test
+//	public void getClientsErrorCase1() {
+//		Optional<ClientsEntity> clientsOpt = this.createErorrClientsData();
+//		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+//	}
+		
+	
+	/**
 	 * 会社作成用のテスト
 	 * 成功例
 	 */
@@ -274,6 +295,29 @@ public class MasterServiceTest {
 		// 	取得する会社Seqの設定
 		DepartmentEntity department = new DepartmentEntity();
 		department.setCompanySeq(null);
+		return Optional.empty();
+		
+	}
+	
+	/**
+	 * デフォルトの取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createDefaultClientsData() {
+		// 	取得する会社Seqの設定
+		ClientsEntity clients = new ClientsEntity();
+		clients.setName("test");
+		return Optional.of(clients);
+		
+	}
+	
+	/**
+	 * エラー用の取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createErorrClientsData() {
+		// 	取得する会社Seqの設定
+		ClientsEntity clients = new ClientsEntity();
 		return Optional.empty();
 		
 	}
