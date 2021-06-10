@@ -1,8 +1,11 @@
 package com.erp.main.domain.component;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.erp.main.app.controller.system.response.BaseResponse;
+import com.erp.main.domain.objects.entity.SystemEntity;
 import com.erp.main.domain.repository.SystemRepository;
 
 /**
@@ -29,14 +32,13 @@ public class MoneyComponent extends BaseResponse {
 		 * Keyは変数にして大文字にする
 		 * private static string final クラスに書く
 		 */
-//		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
-//		String taxVal = taxEntity.get().getValue();
-//		long tax = Long.valueOf(taxVal);
-//		tax = tax/100;
+		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
+		String taxVal = taxEntity.get().getValue();
+		Long beforTax = Long.parseLong(taxVal.trim());
 		
+		Long tax = beforTax / 100;
 		
-		
-		return Double.doubleToLongBits(target * 0.1);
+		return Double.doubleToLongBits(target * tax);
 	}
 
 }
