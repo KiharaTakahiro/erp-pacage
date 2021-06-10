@@ -105,7 +105,10 @@ public class SystemController {
 		this.masterService.createWarehouse(request.mapTo());
 	}
 
-	
+	/*
+	 * 取引先詳細取得のエントリーポイント
+	 * @param responce
+	 */
 	@PostMapping("/clients/edit")
 	public ClientResponse getClient(@RequestBody GetClientRequest request) {
 		Long id = 2L; 

@@ -130,6 +130,7 @@ public class MasterService {
 		this.departmentRepository.save(entity);
 		
 	}
+	
 	/**
 	 * 倉庫マスタ作成処理
 	 * @param vo
@@ -140,7 +141,11 @@ public class MasterService {
 		this.warehouseRepository.save(entity);
 		
 	}
-	
+
+	/**
+	 * クライアント詳細画面のレスポンス
+	 * @param vo
+	 */
 	@Transactional
 	public GetClientVo getClientVo(Long clientsSeq){
 		Optional<ClientsEntity> client = clientsRepository.findById(clientsSeq);
@@ -148,11 +153,7 @@ public class MasterService {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 clientsSeq: %s", clientsSeq));
 		}
 		
-		ClientsEntity clientEntity = client.get();
-		
-		GetClientVo vo = GetClientVo.mapTo(clientEntity);
-		
-		return vo;
+		return GetClientVo.mapTo(client.get());
 	
 	}
 	
