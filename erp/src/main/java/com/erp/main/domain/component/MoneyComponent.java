@@ -34,12 +34,10 @@ public class MoneyComponent extends BaseResponse {
 		 */
 		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
 		String taxVal = taxEntity.get().getValue();
-		Long beforTax = Long.parseLong(taxVal.trim());
-		
-		
+		double beforTax =  Double.parseDouble(taxVal.trim());		
 		double tax = beforTax / 100;
 		
-		return target * tax;
+		return Double.doubleToLongBits(target * tax);
 	}
 
 }
