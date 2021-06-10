@@ -190,6 +190,7 @@ public class MasterServiceTest {
 	/**
 	 * 取引先詳細のテスト
 	 * 失敗パターン
+	 * 取得されたIDが無かった場合
 	 */
 	@Test
 	public void getClientsErrorCase1() {
