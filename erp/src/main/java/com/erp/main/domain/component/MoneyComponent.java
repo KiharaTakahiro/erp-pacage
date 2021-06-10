@@ -25,7 +25,7 @@ public class MoneyComponent extends BaseResponse {
 	 * 金額に対する消費税の計算を行う
 	 * @return
 	 */
-	public long computeTax(long target) {
+	public double computeTax(long target) {
 		/*
 		 * TODO: マスタ等から取得するように変更するべき
 		 * リポジトリでデータを引いてきて、数字化して1/100にして変数に
@@ -37,7 +37,7 @@ public class MoneyComponent extends BaseResponse {
 		double beforTax =  Double.parseDouble(taxVal.trim());		
 		double tax = beforTax / 100;
 		
-		return Double.doubleToLongBits(target * tax);
+		return target * tax;
 	}
 
 }

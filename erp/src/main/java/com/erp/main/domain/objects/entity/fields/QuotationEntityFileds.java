@@ -91,13 +91,13 @@ public class QuotationEntityFileds extends BaseEntityFields {
 	 */
 	@NotNull
 	@Column(name="TAX")
-	private Long tax;
+	private double tax;
 	
 	/**
 	 * 合計金額
 	 */
 	@NotNull
 	@Column(name="TOTAL")
-	private Long total;
+	private double total;
 	
 }
