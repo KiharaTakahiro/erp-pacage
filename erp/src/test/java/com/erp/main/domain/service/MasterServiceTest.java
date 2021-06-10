@@ -180,17 +180,23 @@ public class MasterServiceTest {
 	public void getClientsSuccessCase1() {
 		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
 		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
-	}
+		this.masterService.getClientVo(2L);
+//		GetClientVo vo = this.masterService.getClientVo(2L);
+//		this.masterService.getClientVo(2L);
+//		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+//		Assertions.assertEquals(clientsOpt, this.masterService.getClientVo(2L));
+			}
 	
 	/**
 	 * 取引先詳細のテスト
 	 * 失敗パターン
 	 */
-//	@Test
-//	public void getClientsErrorCase1() {
-//		Optional<ClientsEntity> clientsOpt = this.createErorrClientsData();
-//		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
-//	}
+	@Test
+	public void getClientsErrorCase1() {
+		Optional<ClientsEntity> clientsOpt = this.createErorrClientsData();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		Assertions.assertThrows(AppException.class, () -> masterService.getClientVo(2L));
+	}
 		
 	
 	/**
@@ -306,6 +312,7 @@ public class MasterServiceTest {
 	private Optional<ClientsEntity> createDefaultClientsData() {
 		// 	取得する会社Seqの設定
 		ClientsEntity clients = new ClientsEntity();
+		clients.setClientsSeq(2L);
 		clients.setName("test");
 		return Optional.of(clients);
 		
@@ -316,8 +323,6 @@ public class MasterServiceTest {
 	 * @return
 	 */
 	private Optional<ClientsEntity> createErorrClientsData() {
-		// 	取得する会社Seqの設定
-		ClientsEntity clients = new ClientsEntity();
 		return Optional.empty();
 		
 	}
