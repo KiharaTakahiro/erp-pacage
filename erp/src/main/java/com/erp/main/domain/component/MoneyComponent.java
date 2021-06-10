@@ -36,9 +36,10 @@ public class MoneyComponent extends BaseResponse {
 		String taxVal = taxEntity.get().getValue();
 		Long beforTax = Long.parseLong(taxVal.trim());
 		
-		Long tax = beforTax / 100;
 		
-		return Double.doubleToLongBits(target * tax);
+		double tax = beforTax / 100;
+		
+		return target * tax;
 	}
 
 }
