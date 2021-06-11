@@ -2,7 +2,10 @@ package com.erp.main.app.controller.sales.response;
 
 import java.util.List;
 
+import com.erp.main.app.controller.system.response.BaseResponse;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 見積一覧
@@ -10,7 +13,8 @@ import lombok.Data;
  *
  */
 @Data
-public class QuotationResponse {
+@EqualsAndHashCode(callSuper=true)
+public class QuotationResponse extends BaseResponse {
 
 	// 最大ページ数
 	private Integer maxpage;

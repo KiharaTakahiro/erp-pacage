@@ -170,7 +170,7 @@ public class QuotationService {
 		// 小計
 		quotation.setSubTotal(subtotal);
 		// 消費税
-		long tax = this.moneyComponent.computeTax(subtotal);
+		Long tax = this.moneyComponent.computeTax(subtotal);
 		quotation.setTax(tax);
 		// 合計(小計 + 消費税)
 		quotation.setTotal(subtotal + tax);

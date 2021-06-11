@@ -10,6 +10,7 @@ export default {
     createUsre:"New User",
     client: 'Client Setting',
     newClient: 'New Client',
+    editClient: 'Edit Clietnt',
     documentation: 'Documentation',
     guide: 'Guide',
     permission: 'Permission',
@@ -103,6 +104,7 @@ export default {
   client: {
     title: 'Manage Clients',
     add: 'New Clients',
+    edit: 'Edit Clients',
     complete: 'complete',
     name: 'Company Name'
   },

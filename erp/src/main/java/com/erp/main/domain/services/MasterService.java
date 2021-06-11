@@ -19,6 +19,7 @@ import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueObjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -129,6 +130,7 @@ public class MasterService {
 		this.departmentRepository.save(entity);
 		
 	}
+	
 	/**
 	 * 倉庫マスタ作成処理
 	 * @param vo
@@ -139,5 +141,39 @@ public class MasterService {
 		this.warehouseRepository.save(entity);
 		
 	}
+
+	/**
+	 * クライアント詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetClientVo getClientVo(Long clientsSeq){
+		Optional<ClientsEntity> client = clientsRepository.findById(clientsSeq);
+		if(client.isEmpty()) {
+			throw new AppException(String.format("該当の取引先を取得できませんでした。 clientsSeq: %s", clientsSeq));
+		}
+		
+		return GetClientVo.mapTo(client.get());
+	
+	}
+	
+	/*
+	 * 取引先一覧取得
+	 * @param condition
+	 * @return
+	 */
+//	public GetClientsVo getClientsVo(GetClientsConditionsVo condition) {
+//		if(condition.getPageNo() == null) {
+//			condition.setPageNo(0);
+//		}
+//		
+//		Specification<ClientsEntity> spec = Specification.where(
+//				
+//				
+//				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
+//						);
+//				
+//	}
+	
 }
 

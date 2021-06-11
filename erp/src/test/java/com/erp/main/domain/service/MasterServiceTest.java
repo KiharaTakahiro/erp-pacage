@@ -28,6 +28,7 @@ import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueObjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -173,6 +174,32 @@ public class MasterServiceTest {
 	}
 	
 	/**
+	 * 取引先詳細のテスト
+	 * 通常パターン
+	 */
+	@Test
+	public void getClientsSuccessCase1() {
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		this.masterService.getClientVo(2L);
+		GetClientVo vo = GetClientVo.mapTo(clientsOpt.get());
+		Assertions.assertEquals(vo, this.masterService.getClientVo(2L));
+			}
+	
+	/**
+	 * 取引先詳細のテスト
+	 * 失敗パターン
+	 * 取得されたIDが無かった場合
+	 */
+	@Test
+	public void getClientsErrorCase1() {
+		Optional<ClientsEntity> clientsOpt = this.createErorrClientsData();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		Assertions.assertThrows(AppException.class, () -> masterService.getClientVo(2L));
+	}
+		
+	
+	/**
 	 * 会社作成用のテスト
 	 * 成功例
 	 */
@@ -274,6 +301,28 @@ public class MasterServiceTest {
 		// 	取得する会社Seqの設定
 		DepartmentEntity department = new DepartmentEntity();
 		department.setCompanySeq(null);
+		return Optional.empty();
+		
+	}
+	
+	/**
+	 * デフォルトの取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createDefaultClientsData() {
+		// 	取得する会社Seqの設定
+		ClientsEntity clients = new ClientsEntity();
+		clients.setClientsSeq(2L);
+		clients.setName("test");
+		return Optional.of(clients);
+		
+	}
+	
+	/**
+	 * エラー用の取引先データ生成
+	 * @return
+	 */
+	private Optional<ClientsEntity> createErorrClientsData() {
 		return Optional.empty();
 		
 	}

@@ -34,6 +34,12 @@ const systemRoutes: RouteConfig = {
       name: 'save-client',
       meta: {title: 'newClient', hidden: true },
     },
+    {
+      path: 'edit-client',
+      component: () => import('@/views/system/edit-client.vue'),
+      name: 'edit-client',
+      meta: {title: 'editClient', hidden: true },
+    },
 
   ]
 }
