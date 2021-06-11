@@ -28,6 +28,7 @@ import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueObjects.CreateProductVo;
 import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueObjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -181,10 +182,8 @@ public class MasterServiceTest {
 		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
 		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
 		this.masterService.getClientVo(2L);
-//		GetClientVo vo = this.masterService.getClientVo(2L);
-//		this.masterService.getClientVo(2L);
-//		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
-//		Assertions.assertEquals(clientsOpt, this.masterService.getClientVo(2L));
+		GetClientVo vo = GetClientVo.mapTo(clientsOpt.get());
+		Assertions.assertEquals(vo, this.masterService.getClientVo(2L));
 			}
 	
 	/**
