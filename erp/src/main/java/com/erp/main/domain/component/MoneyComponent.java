@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.erp.main.app.controller.system.response.BaseResponse;
+import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.repository.SystemRepository;
 
 /**
@@ -22,7 +23,7 @@ public class MoneyComponent extends BaseResponse {
 	 * 金額に対する消費税の計算を行う
 	 * @return
 	 */
-	public Long computeTax(long target) {
+	public Long computeTax(long target, TaxType taxType) {
 		/*
 		 * TODO: マスタ等から取得するように変更するべき
 		 * リポジトリでデータを引いてきて、数字化して1/100にして変数に
@@ -34,6 +35,22 @@ public class MoneyComponent extends BaseResponse {
 //		String taxVal = taxEntity.get().getValue();
 //		double beforTax =  Double.parseDouble(taxVal.trim());		
 //		double tax = beforTax / 100;
+		
+		int num = taxType.getCode()
+		
+		
+//		
+//		swich(taxType){
+//			case 1:
+//				tax = 0;
+//				break;
+//			case 2:
+//				tax = 0.08;
+//				break;
+//			case 3:
+//				tax = 0.1;
+//				break;
+//		}
 		
 		return Double.doubleToLongBits(target * 0.1);
 	}

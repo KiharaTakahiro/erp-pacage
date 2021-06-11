@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -108,6 +109,8 @@ public class QuotationService {
 		long subtotal = 0L;
 		// 値引合計
 		long discountTotal = 0L;
+		// 税金
+		long taxTotal = 0L;
 //		
 //		List<CreateQuotationDetailVo> detail = createQuotationVo.getDetails();
 //		if(detail == null) {
@@ -141,12 +144,16 @@ public class QuotationService {
 			// 金額 (単金 × 数量 - 値引)
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
 			detailEntity.setPrice(price);
+			// 税金加算
+			TaxType taxType = product.get().getTaxType();
+			taxTotal += this.moneyComponent.computeTax(price, taxType);
 
 			// 小計を加算する
 			subtotal += price;
 			
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
+			
 			
 			// 見積詳細の追加
 			detailEntities.add(detailEntity);
@@ -170,10 +177,10 @@ public class QuotationService {
 		// 小計
 		quotation.setSubTotal(subtotal);
 		// 消費税
-		Long tax = this.moneyComponent.computeTax(subtotal);
-		quotation.setTax(tax);
+//		Long tax = this.moneyComponent.computeTax(subtotal);
+		quotation.setTax(taxTotal);
 		// 合計(小計 + 消費税)
-		quotation.setTotal(subtotal + tax);
+		quotation.setTotal(subtotal + taxTotal);
 		
 		// 見積詳細をセットする
 		quotation.setQuotationDetailEntity(detailEntities);
