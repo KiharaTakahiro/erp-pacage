@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.5.0-M3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "org.sonarqube" version "3.2.0"
 	id 'java'
 }
 
@@ -52,10 +53,6 @@ task npmRunBuild() {
 	   // "npm --prefix ${rootDir}/web run build"
 	   // 	.execute()
 	   // 	.waitForProcessOutput(System.out, System.err)
-}
-
-plugins {
-  id "org.sonarqube" version "3.2.0"
 }
 
 sonarqube {
