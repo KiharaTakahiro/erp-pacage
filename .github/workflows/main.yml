@@ -12,10 +12,6 @@ jobs:
       run:  sudo apt-get update && sudo apt-get install yarn
     - name: package install
       run:  yarn
-    - name: lint
-      run:  yarn lint:output
-    - name: test
-      run:  yarn test:cov
     - name: SonarCloudScan
       uses: sonarsource/sonarcloud-github-action@master
       env:
