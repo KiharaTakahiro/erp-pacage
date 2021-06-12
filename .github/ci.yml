@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+    
+jobs:
+  check:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: yarn install
+      run:  sudo apt-get update && sudo apt-get install yarn
+    - name: package install
+      run:  yarn
+    - name: lint
+      run:  yarn lint:output
+    - name: test
+      run:  yarn test:cov
+    - name: SonarCloudScan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_QUBE }}
