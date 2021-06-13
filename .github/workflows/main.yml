@@ -53,9 +53,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: erp-0.0.1-SNAPSHOT.jar
-          path: erp/libs/erp-0.0.1-SNAPSHOT.jar
+          path: erp/build/libs/erp-0.0.1-SNAPSHOT.jar
       - name: Save Test
         uses: actions/upload-artifact@v2
         with:
           name: testŒ‹‰Ê‚Ì•ÛŠÇ
-          path: erp/reports/tests/test
+          path: erp/build/reports/tests/test
