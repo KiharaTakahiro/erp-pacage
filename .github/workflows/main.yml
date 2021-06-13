@@ -57,5 +57,5 @@ jobs:
       - name: Save Test
         uses: actions/upload-artifact@v2
         with:
-          name: testŒ‹‰Ê‚Ì•ÛŠÇ
+          name: test
           path: erp/build/reports/tests/test
