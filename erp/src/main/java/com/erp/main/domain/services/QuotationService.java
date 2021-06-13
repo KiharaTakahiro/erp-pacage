@@ -224,7 +224,7 @@ public class QuotationService {
 			// 部署SEQ
 			quotation.setDepartmentSeq(e.getDepartmentSeq());
 			// 部署名
-			quotation.setDepartmentName(e.getDepartmentEntity().getName());				
+			quotation.setDepartmentName(e.getDepartmentEntity().getName());
 			// 見積番号
 			quotation.setQuotationNo(e.getQuotationNo());
 			// 件名

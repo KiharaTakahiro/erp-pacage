@@ -71,7 +71,7 @@ public class QuotationEntity extends QuotationEntityFileds {
 	 */
 	@Getter
 	@OneToOne
-	@JoinColumn(name="COMPANY_SEQ", insertable = false, updatable = false)
+	@JoinColumn(name="COMPANY_SEQ", insertable = false, updatable = false, nullable = true)
 	private CompanyEntity companyEntity;
 
 	/**
@@ -79,7 +79,7 @@ public class QuotationEntity extends QuotationEntityFileds {
 	 */
 	@Getter
 	@OneToOne
-	@JoinColumn(name="DEPARTMENT_SEQ", insertable = false, updatable = false)
+	@JoinColumn(name="DEPARTMENT_SEQ", insertable = false, updatable = false, nullable =true)
 	private DepartmentEntity departmentEntity;
 
 }
