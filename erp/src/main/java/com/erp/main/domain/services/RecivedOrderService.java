@@ -74,13 +74,7 @@ public class RecivedOrderService {
 	 */
 	@Autowired
 	private DepartmentRepository departmentRepository;
-	
-	/**
-	 * ロットマスタのリポジトリ
-	 */
-//	@Autowired
-//	private LotRepository lotRepository;
-	
+		
 	
 	/**
 	 * 受注作成処理
@@ -126,16 +120,6 @@ public class RecivedOrderService {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
 			}
 			
-			// 商品ロットの取得
-//			Optional<LotEntity> lot = this.lotRepository.findById(detailVo.getLotSeq());
-//			if(lot.isEmpty()) {
-//				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getLotSeq()));
-//			}
-				
-			// 受注詳細用のエンティティ生成
-			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);
-			
-			
 			// 値引がマイナスの場合はエラー
 			if(detailVo.getDiscount() < 0) {
 				throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
@@ -146,11 +130,15 @@ public class RecivedOrderService {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
 			
+			
 			// 合計金額を加算する
 			totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
 			
+			// 受注詳細用のエンティティ生成
+			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);
+
 			// 見積詳細の追加
 			detailEntities.add(detailEntity);
 			
