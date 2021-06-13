@@ -34,7 +34,7 @@ public class MoneyComponent extends BaseResponse {
 //		String taxVal = taxEntity.get().getValue();
 //		double beforTax =  Double.parseDouble(taxVal.trim());		
 //		double tax = beforTax / 100;
-		
+		// FIXME: 金額計算が正しく行えていない
 		return Double.doubleToLongBits(target * 0.1);
 	}
 
