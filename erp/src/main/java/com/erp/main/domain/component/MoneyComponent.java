@@ -36,9 +36,7 @@ public class MoneyComponent extends BaseResponse {
 //		double beforTax =  Double.parseDouble(taxVal.trim());		
 //		double tax = beforTax / 100;
 		
-		int num = taxType.getCode()
-		
-		
+		TaxType s = taxType;
 //		
 //		swich(taxType){
 //			case 1:
