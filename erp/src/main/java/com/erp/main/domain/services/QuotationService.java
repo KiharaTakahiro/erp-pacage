@@ -139,10 +139,10 @@ public class QuotationService {
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
 			detailEntity.setPrice(price);
 			
-			//
+			//商品ごとの税金タイプ
 			TaxType taxTaype = product.get().getTaxType();
 			
-			//
+			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
 					
 			// 小計を加算する
@@ -237,7 +237,7 @@ public class QuotationService {
 			return quotation;
 		}).collect(Collectors.toList());
 
-		GetQuotationVo vo = new GetQuotationVo();
+		var vo = new GetQuotationVo();
 		// トータルページ数の設定
 		vo.setMaxpage(pages.getTotalPages());
 		// 見積リストの設定

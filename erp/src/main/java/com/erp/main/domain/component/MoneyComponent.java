@@ -1,9 +1,12 @@
 package com.erp.main.domain.component;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.erp.main.app.controller.system.response.BaseResponse;
 import com.erp.main.domain.common.enums.TaxType;
+import com.erp.main.domain.objects.entity.SystemEntity;
 import com.erp.main.domain.repository.SystemRepository;
 
 /**
@@ -17,7 +20,9 @@ public class MoneyComponent extends BaseResponse {
 	@Autowired
 	private SystemRepository systemRepository;
 	
-	public static final String TAX = "TAX";
+	public static final String NO_TAX = "NO_TAX";
+	public static final String REDUCED_RATE_TAX = "REDUCED_RATE_TAX";
+	public static final String NOMAL_TAX  = "NOMAL_TAX";
 	
 	/**
 	 * 金額に対する消費税の計算を行う
@@ -31,26 +36,26 @@ public class MoneyComponent extends BaseResponse {
 		 * private static string final クラスに書く
 		 * swich文で税率を変える
 		 */
-//		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
-//		String taxVal = taxEntity.get().getValue();
-//		double beforTax =  Double.parseDouble(taxVal.trim());		
-//		double tax = beforTax / 100;
+		String TAX = null;
+
+		switch(taxType){
+			case NO_TAX:
+				TAX = NO_TAX;
+				break;
+			case REDUCED_RATE:
+				TAX = REDUCED_RATE_TAX;
+				break;
+			case NOMAL:
+				TAX = NOMAL_TAX;
+				break;
+		}
+		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
+		String taxVal = taxEntity.get().getValue();
+		double beforTax =  Double.parseDouble(taxVal.trim());		
+		double tax = beforTax / 100;
 		
-		TaxType s = taxType;
-//		
-//		swich(taxType){
-//			case 1:
-//				tax = 0;
-//				break;
-//			case 2:
-//				tax = 0.08;
-//				break;
-//			case 3:
-//				tax = 0.1;
-//				break;
-//		}
 		
-		return Double.doubleToLongBits(target * 0.1);
+		return Double.doubleToLongBits(target * tax);
 	}
 
 }
