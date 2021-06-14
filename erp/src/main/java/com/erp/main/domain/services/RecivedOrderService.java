@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -110,12 +109,12 @@ public class RecivedOrderService {
 		// 受注詳細の作成
 		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
 		// 合計金額
-		long totalPrice = 0L;
+		var totalPrice = 0L;
 		// 値引合計
-		long discountTotal = 0L;
+		var discountTotal = 0L;
 		
 		// 消費税合計
-		long taxTotal = 0L;
+		var taxTotal = 0L;
 		
 		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {
 			// 商品の取得
@@ -144,7 +143,7 @@ public class RecivedOrderService {
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
 			
 			//商品ごとの税金タイプ
-			TaxType taxTaype = product.get().getTaxType();
+			var taxTaype = product.get().getTaxType();
 			
 			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
