@@ -54,8 +54,7 @@ public class MoneyComponent extends BaseResponse {
 		double beforTax =  Double.parseDouble(taxVal.trim());		
 		double tax = beforTax / 100;
 		
-		
-		return Double.doubleToLongBits(target * tax);
+		return Math.round(target * tax);
 	}
 
 }
