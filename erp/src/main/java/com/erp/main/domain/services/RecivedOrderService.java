@@ -162,9 +162,6 @@ public class RecivedOrderService {
 		// 値引適応
 		totalPrice -= discountTotal;
 		
-		// 消費税
-//		long tax = this.moneyComponent.computeTax(totalPrice);
-		recivedOrder.setTax(taxTotal);
 		
 		// 合計金額
 		recivedOrder.setTotal(totalPrice + taxTotal);
