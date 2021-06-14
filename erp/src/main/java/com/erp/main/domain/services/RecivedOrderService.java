@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -113,6 +114,9 @@ public class RecivedOrderService {
 		// 値引合計
 		long discountTotal = 0L;
 		
+		// 消費税合計
+		long taxTotal = 0L;
+		
 		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
@@ -136,6 +140,16 @@ public class RecivedOrderService {
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
 			
+			// 金額 (単金 × 数量 - 値引)
+			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
+			
+			//商品ごとの税金タイプ
+			TaxType taxTaype = product.get().getTaxType();
+			
+			//税金の合計を加算
+			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+			
+			
 			// 受注詳細用のエンティティ生成
 			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);
 
@@ -150,11 +164,11 @@ public class RecivedOrderService {
 		totalPrice -= discountTotal;
 		
 		// 消費税
-		long tax = this.moneyComponent.computeTax(totalPrice);
-		recivedOrder.setTax(tax);
+//		long tax = this.moneyComponent.computeTax(totalPrice);
+		recivedOrder.setTax(taxTotal);
 		
 		// 合計金額
-		recivedOrder.setTotal(totalPrice + tax);
+		recivedOrder.setTotal(totalPrice + taxTotal);
 		
 		// 受注詳細をセット
 		recivedOrder.setRecivedOrderDetailEntity(detailEntities);
