@@ -37,22 +37,24 @@ public class MoneyComponent extends BaseResponse {
 		 * private static string final クラスに書く
 		 * swich文で税率を変える
 		 */
-		String TAX_VAL = null;
+		String TaxVal = null;
 
 		switch(taxType){
 			case NO_TAX:
-				TAX_VAL = NO_TAX;
+				TaxVal = NO_TAX;
 				break;
 			case REDUCED_RATE:
-				TAX_VAL = REDUCED_RATE_TAX;
+				TaxVal = REDUCED_RATE_TAX;
 				break;
 			case NOMAL:
-				TAX_VAL = NOMAL_TAX;
+				TaxVal = NOMAL_TAX;
 				break;
 		}
-		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX_VAL);
+		
+		
+		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TaxVal);
 		if(taxEntity.isEmpty()) {
-			throw new AppException(String.format("該当の税区分を取得できませんでした。 TAX: %s", TAX_VAL));
+			throw new AppException(String.format("該当の税区分を取得できませんでした。 TAX: %s", TaxVal));
 		}
 		String taxVal = taxEntity.get().getValue();
 		var beforTax =  Double.parseDouble(taxVal.trim());		
