@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -109,17 +108,9 @@ public class QuotationService {
 		long subtotal = 0L;
 		// 値引合計
 		long discountTotal = 0L;
-		// 税金
-		long taxTotal = 0L;
-//		
-//		List<CreateQuotationDetailVo> detail = createQuotationVo.getDetails();
-//		if(detail == null) {
-//			throw new AppException(String.format("商品詳細を入力してください"));
-//		}
-//		
+
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
-			
 			
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
@@ -144,16 +135,12 @@ public class QuotationService {
 			// 金額 (単金 × 数量 - 値引)
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
 			detailEntity.setPrice(price);
-			// 税金加算
-			TaxType taxType = product.get().getTaxType();
-			taxTotal += this.moneyComponent.computeTax(price, taxType);
 
 			// 小計を加算する
 			subtotal += price;
 			
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
-			
 			
 			// 見積詳細の追加
 			detailEntities.add(detailEntity);
@@ -177,10 +164,10 @@ public class QuotationService {
 		// 小計
 		quotation.setSubTotal(subtotal);
 		// 消費税
-//		Long tax = this.moneyComponent.computeTax(subtotal);
-		quotation.setTax(taxTotal);
+		Long tax = this.moneyComponent.computeTax(subtotal);
+		quotation.setTax(tax);
 		// 合計(小計 + 消費税)
-		quotation.setTotal(subtotal + taxTotal);
+		quotation.setTotal(subtotal + tax);
 		
 		// 見積詳細をセットする
 		quotation.setQuotationDetailEntity(detailEntities);
@@ -231,7 +218,9 @@ public class QuotationService {
 			// 部署SEQ
 			quotation.setDepartmentSeq(e.getDepartmentSeq());
 			// 部署名
-			quotation.setDepartmentName(e.getDepartmentEntity().getName());				
+			if(e.getDepartmentEntity() != null) {
+				quotation.setDepartmentName(e.getDepartmentEntity().getName());				
+			}
 			// 見積番号
 			quotation.setQuotationNo(e.getQuotationNo());
 			// 件名
