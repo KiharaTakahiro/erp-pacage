@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -106,11 +105,11 @@ public class QuotationService {
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
 		// 小計
-		long subtotal = 0L;
+		var subtotal = 0L;
 		// 値引合計
-		long discountTotal = 0L;
+		var discountTotal = 0L;
 		// 消費税合計
-		long taxTotal = 0L;
+		var taxTotal = 0L;
 
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
@@ -140,7 +139,7 @@ public class QuotationService {
 			detailEntity.setPrice(price);
 			
 			//商品ごとの税金タイプ
-			TaxType taxTaype = product.get().getTaxType();
+			var taxTaype = product.get().getTaxType();
 			
 			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);

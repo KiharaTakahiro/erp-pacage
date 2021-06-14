@@ -50,13 +50,13 @@ public class MoneyComponent extends BaseResponse {
 				TAX_VAL = NOMAL_TAX;
 				break;
 		}
-		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX_VAL);
+		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAXf_VAL);
 		if(taxEntity.isEmpty()) {
 			throw new AppException(String.format("該当の税区分を取得できませんでした。 TAX: %s", TAX_VAL));
 		}
 		String taxVal = taxEntity.get().getValue();
-		double beforTax =  Double.parseDouble(taxVal.trim());		
-		double tax = beforTax / 100;
+		var beforTax =  Double.parseDouble(taxVal.trim());		
+		var tax = beforTax / 100;
 		
 		return Math.round(target * tax);
 	}
