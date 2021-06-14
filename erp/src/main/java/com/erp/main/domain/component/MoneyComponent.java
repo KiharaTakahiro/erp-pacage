@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.erp.main.app.controller.system.response.BaseResponse;
 import com.erp.main.domain.common.enums.TaxType;
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.SystemEntity;
 import com.erp.main.domain.repository.SystemRepository;
 
@@ -50,6 +51,9 @@ public class MoneyComponent extends BaseResponse {
 				break;
 		}
 		Optional<SystemEntity> taxEntity = this.systemRepository.findById(TAX);
+		if(taxEntity.isEmpty()) {
+			throw new AppException(String.format("該当の税区分を取得できませんでした。 TAX: %s", TAX));
+		}
 		String taxVal = taxEntity.get().getValue();
 		double beforTax =  Double.parseDouble(taxVal.trim());		
 		double tax = beforTax / 100;
