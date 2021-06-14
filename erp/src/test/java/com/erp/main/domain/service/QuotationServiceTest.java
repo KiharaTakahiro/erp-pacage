@@ -104,7 +104,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		this.quotationService.createQuotation(createQuotationVo);
@@ -143,7 +143,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		this.quotationService.createQuotation(createQuotationVo);
@@ -182,7 +182,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -210,7 +210,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -238,7 +238,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -266,7 +266,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -294,7 +294,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -322,7 +322,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
@@ -350,7 +350,7 @@ public class QuotationServiceTest {
 		// 取得処理をモック化(商品情報)
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		// 消費税はサービスのテストでは10%として考える
-		Mockito.when(this.moneyComponent.computeTax(700L)).thenReturn(70L);
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
 		// 処理の実行
 		Assertions.assertThrows(AppException.class, () -> quotationService.createQuotation(createQuotationVo));
