@@ -112,7 +112,7 @@ public class QuotationService {
 		var taxTotal = 0L;
 		
 		// 詳細の入力確認
-		if(createQuotationVo.getDetails().size() <= 0) {
+		if(createQuotationVo.getDetails().isEmpty()) {
 			throw new AppException(String.format("見積詳細が入力されていません"));
 		}
 			

@@ -117,7 +117,7 @@ public class RecivedOrderService {
 		var taxTotal = 0L;
 		
 		// 詳細の入力確認
-		if(createRecivedOrderVo.getDetails().size() <= 0) {
+		if(createRecivedOrderVo.getDetails().isEmpty()) {
 			throw new AppException(String.format("受注詳細が入力されていません"));
 		}
 		
