@@ -111,6 +111,7 @@ public class QuotationService {
 		// 消費税合計
 		var taxTotal = 0L;
 		
+		// 詳細の入力確認
 		if(createQuotationVo.getDetails().size() <= 0) {
 			throw new AppException(String.format("見積詳細が入力されていません"));
 		}
