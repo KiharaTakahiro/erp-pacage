@@ -116,6 +116,11 @@ public class RecivedOrderService {
 		// 消費税合計
 		var taxTotal = 0L;
 		
+		// 詳細の入力確認
+		if(createRecivedOrderVo.getDetails().size() <= 0) {
+			throw new AppException(String.format("受注詳細が入力されていません"));
+		}
+		
 		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
