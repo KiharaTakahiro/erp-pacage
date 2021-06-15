@@ -362,6 +362,40 @@ public class RecivedOrderServiceTest {
 		
 	}
 	
+	/*
+	 * 異常のケース
+	 * 詳細が無い
+	 */
+	@Test
+	public void createRecivedOrderErrorCase8() {
+		// 実行用のテストデータ
+		CreateRecivedOrderVo createRecivedOrderVo = this.createErrorInputData();
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();
+		Optional<CompanyEntity> companyOpt = this.createDefaultCompanyData();
+		Optional<DepartmentEntity> departmentOpt = this.createDefaultDepartmentData();
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		Optional<QuotationEntity> quotationOpt = this.createDefaultQuotationData();
+		
+		// 取得処理をモック化(取引先情報)
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		// 取得処理をモック化(会社情報)
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(companyOpt);
+		// 取得処理をモック化(部署情報)
+		Mockito.when(this.departmentRepository.findById(2L)).thenReturn(departmentOpt);
+		// 取得処理をモック化(商品情報)
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		// 取得処理をモック化(見積情報)
+		Mockito.when(this.quotationRepository.findById(39L)).thenReturn(quotationOpt);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> recivedOrderService.createRecivedOrder(createRecivedOrderVo));
+				
+
+		
+	}
+	
 	/**
 	 * デフォルトの商品データ生成
 	 * @return
@@ -439,6 +473,32 @@ public class RecivedOrderServiceTest {
 		createRecivedOrderVo.setDetails(details);
 		return createRecivedOrderVo;
 	}
+	
+	/**
+	 * エラー用の商品データ生成
+	 * 詳細がない
+	 * @return
+	 */
+	private CreateRecivedOrderVo createErrorInputData() {
+		CreateRecivedOrderVo createRecivedOrderVo = new CreateRecivedOrderVo();
+		
+		// 取引先SEQ
+		createRecivedOrderVo.setClientsSeq(2L);
+		// 部門SEQ
+		createRecivedOrderVo.setDepartmentSeq(2L);
+		// 会社SEQ
+		createRecivedOrderVo.setCompanySeq(2L);
+		// 見積SEQ
+		createRecivedOrderVo.setQuotationSeq(39L);
+		// 受注日
+		createRecivedOrderVo.setRecivedOrderDate("20210503");
+		
+		
+		List<CreateRecivedOrderDetailVo> details = new ArrayList<>();
+		createRecivedOrderVo.setDetails(details);
+		return createRecivedOrderVo;
+	}
+	
 	
 	/**
 	 * エラー用（個数がマイナス）の商品データ生成
