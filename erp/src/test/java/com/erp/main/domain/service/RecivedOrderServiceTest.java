@@ -367,7 +367,7 @@ public class RecivedOrderServiceTest {
 	 * 詳細が無い
 	 */
 	@Test
-	public void createRecivedOrderErrorCase8() {
+	void createRecivedOrderErrorCase8() {
 		// 実行用のテストデータ
 		CreateRecivedOrderVo createRecivedOrderVo = this.createErrorInputData();
 		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();

@@ -362,7 +362,7 @@ public class QuotationServiceTest {
 	 * 詳細が無い
 	 */
 	@Test
-	public void createQuotationErrorCase8() {
+	void createQuotationErrorCase8() {
 		// 実行用テストデータの作成
 		CreateQuotationVo createQuotationVo = this.createErrorInputData();
 		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData();

@@ -118,7 +118,7 @@ public class RecivedOrderService {
 		
 		// 詳細の入力確認
 		if(createRecivedOrderVo.getDetails().isEmpty()) {
-			throw new AppException(String.format("受注詳細が入力されていません"));
+			throw new AppException("受注詳細が入力されていません");
 		}
 		
 		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {

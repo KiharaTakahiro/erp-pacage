@@ -113,7 +113,7 @@ public class QuotationService {
 		
 		// 詳細の入力確認
 		if(createQuotationVo.getDetails().isEmpty()) {
-			throw new AppException(String.format("見積詳細が入力されていません"));
+			throw new AppException("見積詳細が入力されていません");
 		}
 			
 
