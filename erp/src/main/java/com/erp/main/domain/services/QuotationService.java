@@ -110,6 +110,12 @@ public class QuotationService {
 		var discountTotal = 0L;
 		// 消費税合計
 		var taxTotal = 0L;
+		
+		// 詳細の入力確認
+		if(createQuotationVo.getDetails().isEmpty()) {
+			throw new AppException("見積詳細が入力されていません");
+		}
+			
 
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
