@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+
 /**
  * 税区分
  * @author takah

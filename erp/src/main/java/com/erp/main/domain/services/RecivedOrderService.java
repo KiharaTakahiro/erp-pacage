@@ -109,9 +109,12 @@ public class RecivedOrderService {
 		// 受注詳細の作成
 		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
 		// 合計金額
-		long totalPrice = 0L;
+		var totalPrice = 0L;
 		// 値引合計
-		long discountTotal = 0L;
+		var discountTotal = 0L;
+		
+		// 消費税合計
+		var taxTotal = 0L;
 		
 		for(CreateRecivedOrderDetailVo detailVo: createRecivedOrderVo.getDetails()) {
 			// 商品の取得
@@ -136,6 +139,16 @@ public class RecivedOrderService {
 			// 値引を加算する
 			discountTotal += detailVo.getDiscount();
 			
+			// 金額 (単金 × 数量 - 値引)
+			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
+			
+			//商品ごとの税金タイプ
+			var taxTaype = product.get().getTaxType();
+			
+			//税金の合計を加算
+			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+			
+			
 			// 受注詳細用のエンティティ生成
 			RecivedOrderDetailEntity detailEntity = RecivedOrderDetailEntity.create(detailVo);
 
@@ -149,12 +162,9 @@ public class RecivedOrderService {
 		// 値引適応
 		totalPrice -= discountTotal;
 		
-		// 消費税
-		long tax = this.moneyComponent.computeTax(totalPrice);
-		recivedOrder.setTax(tax);
 		
 		// 合計金額
-		recivedOrder.setTotal(totalPrice + tax);
+		recivedOrder.setTotal(totalPrice + taxTotal);
 		
 		// 受注詳細をセット
 		recivedOrder.setRecivedOrderDetailEntity(detailEntities);

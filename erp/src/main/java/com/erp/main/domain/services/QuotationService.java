@@ -105,9 +105,11 @@ public class QuotationService {
 		// 見積詳細の作成
 		Set<QuotationDetailEntity> detailEntities = new HashSet<>();
 		// 小計
-		long subtotal = 0L;
+		var subtotal = 0L;
 		// 値引合計
-		long discountTotal = 0L;
+		var discountTotal = 0L;
+		// 消費税合計
+		var taxTotal = 0L;
 
 		// 見積詳細作成処理
 		for(CreateQuotationDetailVo detailVo: createQuotationVo.getDetails()) {
@@ -135,7 +137,13 @@ public class QuotationService {
 			// 金額 (単金 × 数量 - 値引)
 			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
 			detailEntity.setPrice(price);
-
+			
+			//商品ごとの税金タイプ
+			var taxTaype = product.get().getTaxType();
+			
+			//税金の合計を加算
+			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+					
 			// 小計を加算する
 			subtotal += price;
 			
@@ -163,11 +171,10 @@ public class QuotationService {
 		
 		// 小計
 		quotation.setSubTotal(subtotal);
-		// 消費税
-		Long tax = this.moneyComponent.computeTax(subtotal);
-		quotation.setTax(tax);
+		
+		quotation.setTax(taxTotal);
 		// 合計(小計 + 消費税)
-		quotation.setTotal(subtotal + tax);
+		quotation.setTotal(subtotal + taxTotal);
 		
 		// 見積詳細をセットする
 		quotation.setQuotationDetailEntity(detailEntities);
@@ -228,7 +235,7 @@ public class QuotationService {
 			return quotation;
 		}).collect(Collectors.toList());
 
-		GetQuotationVo vo = new GetQuotationVo();
+		var vo = new GetQuotationVo();
 		// トータルページ数の設定
 		vo.setMaxpage(pages.getTotalPages());
 		// 見積リストの設定
