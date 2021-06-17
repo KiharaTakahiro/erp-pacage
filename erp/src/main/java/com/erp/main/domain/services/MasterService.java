@@ -158,7 +158,7 @@ public class MasterService {
 	 */
 	@Transactional
 	public void createLot(CreateLotVo vo) {
-		LotEntity entity = LotEntity.create(vo);
+		var entity = LotEntity.create(vo);
 		this.lotRepository.save(entity);
 		
 	}

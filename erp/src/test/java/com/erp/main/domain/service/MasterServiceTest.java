@@ -164,7 +164,7 @@ public class MasterServiceTest {
 	 * ロット作成用のテスト
 	 */
 	@Test
-	public void registeLotSuccessCase1() {
+	void registeLotSuccessCase1() {
 		
 		// 実行用のデータ作成
 		var vo = new CreateLotVo();
