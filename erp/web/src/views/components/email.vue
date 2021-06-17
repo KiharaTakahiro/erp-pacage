@@ -15,7 +15,6 @@
     autocomplete="on"
     max="50"
     v-on:blur="submit"
-    style="width:100%; margin-bottom:30px;"
     />
 </el-form-item>
 
