@@ -14,7 +14,7 @@ import lombok.Data;
 public class GetQuotationVo {
 
 	// 見積リスト
-	List<Quotation> quotations = new ArrayList<Quotation>();
+	List<Quotation> quotations = new ArrayList<>();
 	
 	// 全体のページ数
 	Integer maxpage;
