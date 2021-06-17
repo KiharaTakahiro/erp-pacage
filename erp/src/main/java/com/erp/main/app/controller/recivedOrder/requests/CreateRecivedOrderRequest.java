@@ -3,8 +3,8 @@ package com.erp.main.app.controller.recivedOrder.requests;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
-import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
+import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.sun.istack.NotNull;
 
 import lombok.Data;

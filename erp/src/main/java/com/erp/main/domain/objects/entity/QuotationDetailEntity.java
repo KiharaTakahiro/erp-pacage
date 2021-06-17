@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.QuotationDetailEntityFileds;
-import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
+import com.erp.main.domain.objects.valueobjects.CreateQuotationVo.CreateQuotationDetailVo;
 
 import lombok.Getter;
 

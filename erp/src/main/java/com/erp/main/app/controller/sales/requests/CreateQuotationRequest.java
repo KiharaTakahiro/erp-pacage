@@ -3,8 +3,8 @@ package com.erp.main.app.controller.sales.requests;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.erp.main.domain.objects.valueObjects.CreateQuotationVo;
-import com.erp.main.domain.objects.valueObjects.CreateQuotationVo.CreateQuotationDetailVo;
+import com.erp.main.domain.objects.valueobjects.CreateQuotationVo;
+import com.erp.main.domain.objects.valueobjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.sun.istack.NotNull;
 
 import lombok.Data;

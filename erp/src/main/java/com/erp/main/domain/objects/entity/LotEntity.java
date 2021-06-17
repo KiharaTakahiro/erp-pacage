@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.LotEntityFileds;
-import com.erp.main.domain.objects.valueObjects.CreateLotVo;
+import com.erp.main.domain.objects.valueobjects.CreateLotVo;
 
 
 /**

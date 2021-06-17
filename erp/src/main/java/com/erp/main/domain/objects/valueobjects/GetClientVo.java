@@ -1,4 +1,4 @@
-package com.erp.main.domain.objects.valueObjects;
+package com.erp.main.domain.objects.valueobjects;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.model.ClientModel;

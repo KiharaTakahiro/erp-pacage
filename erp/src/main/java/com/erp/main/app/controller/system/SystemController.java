@@ -16,7 +16,7 @@ import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
-import com.erp.main.domain.objects.valueObjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 

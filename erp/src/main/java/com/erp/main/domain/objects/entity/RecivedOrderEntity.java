@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.RecivedOrderEntityFileds;
-import com.erp.main.domain.objects.valueObjects.CreateRecivedOrderVo;
+import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 
 import lombok.Getter;
 import lombok.Setter;

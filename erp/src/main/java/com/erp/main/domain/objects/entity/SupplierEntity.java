@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.SupplierEntityFileds;
-import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 
 
 /**

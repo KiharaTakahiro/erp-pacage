@@ -23,7 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.erp.main.app.config.WebSecurityConfig;
 import com.erp.main.app.controller.system.request.AuthUserRequest;
-import com.erp.main.domain.objects.valueObjects.AuthUserVo;
+import com.erp.main.domain.objects.valueobjects.AuthUserVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;

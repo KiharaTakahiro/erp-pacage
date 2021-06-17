@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.WarehouseEntityFileds;
-import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 
 
 /**
