@@ -2,7 +2,8 @@
 <el-form-item 
   label="メールアドレス"
   :rules="[
-    { required: true, message: 'メールアドレスは必ず入力してください', trigger: 'blur'}
+    { required: true, message: 'メールアドレスは必ず入力してください', trigger: 'blur'},
+    { type: 'email', message: 'メールアドレスが不正です', trigger: ['blur', 'change'] }
   ]"
   prop="email"
   >
