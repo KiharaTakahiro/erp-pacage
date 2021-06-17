@@ -11,8 +11,8 @@ public class GetClientVo {
 	
 	public static GetClientVo mapTo(ClientsEntity entity) {
 		
-		GetClientVo vo = new GetClientVo();
-		ClientModel model = new ClientModel();
+		var vo = new GetClientVo();
+		var model = new ClientModel();
 		model.setClientsSeq(entity.getClientsSeq());
 		model.setClientsName(entity.getName());
 		vo.setClient(model);
