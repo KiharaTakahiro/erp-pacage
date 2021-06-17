@@ -1,6 +1,5 @@
 package com.erp.main.domain.objects.valueobjects;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -14,7 +13,7 @@ import lombok.Data;
 public class GetQuotationVo {
 
 	// 見積リスト
-	List<Quotation> quotations = new ArrayList<>();
+	List<Quotation> quotations ;
 	
 	// 全体のページ数
 	Integer maxpage;
