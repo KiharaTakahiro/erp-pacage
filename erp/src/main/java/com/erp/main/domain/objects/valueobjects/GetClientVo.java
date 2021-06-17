@@ -8,8 +8,6 @@ import lombok.Data;
 @Data
 public class GetClientVo {
 	private ClientModel client;
-//	private Long clientsSeq;
-//	private String clientsName;
 	
 	public static GetClientVo mapTo(ClientsEntity entity) {
 		
