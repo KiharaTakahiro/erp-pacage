@@ -60,8 +60,6 @@ public class CreateRecivedOrderVo {
 		// 状態
 		private Integer status;
 		
-		// 受注SEQ
-//		private Long recivedOrderSeq;
 		
 	}
 		
