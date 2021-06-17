@@ -10,19 +10,22 @@ import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
+import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
-import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
-import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
-import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
-import com.erp.main.domain.objects.valueObjects.CreateProductVo;
-import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
-import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
-import com.erp.main.domain.objects.valueObjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
+import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
+import com.erp.main.domain.objects.valueobjects.CreateLotVo;
+import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
+import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
@@ -70,6 +73,13 @@ public class MasterService {
 	 */
 	@Autowired
 	private WarehouseRepository warehouseRepository;
+	
+	/*
+	 * ロットのレポジトリ
+	 */
+	
+	@Autowired
+	private LotRepository lotRepository;
 	
 	/**
 	 * 商品マスタ作成処理
@@ -139,6 +149,17 @@ public class MasterService {
 	public void createWarehouse(CreateWarehouseVo vo) {
 		WarehouseEntity entity = WarehouseEntity.create(vo);
 		this.warehouseRepository.save(entity);
+		
+	}
+	
+	/**
+	 * ロットマスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createLot(CreateLotVo vo) {
+		var entity = LotEntity.create(vo);
+		this.lotRepository.save(entity);
 		
 	}
 

@@ -1,4 +1,4 @@
-package com.erp.main.domain.objects.valueObjects;
+package com.erp.main.domain.objects.valueobjects;
 import java.util.List;
 
 import lombok.Data;
@@ -60,8 +60,6 @@ public class CreateRecivedOrderVo {
 		// 状態
 		private Integer status;
 		
-		// 受注SEQ
-//		private Long recivedOrderSeq;
 		
 	}
 		

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.erp.main.app.controller.sales.requests.CreateQuotationRequest;
 import com.erp.main.app.controller.sales.requests.GetQuotationRequest;
 import com.erp.main.app.controller.sales.response.QuotationResponse;
-import com.erp.main.domain.objects.valueObjects.GetQuotationVo;
+import com.erp.main.domain.objects.valueobjects.GetQuotationVo;
 import com.erp.main.domain.services.QuotationService;
 
 /**

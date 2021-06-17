@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
 import com.erp.main.app.controller.system.request.CreateDepartmentRequest;
+import com.erp.main.app.controller.system.request.CreateLotRequest;
 import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
@@ -15,7 +16,7 @@ import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.CreateUserResponse;
-import com.erp.main.domain.objects.valueObjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -87,6 +88,7 @@ public class SystemController {
 		this.masterService.createCompany(request.mapTo());
 	}
 	
+	
 	/**
 	 * 部署作成用のエントリーポイント
 	 * @param req
@@ -103,6 +105,15 @@ public class SystemController {
 	@PostMapping("/warehouse/register")
 	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
 		this.masterService.createWarehouse(request.mapTo());
+	}
+	
+	/**
+	 * ロット作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/lot/register")
+	public void createLot(@RequestBody CreateLotRequest request) {
+		this.masterService.createLot(request.mapTo());
 	}
 
 	/*
