@@ -12,12 +12,12 @@ public class CreateDepartmentVo {
 	/**
 	 * 会社Seq
 	 */
-	private Long DepartmentCompanySeq;
+	private Long departmentCompanySeq;
 	
 	/**
 	 * 部署名
 	 */
-	private String DepartmentName;
+	private String departmentName;
 	
 	
 }
