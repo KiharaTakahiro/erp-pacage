@@ -99,7 +99,7 @@ export default {
   {
     add :'ユーザー新規登録',
     firstName: '名前',
-    lastName: '苗字',
+    lastName: '名字',
     id: 'ユーザーID',
     email: 'メールアドレス',
     password: 'パスワード',
