@@ -1,5 +1,4 @@
 package com.erp.main.domain.objects.valueobjects;
-
 import java.util.List;
 
 import lombok.Data;
@@ -11,9 +10,9 @@ import lombok.Data;
  */
 @Data
 public class GetQuotationVo {
-
+	
 	// 見積リスト
-	List<Quotation> quotations ;
+	List<Quotation> quotations;
 	
 	// 全体のページ数
 	Integer maxpage;
