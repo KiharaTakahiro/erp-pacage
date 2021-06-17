@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class GetClientsVo {
 	
-	List<ClientModel> clients = new ArrayList<ClientModel>();
+	List<ClientModel> clients = new ArrayList<>();
 	
 	Integer maxpage;
 }
