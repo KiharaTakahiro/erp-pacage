@@ -24,7 +24,7 @@ public abstract class DateValidatelmp  implements ConstraintValidator<DateValida
             return true;
 		}
        
-		Pattern ptn = Pattern.compile("^(\\d{4})(\\d{1,2})(\\d{1,2})$");
+		Pattern ptn = Pattern.compile("^(\\d{4})[-/]?(\\d{1,2})[-/]?(\\d{1,2})$");
 		Matcher mch = ptn.matcher(value);
 		if(mch.find()){
               try {
