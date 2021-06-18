@@ -7,6 +7,11 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/*
+ * 日付のバリデーションの実行クラス
+ * @author ngt
+ */
+
 public abstract class DateValidatelmp  implements ConstraintValidator<DateValidation, String> {
 
 	@Override

@@ -8,14 +8,23 @@ import java.lang.annotation.Target;
 
 import javax.validation.Payload;
 
+/*
+ * 日付のバリデーションのアノテーション
+ * @author ngt
+ */
+
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.FIELD,ElementType.ANNOTATION_TYPE})
 public @interface DateValidation {
+	// メッセージ
 	String message() default "{0}は日付として許可された形式ではありません。";
+	
+	// おまじない
 	Class<?>[]groups() default {};
     Class<? extends Payload>[] payload() default {};
 	
+    
     @Retention(RetentionPolicy.CLASS)
     @Target({ElementType.FIELD,ElementType.METHOD,ElementType.PARAMETER,ElementType.LOCAL_VARIABLE})
     @Documented

@@ -1,5 +1,7 @@
 package com.erp.main.app.controller.sales;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +29,7 @@ public class SalesController {
 	 * @param request
 	 */
 	@PostMapping("/quotation/register")
-	public void createQuotation(@RequestBody CreateQuotationRequest request) {
+	public void createQuotation(@Valid @RequestBody CreateQuotationRequest request) {
 		this.quotationService.createQuotation(request.mapTo());
 	}
 	

@@ -1,5 +1,7 @@
 package com.erp.main.app.controller.recivedOrder;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ public class RecivedOrderController {
 	 * @param request
 	 */
 	@PostMapping("/recivedorder/register")
-	public void createRecivedOrder(@RequestBody CreateRecivedOrderRequest request) {
+	public void createRecivedOrder(@Valid @RequestBody CreateRecivedOrderRequest request) {
 		this.recivedOrderService.createRecivedOrder(request.mapTo());
 	}
 	

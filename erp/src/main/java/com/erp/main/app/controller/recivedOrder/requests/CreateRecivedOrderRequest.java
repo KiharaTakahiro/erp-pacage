@@ -3,6 +3,7 @@ package com.erp.main.app.controller.recivedOrder.requests;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.erp.main.app.annotations.datevalidation.DateValidation;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.sun.istack.NotNull;
@@ -31,6 +32,7 @@ public class CreateRecivedOrderRequest {
 	private Long quotationSeq;
 	
 	// 受注日
+	@DateValidation
 	private String recivedOrderDate;
 	
 	// 消費税
@@ -52,6 +54,7 @@ public class CreateRecivedOrderRequest {
 	public static class CreateRecivedOrderDetailRequest {
 
 		// 配送日
+		@DateValidation
 		private String deriveryDate;
 		
 		// 値引
