@@ -1,6 +1,6 @@
 package com.erp.main.app.controller.sales.requests;
 
-import com.erp.main.domain.objects.valueObjects.GetQuotationConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetQuotationConditionsVo;
 
 import lombok.Data;
 

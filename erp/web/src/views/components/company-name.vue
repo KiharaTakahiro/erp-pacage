@@ -15,7 +15,6 @@
       tabindex="1"
       autocomplete="on"
       v-on:blur='companyNameSend'
-      style="width:100%; margin-bottom:30px;"
     />
   </el-form-item>
 

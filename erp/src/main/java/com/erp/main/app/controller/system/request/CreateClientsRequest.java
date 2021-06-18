@@ -1,6 +1,6 @@
 package com.erp.main.app.controller.system.request;
 
-import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.sun.istack.NotNull;
 
 import lombok.Data;

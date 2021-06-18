@@ -1,4 +1,4 @@
-package com.erp.main.domain.objects.valueObjects;
+package com.erp.main.domain.objects.valueobjects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class GetClientsVo {
 	
-	List<ClientModel> clients = new ArrayList<ClientModel>();
+	List<ClientModel> clients = new ArrayList<>();
 	
 	Integer maxpage;
 }

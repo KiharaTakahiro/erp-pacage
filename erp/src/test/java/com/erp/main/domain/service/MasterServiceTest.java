@@ -19,19 +19,22 @@ import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
+import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
-import com.erp.main.domain.objects.valueObjects.CreateClientsVo;
-import com.erp.main.domain.objects.valueObjects.CreateCompanyVo;
-import com.erp.main.domain.objects.valueObjects.CreateDepartmentVo;
-import com.erp.main.domain.objects.valueObjects.CreateProductVo;
-import com.erp.main.domain.objects.valueObjects.CreateSupplierVo;
-import com.erp.main.domain.objects.valueObjects.CreateWarehouseVo;
-import com.erp.main.domain.objects.valueObjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
+import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
+import com.erp.main.domain.objects.valueobjects.CreateLotVo;
+import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
+import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
+import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
@@ -88,6 +91,11 @@ public class MasterServiceTest {
 	@Mock
 	private WarehouseRepository warehouseRepository;
 	
+	/*
+	 * ロットのリポジトリ
+	 */
+	@Mock
+	private LotRepository lotRepository;
 	
 	
 	/**
@@ -150,6 +158,27 @@ public class MasterServiceTest {
 		entity.setName("test社");
 		
 		Mockito.verify(this.supplierRepository, times(1)).save(entity);
+	}
+	
+	/**
+	 * ロット作成用のテスト
+	 */
+	@Test
+	void registeLotSuccessCase1() {
+		
+		// 実行用のデータ作成
+		var vo = new CreateLotVo();
+		vo.setLotDate("20210617");
+		vo.setLotNo("1234");		
+		// 処理実行
+		this.masterService.createLot(vo);
+		
+		// 検証用のデータ作成
+		var entity = new LotEntity();
+		entity.setLotNo("1234");
+		entity.setLotDate("20210617");
+		
+		Mockito.verify(this.lotRepository, times(1)).save(entity);
 	}
 	
 	

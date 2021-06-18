@@ -2,7 +2,7 @@ package com.erp.main.app.controller.system.request;
 
 import com.erp.main.domain.common.enums.BaseEnum;
 import com.erp.main.domain.common.enums.TaxType;
-import com.erp.main.domain.objects.valueObjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 import com.sun.istack.NotNull;
 
 import lombok.Data;

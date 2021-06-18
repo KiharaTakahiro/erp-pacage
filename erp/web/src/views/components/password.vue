@@ -12,6 +12,7 @@
         v-model="password"
         autocomplete="off"
         v-on:blur="submitPass"
+        max="50"
         />
     </el-form-item>
     <el-form-item

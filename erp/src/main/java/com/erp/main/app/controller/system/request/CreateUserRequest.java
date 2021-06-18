@@ -1,6 +1,6 @@
 package com.erp.main.app.controller.system.request;
 
-import com.erp.main.domain.objects.valueObjects.CreateUserVo;
+import com.erp.main.domain.objects.valueobjects.CreateUserVo;
 
 import lombok.Data;
 
