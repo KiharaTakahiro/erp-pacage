@@ -67,11 +67,3 @@ task npmRunBuild() {
 processResources {
     dependsOn npmRunBuild
 }
-
-apply plugin: 'checkstyle'
-
-checkstyle {
-  toolVersion '8.28'
-  ignoreFailures true
-  configFile file('config/google_checks.xml')
-}

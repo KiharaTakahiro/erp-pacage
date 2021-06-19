@@ -43,16 +43,6 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
         working-directory: erp
-      - name: Check Style
-        run: ./gradlew checkstyle --stacktrace
-        continue-on-error: true
-        working-directory: erp
-      - name: Save Style Report
-        run: pwd
-        working-directory: erp
-      - name: Save Style Report
-        run: tree
-        working-directory: erp
       - name: Build
         run: ./gradlew build
         working-directory: erp
