@@ -49,6 +49,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonarqube --info
         working-directory: erp
+      - name: Check Style
+        run: ./gradlew check
+        working-directory: erp
+      - name: Check Style
+        run: tree
+        working-directory: erp
       - name: Save jar
         uses: actions/upload-artifact@v2
         with:

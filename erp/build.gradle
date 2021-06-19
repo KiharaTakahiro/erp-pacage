@@ -68,3 +68,9 @@ processResources {
     dependsOn npmRunBuild
 }
 
+apply plugin: 'checkstyle'
+
+checkstyle {
+  toolVersion '8.16'
+  configFile file('./config/google_checks.xml')
+}
