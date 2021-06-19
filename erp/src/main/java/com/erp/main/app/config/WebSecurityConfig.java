@@ -50,6 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	
 	public static final String TOKEN_PREFIX = "Bearer ";
 	
+	/**
+	 * ユーザサービス
+	 */
 	@Autowired
 	private UserService userService;
 
