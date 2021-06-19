@@ -44,7 +44,7 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: erp
       - name: Check Style
-        run: ./gradlew check
+        run: ./gradlew check --stacktrace
         continue-on-error: true
         working-directory: erp
       - name: Save Style Report
