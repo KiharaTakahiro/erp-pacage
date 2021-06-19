@@ -29,7 +29,9 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 	 */
 	
 	public static RecivedOrderDetailEntity create(CreateRecivedOrderDetailVo vo) {
-		RecivedOrderDetailEntity entity = new RecivedOrderDetailEntity();
+
+		var entity = new RecivedOrderDetailEntity();
+		
 		// 商品SEQ
 		entity.setDeriveryDate(vo.getDeriveryDate());
 		// 値引
@@ -42,8 +44,6 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		entity.setQuantity(vo.getQuantity());
 		// 状態
 		entity.setStatus(vo.getStatus());	
-		// 受注SEQ
-//		entity.setRecivedOrderDetailSeq(vo.getRecivedOrderSeq());
 		return entity;
 		
 	}

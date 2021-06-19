@@ -21,10 +21,11 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.QuotationDetailEntity;
 import com.erp.main.domain.objects.entity.QuotationEntity;
+import com.erp.main.domain.objects.model.QuotationModel;
 import com.erp.main.domain.objects.valueobjects.CreateQuotationVo;
+import com.erp.main.domain.objects.valueobjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.erp.main.domain.objects.valueobjects.GetQuotationConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetQuotationVo;
-import com.erp.main.domain.objects.valueobjects.CreateQuotationVo.CreateQuotationDetailVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -189,7 +190,6 @@ public class QuotationService {
 		quotation = this.quotationRepository.save(quotation);
 	}
 	
-	
 	/**
 	 * 見積取得処理
 	 * @param condition
@@ -216,8 +216,8 @@ public class QuotationService {
 		
 		// HACK: 下記の書き方は可読性を落とすと思うため辞めたいが、速度を考えるとこちらの方が早くなる
 		// ような気がするため一度実装して見て著しい処理速度の差がない場合は通常の拡張Forで書く予定
-		List<GetQuotationVo.Quotation> quotations = pages.get().map(e -> {
-			GetQuotationVo.Quotation quotation = new GetQuotationVo.Quotation();
+		List<QuotationModel> quotations = pages.get().map(e -> {
+			var quotation = new QuotationModel();
 			// 取引先SEQ
 			quotation.setClientsSeq(e.getClientsSeq());
 			// 取引先名

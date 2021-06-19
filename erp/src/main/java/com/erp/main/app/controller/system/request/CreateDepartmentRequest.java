@@ -12,23 +12,25 @@ import lombok.Data;
 @Data
 public class CreateDepartmentRequest {
 	
-	/**
-	 * 会社seq
-	 */
+	// 会社SEQ
 	private Long companySeq;
 
-	/**
-	 * 部署名
-	 */
+	// 部署名
 	private String name;
 	
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
 	public CreateDepartmentVo mapTo() {
-		CreateDepartmentVo vo = new CreateDepartmentVo();
+		
+		var vo = new CreateDepartmentVo();
 		
 		// 会社seq
 		vo.setDepartmentCompanySeq(this.getCompanySeq());
 		// 部署名
 		vo.setDepartmentName(this.getName());
+		
 		return vo;
 	}
 	

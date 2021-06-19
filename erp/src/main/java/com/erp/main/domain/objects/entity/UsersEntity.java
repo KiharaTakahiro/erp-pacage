@@ -25,7 +25,8 @@ public class UsersEntity extends UsersEntityFileds{
 	 * @return
 	 */
 	public static UsersEntity create(String userId, String password,String firstName, String lastName, String email) {
-		UsersEntity entity =  new UsersEntity();
+		
+		var entity =  new UsersEntity();
 		// ユーザID
 		entity.setUserId(userId);
 		// パスワード
@@ -40,6 +41,7 @@ public class UsersEntity extends UsersEntityFileds{
 		entity.setLockFlag(Boolean.FALSE);
 		// 連続ログイン失敗回数
 		entity.setFailuerCount(0);
+		
 		return entity;
 	}
 

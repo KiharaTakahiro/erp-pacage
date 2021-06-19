@@ -33,7 +33,9 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 	 */
 	
 	public static RecivedOrderEntity create(CreateRecivedOrderVo vo ) {
-		RecivedOrderEntity entity = new RecivedOrderEntity();
+		
+		var entity = new RecivedOrderEntity();
+		
 		// 取引先SEQ
 		entity.setClientsSeq(vo.getClientsSeq());
 		// 会社SEQ
@@ -52,8 +54,6 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 		return entity;
 
 	}
-	
-	
 
 	/**
 	 * 受注詳細

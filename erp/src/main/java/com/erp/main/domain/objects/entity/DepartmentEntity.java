@@ -17,16 +17,21 @@ import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
 @Table(name="Department")
 public class DepartmentEntity extends DepartmentEntityFileds {
 
-public static DepartmentEntity create(CreateDepartmentVo vo) {
+	/**
+	 * 部署エンティティの生成
+	 * @param vo
+	 * @return
+	 */
+	public static DepartmentEntity create(CreateDepartmentVo vo) {
 		
-	DepartmentEntity entity = new DepartmentEntity();
+		var entity = new DepartmentEntity();
+			
+		// 部署SEQ
+		entity.setCompanySeq(vo.getDepartmentCompanySeq());
+		// 部署名
+		entity.setName(vo.getDepartmentName());
 		
-	// 会社Seq
-	entity.setCompanySeq(vo.getDepartmentCompanySeq());
-	// 部署名
-	entity.setName(vo.getDepartmentName());
-	
-	return entity;
+		return entity;
 	
 	}
 }

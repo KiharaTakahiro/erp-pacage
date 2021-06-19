@@ -50,7 +50,7 @@ public class BaseEntityFields implements Serializable {
      */
     @PrePersist
     public void prePersist() {
-        Date date = new Date();
+        var date = new Date();
         insertDate = date;
         updateDate = date;
     }

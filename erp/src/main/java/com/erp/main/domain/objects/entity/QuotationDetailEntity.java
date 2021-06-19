@@ -27,13 +27,16 @@ public class QuotationDetailEntity extends QuotationDetailEntityFileds {
 	 * @return
 	 */
 	public static QuotationDetailEntity create(CreateQuotationDetailVo vo) {
-		QuotationDetailEntity entity = new QuotationDetailEntity();
+		
+		var entity = new QuotationDetailEntity();
+		
 		// 商品SEQ
 		entity.setProductSeq(vo.getProductSeq());
 		// 数量
 		entity.setQuantity(vo.getQuantity());
 		// 値引
 		entity.setDiscount(vo.getDiscount());
+		
 		return entity;
 	}
 	

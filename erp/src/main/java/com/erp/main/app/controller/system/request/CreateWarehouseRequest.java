@@ -5,18 +5,29 @@ import com.sun.istack.NotNull;
 
 import lombok.Data;
 
+/**
+ * 倉庫登録リクエスト
+ * @author takah
+ *
+ */
 @Data
 public class CreateWarehouseRequest {
-	/*
-	 * 倉庫名
-	 */
+
+	// 倉庫名
 	@NotNull
 	private String warehouseName;
 	
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
 	public CreateWarehouseVo mapTo() {
-		 CreateWarehouseVo vo = new  CreateWarehouseVo();
+		 
+		var vo = new  CreateWarehouseVo();
+		
 		// 商品名
 		vo.setWarehouseName(this.getWarehouseName());
+		
 		return vo;
 	}
 	
