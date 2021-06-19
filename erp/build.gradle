@@ -71,7 +71,7 @@ processResources {
 apply plugin: 'checkstyle'
 
 checkstyle {
-  toolVersion '8.16'
+  toolVersion '8.28'
   ignoreFailures true
-  configFile file('${rootDir}/config/google_checks.xml')
+  configFile file('config/google_checks.xml')
 }
