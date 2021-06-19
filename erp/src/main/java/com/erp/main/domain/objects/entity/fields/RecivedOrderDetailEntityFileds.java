@@ -2,6 +2,8 @@ package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -83,6 +85,7 @@ public class RecivedOrderDetailEntityFileds extends BaseEntityFields {
 	@NotNull
 	@Column(name="STATUS")
 	@Convert(converter = RacivedOrderStatusConverter.class)
+	@Enumerated(EnumType.ORDINAL)
 	private RacivedOrderStatus status;
 	
 }
