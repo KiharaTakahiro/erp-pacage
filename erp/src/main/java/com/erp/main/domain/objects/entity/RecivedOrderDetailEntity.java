@@ -6,6 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.erp.main.domain.common.enums.BaseEnum;
+import com.erp.main.domain.common.enums.RacivedOrderStatus;
 import com.erp.main.domain.objects.entity.fields.RecivedOrderDetailEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 
@@ -43,7 +45,7 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		// 数量
 		entity.setQuantity(vo.getQuantity());
 		// 状態
-		entity.setStatus(vo.getStatus());	
+		entity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 0));	
 		return entity;
 		
 	}
