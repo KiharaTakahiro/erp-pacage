@@ -72,5 +72,6 @@ apply plugin: 'checkstyle'
 
 checkstyle {
   toolVersion '8.16'
+  ignoreFailures true
   configFile file('./config/google_checks.xml')
 }
