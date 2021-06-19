@@ -45,7 +45,7 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		// 数量
 		entity.setQuantity(vo.getQuantity());
 		// 状態
-		entity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 0));	
+		entity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 1));	
 		return entity;
 		
 	}

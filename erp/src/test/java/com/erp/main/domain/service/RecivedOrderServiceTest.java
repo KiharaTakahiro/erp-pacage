@@ -675,8 +675,8 @@ public class RecivedOrderServiceTest {
 		detailEntity.setQuantity(4);
 		// 配送日
 		detailEntity.setDeriveryDate("20210503");
-		// 状態
-		detailEntity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 0));
+		// 状態(必ず準備中にする)
+		detailEntity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 1));
 		
 		return entity;
 	}
