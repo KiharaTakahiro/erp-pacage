@@ -22,22 +22,29 @@ public class CreateQuotationRequest {
 	// 取引先SEQ
 	@NotNull
 	private Long clientsSeq;
+	
 	// 会社SEQ
 	private Long companySeq;
+	
 	// 部署SEQ
 	private Long departmentSeq;
+	
 	// 見積番号
 	@NotNull
 	private String quotationNo;
+	
 	// 作成日
 	@DateValidation
 	private String createDate;
+	
 	// 件名
 	@NotNull
 	private String subject;
+	
 	// 値引合計
 	@NotNull
 	private Long discountTotal;
+	
 	// 見積詳細
 	private List<CreateDetailRequest> details;
 	
@@ -52,9 +59,11 @@ public class CreateQuotationRequest {
 		// 商品SEQ
 		@NotNull
 		private Long productSeq;
+
 		// 数量
 		@NotNull
 		private Integer quantity;
+		
 		// 値引
 		@NotNull
 		private Long discount;
