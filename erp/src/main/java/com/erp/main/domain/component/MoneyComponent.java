@@ -18,26 +18,26 @@ import com.erp.main.domain.repository.SystemRepository;
 @Component
 public class MoneyComponent extends BaseResponse {
 	
+	/**
+	 * システムリポジトリ
+	 */
 	@Autowired
 	private SystemRepository systemRepository;
 	
-	public static final String NO_TAX = "NO_TAX";
-	public static final String REDUCED_RATE_TAX = "REDUCED_RATE_TAX";
-	public static final String NOMAL_TAX  = "NOMAL_TAX";
+	// 税金なしのシステムリポジトリキー
+	private static final String NO_TAX = "NO_TAX";
+	// 軽減税率のシステムリポジトリのキー
+	private static final String REDUCED_RATE_TAX = "REDUCED_RATE_TAX";
+	// 通常の税金のシステムリポジトリのキー
+	private static final String NOMAL_TAX  = "NOMAL_TAX";
 	
 	/**
 	 * 金額に対する消費税の計算を行う
 	 * @return
 	 */
 	public Long computeTax(long target, TaxType taxType) {
-		/*
-		 * TODO: マスタ等から取得するように変更するべき
-		 * リポジトリでデータを引いてきて、数字化して1/100にして変数に
-		 * Keyは変数にして大文字にする
-		 * private static string final クラスに書く
-		 * swich文で税率を変える
-		 */
-		String taxCase = null;
+
+		String taxCase;
 
 		switch(taxType){
 			case NO_TAX:
@@ -49,6 +49,8 @@ public class MoneyComponent extends BaseResponse {
 			case NOMAL:
 				taxCase = NOMAL_TAX;
 				break;
+			default:
+				throw new AppException((String.format("想定外の税区分です。。 taxVal: %s", taxType)));
 		}
 		
 		

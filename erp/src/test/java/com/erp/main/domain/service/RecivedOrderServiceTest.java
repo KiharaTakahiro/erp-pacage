@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import com.erp.main.domain.common.enums.BaseEnum;
+import com.erp.main.domain.common.enums.RacivedOrderStatus;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -673,8 +675,8 @@ public class RecivedOrderServiceTest {
 		detailEntity.setQuantity(4);
 		// 配送日
 		detailEntity.setDeriveryDate("20210503");
-		// 状態
-		detailEntity.setStatus(0);
+		// 状態(必ず準備中にする)
+		detailEntity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 1));
 		
 		return entity;
 	}

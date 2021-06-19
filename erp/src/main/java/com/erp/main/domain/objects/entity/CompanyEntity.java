@@ -17,9 +17,14 @@ import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 @Table(name="Company")
 public class CompanyEntity extends CompanyEntityFileds {
 	
+	/**
+	 * 会社エンティティの生成
+	 * @param vo
+	 * @return
+	 */
 	public static CompanyEntity create(CreateCompanyVo vo) {
 		
-		CompanyEntity entity = new CompanyEntity();
+		var entity = new CompanyEntity();
 		
 		// 会社名
 		entity.setName(vo.getCompanyName());
@@ -29,6 +34,7 @@ public class CompanyEntity extends CompanyEntityFileds {
 		entity.setAddress(vo.getCompanyAddress());
 		// 会社電話番号
 		entity.setPhone(vo.getCompanyPhone());
+		
 		return entity;
 	}
 }

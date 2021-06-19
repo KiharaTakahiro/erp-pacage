@@ -17,12 +17,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.erp.main.app.config.WebSecurityConfig;
 import com.erp.main.app.controller.system.request.AuthUserRequest;
+import com.erp.main.domain.common.exception.AuthException;
 import com.erp.main.domain.objects.valueobjects.AuthUserVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,7 +34,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @author takah
  *
  */
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		
 	/**
 	 * 有効期限
@@ -50,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 	private AuthenticationManager authenticationManager;
 	
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, PasswordEncoder passwordEncorder) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
 
         // ログイン用のpathを変更する
@@ -79,8 +79,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                             new ArrayList<>())
             );
         } catch (IOException e) {
-        	// TODO: 認証系のエラーを作って返却する
-            throw new RuntimeException(e);
+            throw new AuthException(e);
         }
     }
     
@@ -101,10 +100,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader(WebSecurityConfig.AUTH_KEY_NAME,  WebSecurityConfig.TOKEN_PREFIX + token);
         res.setContentType("application/json");
         PrintWriter out = res.getWriter();
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
         Map<String, Object> resMap = new HashMap<>();
         resMap.put("token", WebSecurityConfig.TOKEN_PREFIX + token);
-        String resJson = mapper.writeValueAsString(resMap);
+        var resJson = mapper.writeValueAsString(resMap);
         out.print(resJson);
     }
 }

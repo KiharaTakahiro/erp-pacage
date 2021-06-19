@@ -43,11 +43,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
         working-directory: erp
-      - name: Build and analyze
+      - name: Build
+        run: ./gradlew build
+        working-directory: erp
+      - name: analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build sonarqube --info
+        run: ./gradlew sonarqube --info
+        continue-on-error: true
         working-directory: erp
       - name: Save jar
         uses: actions/upload-artifact@v2

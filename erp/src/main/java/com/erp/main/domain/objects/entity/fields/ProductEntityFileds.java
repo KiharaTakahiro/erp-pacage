@@ -9,10 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.common.enums.TaxType.TaxTypeConverter;
-import com.sun.istack.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;

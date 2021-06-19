@@ -4,19 +4,28 @@ import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 
 import lombok.Data;
 
+/**
+ * 取引先作成リクエスト
+ * @author takah
+ *
+ */
 @Data
 public class CreateClientsRequest {
 	
-	/**
-	 * 取引先名
-	 */
-	
+	// 取引先名
 	private String clientsName;
 	
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
 	public CreateClientsVo mapTo() {
-		CreateClientsVo vo = new CreateClientsVo();
+		
+		var vo = new CreateClientsVo();
+		
 		// 商品名
 		vo.setClientsName(this.getClientsName());
+		
 		return vo;
 	}
 

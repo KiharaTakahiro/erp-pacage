@@ -17,11 +17,18 @@ import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 @Table(name="Clients")
 public class ClientsEntity extends ClientsEntityFileds {
 	
+	/**
+	 * 取引先エンティティ生成
+	 * @param vo
+	 * @return
+	 */
 	public static ClientsEntity create(CreateClientsVo vo) {
 
-		ClientsEntity entity = new ClientsEntity();
+		var entity = new ClientsEntity();
 		
+		// 取引先名
 		entity.setName(vo.getClientsName());
+		
 		return entity;
 	}
 

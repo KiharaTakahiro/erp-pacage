@@ -4,19 +4,28 @@ import com.sun.istack.NotNull;
 
 import lombok.Data;
 
+/**
+ * 仕入れ先登録
+ * @author takah
+ *
+ */
 @Data
 public class CreateSupplierRequest {
 	
-	/**
-	 * 取引先名
-	 */
+	// 仕入れ先名
 	@NotNull
 	private String supplierName;
 	
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
 	public CreateSupplierVo mapTo() {
-		CreateSupplierVo vo = new CreateSupplierVo();
-		// 商品名
+		var vo = new CreateSupplierVo();
+		
+		// 仕入れ先名
 		vo.setSupplierName(this.getSupplierName());
+
 		return vo;
 	}
 }

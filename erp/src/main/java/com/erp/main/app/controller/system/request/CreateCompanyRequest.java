@@ -12,29 +12,26 @@ import lombok.Data;
 @Data
 public class CreateCompanyRequest {	
 	
-	/**
-	 * 会社名
-	 */
+	// 会社名
 	private String name;
 	
-	/**
-	 * 会社郵便番号
-	 */
+	// 会社郵便番号
 	private String zip;
-	/**
-	 * 会社住所
-	 */
+	
+	// 会社住所
 	private String address;
 	
-	/**
-	 * 	会社電話番号
-	 */
+	// 会社電話番号
 	private String phone;
 	
-
+	
+	/**
+	 * リクエストからValueObjectへの変換
+	 * @return
+	 */
 	public CreateCompanyVo mapTo() {
 		
-		CreateCompanyVo vo = new CreateCompanyVo();
+		var vo = new CreateCompanyVo();
 		
 		// 会社名
 		vo.setCompanyName(this.getName());
@@ -44,6 +41,7 @@ public class CreateCompanyRequest {
 		vo.setCompanyAddress(this.getAddress());
 		// 会社電話番号
 		vo.setCompanyPhone(this.getPhone());
+		
 		return vo;
 	}
 	

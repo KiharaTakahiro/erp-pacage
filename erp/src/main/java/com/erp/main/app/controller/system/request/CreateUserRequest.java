@@ -12,37 +12,28 @@ import lombok.Data;
 @Data
 public class CreateUserRequest {
 	
-	/**
-	 * ユーザID
-	 */
+	// ユーザID
 	private String userId;
 	
-	/**
-	 * パスワード
-	 */
+	// パスワード
 	private String password;
 	
-	/**
-	 * 姓
-	 */
+	// 姓
 	private String firstName;
 	
-	/**
-	 * 名
-	 */
+	// 名
 	private String lastName;
 	
-	/**
-	 * Email
-	 */
+	// email
 	private String email;
 	
 	/**
-	 * ユーザ作成用のValueObjectへのマッピング
+	 * リクエストからValueObjectへのマッピング
 	 * @return
 	 */
 	public CreateUserVo mapTo() {
-		CreateUserVo vo = new CreateUserVo();
+		var vo = new CreateUserVo();
+		
 		// ユーザID
 		vo.setUserId(this.getUserId());
 		// パスワード
@@ -53,6 +44,7 @@ public class CreateUserRequest {
 		vo.setLastName(this.getLastName());
 		// email
 		vo.setEmail(this.getEmail());
+		
 		return vo;
 	}
 }

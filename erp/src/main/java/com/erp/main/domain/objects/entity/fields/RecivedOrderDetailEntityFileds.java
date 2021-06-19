@@ -1,13 +1,18 @@
 package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.NotNull;
+import com.erp.main.domain.common.enums.RacivedOrderStatus;
+import com.erp.main.domain.common.enums.RacivedOrderStatus.RacivedOrderStatusConverter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -79,6 +84,8 @@ public class RecivedOrderDetailEntityFileds extends BaseEntityFields {
 	// TODO: Enumに変更する
 	@NotNull
 	@Column(name="STATUS")
-	private Integer status;
+	@Convert(converter = RacivedOrderStatusConverter.class)
+	@Enumerated(EnumType.ORDINAL)
+	private RacivedOrderStatus status;
 	
 }

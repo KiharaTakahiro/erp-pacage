@@ -1,13 +1,18 @@
 package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.NotNull;
+import com.erp.main.domain.common.enums.OrderStatus;
+import com.erp.main.domain.common.enums.OrderStatus.OrderStatusConverter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,9 +46,10 @@ public class OrderDetailEntityFileds extends BaseEntityFields {
 	/**
 	 * 発注ステータス
 	 */
-	// TODO: Enumに変更する
 	@Column(name = "STATUS")
-	private Long status;
+	@Convert(converter = OrderStatusConverter.class)
+	@Enumerated(EnumType.ORDINAL)
+	private OrderStatus status;
 
 	/**
 	 * 数量

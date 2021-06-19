@@ -15,8 +15,6 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
-import com.erp.main.app.controller.system.response.CreateUserResponse;
-import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -46,10 +44,8 @@ public class SystemController {
 	 * @return
 	 */
 	@PostMapping("/users/register")
-	public CreateUserResponse createUser(@RequestBody CreateUserRequest request) {
+	public void createUser(@RequestBody CreateUserRequest request) {
 		this.userService.registerUser(request.mapTo());
-		CreateUserResponse response = new CreateUserResponse();
-		return response;
 	}
 	
 	/**
@@ -123,8 +119,8 @@ public class SystemController {
 	@PostMapping("/clients/edit")
 	public ClientResponse getClient(@RequestBody GetClientRequest request) {
 		Long id = 2L; 
-		GetClientVo vo = this.masterService.getClientVo(id);
-		ClientResponse response = new ClientResponse();
+		var vo = this.masterService.getClientVo(id);
+		var response = new ClientResponse();
 		response.setClientsName(vo.getClient().getClientsName());
 		response.setClientsSeq(vo.getClient().getClientsSeq());
 		return response;

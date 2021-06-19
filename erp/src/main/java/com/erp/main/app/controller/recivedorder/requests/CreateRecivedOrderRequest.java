@@ -1,12 +1,13 @@
-package com.erp.main.app.controller.recivedOrder.requests;
+package com.erp.main.app.controller.recivedorder.requests;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.erp.main.app.annotations.datevalidation.DateValidation;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
-import com.sun.istack.NotNull;
 
 import lombok.Data;
 
@@ -43,6 +44,7 @@ public class CreateRecivedOrderRequest {
 	@NotNull
 	private Long total;
 	
+	// 受注詳細
 	private List<CreateRecivedOrderDetailRequest> details;
 	
 	/**
@@ -76,14 +78,17 @@ public class CreateRecivedOrderRequest {
 		// 状態
 		@NotNull
 		private Integer status;
-		
-		// 受注SEQ
-//		private Long recivedOrderSeq;
-		
+				
 	}
 	
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
 	public CreateRecivedOrderVo mapTo() {
-		CreateRecivedOrderVo vo = new CreateRecivedOrderVo();
+		
+		var vo = new CreateRecivedOrderVo();
+		
 		// 取引先SEQ
 		vo.setClientsSeq(this.getClientsSeq());
 		// 会社SEQ
@@ -101,8 +106,9 @@ public class CreateRecivedOrderRequest {
 		
 		// 値引詳細
 		List<CreateRecivedOrderDetailVo> detailVos = new ArrayList<>();
+		
 		for(CreateRecivedOrderDetailRequest detail: this.getDetails()) {
-			CreateRecivedOrderDetailVo detailVo = new CreateRecivedOrderDetailVo();
+			var detailVo = new CreateRecivedOrderDetailVo();
 			
 			//配送日
 			detailVo.setDeriveryDate(detail.getDeriveryDate());		

@@ -67,4 +67,3 @@ task npmRunBuild() {
 processResources {
     dependsOn npmRunBuild
 }
-

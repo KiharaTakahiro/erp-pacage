@@ -50,6 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	
 	public static final String TOKEN_PREFIX = "Bearer ";
 	
+	/**
+	 * ユーザサービス
+	 */
 	@Autowired
 	private UserService userService;
 
@@ -68,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .authenticated()
                 .and().logout()
                 .and().csrf().disable()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), passwordEncoder()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -1,4 +1,4 @@
-package com.erp.main.app.controller.recivedOrder;
+package com.erp.main.app.controller.recivedorder;
 
 import javax.validation.Valid;
 
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.erp.main.app.controller.recivedOrder.requests.CreateRecivedOrderRequest;
+import com.erp.main.app.controller.recivedorder.requests.CreateRecivedOrderRequest;
 import com.erp.main.domain.services.RecivedOrderService;
 
 /*
@@ -16,8 +16,13 @@ import com.erp.main.domain.services.RecivedOrderService;
  */
 @RestController
 public class RecivedOrderController {
+	
+	/**
+	 * 受注サービス
+	 */
 	@Autowired
 	private RecivedOrderService recivedOrderService;
+	
 	/**
 	 * 見積作成
 	 * @param request

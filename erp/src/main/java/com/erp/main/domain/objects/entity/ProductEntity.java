@@ -17,8 +17,15 @@ import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 @Table(name="Product")
 public class ProductEntity extends ProductEntityFileds {
 	
+	/**
+	 * 商品エンティティの生成
+	 * @param vo
+	 * @return
+	 */
 	public static ProductEntity create(CreateProductVo vo) {
-		ProductEntity entity = new ProductEntity();
+		
+		var entity = new ProductEntity();
+		
 		// 商品名
 		entity.setName(vo.getProductName());
 		// 金額
@@ -27,6 +34,7 @@ public class ProductEntity extends ProductEntityFileds {
 		entity.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
 		// 税区分
 		entity.setTaxType(vo.getTaxType());
+		
 		return entity;
 	}
 }

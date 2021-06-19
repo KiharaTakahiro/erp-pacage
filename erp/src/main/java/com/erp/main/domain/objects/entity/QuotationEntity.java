@@ -32,7 +32,9 @@ public class QuotationEntity extends QuotationEntityFileds {
 	 * @return
 	 */
 	public static QuotationEntity create(CreateQuotationVo vo) {
-		QuotationEntity entity = new QuotationEntity();
+		
+		var entity = new QuotationEntity();
+		
 		// 取引先SEQ
 		entity.setClientsSeq(vo.getClientsSeq());
 		// 会社SEQ
