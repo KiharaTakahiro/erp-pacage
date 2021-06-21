@@ -1,14 +1,16 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { createClient } from '@/api/client'
+import { createClient, editClientPage } from '@/api/client'
 import store from '@/store'
 import elementVariables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
 export interface IClientState {
+  id: string,
   name: string
 }
 
 @Module({ dynamic: true, store, name: 'client' })
 class Client extends VuexModule implements IClientState {
+  public id = ''
   public name = ''
 
   @Action
@@ -16,6 +18,14 @@ class Client extends VuexModule implements IClientState {
     let { name } = clientInfo
     name = name.trim()
     await createClient({clientsName: name})
+  }
+
+  
+  @Action
+  public async EditClientPage(clientInfo: { id: string}) {
+    let { id } = clientInfo
+    id = id.trim()
+    await editClientPage({clientsId: id})
   }
 }
 

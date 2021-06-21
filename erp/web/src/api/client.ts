@@ -6,3 +6,10 @@ export const createClient = (data: any) =>
     method: 'post',
     data
   })
+
+  export const editClientPage = (data: any) =>
+  request({
+    url: '/clients/edit',
+    method: 'post',
+    data
+  })
