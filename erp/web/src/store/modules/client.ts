@@ -13,6 +13,11 @@ class Client extends VuexModule implements IClientState {
   public id = ''
   public name = ''
 
+  @Mutation
+  private SET_NAME(name: string){
+    this.name = name
+  }
+
   @Action
   public async CreateClient(clientInfo: { name: string}) {
     let { name } = clientInfo
@@ -25,6 +30,7 @@ class Client extends VuexModule implements IClientState {
   public async EditClientPage(clientInfo: { id: string}) {
     let { id } = clientInfo
     id = id.trim()
+    console.log(id)
     await editClientPage({clientsId: id})
   }
 }
