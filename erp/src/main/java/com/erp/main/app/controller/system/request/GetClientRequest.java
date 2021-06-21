@@ -14,9 +14,6 @@ public class GetClientRequest {
 	// 取引先SEQ
 	private Long clientsSeq;
 	
-	// 取引先名
-	private String clientsName;
-	
 	/**
 	 * リクエスト空ValueObjectへのマッピング
 	 * @return
@@ -27,9 +24,7 @@ public class GetClientRequest {
 		
 		// 取引先SEQ
 		vo.setClientsSeq(this.getClientsSeq());
-		// 取引先名
-		vo.setClientName(this.getClientsName());
-		
+
 		return vo;
 	}
 }

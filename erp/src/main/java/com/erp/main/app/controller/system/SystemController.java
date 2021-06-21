@@ -118,7 +118,7 @@ public class SystemController {
 	 */
 	@PostMapping("/clients/edit")
 	public ClientResponse getClient(@RequestBody GetClientRequest request) {
-		Long id = 2L; 
+		Long id = request.getClientsSeq(); 
 		var vo = this.masterService.getClientVo(id);
 		var response = new ClientResponse();
 		response.setClientsName(vo.getClient().getClientsName());
