@@ -24,10 +24,6 @@
         </el-button>
       </div>
     </el-form>
-
-    
-    
-    
   </div>
 </template>
 

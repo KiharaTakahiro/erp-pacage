@@ -36,7 +36,6 @@ export default class extends Vue {
   client = {
     id: '2'
   }
-
   createClientBtn() {
     // ボタンが押されたときの処理
     this.$router.push({
@@ -44,7 +43,6 @@ export default class extends Vue {
     }).catch(err => {
       console.warn(err)
     })
-    
   }
   editClientBtn() {
     // ボタンが押されたときの処理
