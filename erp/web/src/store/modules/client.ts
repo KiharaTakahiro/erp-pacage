@@ -30,8 +30,8 @@ class Client extends VuexModule implements IClientState {
   public async EditClientPage(clientInfo: { id: string}) {
     let { id } = clientInfo
     id = id.trim()
-    console.log(id)
     await editClientPage({clientsId: id})
+    console.log(await fetch("/clients/edit"))
   }
 }
 

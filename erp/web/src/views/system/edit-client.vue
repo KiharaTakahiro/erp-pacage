@@ -18,7 +18,6 @@
             :loading="loading"
             type="primary"
             style="width:100%;"
-            @click.native.prevent="createClient"
           >
             {{ $t('client.complete') }}
         </el-button>
@@ -56,30 +55,31 @@ export default class extends Vue {
   private conpanyName(name: any): void {
     this.client.name = name
   }
+  
+  
 
-
-  private createClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      if(valid){
-        await ClientModule.CreateClient(this.client)
-        this.$router.push({
-          path: 'clinet' 
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
-        this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
-        })
-        return false
-      }
-    })
-  }
+  // private createClient(){
+  //   (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+  //     if(valid){
+  //       await ClientModule.CreateClient(this.client)
+  //       this.$router.push({
+  //         path: 'clinet' 
+  //       }).catch(err => {
+  //         console.warn(err)
+  //       })
+  //     this.$message({
+  //     message: this.$t('components.createClients').toString(),
+  //     type: 'success'
+  //   })
+  //     }else {
+  //       this.$message({
+  //       message: this.$t('components.validation').toString(),
+  //       type: 'error'
+  //       })
+  //       return false
+  //     }
+  //   })
+  // }
 }
 
 
