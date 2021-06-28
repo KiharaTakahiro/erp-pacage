@@ -41,7 +41,7 @@ class Client extends VuexModule implements IClientState {
   }
 
   @Action
-  public async EditdClient(clientInfo: {id: string, name: string }) {
+  public async EditedClient(clientInfo: {id: string, name: string }) {
     let {id, name } = clientInfo
     name = name.trim()
     id = id.trim()
