@@ -25,18 +25,12 @@ class Client extends VuexModule implements IClientState {
     await createClient({clientsName: name})
   }
 
-  @Action
-  public async GetClientInfo(){
-    const { data } = await getClient({ clientsId: 2 })
-  }
-
   
   @Action
   public async EditClientPage(clientInfo: { id: string }) {
     let { id } = clientInfo
     id = id.trim()
     const { data } = await getClient({ clientsId: id })
-    console.log(data)
     this.SET_NAME(data.clientsName)
   }
 }
