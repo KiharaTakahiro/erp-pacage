@@ -60,10 +60,10 @@ export default class extends Vue {
 
 
 
-  private createClient(){
+  private editClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.CreateClient(this.client)
+        await ClientModule.EditClient(this.client)
         this.$router.push({
           path: 'clinet' 
         }).catch(err => {
