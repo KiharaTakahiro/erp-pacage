@@ -46,7 +46,7 @@ export default class extends Vue {
   }
   editClientBtn() {
     // ボタンが押されたときの処理
-      ClientModule.EditClientPage(this.client)
+      ClientModule.EditClient(this.client)
       this.$router.push({
       path:'edit-client'
       }).catch(err => {
