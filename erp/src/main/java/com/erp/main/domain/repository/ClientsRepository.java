@@ -13,5 +13,6 @@ import com.erp.main.domain.objects.entity.ClientsEntity;
  */
 @Repository
 public interface ClientsRepository extends JpaRepository<ClientsEntity, Long> {
+
 	
 }

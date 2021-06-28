@@ -22,6 +22,7 @@ import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -177,6 +178,19 @@ public class MasterService {
 		return GetClientVo.mapTo(client.get());
 	
 	}
+	
+	/*
+	 * クライアント編集完了処理
+	 * @param vo
+	 */
+	@Transactional
+	public void editClient(GetClientsConditionsVo vo) {
+		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClientsSeq());
+		var newClientName = vo.getClientName();
+		client.get().setName(newClientName);
+		this.clientsRepository.save(client.get());
+	}
+	
 	
 	/*
 	 * 取引先一覧取得

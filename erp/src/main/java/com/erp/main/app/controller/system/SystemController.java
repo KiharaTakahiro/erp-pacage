@@ -132,8 +132,8 @@ public class SystemController {
 	 * @param req
 	 */
 	@PostMapping("/client/edited")
-	public void clientEdit(@RequestBody CreateClientsRequest request) {
-		
+	public void editClient(@RequestBody GetClientRequest request) {
+		this.masterService.editClient(request.mapTo());
 	}
 	
 	
