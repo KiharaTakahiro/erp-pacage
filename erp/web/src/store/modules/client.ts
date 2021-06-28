@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { createClient, getClient } from '@/api/client'
+import { createClient, getClient, editedClient } from '@/api/client'
 import store from '@/store'
 import elementVariables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
@@ -32,12 +32,20 @@ class Client extends VuexModule implements IClientState {
 
   
   @Action
-  public async EditClientPage(clientInfo: { id: string }) {
+  public async EditClient(clientInfo: { id: string }) {
     let { id } = clientInfo
     id = id.trim()
     const { data } = await getClient({ clientsId: id })
     this.SET_ID(data.clientsSeq)
     this.SET_NAME(data.clientsName)
+  }
+
+  @Action
+  public async EditdClient(clientInfo: {id: string, name: string }) {
+    let {id, name } = clientInfo
+    name = name.trim()
+    id = id.trim()
+    await editedClient({clientsSeq: id, clientsName: name})
   }
 }
 
