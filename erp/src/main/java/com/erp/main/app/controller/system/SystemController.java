@@ -128,6 +128,16 @@ public class SystemController {
 	}
 	
 	/*
+	 * 取引先更新処理
+	 * @param req
+	 */
+	@PostMapping("/client/edited")
+	public void clientEdit(@RequestBody CreateClientsRequest request) {
+		
+	}
+	
+	
+	/*
 	 * 取引先一覧処理
 	 */
 	// TODO:ID指定できるように変更すること

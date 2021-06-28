@@ -14,6 +14,11 @@ class Client extends VuexModule implements IClientState {
   public name = ''
 
   @Mutation
+  private SET_ID(id: string){
+    this.id = id
+  }
+
+  @Mutation
   private SET_NAME(name: string){
     this.name = name
   }
@@ -31,6 +36,7 @@ class Client extends VuexModule implements IClientState {
     let { id } = clientInfo
     id = id.trim()
     const { data } = await getClient({ clientsId: id })
+    this.SET_ID(data.clientsSeq)
     this.SET_NAME(data.clientsName)
   }
 }

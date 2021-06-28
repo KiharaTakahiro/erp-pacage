@@ -49,7 +49,8 @@ import { toNamespacedPath } from 'node:path'
 export default class extends Vue {
 
   client = {
-  name: ClientModule.name
+    id: ClientModule.id,
+    name: ClientModule.name
   }
 
   // private conpanyName(name: any): void {
