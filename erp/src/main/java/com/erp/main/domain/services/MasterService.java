@@ -22,7 +22,7 @@ import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
-import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
+import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -184,11 +184,12 @@ public class MasterService {
 	 * @param vo
 	 */
 	@Transactional
-	public void editClient(GetClientsConditionsVo vo) {
-		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClientsSeq());
-		//TODO： 無かった場合の処理
-		var newClientName = vo.getClientName();
-		client.get().setName(newClientName);
+	public void editClient(UpdateClientVo vo) {
+		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClient().getClientsSeq());
+		if(client.isEmpty()) {
+			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));
+		}
+		client.get().update(vo);	
 		this.clientsRepository.save(client.get());
 	}
 	

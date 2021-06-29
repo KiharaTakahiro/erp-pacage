@@ -14,6 +14,7 @@ import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
+import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
@@ -132,7 +133,7 @@ public class SystemController {
 	 * @param req
 	 */
 	@PostMapping("/client/edited")
-	public void editClient(@RequestBody GetClientRequest request) {
+	public void editClient(@RequestBody UpdateClientRequest request) {
 		this.masterService.editClient(request.mapTo());
 	}
 	
