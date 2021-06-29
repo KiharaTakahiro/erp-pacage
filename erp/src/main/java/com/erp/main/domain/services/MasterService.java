@@ -189,8 +189,9 @@ public class MasterService {
 		if(client.isEmpty()) {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));
 		}
-		client.get().update(vo);	
-		this.clientsRepository.save(client.get());
+		var clientEntity = client.get();
+		clientEntity.update(vo);	
+		this.clientsRepository.save(clientEntity);
 	}
 	
 	

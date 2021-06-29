@@ -1,5 +1,6 @@
 package com.erp.main.app.controller.system.request;
 
+import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 
 import lombok.Data;
@@ -17,20 +18,22 @@ public class UpdateClientRequest {
 	// 取引先名
 	private String clientsName;
 	
-	
 	/**
 	 * リクエスト空ValueObjectへのマッピング
 	 * @return
 	 */
 	public UpdateClientVo mapTo() {
 		
-		var vo = new UpdateClientVo();
+		var client = new ClientModel();
 		
 		// 取引先SEQ
-		vo.getClient().setClientsSeq(this.getClientsSeq());
+		client.setClientsSeq(this.getClientsSeq());
 		
 		// 取引先名
-		vo.getClient().setClientsName(this.getClientsName());
+		client.setClientsName(this.getClientsName());
+		
+		var vo = new UpdateClientVo();
+		vo.setClient(client);
 
 		return vo;
 	}

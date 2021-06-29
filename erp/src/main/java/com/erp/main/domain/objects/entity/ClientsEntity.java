@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.ClientsEntityFileds;
-import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 
@@ -35,16 +34,11 @@ public class ClientsEntity extends ClientsEntityFileds {
 	}
 
 	/*
-	 * TODO:
-	 * ここにマッピングして自信を変更するメソッド
-	 * UPDATE
+	 * 取引先編集処理のEntity
+	 * @
 	 */
 	
-	public ClientsEntity update(UpdateClientVo vo) {
-		var model = new ClientModel();
-		model.setClientsName(vo.getClient().getClientsName());
-		this.setName(model.getClientsName());
-		
-		return this;
+	public void update(UpdateClientVo vo) {
+		this.setName(vo.getClient().getClientsName());
 	}
 }
