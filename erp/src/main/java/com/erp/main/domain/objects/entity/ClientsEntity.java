@@ -32,5 +32,9 @@ public class ClientsEntity extends ClientsEntityFileds {
 		return entity;
 	}
 
-	
+	/*
+	 * TODO:
+	 * ここにマッピングして自信を変更するメソッド
+	 * UPDATE
+	 */
 }

@@ -186,6 +186,7 @@ public class MasterService {
 	@Transactional
 	public void editClient(GetClientsConditionsVo vo) {
 		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClientsSeq());
+		//TODO： 無かった場合の処理
 		var newClientName = vo.getClientName();
 		client.get().setName(newClientName);
 		this.clientsRepository.save(client.get());
