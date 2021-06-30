@@ -14,9 +14,9 @@ export const createClient = (data: any) =>
     data
   })
 
-  export const editedClient = (data: any) =>
+  export const updateClient = (data: any) =>
   request({
-    url: '/client/edited',
+    url: '/client/update',
     method: 'post',
     data
   })

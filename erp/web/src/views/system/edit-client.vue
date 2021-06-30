@@ -18,15 +18,12 @@
             :loading="loading"
             type="primary"
             style="width:100%;"
+            @click.native.prevent="updateClient"
           >
             {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
-
-    
-    
-    
   </div>
 </template>
 
@@ -53,17 +50,16 @@ export default class extends Vue {
     name: ClientModule.name
   }
 
-  // private conpanyName(name: any): void {
-  //   this.client.name = name
-  //   console.log(this.client.name)
-  // }
+  private conpanyName(name: any): void {
+    this.client.name = name
+  }
 
 
 
-  private editClient(){
+  private updateClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.EditClient(this.client)
+        await ClientModule.UpdateClient(this.client)
         this.$router.push({
           path: 'clinet' 
         }).catch(err => {

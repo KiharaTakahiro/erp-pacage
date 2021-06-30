@@ -184,7 +184,7 @@ public class MasterService {
 	 * @param vo
 	 */
 	@Transactional
-	public void editClient(UpdateClientVo vo) {
+	public void updateClient(UpdateClientVo vo) {
 		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClient().getClientsSeq());
 		if(client.isEmpty()) {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));

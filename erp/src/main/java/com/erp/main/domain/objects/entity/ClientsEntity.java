@@ -35,10 +35,11 @@ public class ClientsEntity extends ClientsEntityFileds {
 
 	/*
 	 * 取引先編集処理のEntity
-	 * @
+	 * @param vo
 	 */
 	
 	public void update(UpdateClientVo vo) {
+		// 取引先名入れ替え
 		this.setName(vo.getClient().getClientsName());
 	}
 }

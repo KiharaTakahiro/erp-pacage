@@ -132,9 +132,9 @@ public class SystemController {
 	 * 取引先更新処理
 	 * @param req
 	 */
-	@PostMapping("/client/edited")
+	@PostMapping("/client/update")
 	public void editClient(@RequestBody UpdateClientRequest request) {
-		this.masterService.editClient(request.mapTo());
+		this.masterService.updateClient(request.mapTo());
 	}
 	
 	
