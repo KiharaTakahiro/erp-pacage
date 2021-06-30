@@ -52,9 +52,9 @@ export default class extends Vue {
 
   private conpanyName(name: any): void {
     this.client.name = name
+    console.log(this.client.id)
+    console.log(this.client.name)
   }
-
-
 
   private updateClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
