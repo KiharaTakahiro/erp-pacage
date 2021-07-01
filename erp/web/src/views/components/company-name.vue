@@ -7,7 +7,6 @@
       prop="name"
     >
     <el-input
-      :model="company"
       v-model='companyName'
       :placeholder="$t('client.name')"
       type="text"

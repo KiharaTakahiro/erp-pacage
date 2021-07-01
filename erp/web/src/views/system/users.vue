@@ -2,7 +2,6 @@
   <div class="app-container">
     <div>{{ $t("route.createUsre") }}</div>
       <el-button
-        :loading="loading"
         type="primary"
         style="width:25%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="onClickButton"

@@ -2,7 +2,6 @@
   <div class="app-container">
     <div>{{ $t("route.client") }}</div>
     <el-button
-        :loading="loading"
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="createClientBtn"
@@ -10,7 +9,6 @@
         {{ $t('client.add') }}
       </el-button>
         <el-button
-        :loading="loading"
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="editClientBtn"
