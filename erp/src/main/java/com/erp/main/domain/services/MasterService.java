@@ -1,8 +1,13 @@
 package com.erp.main.domain.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +19,7 @@ import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
+import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -22,6 +28,8 @@ import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
@@ -30,6 +38,7 @@ import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
+import com.erp.main.domain.specification.ClientsSpec;
 
 /**
  * マスターの管理用のサービス
@@ -199,18 +208,35 @@ public class MasterService {
 	 * @param condition
 	 * @return
 	 */
-//	public GetClientsVo getClientsVo(GetClientsConditionsVo condition) {
-//		if(condition.getPageNo() == null) {
-//			condition.setPageNo(0);
-//		}
-//		
-//		Specification<ClientsEntity> spec = Specification.where(
-//				
-//				
-//				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
-//						);
-//				
-//	}
+	public GetClientsVo getClientsVo(GetClientsConditionsVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<ClientsEntity> spec = Specification.where(
+				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
+				.and(ClientsSpec.clientsNameEquals(condition.getClientName())));
+				
+		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(),30));
+		
+		List<ClientModel> clients = pages.get().map(e -> {
+			var client = new ClientModel();
+			// 取引先Seq
+			client.setClientsSeq(e.getClientsSeq());
+			// 取引先名
+			client.setClientsName(e.getName());
+			return client;
+		}).collect(Collectors.toList());
+		
+		var vo = new GetClientsVo();
+		
+		vo.setMaxpage(pages.getTotalPages());
+		vo.setClients(clients);
+		
+		return vo;
+	}
 	
 }
 

@@ -16,6 +16,8 @@ import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
+import com.erp.main.app.controller.system.response.ClientsResponse;
+import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -141,13 +143,13 @@ public class SystemController {
 	/*
 	 * 取引先一覧処理
 	 */
-	// TODO:ID指定できるように変更すること
-//	@GetMapping("/clients/info")
-//	public ClientsResponse getClients(@RequestBody GetClientsRequest request) {
-//		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
-//		ClientsResponse response = new ClientsResponse();
-//		return response
-//	}
+	@PostMapping("/clients/info")
+	public ClientsResponse getClients(@RequestBody GetClientRequest request) {
+		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
+		ClientsResponse response = new ClientsResponse();
+		response.setMaxpage(vo.getMaxpage());
+		return response;
+	}
 	
 	
 	
