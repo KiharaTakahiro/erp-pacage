@@ -133,7 +133,7 @@ public class SystemController {
 	 * @param req
 	 */
 	@PostMapping("/client/update")
-	public void editClient(@RequestBody UpdateClientRequest request) {
+	public void updateClient(@RequestBody UpdateClientRequest request) {
 		this.masterService.updateClient(request.mapTo());
 	}
 	

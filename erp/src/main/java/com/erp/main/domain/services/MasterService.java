@@ -194,7 +194,6 @@ public class MasterService {
 		this.clientsRepository.save(clientEntity);
 	}
 	
-	
 	/*
 	 * 取引先一覧取得
 	 * @param condition
