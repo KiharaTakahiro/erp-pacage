@@ -300,7 +300,7 @@ public class MasterServiceTest {
 	 * 成功例
 	 */
 	@Test
-	public void updateClientSuccessCase1() {
+	void updateClientSuccessCase1() {
 		
 		// 実行用のデータ作成
 		UpdateClientVo vo = new UpdateClientVo();
@@ -335,7 +335,7 @@ public class MasterServiceTest {
 	 * 失敗例
 	 */
 	@Test
-	public void updateClientErrorCase1() {
+	void updateClientErrorCase1() {
 		
 		// 実行用のデータ作成
 		UpdateClientVo vo = new UpdateClientVo();
