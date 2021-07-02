@@ -26,7 +26,7 @@ public class ClientsSpec {
 	 * @param clientsName
 	 * @return
 	 */
-	public static Specification<ClientsEntity> clientsNameLikes(String clientsName){
+	public static Specification<ClientsEntity> clientsNameEquals(String clientsName){
 		return clientsName == null ? null : (root, query, builder) -> builder.equal(root.get("clientsName"), clientsName);
 	}
 

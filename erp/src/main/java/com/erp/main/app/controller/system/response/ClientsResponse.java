@@ -18,6 +18,6 @@ public class ClientsResponse extends BaseResponse {
 	// 最大ページ数
 	private Integer maxpage;
 	
-	// 見積リスト
+	// 取引先リスト
 	List<ClientModel> clients;
 }

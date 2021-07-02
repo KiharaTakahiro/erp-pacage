@@ -13,5 +13,5 @@ public class GetClientsConditionsVo {
 	// 取引先Seq
 	private Long clientsSeq;
 	// 取引先名
-	private String clientName;
+	private String clientsName;
 }

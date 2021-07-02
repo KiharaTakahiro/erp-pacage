@@ -14,10 +14,10 @@ import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
+import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
-import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -144,8 +144,8 @@ public class SystemController {
 	 */
 	@PostMapping("/clients/info")
 	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
-		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
-		ClientsResponse response = new ClientsResponse();
+		var vo = this.masterService.getClientsVo(request.mapTo());
+		var response = new ClientsResponse();
 		response.setMaxpage(vo.getMaxpage());
 		return response;
 	}
