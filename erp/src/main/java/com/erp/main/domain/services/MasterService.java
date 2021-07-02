@@ -217,7 +217,7 @@ public class MasterService {
 		// 検索条件の設定
 		Specification<ClientsEntity> spec = Specification.where(
 				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
-				.and(ClientsSpec.clientsNameEquals(condition.getClientName())));
+				.and(ClientsSpec.clientsNameLikes(condition.getClientName())));
 				
 		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(),30));
 		
@@ -232,7 +232,9 @@ public class MasterService {
 		
 		var vo = new GetClientsVo();
 		
+		// トータルぺ―ジ
 		vo.setMaxpage(pages.getTotalPages());
+		// 取引先リストの設定
 		vo.setClients(clients);
 		
 		return vo;

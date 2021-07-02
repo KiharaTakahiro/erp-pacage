@@ -19,5 +19,5 @@ public class ClientsResponse extends BaseResponse {
 	private Integer maxpage;
 	
 	// 見積リスト
-	List<ClientModel> quotations;
+	List<ClientModel> clients;
 }
