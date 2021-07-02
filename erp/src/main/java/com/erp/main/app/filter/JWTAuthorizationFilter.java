@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +18,6 @@ import com.erp.main.app.config.WebSecurityConfig;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
-	
-	/**
-	 * アプリケーションの鍵
-	 */
-	@Value("$app.security.app_key")
-	private String appKey;
-		
 	
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -54,7 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             // parse the token.
             String user = Jwts.parser()
-                    .setSigningKey(this.appKey)
+                    .setSigningKey("APP_KEY")
                     .parseClaimsJws(token.replace(WebSecurityConfig.TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();

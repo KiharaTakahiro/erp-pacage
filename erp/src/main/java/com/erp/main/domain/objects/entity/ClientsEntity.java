@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.ClientsEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
+import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 
 
 /**
@@ -32,5 +33,13 @@ public class ClientsEntity extends ClientsEntityFileds {
 		return entity;
 	}
 
+	/*
+	 * 取引先編集処理のEntity
+	 * @param vo
+	 */
 	
+	public void update(UpdateClientVo vo) {
+		// 取引先名入れ替え
+		this.setName(vo.getClient().getClientsName());
+	}
 }

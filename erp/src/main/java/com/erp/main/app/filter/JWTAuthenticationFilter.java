@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,18 +34,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
  *
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-		
-	/**
-	 * 有効期限
-	 */
-	@Value("${app.security.exptration_time}")
-	private long exptrationTime;
-	
-	/**
-	 * アプリケーションの鍵
-	 */
-	@Value("$app.security.app_key")
-	private String appKey;
 		
 	private AuthenticationManager authenticationManager;
 	
@@ -94,7 +81,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // loginIdからtokenを設定してヘッダにセットする
         String token = Jwts.builder()
                 .setSubject(((AuthUserVo)auth.getPrincipal()).getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + this.exptrationTime))
+                .setExpiration(new Date(System.currentTimeMillis() + 300000L))
                 .signWith(SignatureAlgorithm.HS512, "APP_KEY")
                 .compact();
         res.addHeader(WebSecurityConfig.AUTH_KEY_NAME,  WebSecurityConfig.TOKEN_PREFIX + token);

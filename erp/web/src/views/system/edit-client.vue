@@ -15,19 +15,14 @@
         />
       <div class="complete-btn">
         <el-button
-            :loading="loading"
             type="primary"
             style="width:100%;"
-            @click.native.prevent="createClient"
+            @click.native.prevent="updateClient"
           >
             {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
-
-    
-    
-    
   </div>
 </template>
 
@@ -50,18 +45,18 @@ import { toNamespacedPath } from 'node:path'
 export default class extends Vue {
 
   client = {
-  name: ''
+    id: ClientModule.id,
+    name: ClientModule.name
   }
 
   private conpanyName(name: any): void {
     this.client.name = name
   }
 
-
-  private createClient(){
+  private updateClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
       if(valid){
-        await ClientModule.CreateClient(this.client)
+        await ClientModule.UpdateClient(this.client)
         this.$router.push({
           path: 'clinet' 
         }).catch(err => {

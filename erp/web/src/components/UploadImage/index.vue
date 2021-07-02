@@ -61,7 +61,7 @@ export default class extends Vue {
     return this.value
   }
 
-  private Input(value: string) {
+  private emitInput(value: string) {
     this.$emit('input', value)
   }
 

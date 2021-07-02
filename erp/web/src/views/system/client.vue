@@ -2,18 +2,16 @@
   <div class="app-container">
     <div>{{ $t("route.client") }}</div>
     <el-button
-        :loading="loading"
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="onClickButton"
+        @click.native.prevent="createClientBtn"
       >
         {{ $t('client.add') }}
       </el-button>
         <el-button
-        :loading="loading"
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="onClickButton2"
+        @click.native.prevent="editClientBtn"
       >
         {{ $t('client.edit') }}
       </el-button>
@@ -22,6 +20,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Form as ElForm, Input } from 'element-ui'
+import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 
 
@@ -30,23 +30,26 @@ import '@/assets/custom-theme/index.css'
   name: 'Client'
 })
 export default class extends Vue {
-  onClickButton() {
+
+  client = {
+    id: '2'
+  }
+  createClientBtn() {
     // ボタンが押されたときの処理
     this.$router.push({
     path:'save-client'
     }).catch(err => {
       console.warn(err)
     })
-    
   }
-  onClickButton2() {
+  editClientBtn() {
     // ボタンが押されたときの処理
-    this.$router.push({
-    path:'edit-client'
-    }).catch(err => {
-      console.warn(err)
-    })
-    
+      ClientModule.EditClient(this.client)
+      this.$router.push({
+      path:'edit-client'
+      }).catch(err => {
+        console.warn(err)
+      })
   }
 }
 </script>

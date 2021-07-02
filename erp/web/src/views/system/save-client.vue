@@ -15,7 +15,6 @@
         />
       <div class="complete-btn">
         <el-button
-            :loading="loading"
             type="primary"
             style="width:100%;"
             @click.native.prevent="createClient"
@@ -24,10 +23,6 @@
         </el-button>
       </div>
     </el-form>
-
-    
-    
-    
   </div>
 </template>
 

@@ -22,6 +22,7 @@ import com.erp.main.domain.objects.valueobjects.CreateProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -176,6 +177,21 @@ public class MasterService {
 		
 		return GetClientVo.mapTo(client.get());
 	
+	}
+	
+	/*
+	 * クライアント編集完了処理
+	 * @param vo
+	 */
+	@Transactional
+	public void updateClient(UpdateClientVo vo) {
+		Optional<ClientsEntity> client = clientsRepository.findById(vo.getClient().getClientsSeq());
+		if(client.isEmpty()) {
+			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));
+		}
+		var clientEntity = client.get();
+		clientEntity.update(vo);	
+		this.clientsRepository.save(clientEntity);
 	}
 	
 	/*

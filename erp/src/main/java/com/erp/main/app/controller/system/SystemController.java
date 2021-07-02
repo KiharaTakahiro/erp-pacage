@@ -14,6 +14,7 @@ import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
+import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
@@ -118,7 +119,7 @@ public class SystemController {
 	 */
 	@PostMapping("/clients/edit")
 	public ClientResponse getClient(@RequestBody GetClientRequest request) {
-		Long id = 2L; 
+		Long id = request.getClientsSeq(); 
 		var vo = this.masterService.getClientVo(id);
 		var response = new ClientResponse();
 		response.setClientsName(vo.getClient().getClientsName());
@@ -126,6 +127,16 @@ public class SystemController {
 		return response;
 		
 	}
+	
+	/*
+	 * 取引先更新処理
+	 * @param req
+	 */
+	@PostMapping("/client/update")
+	public void updateClient(@RequestBody UpdateClientRequest request) {
+		this.masterService.updateClient(request.mapTo());
+	}
+	
 	
 	/*
 	 * 取引先一覧処理

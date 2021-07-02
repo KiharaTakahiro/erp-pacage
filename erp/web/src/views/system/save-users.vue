@@ -35,7 +35,6 @@
       
       <div class="complete-btn">
         <el-button
-            :loading="loading"
             type="primary"
             style="width:100%;"
             @click.native.prevent="createUser"
