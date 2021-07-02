@@ -13,7 +13,6 @@ import com.erp.main.app.controller.system.request.CreateProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
-import com.erp.main.app.controller.system.request.GetClienstRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
@@ -144,7 +143,7 @@ public class SystemController {
 	 * 取引先一覧処理
 	 */
 	@PostMapping("/clients/info")
-	public ClientsResponse infoClients(@RequestBody GetClienstRequest request) {
+	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
 		GetClientsVo vo = this.masterService.getClientsVo(request.mapTo());
 		ClientsResponse response = new ClientsResponse();
 		response.setMaxpage(vo.getMaxpage());
