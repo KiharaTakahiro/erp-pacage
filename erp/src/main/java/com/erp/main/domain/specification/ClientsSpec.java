@@ -27,7 +27,7 @@ public class ClientsSpec {
 	 * @return
 	 */
 	public static Specification<ClientsEntity> clientsNameEquals(String clientsName){
-		return clientsName == null ? null : (root, query, builder) -> builder.equal(root.get("clientsName"), clientsName);
+		return clientsName == null ? null : (root, query, builder) -> builder.equal(root.get("name"), clientsName);
 	}
 
 }
