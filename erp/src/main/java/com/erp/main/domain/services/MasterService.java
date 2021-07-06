@@ -216,8 +216,9 @@ public class MasterService {
 		
 		// 検索条件の設定
 		Specification<ClientsEntity> spec = Specification.where(
-				ClientsSpec.clientsSeqEquals(condition.getClientsSeq())
-				.and(ClientsSpec.clientsNameEquals(condition.getClientsName())));
+				ClientsSpec.clientsNameEquals(condition.getClientsName())
+				.and(ClientsSpec.clientsSeqEquals(condition.getClientsSeq())));
+				
 				
 		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 30));
 		
