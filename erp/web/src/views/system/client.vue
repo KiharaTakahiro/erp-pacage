@@ -9,28 +9,45 @@
         {{ $t('client.add') }}
     </el-button>
     <div class="right">
-      <el-select v-model="value" placeholder="Select" >
+      <el-select v-model="TargetClientSeq" placeholder="Select">
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          v-for="client in clientsData"
+          :key="client.clientsSeq"
+          :label="client.clientsSeq"
+          :value="client.clientsSeq">
         </el-option>
       </el-select>
       <el-input
         placeholder="Type something"
         prefix-icon="el-icon-search"
         v-model="searchName"
+        style="margin-top:10px;"
         >
       </el-input>
+      <el-button
+        type="primary"
+        style="width:20%; margin-bottom:30px; margin-top:10px;"
+        @click.native.prevent="checkSaerch"
+      >
+        {{ $t('route.search') }}
+      </el-button>
+      <el-button
+        type="info"
+        style="width:20%; margin-bottom:30px; margin-top:10px;"
+        @click.native.prevent="getList"
+      >
+        {{ $t('route.reset') }}
+      </el-button>
     </div>
     <el-table
-      :data="clientData"
+      :data="clientsData"
       style="width: 100%">
       <el-table-column
         label=""
         width="180">
-        <el-radio label=""></el-radio>
+        <el-radio-group v-model="radio">
+          <el-radio prop="clientsSeq"></el-radio>
+        </el-radio-group>
       </el-table-column>
       <el-table-column
         prop="clientsSeq"
@@ -79,30 +96,15 @@ export default class extends Vue {
   client = {
     id: '2'
     }
-
-  private options = [{
-      value: '',
-      label: ''
-    },{
-      value: '1',
-      label: '1'
-    },{
-      value: '2',
-      label: '2'
-    }, {
-      value: '3',
-      label: '3'
-    }, {
-      value: '4',
-      label: '4'
-    }]
   
+  radio = ''
+
   pageNo = 0
-  value = ''
+  TargetClientSeq = ''
   searchName = ''
 
   
-  private clientData = [{}]
+  private clientsData = [{}]
 
   created() {
     this.getList()
@@ -110,7 +112,21 @@ export default class extends Vue {
 
   private async getList() {
     const { data } = await infoClient({})
-    this.clientData = data.clients
+    this.clientsData = data.clients
+  }
+
+  private async checkSaerch(){
+    if(this.TargetClientSeq != '' && this.searchName == ''){
+      const { data } = await infoClient({clientsSeq : this.TargetClientSeq})
+      this.clientsData = data.clients
+    } else if (this.TargetClientSeq == '' && this.searchName != ''){
+      const { data } = await infoClient({clientsName : this.searchName})
+      this.clientsData = data.clients
+      console.log(this.searchName)
+    }else if (this.TargetClientSeq != '' && this.searchName != ''){
+      const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.TargetClientSeq})
+      this.clientsData = data.clients
+    }
   }
 
   createClientBtn() {
@@ -154,7 +170,7 @@ export default class extends Vue {
 
 .right {
   float: right;
-} 
+}
 
 .left {
   float: left;

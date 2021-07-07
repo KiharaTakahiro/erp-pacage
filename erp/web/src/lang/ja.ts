@@ -73,7 +73,9 @@ export default {
     i18n: '多言語',
     externalLink: '外部リンク',
     profile: 'プロフィール',
-    back :'戻る'
+    back :'戻る',
+    search : '検索',
+    reset : 'リセット'
   },
   navbar: {
     dashboard: 'トップ',

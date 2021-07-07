@@ -73,7 +73,9 @@ export default {
     i18n: 'I18n',
     externalLink: 'External Link',
     profile: 'Profile',
-    back :'back'
+    back :'back',
+    search : 'search',
+    reset : 'reset'
   },
   navbar: {
     logOut: 'Log Out',
