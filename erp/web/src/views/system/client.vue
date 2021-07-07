@@ -9,7 +9,7 @@
         {{ $t('client.add') }}
     </el-button>
     <div class="right">
-      <el-select v-model="TargetClientSeq" placeholder="Select">
+      <el-select clearable  v-model="TargetClientSeq" placeholder="Select">
         <el-option
           v-for="client in clientsData"
           :key="client.clientsSeq"
@@ -122,7 +122,6 @@ export default class extends Vue {
     } else if (this.TargetClientSeq == '' && this.searchName != ''){
       const { data } = await infoClient({clientsName : this.searchName})
       this.clientsData = data.clients
-      console.log(this.searchName)
     }else if (this.TargetClientSeq != '' && this.searchName != ''){
       const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.TargetClientSeq})
       this.clientsData = data.clients
