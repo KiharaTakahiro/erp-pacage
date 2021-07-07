@@ -72,7 +72,8 @@ export default {
     clipboard: 'Clipboard',
     i18n: '多言語',
     externalLink: '外部リンク',
-    profile: 'プロフィール'
+    profile: 'プロフィール',
+    back :'戻る'
   },
   navbar: {
     dashboard: 'トップ',
