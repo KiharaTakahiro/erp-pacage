@@ -26,7 +26,9 @@
         label="Address">
       </el-table-column>
     </el-table>
-    <back-btn/>
+    <div class="left">
+      <back-btn/>
+    </div>
     <div class="right">
       <el-button
         type="primary"
