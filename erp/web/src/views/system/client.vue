@@ -8,22 +8,38 @@
       >
         {{ $t('client.add') }}
     </el-button>
+    <div class="right">
+      <el-select v-model="value" placeholder="Select" >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+      </el-select>
+      <el-input
+        placeholder="Type something"
+        prefix-icon="el-icon-search"
+        v-model="searchName"
+        >
+      </el-input>
+    </div>
     <el-table
       :data="tableData"
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="Date"
+        label=""
+        width="180">
+        <el-radio v-model="radio" label=""></el-radio>
+      </el-table-column>
+      <el-table-column
+        prop="id"
+        label="ID"
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="Name"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="Address">
+        label="Client name">
       </el-table-column>
     </el-table>
     <div class="left">
@@ -61,21 +77,41 @@ export default class extends Vue {
   client = {
     id: '2'
     }
+
+  private options = [{
+      value: '',
+      label: ''
+    },{
+      value: '1',
+      label: '1'
+    },{
+      value: '2',
+      label: '2'
+    }, {
+      value: '3',
+      label: '3'
+    }, {
+      value: '4',
+      label: '4'
+    }]
+  value = ''
+  searchName = ''
+
   
   private tableData = [{
-    date: '2016-05-03',
+    id: '1',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   }, {
-    date: '2016-05-02',
+    id: '2',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   }, {
-    date: '2016-05-04',
+    id: '3',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   }, {
-    date: '2016-05-01',
+    id: '4',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   }]
