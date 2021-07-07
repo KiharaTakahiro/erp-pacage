@@ -10,6 +10,8 @@ import lombok.Data;
  */
 @Data
 public class GetClientsRequest {
+	// ページNo
+	private Integer pageNo;
     // 取引先SEQ
     private Long clientsSeq;
     
@@ -22,6 +24,8 @@ public class GetClientsRequest {
      */
     public GetClientsConditionsVo mapTo() {
         var vo = new GetClientsConditionsVo();
+        // ページ番号
+        vo.setPageNo(this.getPageNo());
         // 取引先SEQ
         vo.setClientsSeq(this.getClientsSeq());
         // 取引先名
