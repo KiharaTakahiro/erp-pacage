@@ -20,3 +20,10 @@ export const createClient = (data: any) =>
     method: 'post',
     data
   })
+
+  export const infoClient = (data: any) =>
+  request({
+    url: '/clients/info',
+    method: 'post',
+    data
+  })

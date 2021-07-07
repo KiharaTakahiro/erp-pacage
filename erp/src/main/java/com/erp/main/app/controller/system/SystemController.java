@@ -147,6 +147,7 @@ public class SystemController {
 		var vo = this.masterService.getClientsVo(request.mapTo());
 		var response = new ClientsResponse();
 		response.setMaxpage(vo.getMaxpage());
+		response.setClients(vo.getClients());
 		return response;
 	}
 	

@@ -10,12 +10,12 @@
     </el-button>
     <div class="right">
       <el-select v-model="value" placeholder="Select" >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
       </el-select>
       <el-input
         placeholder="Type something"
@@ -25,20 +25,20 @@
       </el-input>
     </div>
     <el-table
-      :data="tableData"
+      :data="clientData"
       style="width: 100%">
       <el-table-column
         label=""
         width="180">
-        <el-radio v-model="radio" label=""></el-radio>
+        <el-radio label=""></el-radio>
       </el-table-column>
       <el-table-column
-        prop="id"
+        prop="clientsSeq"
         label="ID"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="clientsName"
         label="Client name">
       </el-table-column>
     </el-table>
@@ -63,6 +63,7 @@ import { Form as ElForm, Input } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
+import { infoClient } from '@/api/client'
 
 
 
@@ -73,6 +74,7 @@ import backBtn from "@/views/components/back-button.vue"
   }
 })
 export default class extends Vue {
+
 
   client = {
     id: '2'
@@ -94,27 +96,22 @@ export default class extends Vue {
       value: '4',
       label: '4'
     }]
+  
+  pageNo = 0
   value = ''
   searchName = ''
 
   
-  private tableData = [{
-    id: '1',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }, {
-    id: '2',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }, {
-    id: '3',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }, {
-    id: '4',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }]
+  private clientData = [{}]
+
+  created() {
+    this.getList()
+  }
+
+  private async getList() {
+    const { data } = await infoClient({})
+    this.clientData = data.clients
+  }
 
   createClientBtn() {
     // ボタンが押されたときの処理
