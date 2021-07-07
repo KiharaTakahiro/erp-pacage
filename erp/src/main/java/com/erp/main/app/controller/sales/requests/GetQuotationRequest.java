@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class GetQuotationRequest {
+	
+	// ページ番号
+	private Integer pageNo;
 
 	// 取引先SEQ
 	private Long clientsSeq;
@@ -39,6 +42,8 @@ public class GetQuotationRequest {
 	 */
 	public GetQuotationConditionsVo mapTo() {
 		GetQuotationConditionsVo vo = new GetQuotationConditionsVo();
+		// ページ番号
+		vo.setPageNo(this.getPageNo());
 		// 取引先SEQ
 		vo.setClientsSeq(this.getClientsSeq());
 		// 会社SEQ
