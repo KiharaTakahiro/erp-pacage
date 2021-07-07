@@ -22,6 +22,7 @@
         prefix-icon="el-icon-search"
         v-model="searchName"
         style="margin-top:10px;"
+        clearable
         >
       </el-input>
       <el-button
