@@ -35,7 +35,7 @@
       <el-button
         type="info"
         style="width:20%; margin-bottom:30px; margin-top:10px;"
-        @click.native.prevent="getList"
+        @click.native.prevent="resetList"
       >
         {{ $t('route.reset') }}
       </el-button>
@@ -114,6 +114,13 @@ export default class extends Vue {
   private async getList() {
     const { data } = await infoClient({})
     this.clientsData = data.clients
+  }
+
+  private async resetList() {
+    const { data } = await infoClient({})
+    this.clientsData = data.clients
+    this.TargetClientSeq = ""
+    this.searchName = ""
   }
 
   private async checkSaerch(){
