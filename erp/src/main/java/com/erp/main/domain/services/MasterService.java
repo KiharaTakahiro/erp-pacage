@@ -221,7 +221,10 @@ public class MasterService {
 				ClientsSpec.clientsSeqEquals(condition.getClientsSeq()))
 				.and(ClientsSpec.clientsNameEquals(condition.getClientsName()));
 		
-		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, Sort.by(Sort.Direction.ASC, "clientsSeq")));
+		// ソートの設定
+		Sort sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
+		
+		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
 		
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
