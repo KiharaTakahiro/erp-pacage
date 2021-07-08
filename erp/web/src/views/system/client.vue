@@ -8,70 +8,82 @@
       >
         {{ $t('client.add') }}
     </el-button>
-    <div class="right">
-      <el-select clearable  v-model="TargetClientSeq" placeholder="Select">
-        <el-option
-          v-for="client in clientsData"
-          :key="client.clientsSeq"
-          :label="client.clientsSeq"
-          :value="client.clientsSeq">
-        </el-option>
-      </el-select>
-      <el-input
-        placeholder="Type something"
-        prefix-icon="el-icon-search"
-        v-model="searchName"
-        style="margin-top:10px;"
-        clearable
+    <el-card class="box-card">
+      <h5>検索フォーム</h5>
+      <div class="border">
+        <span class="input-label">ID:</span>
+        <el-select clearable  v-model="targetClientSeq" placeholder="Select" style="margin-right:10px;" >
+          <el-option
+            v-for="client in clientsData"
+            :key="client.clientsSeq"
+            :label="client.clientsSeq"
+            :value="client.clientsSeq">
+          </el-option>
+        </el-select>
+        <span class="input-label">Name:</span>
+        <el-input
+          placeholder="Type something"
+          prefix-icon="el-icon-search"
+          v-model="searchName"
+          style="margin-top:10px; width:40%;"
+          clearable
+          >
+        </el-input>
+      </div>
+      <div class="right">
+        <el-button
+          size="small"
+          type="info"
+          style="width:45%; margin-top:10px;"
+          @click.native.prevent="resetList"
         >
-      </el-input>
-      <el-button
-        type="primary"
-        style="width:20%; margin-bottom:30px; margin-top:10px;"
-        @click.native.prevent="checkSaerch"
-      >
-        {{ $t('route.search') }}
-      </el-button>
-      <el-button
-        type="info"
-        style="width:20%; margin-bottom:30px; margin-top:10px;"
-        @click.native.prevent="resetList"
-      >
-        {{ $t('route.reset') }}
-      </el-button>
-    </div>
-    <el-table
-      :data="clientsData"
-      style="width: 100%">
-      <el-table-column
-        label=""
-        width="180">
-        <el-radio-group v-model="radio">
-          <el-radio prop="clientsSeq"></el-radio>
-        </el-radio-group>
-      </el-table-column>
-      <el-table-column
-        prop="clientsSeq"
-        label="ID"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="clientsName"
-        label="Client name">
-      </el-table-column>
-    </el-table>
-    <div class="left">
-      <back-btn/>
-    </div>
-    <div class="right">
-      <el-button
-        type="primary"
-        style="width:100%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="editClientBtn"
-      >
-        {{ $t('client.edit') }}
-      </el-button>
-    </div>
+          {{ $t('route.reset') }}
+        </el-button>
+        <el-button
+          size="small"
+          type="primary"
+          style="width:45%; margin-top:10px;"
+          @click.native.prevent="checkSaerch"
+        >
+          {{ $t('route.search') }}
+        </el-button>
+      </div>
+    </el-card>
+    <el-card class="box-card">
+      <h5>取引先一覧</h5>
+      <el-table
+        :data="clientsData"
+        style="width: 100%">
+        <el-table-column
+          label=""
+          width="180">
+          <el-radio-group v-model="radio">
+            <el-radio prop="clientsSeq"></el-radio>
+          </el-radio-group>
+        </el-table-column>
+        <el-table-column
+          prop="clientsSeq"
+          label="ID"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="clientsName"
+          label="Client name">
+        </el-table-column>
+      </el-table>
+      <div class="left">
+        <back-btn/>
+      </div>
+      <div class="right">
+        <el-button
+          type="primary"
+          style="width:100%; margin-bottom:30px; margin-top:30px;"
+          @click.native.prevent="editClientBtn"
+        >
+          {{ $t('client.edit') }}
+        </el-button>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -101,7 +113,7 @@ export default class extends Vue {
   radio = ''
 
   pageNo = 0
-  TargetClientSeq = ''
+  targetClientSeq = ''
   searchName = ''
 
   
@@ -119,19 +131,19 @@ export default class extends Vue {
   private async resetList() {
     const { data } = await infoClient({})
     this.clientsData = data.clients
-    this.TargetClientSeq = ""
+    this.targetClientSeq = ""
     this.searchName = ""
   }
 
   private async checkSaerch(){
-    if(this.TargetClientSeq != '' && this.searchName == ''){
-      const { data } = await infoClient({clientsSeq : this.TargetClientSeq})
+    if(this.targetClientSeq != '' && this.searchName == ''){
+      const { data } = await infoClient({clientsSeq : this.targetClientSeq})
       this.clientsData = data.clients
-    } else if (this.TargetClientSeq == '' && this.searchName != ''){
+    } else if (this.targetClientSeq == '' && this.searchName != ''){
       const { data } = await infoClient({clientsName : this.searchName})
       this.clientsData = data.clients
-    }else if (this.TargetClientSeq != '' && this.searchName != ''){
-      const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.TargetClientSeq})
+    }else if (this.targetClientSeq != '' && this.searchName != ''){
+      const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.targetClientSeq})
       this.clientsData = data.clients
     }
   }
@@ -182,4 +194,14 @@ export default class extends Vue {
 .left {
   float: left;
 }
+
+.input-label {
+  display: inline-block;
+  width: 5%;
+  }
+
+.box-card {
+  width: 100%;
+  padding: 15px;
+  }
 </style>
