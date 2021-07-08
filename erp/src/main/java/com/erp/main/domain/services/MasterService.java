@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -214,13 +215,13 @@ public class MasterService {
 			condition.setPageNo(0);
 		}
 		
+		
 		// 検索条件の設定
 		Specification<ClientsEntity> spec = Specification.where(
 				ClientsSpec.clientsSeqEquals(condition.getClientsSeq()))
 				.and(ClientsSpec.clientsNameEquals(condition.getClientsName()));
-				
-				
-		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 30));
+		
+		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, Sort.by(Sort.Direction.ASC, "clientsSeq")));
 		
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
