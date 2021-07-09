@@ -149,7 +149,7 @@ export default class extends Vue {
     }
   }
 
-  private testLog(val){
+  private testLog(val : any){
     this.client.id = val.clientsSeq
   }
 
