@@ -222,7 +222,7 @@ public class MasterService {
 				.and(ClientsSpec.clientsNameEquals(condition.getClientsName()));
 		
 		// ソートの設定
-		Sort sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
+		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
 		

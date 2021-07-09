@@ -12,17 +12,16 @@
       <h5>検索フォーム</h5>
       <div class="border">
         <span class="input-label">ID:</span>
-        <el-select clearable  v-model="targetClientSeq" placeholder="Select" style="margin-right:10px;" >
-          <el-option
-            v-for="client in clientsData"
-            :key="client.clientsSeq"
-            :label="client.clientsSeq"
-            :value="client.clientsSeq">
-          </el-option>
-        </el-select>
+        <el-input
+          placeholder=""
+          v-model="targetClientSeq"
+          style="margin-top:10px; width:5%; margin-right:20px;"
+          clearable
+          >
+        </el-input>
         <span class="input-label">Name:</span>
         <el-input
-          placeholder="Type something"
+          placeholder=""
           prefix-icon="el-icon-search"
           v-model="searchName"
           style="margin-top:10px; width:40%;"
@@ -189,6 +188,7 @@ export default class extends Vue {
 
 .right {
   float: right;
+  width: 25%;
 }
 
 .left {
