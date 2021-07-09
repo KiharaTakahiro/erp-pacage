@@ -51,15 +51,16 @@
     <el-card class="box-card">
       <h5>取引先一覧</h5>
       <el-table
+        ref="clientsTable"
         :data="clientsData"
+        highlight-current-row
+        @current-change="testLog"
         style="width: 100%">
-        <el-table-column
+        <!-- <el-table-column
           label=""
+          type="selection"
           width="180">
-          <el-radio-group v-model="radio">
-            <el-radio prop="clientsSeq"></el-radio>
-          </el-radio-group>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="clientsSeq"
           label="ID"
@@ -87,7 +88,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
@@ -109,7 +110,7 @@ export default class extends Vue {
     id: '2'
     }
   
-  radio = ''
+  radio = 2
 
   pageNo = 0
   targetClientSeq = ''
@@ -132,6 +133,7 @@ export default class extends Vue {
     this.clientsData = data.clients
     this.targetClientSeq = ""
     this.searchName = ""
+    console.log(this.radio)
   }
 
   private async checkSaerch(){
@@ -147,6 +149,10 @@ export default class extends Vue {
     }
   }
 
+  private testLog(val){
+    this.client.id = val.clientsSeq
+  }
+
   createClientBtn() {
     // ボタンが押されたときの処理
     this.$router.push({
@@ -157,12 +163,12 @@ export default class extends Vue {
   }
   editClientBtn() {
     // ボタンが押されたときの処理
-      ClientModule.EditClient(this.client)
-      this.$router.push({
-      path:'edit-client'
-      }).catch(err => {
-        console.warn(err)
-      })
+    ClientModule.EditClient(this.client)
+    this.$router.push({
+    path:'edit-client'
+    }).catch(err => {
+      console.warn(err)
+    })
   }
 }
 </script>

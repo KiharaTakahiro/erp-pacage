@@ -20,10 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { ClientModule } from '@/store/modules/client'
-// import { CientSave } from '@/view/compornents/company'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 

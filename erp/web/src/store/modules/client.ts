@@ -31,10 +31,9 @@ class Client extends VuexModule implements IClientState {
   }
 
   
-  @Action
+  @Action({ rawError: true })
   public async EditClient(clientInfo: { id: string }) {
     let { id } = clientInfo
-    id = id.trim()
     const { data } = await getClient({ clientsSeq: id })
     this.SET_ID(data.clientsSeq)
     this.SET_NAME(data.clientsName)
