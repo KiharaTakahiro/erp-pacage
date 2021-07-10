@@ -1,6 +1,7 @@
 package com.erp.main.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -12,7 +13,7 @@ import com.erp.main.domain.objects.entity.ClientsEntity;
  *
  */
 @Repository
-public interface ClientsRepository extends JpaRepository<ClientsEntity, Long> {
+public interface ClientsRepository extends JpaRepository<ClientsEntity, Long>, JpaSpecificationExecutor<ClientsEntity> {
 
 	
 }

@@ -20,5 +20,14 @@ public class ClientsSpec {
 	public static Specification<ClientsEntity> clientsSeqEquals(Long clientsSeq){
 		return clientsSeq == null ? null : (root, query, builder) -> builder.equal(root.get("clientsSeq"), clientsSeq);
 	}
+	
+	/*
+	 * 取引先名での検索
+	 * @param clientsName
+	 * @return
+	 */
+	public static Specification<ClientsEntity> clientsNameEquals(String clientsName){
+		return clientsName == null ? null : (root, query, builder) ->builder.like(root.get("name"),"%" + clientsName + "%");
+	}
 
 }
