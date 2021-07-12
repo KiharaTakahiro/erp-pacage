@@ -71,18 +71,18 @@
           label="Client name">
         </el-table-column>
       </el-table>
-      <div class="left">
-        <back-btn/>
-      </div>
-      <div class="right">
-        <el-button
-          type="primary"
-          style="width:100%; margin-bottom:30px; margin-top:30px;"
-          @click.native.prevent="editClientBtn"
-        >
-          {{ $t('client.edit') }}
-        </el-button>
-      </div>
+        <div class="left">
+          <back-btn/>
+        </div>
+        <div class="right">
+          <el-button
+            type="primary"
+            style="width:100%; margin-bottom:30px; margin-top:30px; "
+            @click.native.prevent="editClientBtn"
+          >
+            {{ $t('route.edit') }}
+          </el-button>
+        </div>
     </el-card>
   </div>
 </template>
@@ -194,7 +194,6 @@ export default class extends Vue {
 
 .right {
   float: right;
-  width: 25%;
 }
 
 .left {

@@ -75,7 +75,8 @@ export default {
     profile: 'Profile',
     back :'back',
     search : 'search',
-    reset : 'reset'
+    reset : 'reset',
+    edit: "edit"
   },
   navbar: {
     logOut: 'Log Out',

@@ -75,7 +75,8 @@ export default {
     profile: 'プロフィール',
     back :'戻る',
     search : '検索',
-    reset : 'リセット'
+    reset : 'リセット',
+    edit: "編集"
   },
   navbar: {
     dashboard: 'トップ',
