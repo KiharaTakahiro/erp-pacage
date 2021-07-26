@@ -53,14 +53,17 @@
       <el-table
         ref="clientsTable"
         :data="clientsData"
-        highlight-current-row
-        @current-change="testLog"
+        @selection-change="testLog"
         style="width: 100%">
         <!-- <el-table-column
           label=""
           type="selection"
           width="180">
         </el-table-column> -->
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
         <el-table-column
           prop="clientsSeq"
           label="ID"
@@ -107,10 +110,10 @@ export default class extends Vue {
 
 
   client = {
-    id: '2'
+    id: ''
     }
   
-  radio = 2
+  checkLength = 0
 
   pageNo = 0
   targetClientSeq = ''
@@ -133,7 +136,6 @@ export default class extends Vue {
     this.clientsData = data.clients
     this.targetClientSeq = ""
     this.searchName = ""
-    console.log(this.radio)
   }
 
   private async checkSaerch(){
@@ -150,7 +152,8 @@ export default class extends Vue {
   }
 
   private testLog(val : any){
-    this.client.id = val.clientsSeq
+    this.client.id = val[0]['clientsSeq']
+    this.checkLength = val.length
   }
 
   createClientBtn() {
@@ -162,7 +165,20 @@ export default class extends Vue {
     })
   }
   editClientBtn() {
-    // ボタンが押されたときの処理
+    // ボタンが押されたときの処理]
+    if(this.checkLength == 0){
+      this.$message({
+      message: this.$t('client.check0').toString(),
+      type: 'error'
+      })
+      return false
+    } else if (this.checkLength >= 2){
+      this.$message({
+      message: this.$t('client.check2').toString(),
+      type: 'error'
+      })
+      return false
+    }
     ClientModule.EditClient(this.client)
     this.$router.push({
     path:'edit-client'

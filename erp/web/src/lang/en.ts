@@ -110,7 +110,9 @@ export default {
     add: 'New Clients',
     edit: 'Edit Clients',
     complete: 'complete',
-    name: 'Company Name'
+    name: 'Company Name',
+    check0: 'No company selected',
+    check2: 'Two or more companies have been selected'
   },
   documentation: {
     documentation: 'Documentation',
