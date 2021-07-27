@@ -165,7 +165,7 @@ export default class extends Vue {
     })
   }
   editClientBtn() {
-    // ボタンが押されたときの処理]
+    // ボタンが押されたときの処理
     if(this.checkLength == 0){
       this.$message({
       message: this.$t('client.check0').toString(),
