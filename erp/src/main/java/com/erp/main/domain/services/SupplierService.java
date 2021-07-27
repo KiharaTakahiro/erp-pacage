@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.OrderEntity;
+import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
+import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 
@@ -52,7 +55,27 @@ public class SupplierService {
 		// 消費税
 		var tax = 0L;
 		
+		// 詳細の入力確認
+		if(createOrderVo.getDetails().isEmpty()) {
+			throw new AppException("受注詳細が入力されていません");
+		}
+		
+		for(CreateOrderDetailVo detailVo: createOrderVo.getDetails()) {
+			// 商品の取得
+			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+			if(product.isEmpty()) {
+				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+			}
 			
+			
+			// 数量がマイナスの場合はエラー
+			if(detailVo.getQuantity() < 0) {
+				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+			}
+			
+			
+			// 合計金額を加算する
+			totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
 		
 	}
 	

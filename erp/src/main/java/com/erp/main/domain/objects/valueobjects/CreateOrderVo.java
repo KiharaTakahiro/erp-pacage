@@ -45,7 +45,7 @@ public class CreateOrderVo {
 		private OrderStatus status;
 		
 		// 数量
-		private Long discount;
+		private Long quantity;
 		
 		// 納期
 		private String deriveryDate;
