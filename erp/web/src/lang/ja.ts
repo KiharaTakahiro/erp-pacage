@@ -75,7 +75,8 @@ export default {
     profile: 'プロフィール',
     back :'戻る',
     search : '検索',
-    reset : 'リセット'
+    reset : 'リセット',
+    edit: "編集"
   },
   navbar: {
     dashboard: 'トップ',
@@ -114,7 +115,9 @@ export default {
     add: '取引先新規登録',
     edit: '取引先編集',
     complete: '完了',
-    name: '会社名'
+    name: '会社名',
+    check0: '会社が選択されていません',
+    check2: '会社が二つ以上選択されています'
   },
   permission: {
     createRole: 'ロール追加',
