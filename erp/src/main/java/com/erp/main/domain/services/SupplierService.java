@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.common.exception.AppException;
@@ -24,6 +25,7 @@ import com.erp.main.domain.repository.SupplierRepository;
  * @author takayama
  */
 
+@Service
 public class SupplierService {
 	/*
 	 * 発注レポジトリ
