@@ -7,7 +7,7 @@ import com.erp.main.domain.common.enums.OrderStatus;
 import lombok.Data;
 
 /**
- * 受注作成用のVo
+ * 発注作成用のVo
  * @author 高山
  *
  */
