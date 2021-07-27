@@ -14,21 +14,21 @@ import lombok.Data;
 
 @Data
 public class CreateOrderVo {
-	
+
 	// 発注SEQ
 	private Long orderSeq;
-	
+
 	// 仕入先SEQ
 	private Long supplierSeq;
-	
+
 	// 発注金額
 	private Long total;
-	
+
 	// 消費税
 	private Long tax;
-	
+
 	private List<CreateOrderDetailVo> details;
-	
+
 	/**
 	 * 発注詳細のリクエスト
 	 * @author ngt
@@ -37,19 +37,21 @@ public class CreateOrderVo {
 	@Data
 	public static class CreateOrderDetailVo {
 		private Long orderDetailSeq;
-		
+
 		// 発注SEQ
 		private Long orderSeq;
-		
+
 		// 発注ステータス
 		private OrderStatus status;
-		
+
+		// 商品SEQ
+		private Long supplierProductSeq;
+
 		// 数量
-		private Long quantity;
-		
+		private Integer quantity;
+
 		// 納期
 		private String deriveryDate;
-		
+
 	}
 }
-

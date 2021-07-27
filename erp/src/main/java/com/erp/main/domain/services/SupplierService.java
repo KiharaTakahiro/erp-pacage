@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.main.domain.common.exception.AppException;
+import com.erp.main.domain.component.MoneyComponent;
+import com.erp.main.domain.objects.entity.OrderDetailEntity;
 import com.erp.main.domain.objects.entity.OrderEntity;
-import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
-import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.repository.OrderRepository;
+import com.erp.main.domain.repository.SupplierProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 
 /*
@@ -35,7 +37,18 @@ public class SupplierService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 	
+	/**
+	 * 仕入先商品のリポジトリ
+	 */
+	@Autowired
+	private SupplierProductRepository supplierProductRepository;
 
+	/**
+	 * 金額コンポーネント
+	 */
+	@Autowired
+	private MoneyComponent moneyComponent;
+	
 	/**
 	 * 発注作成処理
 	 * @param createOrderVo
@@ -49,11 +62,11 @@ public class SupplierService {
 			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",createOrderVo.getSupplierSeq()));
 		}
 		// 発注詳細の作成
-		Set<OrderEntity> detailEntities = new HashSet<>();
+		Set<OrderDetailEntity> detailEntities = new HashSet<>();
 		// 発注金額
 		var totalPrice = 0L;
 		// 消費税
-		var tax = 0L;
+		var taxTotal = 0L;
 		
 		// 詳細の入力確認
 		if(createOrderVo.getDetails().isEmpty()) {
@@ -61,13 +74,12 @@ public class SupplierService {
 		}
 		
 		for(CreateOrderDetailVo detailVo: createOrderVo.getDetails()) {
+			
 			// 商品の取得
-			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+			Optional<SupplierProductEntity> product = this.supplierProductRepository.findById(detailVo.getSupplierProductSeq());
 			if(product.isEmpty()) {
-				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getSupplierProductSeq()));
 			}
-			
-			
 			// 数量がマイナスの場合はエラー
 			if(detailVo.getQuantity() < 0) {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
@@ -75,9 +87,38 @@ public class SupplierService {
 			
 			
 			// 合計金額を加算する
-			totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
+			totalPrice += product.get().getPurchaseUnitPrice() * detailVo.getQuantity();	
+			
+			// 金額 (単金 × 数量)
+			long price = product.get().getPurchaseUnitPrice() * detailVo.getQuantity();
+			
+			//商品ごとの税金タイプ
+			var taxTaype = product.get().getTaxType();
+			
+			//税金の合計を加算
+			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+			
+			
+			// 受注詳細用のエンティティ生成
+			OrderDetailEntity detailEntity = OrderDetailEntity.create(detailVo);
+
+			// 見積詳細の追加
+			detailEntities.add(detailEntity);
+			
+		}
+			
+		OrderEntity order = OrderEntity.create(createOrderVo);
+		// 合計金額
+		order.setTotal(totalPrice + taxTotal);
 		
-	}
+		// 受注詳細をセット
+		order.setOrderDetailEntity(detailEntities);
+		
+		// 受注の保存
+		order = this.orderRepository.save(order);
+
+	
 	
 
+	}
 }

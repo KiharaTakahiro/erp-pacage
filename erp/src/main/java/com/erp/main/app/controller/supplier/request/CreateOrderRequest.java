@@ -4,6 +4,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.OrderStatus;
+import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 
 import lombok.Data;
 
@@ -53,6 +54,27 @@ public class CreateOrderRequest {
 		// 納期
 		@NotNull
 		private String deriveryDate;
+		
+	}
+
+	/**
+	 * リクエストからValueObjectへのマッピング
+	 * @return
+	 */
+	
+	public CreateOrderVo mapTo() {
+		
+		var vo = new CreateOrderVo();
+		
+		// 発注SEQ
+		vo.setOrderSeq(this.getOrderSeq());
+		// 仕入先SEQ
+		vo.setSupplierSeq(this.getSupplierSeq());
+		// 発注金額
+		vo.setTotal(this.getTotal());
+		// 消費税
+		vo.setTax(this.getTax());		
+		return vo;
 		
 	}
 }
