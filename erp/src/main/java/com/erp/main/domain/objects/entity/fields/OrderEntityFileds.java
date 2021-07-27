@@ -31,12 +31,6 @@ public class OrderEntityFileds extends BaseEntityFields {
 	private Long orderSeq;
 
 	/**
-	 * 受注SEQ
-	 */
-	@Column(name = "RECIVED_ORDER_SEQ")
-	private Long recivedOrderSeq;
-	
-	/**
 	 * 仕入先SEQ
 	 */
 	@Column(name = "SUPPLIER_SEQ")
