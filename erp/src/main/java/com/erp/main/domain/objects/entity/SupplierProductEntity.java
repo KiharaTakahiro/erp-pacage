@@ -10,7 +10,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="SupllierProduct")
+@Table(name="SupplierProduct")
 public class SupplierProductEntity extends SupplierProductEntityFileds {
 
 }
