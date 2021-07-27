@@ -13,7 +13,7 @@ import com.erp.main.domain.objects.entity.fields.OrderEntityFileds;
  *
  */
 @Entity
-@Table(name="Order")
+@Table(name="Orders")
 public class OrderEntity extends OrderEntityFileds {
 
 	
