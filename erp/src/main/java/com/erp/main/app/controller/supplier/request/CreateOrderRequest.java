@@ -1,10 +1,12 @@
 package com.erp.main.app.controller.supplier.request;
 
-import javax.persistence.Id;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.OrderStatus;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
+import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 
 import lombok.Data;
 
@@ -16,10 +18,6 @@ import lombok.Data;
 @Data
 public class CreateOrderRequest {
 	
-	// 発注SEQ
-	@NotNull
-	private Long orderSeq;
-	
 	// 仕入先SEQ
 	private Long supplierSeq;
 	
@@ -29,21 +27,16 @@ public class CreateOrderRequest {
 	// 消費税
 	private Long tax;
 	
+	private List<CreateOrderDetailVo> details;
+	
 	/**
 	 * 発注詳細のリクエスト
 	 * @author ngt
 	 *
 	 */
 	@Data
-	public static class CreateOrderDetailRequest {
+	public static class CreateOrderDetailRequest {		
 
-		// 発注詳細SEQ
-		@Id
-		private Long orderDetailSeq;
-		
-		// 発注SEQ
-		private Long orderSeq;
-		
 		// 発注ステータス
 		private OrderStatus status;
 		
@@ -56,7 +49,7 @@ public class CreateOrderRequest {
 		private String deriveryDate;
 		
 	}
-
+	
 	/**
 	 * リクエストからValueObjectへのマッピング
 	 * @return
@@ -65,9 +58,7 @@ public class CreateOrderRequest {
 	public CreateOrderVo mapTo() {
 		
 		var vo = new CreateOrderVo();
-		
-		// 発注SEQ
-		vo.setOrderSeq(this.getOrderSeq());
+
 		// 仕入先SEQ
 		vo.setSupplierSeq(this.getSupplierSeq());
 		// 発注金額
