@@ -83,7 +83,7 @@ public class SupplierService {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getSupplierProductSeq()));
 			}
 			// 数量がマイナスの場合はエラー
-			if(detailVo.getQuantity() < 0) {
+			if(detailVo.getQuantity() <= 0) {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
 			
