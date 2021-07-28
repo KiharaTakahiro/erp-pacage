@@ -25,7 +25,12 @@ import lombok.Setter;
 @Entity
 @Table(name="Orders")
 public class OrderEntity extends OrderEntityFileds {
-
+	
+	/**
+	 * 登録用のエンティティ作成処理
+	 * @param vo
+	 * @return
+	 */
 	public static OrderEntity create(CreateOrderVo vo) {
 		
 		var entity = new OrderEntity();
