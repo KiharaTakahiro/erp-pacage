@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.OrderStatus;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
-import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 
 import lombok.Data;
 
