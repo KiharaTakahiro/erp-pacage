@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.OrderStatus;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
-import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 
 import lombok.Data;
 
@@ -27,7 +26,7 @@ public class CreateOrderRequest {
 	// 消費税
 	private Long tax;
 	
-	private List<CreateOrderDetailVo> details;
+	private List<CreateOrderDetailRequest> details;
 	
 	/**
 	 * 発注詳細のリクエスト
