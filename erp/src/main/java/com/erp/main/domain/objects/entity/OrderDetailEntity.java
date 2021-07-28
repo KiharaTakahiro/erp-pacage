@@ -24,10 +24,7 @@ public class OrderDetailEntity extends OrderDetailEntityFileds {
 
 	public static OrderDetailEntity create(CreateOrderDetailVo vo) {
 		var entity = new OrderDetailEntity();
-		
-		// 発注SEQ
-		entity.setOrderSeq(vo.getOrderSeq());
-		
+
 		// 発注ステータス
 		entity.setStatus(vo.getStatus());
 		

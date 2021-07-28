@@ -29,10 +29,7 @@ public class OrderEntity extends OrderEntityFileds {
 	public static OrderEntity create(CreateOrderVo vo) {
 		
 		var entity = new OrderEntity();
-		
-		// 発注SEQ
-		entity.setOrderSeq(vo.getOrderSeq());
-		
+
 		// 仕入先SEQ
 		entity.setSupplierSeq(vo.getSupplierSeq());
 		
