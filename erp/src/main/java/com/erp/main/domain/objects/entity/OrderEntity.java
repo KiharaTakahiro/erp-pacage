@@ -25,7 +25,12 @@ import lombok.Setter;
 @Entity
 @Table(name="Orders")
 public class OrderEntity extends OrderEntityFileds {
-
+	
+	/**
+	 * 登録用のエンティティ作成処理
+	 * @param vo
+	 * @return
+	 */
 	public static OrderEntity create(CreateOrderVo vo) {
 		
 		var entity = new OrderEntity();
@@ -47,7 +52,7 @@ public class OrderEntity extends OrderEntityFileds {
 	@Getter
 	@Setter
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "RECIVED_ORDER_SEQ", insertable = true, updatable = true)
+	@JoinColumn(name = "ORDER_SEQ", insertable = true, updatable = true)
 	private Set<OrderDetailEntity> OrderDetailEntity;
 	
 	/**

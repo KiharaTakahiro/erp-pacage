@@ -68,7 +68,6 @@ public class OrderDetailEntityFileds extends BaseEntityFields {
 	/**
 	 * 値引
 	 */
-	@NotNull
 	@Column(name="DISCOUNT")
 	private Long discount;
 	
