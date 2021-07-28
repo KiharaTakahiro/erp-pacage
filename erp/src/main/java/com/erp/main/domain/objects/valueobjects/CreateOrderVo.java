@@ -15,9 +15,6 @@ import lombok.Data;
 @Data
 public class CreateOrderVo {
 
-	// 発注SEQ
-	private Long orderSeq;
-
 	// 仕入先SEQ
 	private Long supplierSeq;
 
@@ -30,22 +27,18 @@ public class CreateOrderVo {
 	private List<CreateOrderDetailVo> details;
 
 	/**
-	 * 発注詳細のリクエスト
-	 * @author ngt
+	 * 発注詳細のvo
+	 * @author 高山
 	 *
 	 */
 	@Data
 	public static class CreateOrderDetailVo {
-		private Long orderDetailSeq;
-
-		// 発注SEQ
-		private Long orderSeq;
-
+		
+		// 仕入商品Seq
+		private Long supplierProductSeq;
+		
 		// 発注ステータス
 		private OrderStatus status;
-
-		// 商品SEQ
-		private Long supplierProductSeq;
 
 		// 数量
 		private Integer quantity;
