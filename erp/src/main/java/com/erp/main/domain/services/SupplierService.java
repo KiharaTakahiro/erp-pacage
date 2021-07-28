@@ -113,14 +113,11 @@ public class SupplierService {
 		// 合計金額
 		order.setTotal(totalPrice + taxTotal);
 		
-		// 受注詳細をセット
+		// 発注詳細をセット
 		order.setOrderDetailEntity(detailEntities);
 		
-		// 受注の保存
+		// 発注の保存
 		order = this.orderRepository.save(order);
-
-	
-	
 
 	}
 }

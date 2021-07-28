@@ -42,12 +42,12 @@ public class OrderEntity extends OrderEntityFileds {
 }
 
 	/**
-	 * 受注詳細
+	 * 発注詳細
 	 */	
 	@Getter
 	@Setter
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "RECIVED_ORDER_SEQ", insertable = true, updatable = true)
+	@JoinColumn(name = "ORDER_SEQ", insertable = true, updatable = true)
 	private Set<OrderDetailEntity> OrderDetailEntity;
 	
 	/**

@@ -44,7 +44,7 @@ public class OrderDetailEntity extends OrderDetailEntityFileds {
 	 */
 	@Getter
 	@ManyToOne
-	@JoinColumn(name = "RECIVED_ORDER_SEQ", insertable = false, updatable = false)
+	@JoinColumn(name = "ORDER_SEQ", insertable = false, updatable = false)
 	private OrderEntity order;
 	
 	/**
