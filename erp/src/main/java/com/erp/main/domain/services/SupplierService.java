@@ -78,8 +78,8 @@ public class SupplierService {
 		for(CreateOrderDetailVo detailVo: createOrderVo.getDetails()) {
 			
 			// 商品の取得
-			Optional<SupplierProductEntity> product = this.supplierProductRepository.findById(detailVo.getSupplierProductSeq());
-			if(product.isEmpty()) {
+			Optional<SupplierProductEntity> productOpt = this.supplierProductRepository.findById(detailVo.getSupplierProductSeq());
+			if(productOpt.isEmpty()) {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getSupplierProductSeq()));
 			}
 			// 数量がマイナスの場合はエラー
@@ -87,15 +87,16 @@ public class SupplierService {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
 			
+			var product = productOpt.get();
 			
 			// 合計金額を加算する
-			totalPrice += product.get().getPurchaseUnitPrice() * detailVo.getQuantity();	
+			totalPrice += product.getPurchaseUnitPrice() * detailVo.getQuantity();	
 			
 			// 金額 (単金 × 数量)
-			long price = product.get().getPurchaseUnitPrice() * detailVo.getQuantity();
+			long price = product.getPurchaseUnitPrice() * detailVo.getQuantity();
 			
 			//商品ごとの税金タイプ
-			var taxTaype = product.get().getTaxType();
+			var taxTaype = product.getTaxType();
 			
 			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
