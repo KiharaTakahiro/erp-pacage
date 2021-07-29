@@ -6,11 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.OrderDetailEntity;
 import com.erp.main.domain.objects.entity.OrderEntity;
@@ -22,7 +28,14 @@ import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.SupplierService;
+/**
+ * OrderServiceのパターン網羅用のテスト
+ * @author ngt
+ *
+ */
 
+@MockitoSettings(strictness = Strictness.LENIENT)
+@ExtendWith(MockitoExtension.class)
 public class SupplierServiceTest {
 	@InjectMocks
 	private SupplierService supplierService = new SupplierService();
@@ -81,24 +94,89 @@ public class SupplierServiceTest {
 	}
 	
 	
-	
 	/**
 	 * 異常系1
 	 * 取引先情報がないパターン
 	 */
-//	@Test
-//	public void createOrderErrorCase1() {
-//		// 実行用テストデータの作成
-//		CreateOrderVo createOrderVo = this.createDefaultInputData();
-//		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
-//		
-//		// 取得処理をモック化
-//		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplier);
-//		// 消費税はサービスのテストでは10%として考える
-//		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
-//		// 処理の実行
-//		Assertions.assertThrows(AppException.class, () -> orderService.createSupplier(createSupplier));
-//		}
+	@Test
+	public void createQuotationErrorCase1() {
+		// 実行用テストデータの作成
+		CreateOrderVo createOrderVo = this.createDefaultInputData();
+		Optional<SupplierEntity> supplier = this.createErrorSupplierData();
+		Optional<SupplierProductEntity> supplierProduct = this.createDefaultSupplierProductData();		
+		// 取得処理をモック化 (仕入先情報)
+		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
+		// 取得処理をモック化 (仕入商品)
+		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> supplierService.createOrder(createOrderVo));
+	}
+	
+	/**
+	 * 異常系2
+	 * 取引先商品情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase2() {
+		// 実行用テストデータの作成
+		CreateOrderVo createOrderVo = this.createDefaultInputData();
+		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
+		Optional<SupplierProductEntity> supplierProduct = this.createErrorSupplierProductData();		
+		// 取得処理をモック化 (仕入先情報)
+		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
+		// 取得処理をモック化 (仕入商品)
+		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> supplierService.createOrder(createOrderVo));
+	}
+	
+	/**
+	 * 異常系3
+	 * 取引先商品情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase3() {
+		// 実行用テストデータの作成
+		CreateOrderVo createOrderVo = this.createErrorInputData();
+		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
+		Optional<SupplierProductEntity> supplierProduct = this.createDefaultSupplierProductData();		
+		// 取得処理をモック化 (仕入先情報)
+		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
+		// 取得処理をモック化 (仕入商品)
+		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> supplierService.createOrder(createOrderVo));
+	}
+	
+	/**
+	 * 異常系4
+	 * 取引先商品情報がないパターン
+	 */
+	@Test
+	public void createQuotationErrorCase4() {
+		// 実行用テストデータの作成
+		CreateOrderVo createOrderVo = this.createErrorInputData2();
+		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
+		Optional<SupplierProductEntity> supplierProduct = this.createDefaultSupplierProductData();		
+		// 取得処理をモック化 (仕入先情報)
+		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
+		// 取得処理をモック化 (仕入商品)
+		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		// 消費税はサービスのテストでは10%として考える
+		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
+		
+		// 処理の実行
+		Assertions.assertThrows(AppException.class, () -> supplierService.createOrder(createOrderVo));
+	}
 	
 	/**
 	 * 仕入先データ生成
@@ -109,6 +187,16 @@ public class SupplierServiceTest {
 		suppliers.setSupplierSeq(2L);
 		return Optional.of(suppliers);
 		}
+	
+	/**
+	 * エラー用仕入れ先データ生成
+	 * @return
+	 */
+	private Optional<SupplierEntity> createErrorSupplierData() {
+		return Optional.empty();
+		
+	}
+
 
 	/**
 	 * 仕入先商品データ生成
@@ -116,8 +204,16 @@ public class SupplierServiceTest {
 	 */
 	private Optional<SupplierProductEntity> createDefaultSupplierProductData(){
 		SupplierProductEntity supplierProducts = new SupplierProductEntity();
-		supplierProducts.setSupplierProductSeq(2L);
+		supplierProducts.setPurchaseUnitPrice(1000L);		
 		return Optional.of(supplierProducts);
+	}
+	
+	/**
+	 * エラー用仕入先商品データ生成
+	 * @return
+	 */
+	private Optional<SupplierProductEntity> createErrorSupplierProductData(){
+		return Optional.empty();
 	}
 	
 	/**
@@ -150,8 +246,64 @@ public class SupplierServiceTest {
 		return createOrderVo;
 	}
 	
+	/**
+	 * エラー用の商品データ生成
+	 * @return
+	 */
+	private CreateOrderVo createErrorInputData() {
+		CreateOrderVo createOrderVo = new CreateOrderVo();
+		// 仕入先SEQ
+		createOrderVo.setSupplierSeq(2L);
+		// 発注金額
+		createOrderVo.setTotal(2L);
+		// 消費税
+		createOrderVo.setTax(2L);
+		
+		CreateOrderDetailVo createOrderDetailVo = new CreateOrderDetailVo();
+		// 仕入商品Seq
+		createOrderDetailVo.setSupplierProductSeq(2L);
+		// 発注ステータス
+		createOrderDetailVo.setStatus(null);
+		// 数量
+		createOrderDetailVo.setQuantity(0);
+		// 納期
+		createOrderDetailVo.setDeriveryDate("20210503");
+		
+		List<CreateOrderDetailVo> details = new ArrayList<>();
+		details.add(createOrderDetailVo);
+		createOrderVo.setDetails(details);
+		
+		return createOrderVo;
+	}
 	
-	
+	/**
+	 * エラー用の商品データ生成
+	 * @return
+	 */
+	private CreateOrderVo createErrorInputData2() {
+		CreateOrderVo createOrderVo = new CreateOrderVo();
+		// 仕入先SEQ
+		createOrderVo.setSupplierSeq(2L);
+		// 発注金額
+		createOrderVo.setTotal(2L);
+		// 消費税
+		createOrderVo.setTax(2L);
+		
+		CreateOrderDetailVo createOrderDetailVo = new CreateOrderDetailVo();
+		// 仕入商品Seq
+		createOrderDetailVo.setSupplierProductSeq(2L);
+		// 発注ステータス
+		createOrderDetailVo.setStatus(null);
+		// 数量
+		createOrderDetailVo.setQuantity(2);
+		// 納期
+		createOrderDetailVo.setDeriveryDate("20210503");
+		
+		List<CreateOrderDetailVo> details = new ArrayList<>();
+		createOrderVo.setDetails(details);
+		
+		return createOrderVo;
+	}
 	/**
 	 * デフォルトのテストデータの場合の検証データ
 	 * @return
@@ -174,5 +326,6 @@ public class SupplierServiceTest {
 		detailEntity.setDeriveryDate("20210503");
 		return entity;
 	}
-
+	
+	
 }
