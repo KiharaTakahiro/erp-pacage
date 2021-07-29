@@ -3,6 +3,7 @@ package com.erp.main.domain.service;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,6 @@ import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.SupplierService;
-
-import antlr.collections.List;
 
 public class SupplierServiceTest {
 	@InjectMocks
@@ -144,7 +143,7 @@ public class SupplierServiceTest {
 		createOrderDetailVo.setDeriveryDate("20210503");
 		
 		List<CreateOrderDetailVo> details = new ArrayList<>();
-		details.add(createOrderVo);
+		details.add(createOrderDetailVo);
 		createOrderVo.setDetails(details);
 		
 		return createOrderVo;
