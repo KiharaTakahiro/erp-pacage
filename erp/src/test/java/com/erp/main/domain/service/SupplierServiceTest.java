@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.OrderDetailEntity;
+import com.erp.main.domain.objects.entity.OrderEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
@@ -60,9 +61,9 @@ public class SupplierServiceTest {
 		CreateOrderVo createOrderVo = this.createDefaultInputData();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
 		Optional<SupplierProductEntity> supplierProduct = this.createDefaultSupplierProductData();		
-		// 取得処理をモック化
+		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
-		// 取得処理をモック化
+		// 取得処理をモック化 (仕入商品)
 		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
@@ -70,7 +71,7 @@ public class SupplierServiceTest {
 		this.supplierService.createOrder(createOrderVo);
 		
 		// 検証用データの作成
-		SupplierService entity = this.createVerifyDataByDefaltInput();
+		OrderEntity entity = this.createVerifyDataByDefaltInput();
 		// 消費税
 		entity.setTax(70L);
 		// 合計金額
@@ -151,16 +152,13 @@ public class SupplierServiceTest {
 	
 	
 	
-	
-	
-	
 	/**
 	 * デフォルトのテストデータの場合の検証データ
 	 * @return
 	 */
 	
-	private SupplierEntity createVerifyDataByDefaltInput() {
-		SupplierEntity entity = new SupplierEntity();
+	private OrderEntity createVerifyDataByDefaltInput() {
+		OrderEntity entity = new OrderEntity();
 		// 仕入先SEQ
 		entity.setSupplierSeq(2L);
 		// 発注金額
@@ -168,18 +166,13 @@ public class SupplierServiceTest {
 		// 消費税
 		entity.setTax(2L);
 		
-		OrderDetailEntity detailEntity = new orderDetailEntity();
-		
-		
+		OrderDetailEntity detailEntity = new OrderDetailEntity();
+		// 仕入商品Seq
+		detailEntity.setSupplierProductSeq(2L);
+		detailEntity.setStatus(null);
+		detailEntity.setQuantity(4);
+		detailEntity.setDeriveryDate("20210503");
+		return entity;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
