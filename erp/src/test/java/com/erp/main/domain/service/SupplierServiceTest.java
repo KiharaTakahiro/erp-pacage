@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.OrderDetailEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 import com.erp.main.domain.repository.OrderRepository;
@@ -60,11 +60,11 @@ public class SupplierServiceTest {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createDefaultInputData();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
-		
+		Optional<SupplierProductEntity> supplierProduct = this.createDefaultSupplierProductData();		
 		// 取得処理をモック化
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化
-		Mockito.when
+		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		// 処理の実行
@@ -111,6 +111,16 @@ public class SupplierServiceTest {
 		}
 
 	/**
+	 * 仕入先商品データ生成
+	 * @return
+	 */
+	private Optional<SupplierProductEntity> createDefaultSupplierProductData(){
+		SupplierProductEntity supplierProducts = new SupplierProductEntity();
+		supplierProducts.setSupplierProductSeq(2L);
+		return Optional.of(supplierProducts);
+	}
+	
+	/**
 	 * デフォルトの商品データ生成
 	 * @return
 	 */
@@ -139,6 +149,10 @@ public class SupplierServiceTest {
 		
 		return createOrderVo;
 	}
+	
+	
+	
+	
 	
 	
 	/**
