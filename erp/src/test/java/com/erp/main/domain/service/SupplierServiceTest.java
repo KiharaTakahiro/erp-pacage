@@ -108,23 +108,24 @@ public class SupplierServiceTest {
 		// 仕入先SEQ
 		createOrderVo.setSupplierSeq(2L);
 		// 発注金額
-		createOrderVo.setTax(2L);
+		createOrderVo.setTotal(2L);
 		// 消費税
 		createOrderVo.setTax(2L);
 		
 		CreateOrderDetailVo createOrderDetailVo = new CreateOrderDetailVo();
 		// 仕入商品Seq
-		createOrderVo.setSupplierProductSeq(2L);
+		createOrderDetailVo.setSupplierProductSeq(2L);
 		// 発注ステータス
-		createOrderVo.setStatus();
+		createOrderDetailVo.setStatus(null);
 		// 数量
-		createOrderVo.setQuantity(4);
+		createOrderDetailVo.setQuantity(4);
 		// 納期
-		createOrderVo.setDeriveryDate(20210503);
+		createOrderDetailVo.setDeriveryDate("20210503");
 		
 		List<CreateOrderDetailVo> details = new ArrayList<>();
 		details.add(createOrderVo);
 		createOrderVo.setDetails(details);
+		
 		return createOrderVo;
 	}
 	
@@ -134,7 +135,16 @@ public class SupplierServiceTest {
 	 * @return
 	 */
 	
-	
+	private SupplierEntity createVerifyDataByDefaltInput() {
+		SupplierEntity entity = new SupplierEntity();
+		// 仕入先SEQ
+		entity.setSupplierSeq(2L);
+		// 発注金額
+		entity.setTotal(2L);
+		// 消費税
+		entity.setTax(2L);
+		
+	}
 	
 	
 	
