@@ -16,6 +16,8 @@ import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductConditionVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductVo;
 import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
@@ -121,4 +123,38 @@ public class SupplierService {
 		this.orderRepository.save(order);
 
 	}
+	
+	public GetSupplierProductVo getSupplierProductVo(GetSupplierProductConditionVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+//		Specification<SupplierProductEntity> spen = specification.where(
+//				SupplierProductSpec.cli)
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

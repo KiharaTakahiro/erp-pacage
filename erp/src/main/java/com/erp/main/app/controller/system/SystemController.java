@@ -149,11 +149,5 @@ public class SystemController {
 		response.setMaxpage(vo.getMaxpage());
 		response.setClients(vo.getClients());
 		return response;
-	}
-	
-	
-	
-	
-	
-	
+	}	
 }
