@@ -53,7 +53,7 @@ public class OrderEntity extends OrderEntityFileds {
 	@Setter
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "ORDER_SEQ", insertable = true, updatable = true)
-	private Set<OrderDetailEntity> OrderDetailEntity;
+	private Set<OrderDetailEntity> orderDetailEntity;
 	
 	/**
 	 * 取引先
