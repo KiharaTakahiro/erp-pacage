@@ -37,7 +37,7 @@ import com.erp.main.domain.services.SupplierService;
 
 @MockitoSettings(strictness = Strictness.LENIENT)
 @ExtendWith(MockitoExtension.class)
-public class SupplierServiceTest {
+class SupplierServiceTest {
 	
 	@InjectMocks
 	private SupplierService supplierService = new SupplierService();
@@ -71,7 +71,7 @@ public class SupplierServiceTest {
 	 * 通常の登録ケース
 	 */
 	@Test
-	public void createOrderSucsessCase1() {
+	void createOrderSucsessCase1() {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createDefaultInputData();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
@@ -103,7 +103,7 @@ public class SupplierServiceTest {
 	 * 取引先情報がないパターン
 	 */
 	@Test
-	public void createQuotationErrorCase1() {
+	void createQuotationErrorCase1() {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createDefaultInputData();
 		Optional<SupplierEntity> supplier = this.createErrorSupplierData();
@@ -124,7 +124,7 @@ public class SupplierServiceTest {
 	 * 取引先商品情報がないパターン
 	 */
 	@Test
-	public void createQuotationErrorCase2() {
+	void createQuotationErrorCase2() {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createDefaultInputData();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
@@ -145,7 +145,7 @@ public class SupplierServiceTest {
 	 * 取引先商品情報がないパターン
 	 */
 	@Test
-	public void createQuotationErrorCase3() {
+	void createQuotationErrorCase3() {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createErrorInputData();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
@@ -165,7 +165,7 @@ public class SupplierServiceTest {
 	 * 取引先商品情報がないパターン
 	 */
 	@Test
-	public void createQuotationErrorCase4() {
+	void createQuotationErrorCase4() {
 		// 実行用テストデータの作成
 		CreateOrderVo createOrderVo = this.createErrorInputData2();
 		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
