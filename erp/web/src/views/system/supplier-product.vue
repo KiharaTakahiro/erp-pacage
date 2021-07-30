@@ -8,7 +8,7 @@
       >
         {{ $t('supplierProduct.add') }}
     </el-button>
-    <el-card class="box-card">
+    <!-- <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
         <span class="input-label">ID:</span>
@@ -47,9 +47,9 @@
           {{ $t('route.search') }}
         </el-button>
       </div>
-    </el-card>
+    </el-card> -->
     <el-card class="box-card">
-      <h5>取引先一覧</h5>
+      <h5>仕入商品一覧</h5>
       <el-table
         ref="clientsTable"
         :data="clientsData"
@@ -71,7 +71,7 @@
         </el-table-column>
         <el-table-column
           prop="clientsName"
-          label="Client name">
+          label="product name">
         </el-table-column>
       </el-table>
         <div class="left">
@@ -81,7 +81,7 @@
           <el-button
             type="primary"
             style="width:100%; margin-bottom:30px; margin-top:30px; "
-            @click.native.prevent="editClientBtn"
+            @click.native.prevent="editSupplierProductBtn"
           >
             {{ $t('route.edit') }}
           </el-button>
