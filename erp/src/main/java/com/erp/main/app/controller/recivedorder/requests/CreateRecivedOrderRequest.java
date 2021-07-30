@@ -104,7 +104,7 @@ public class CreateRecivedOrderRequest {
 		// 合計金額
 		vo.setTotal(this.getTotal());
 		
-		// 値引詳細
+		// 詳細
 		List<CreateRecivedOrderDetailVo> detailVos = new ArrayList<>();
 		
 		for(CreateRecivedOrderDetailRequest detail: this.getDetails()) {
@@ -123,7 +123,7 @@ public class CreateRecivedOrderRequest {
 			detailVos.add(detailVo);
 		}
 		
-		// 値引詳細の追加
+		// 詳細の追加
 		vo.setDetails(detailVos);
 		
 		return vo;
