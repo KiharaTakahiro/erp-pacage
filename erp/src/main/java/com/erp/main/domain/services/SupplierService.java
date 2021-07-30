@@ -118,7 +118,7 @@ public class SupplierService {
 		order.setOrderDetailEntity(detailEntities);
 		
 		// 発注の保存
-		order = this.orderRepository.save(order);
+		this.orderRepository.save(order);
 
 	}
 }
