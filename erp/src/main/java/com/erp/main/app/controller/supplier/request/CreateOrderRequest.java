@@ -80,7 +80,7 @@ public class CreateOrderRequest {
 			// 仕入商品Seq
 			detailVo.setSupplierProductSeq(detail.getSupplierProductSeq());
 			// 発注ステータス
-			detailVo.setStatus(detail.getStatus());;
+			detailVo.setStatus(detail.getStatus());
 			// 数量
 			detailVo.setQuantity(detail.getQuantity());
 			// 納期
