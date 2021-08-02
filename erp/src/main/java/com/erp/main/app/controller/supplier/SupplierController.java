@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.erp.main.app.controller.supplier.request.CreateOrderRequest;
 import com.erp.main.app.controller.system.request.GetSupplierProductsRequest;
 import com.erp.main.app.controller.system.response.SupplierProductsResponse;
-import com.erp.main.domain.repository.SupplierProductsRespons;
 import com.erp.main.domain.services.SupplierService;
 
 
@@ -38,8 +37,10 @@ public class SupplierController{
 	 * 仕入れ商品一覧処理
 	 */
 	@PostMapping("supplier-products/info")
-	public SupplierProductsRespons supplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
+	public SupplierProductsResponse supplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
 		var vo = this.supplierService.getSupplierProducstVo(request.mapTo());
 		var response = new SupplierProductsResponse();
-		responce.set
+		response.setMaxpage(vo.getMaxpage());
+		return response;
 	}
+}

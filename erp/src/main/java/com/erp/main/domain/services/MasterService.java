@@ -199,6 +199,7 @@ public class MasterService {
 		if(client.isEmpty()) {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));
 		}
+		
 		var clientEntity = client.get();
 		clientEntity.update(vo);	
 		this.clientsRepository.save(clientEntity);
@@ -215,7 +216,6 @@ public class MasterService {
 			condition.setPageNo(0);
 		}
 		
-		
 		// 検索条件の設定
 		Specification<ClientsEntity> spec = Specification.where(
 				ClientsSpec.clientsSeqEquals(condition.getClientsSeq()))
@@ -225,7 +225,6 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
-		
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
 			// 取引先Seq
@@ -235,8 +234,8 @@ public class MasterService {
 			return client;
 		}).collect(Collectors.toList());
 		
+		// 返却用のVo生成
 		var vo = new GetClientsVo();
-		
 		// トータルぺ―ジ
 		vo.setMaxpage(pages.getTotalPages());
 		// 取引先リストの設定

@@ -16,8 +16,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 public class SupplierProductsResponse extends BaseResponse {
 	// 最大ページ数
-	private Integer maxPage;
+	private Integer maxpage;
 	
 	// 仕入れ商品リスト
-	List<SupplierProductModel> SupplierProduct;
+	List<SupplierProductModel> supplierProducts;
 }

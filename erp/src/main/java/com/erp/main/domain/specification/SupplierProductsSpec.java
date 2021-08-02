@@ -8,8 +8,8 @@ import com.erp.main.domain.objects.entity.SupplierProductEntity;
  * 取引先用のSpecification
  * @author 高山
  */
-public class SupplierProductSpec {
-	private SupplierProductSpec() {}
+public class SupplierProductsSpec {
+	private SupplierProductsSpec() {}
 	/*
 	 * 仕入先SEQでの検索
 	 * @param supplierProductsSeq

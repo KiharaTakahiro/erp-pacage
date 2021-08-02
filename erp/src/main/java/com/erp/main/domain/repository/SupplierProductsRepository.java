@@ -12,6 +12,6 @@ import com.erp.main.domain.objects.entity.SupplierProductEntity;
  *
  */
 @Repository
-public interface  SupplierProductRepository extends JpaRepository<SupplierProductEntity, Long> {
+public interface  SupplierProductsRepository extends JpaRepository<SupplierProductEntity, Long> {
 
 }

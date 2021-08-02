@@ -1,10 +1,16 @@
 package com.erp.main.domain.services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +20,15 @@ import com.erp.main.domain.objects.entity.OrderDetailEntity;
 import com.erp.main.domain.objects.entity.OrderEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
+import com.erp.main.domain.objects.model.SupplierProductModel;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
-import com.erp.main.domain.objects.valueobjects.GetSupplierProductConditionVo;
-import com.erp.main.domain.objects.valueobjects.GetSupplierProductVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductsConditionVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductsVo;
 import com.erp.main.domain.repository.OrderRepository;
-import com.erp.main.domain.repository.SupplierProductRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
+import com.erp.main.domain.specification.SupplierProductsSpec;
 
 /*
  * 受注のサービス
@@ -45,7 +53,7 @@ public class SupplierService {
 	 * 仕入先商品のリポジトリ
 	 */
 	@Autowired
-	private SupplierProductRepository supplierProductRepository;
+	private SupplierProductsRepository supplierProductsRepository;
 
 	/**
 	 * 金額コンポーネント
@@ -84,25 +92,21 @@ public class SupplierService {
 			if(productOpt.isEmpty()) {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getSupplierProductSeq()));
 			}
+			
 			// 数量がマイナスの場合はエラー
 			if(detailVo.getQuantity() <= 0) {
 				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
 			}
 			
 			var product = productOpt.get();
-			
 			// 合計金額を加算する
 			totalPrice += product.getPurchaseUnitPrice() * detailVo.getQuantity();	
-			
 			// 金額 (単金 × 数量)
 			long price = product.getPurchaseUnitPrice() * detailVo.getQuantity();
-			
 			//商品ごとの税金タイプ
 			var taxTaype = product.getTaxType();
-			
 			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
-			
 			
 			// 受注詳細用のエンティティ生成
 			OrderDetailEntity detailEntity = OrderDetailEntity.create(detailVo);
@@ -115,46 +119,50 @@ public class SupplierService {
 		OrderEntity order = OrderEntity.create(createOrderVo);
 		// 合計金額
 		order.setTotal(totalPrice + taxTotal);
-		
 		// 発注詳細をセット
 		order.setOrderDetailEntity(detailEntities);
-		
 		// 発注の保存
 		this.orderRepository.save(order);
-
 	}
 	
-	public GetSupplierProductVo getSupplierProductVo(GetSupplierProductConditionVo condition) {
+	/*
+	 * 取引先一覧取得
+	 * @param condition
+	 * @return
+	 */
+	
+	public GetSupplierProductsVo getSupplierProducstVo(GetSupplierProductsConditionVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
 		}
 		
 		// 検索条件の設定
-//		Specification<SupplierProductEntity> spen = specification.where(
-//				SupplierProductSpec.cli)
+		Specification<SupplierProductEntity> spec = Specification.where(
+				SupplierProductsSpec.supplierProductsSeqEquals(condition.getSupplierProductsSeq()))
+				.and(SupplierProductsSpec.supplierProductsNameEquals(condition.getSupplierProductsName()));
+		
+		// ソートの設定
+	var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
+
+	Page<SupplierProductEntity> pages = this.supplierProductsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+	List<SupplierProductModel> supplierProducts = pages.get().map(e -> {
+		var supplierProduct = new SupplierProductModel();
+		// 仕入先seq
+		supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
+		// 仕入先名
+		supplierProduct.setSupplierProductName(e.getName());
+		return supplierProduct;
+	}).collect(Collectors.toList());
+	
+	// 返却用のVo生成
+	var vo = new GetSupplierProductsVo();
+	// トータルぺ―ジ
+	vo.setMaxpage(pages.getTotalPages());
+	// 仕入先リストの設定
+	vo.setSupplierProducts(supplierProducts);
+	
+	return vo;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

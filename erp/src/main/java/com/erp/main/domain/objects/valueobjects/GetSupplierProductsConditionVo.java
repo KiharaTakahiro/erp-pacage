@@ -11,8 +11,8 @@ public class GetSupplierProductsConditionVo {
 	// ページ番号
 	private Integer pageNo;
 	// 取引先Seq
-	private Long SupplierProductSeq;
+	private Long SupplierProductsSeq;
 	// 取引先名
-	private String SupplierProductName;
+	private String SupplierProductsName;
 
 }
