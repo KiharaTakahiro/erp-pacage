@@ -126,7 +126,7 @@ public class SupplierService {
 	}
 	
 	/*
-	 * 取引先一覧取得
+	 * 仕入先一覧取得
 	 * @param condition
 	 * @return
 	 */
@@ -145,7 +145,7 @@ public class SupplierService {
 		// ソートの設定
 	var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
 
-	Page<SupplierProductEntity> pages = this.supplierProductsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+	<SupplierProductEntity> pages = this.supplierProductsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort))
 	List<SupplierProductModel> supplierProducts = pages.get().map(e -> {
 		var supplierProduct = new SupplierProductModel();
 		// 仕入先seq
