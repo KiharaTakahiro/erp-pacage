@@ -37,7 +37,7 @@ public class SupplierController{
 	 * 仕入れ商品一覧処理
 	 */
 	@PostMapping("supplier-products/info")
-	public SupplierProductsResponse supplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
+	public SupplierProductsResponse infosupplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
 		var vo = this.supplierService.getSupplierProducstVo(request.mapTo());
 		var response = new SupplierProductsResponse();
 		response.setMaxpage(vo.getMaxpage());

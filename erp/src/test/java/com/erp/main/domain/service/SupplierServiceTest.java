@@ -25,7 +25,7 @@ import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 import com.erp.main.domain.repository.OrderRepository;
-import com.erp.main.domain.repository.SupplierProductRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.SupplierService;
 /**
@@ -58,7 +58,7 @@ class SupplierServiceTest {
 	 * 仕入先商品のリポジトリ
 	 */
 	@Mock
-	private SupplierProductRepository supplierProductRepository;
+	private SupplierProductsRepository supplierProductRepository;
 	
 	/**
 	 * 金額コンポーネント

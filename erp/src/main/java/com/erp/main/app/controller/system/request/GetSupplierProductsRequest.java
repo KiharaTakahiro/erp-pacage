@@ -26,9 +26,9 @@ public class GetSupplierProductsRequest {
 		// page no.
 		vo.setPageNo(this.getPageNo());
 		// 商品名seq
-		vo.setSupplierProductSeq(this.getSupplierProductSeq());
+		vo.setSupplierProductsSeq(this.getSupplierProductSeq());
 		// 商品名
-		vo.setSupplierProductName(this.getSupplierProductName());
+		vo.setSupplierProductsName(this.getSupplierProductName());
 		return vo;
 	}
 }

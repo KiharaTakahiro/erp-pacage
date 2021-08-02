@@ -126,7 +126,7 @@ public class SupplierService {
 	}
 	
 	/*
-	 * 仕入先一覧取得
+	 * 仕入商品一覧取得
 	 * @param condition
 	 * @return
 	 */
