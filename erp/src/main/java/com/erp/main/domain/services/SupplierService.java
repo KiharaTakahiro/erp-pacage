@@ -88,7 +88,7 @@ public class SupplierService {
 		for(CreateOrderDetailVo detailVo: createOrderVo.getDetails()) {
 			
 			// 商品の取得
-			Optional<SupplierProductEntity> productOpt = this.supplierProductRepository.findById(detailVo.getSupplierProductSeq());
+			Optional<SupplierProductEntity> productOpt = this.supplierProductsRepository.findById(detailVo.getSupplierProductSeq());
 			if(productOpt.isEmpty()) {
 				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getSupplierProductSeq()));
 			}
