@@ -28,7 +28,7 @@ import com.erp.main.domain.objects.valueobjects.GetSupplierProductsVo;
 import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
-import com.erp.main.domain.specification.SupplierProductsSpec;
+import com.erp.main.domain.specification.SupplierProductSpec;
 
 /*
  * 受注のサービス
@@ -139,8 +139,8 @@ public class SupplierService {
 		
 		// 検索条件の設定
 		Specification<SupplierProductEntity> spec = Specification.where(
-				SupplierProductsSpec.supplierProductsSeqEquals(condition.getSupplierProductSeq()))
-				.and(SupplierProductsSpec.supplierProductsNameEquals(condition.getSupplierProductName()));
+				SupplierProductSpec.supplierProductsSeqEquals(condition.getSupplierProductSeq()))
+				.and(SupplierProductSpec.supplierProductsNameEquals(condition.getSupplierProductName()));
 		
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
