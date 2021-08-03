@@ -41,6 +41,7 @@ public class SupplierController{
 		var vo = this.supplierService.getSupplierProducstVo(request.mapTo());
 		var response = new SupplierProductsResponse();
 		response.setMaxpage(vo.getMaxpage());
+		response.setSupplierProducts(vo.getSupplierProducts());
 		return response;
 	}
 }

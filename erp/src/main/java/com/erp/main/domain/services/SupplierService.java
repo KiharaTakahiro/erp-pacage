@@ -143,26 +143,26 @@ public class SupplierService {
 				.and(SupplierProductsSpec.supplierProductsNameEquals(condition.getSupplierProductsName()));
 		
 		// ソートの設定
-	var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
-
-	Page<SupplierProductEntity> pages = this.supplierProductsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
-	List<SupplierProductModel> supplierProducts = pages.get().map(e -> {
-		var supplierProduct = new SupplierProductModel();
-		// 仕入先seq
-		supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
-		// 仕入先名
-		supplierProduct.setSupplierProductName(e.getName());
-		return supplierProduct;
-	}).collect(Collectors.toList());
+		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
 	
-	// 返却用のVo生成
-	var vo = new GetSupplierProductsVo();
-	// トータルぺ―ジ
-	vo.setMaxpage(pages.getTotalPages());
-	// 仕入先リストの設定
-	vo.setSupplierProducts(supplierProducts);
-	
-	return vo;
+		Page<SupplierProductEntity> pages = this.supplierProductsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		List<SupplierProductModel> supplierProducts = pages.get().map(e -> {
+			var supplierProduct = new SupplierProductModel();
+			// 仕入先seq
+			supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
+			// 仕入先名
+			supplierProduct.setSupplierProductName(e.getName());
+			return supplierProduct;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetSupplierProductsVo();
+		// トータルぺ―ジ
+		vo.setMaxpage(pages.getTotalPages());
+		// 仕入先リストの設定
+		vo.setSupplierProducts(supplierProducts);
+		
+		return vo;
 
 	}
 }

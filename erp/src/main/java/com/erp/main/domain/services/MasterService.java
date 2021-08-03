@@ -206,7 +206,7 @@ public class MasterService {
 	}
 	
 	/*
-	 * 取引先一覧取得
+	 * 取引先一覧取
 	 * @param condition
 	 * @return
 	 */

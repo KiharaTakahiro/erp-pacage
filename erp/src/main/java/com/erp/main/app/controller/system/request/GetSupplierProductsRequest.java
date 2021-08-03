@@ -4,7 +4,7 @@ import com.erp.main.domain.objects.valueobjects.GetSupplierProductsConditionVo;
 
 import lombok.Data;
 
-/* 仕入商品のリクエスト
+/** 仕入商品のリクエスト
  * @author 高山
  */
 @Data
