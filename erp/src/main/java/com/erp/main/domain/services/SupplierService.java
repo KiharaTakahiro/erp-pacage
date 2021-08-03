@@ -131,7 +131,7 @@ public class SupplierService {
 	 * @return
 	 */
 	
-	public GetSupplierProductsVo getSupplierProducstVo(GetSupplierProductsConditionVo condition) {
+	public GetSupplierProductsVo getSupplierProductsVo(GetSupplierProductsConditionVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
@@ -139,8 +139,8 @@ public class SupplierService {
 		
 		// 検索条件の設定
 		Specification<SupplierProductEntity> spec = Specification.where(
-				SupplierProductsSpec.supplierProductsSeqEquals(condition.getSupplierProductsSeq()))
-				.and(SupplierProductsSpec.supplierProductsNameEquals(condition.getSupplierProductsName()));
+				SupplierProductsSpec.supplierProductsSeqEquals(condition.getSupplierProductSeq()))
+				.and(SupplierProductsSpec.supplierProductsNameEquals(condition.getSupplierProductName()));
 		
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");

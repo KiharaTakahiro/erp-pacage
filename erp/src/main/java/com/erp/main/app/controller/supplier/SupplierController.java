@@ -38,7 +38,7 @@ public class SupplierController{
 	 */
 	@PostMapping("supplier-products/info")
 	public SupplierProductsResponse infosupplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
-		var vo = this.supplierService.getSupplierProducstVo(request.mapTo());
+		var vo = this.supplierService.getSupplierProductsVo(request.mapTo());
 		var response = new SupplierProductsResponse();
 		response.setMaxpage(vo.getMaxpage());
 		response.setSupplierProducts(vo.getSupplierProducts());
