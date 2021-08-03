@@ -51,6 +51,13 @@ public class OrderDetailEntityFileds extends BaseEntityFields {
 	@Enumerated(EnumType.ORDINAL)
 	private OrderStatus status;
 
+
+	/**
+	 * 商品SEQ
+	 */
+	@Column(name = "SUPPLIER_PRODUCT_SEQ")
+	private Long supplierProductSeq;
+	
 	/**
 	 * 数量
 	 */
@@ -61,7 +68,6 @@ public class OrderDetailEntityFileds extends BaseEntityFields {
 	/**
 	 * 値引
 	 */
-	@NotNull
 	@Column(name="DISCOUNT")
 	private Long discount;
 	
