@@ -15,7 +15,7 @@ public class SupplierProductSpec {
 	 * @param supplierProductsSeq
 	 * @return
 	 */
-	public static Specification<SupplierProductEntity> supplierProductsSeqEquals(Long supplierProductSeq){
+	public static Specification<SupplierProductEntity> supplierProductSeqEquals(Long supplierProductSeq){
 		return supplierProductSeq == null ? null : (root, query, builder) -> builder.equal(root.get("supplierProductSeq"), supplierProductSeq);
 	}
 	
@@ -24,7 +24,7 @@ public class SupplierProductSpec {
 	 * @param supplierProductsName
 	 * @return
 	 */
-	public static Specification<SupplierProductEntity> supplierProductsNameEquals(String supplierProductName){
+	public static Specification<SupplierProductEntity> supplierProductNameEquals(String supplierProductName){
 		return supplierProductName == null ? null : (root, query, builder) ->builder.like(root.get("name"),"%" + supplierProductName + "%");
 	}
 

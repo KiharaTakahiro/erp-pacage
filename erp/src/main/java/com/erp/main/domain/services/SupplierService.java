@@ -139,8 +139,8 @@ public class SupplierService {
 		
 		// 検索条件の設定
 		Specification<SupplierProductEntity> spec = Specification.where(
-				SupplierProductSpec.supplierProductsSeqEquals(condition.getSupplierProductSeq()))
-				.and(SupplierProductSpec.supplierProductsNameEquals(condition.getSupplierProductName()));
+				SupplierProductSpec.supplierProductSeqEquals(condition.getSupplierProductSeq()))
+				.and(SupplierProductSpec.supplierProductNameEquals(condition.getSupplierProductName()));
 		
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");

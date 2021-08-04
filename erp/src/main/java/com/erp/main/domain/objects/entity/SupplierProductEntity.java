@@ -17,7 +17,7 @@ import com.erp.main.domain.objects.valueobjects.UpdateSupplierProductVo;
 public class SupplierProductEntity extends SupplierProductEntityFileds {
 	
 	/**
-	 * 仕入先エンティティ生成
+	 * 仕入商品エンティティ生成
 	 * @param vo
 	 * @return
 	 */
