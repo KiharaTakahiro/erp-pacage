@@ -1,8 +1,11 @@
 package com.erp.main.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ControllerAdvice {
 
+
 	@InitBinder
 	public void initBuilder(WebDataBinder dataBinder) {
+		
 		log.debug("initBinder : {}",dataBinder);
+	}
+	
+
+	@InitBinder
+	public void requestLog(@RequestBody HttpServletRequest request){
+	
+		log.info("テスト" + request.getMethod());
+		
 	}
 	
 	@ExceptionHandler
