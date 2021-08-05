@@ -1,20 +1,20 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.supplierProduct") }}</div>
-    <el-button
+    <!-- <el-button
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="createSupplierProductBtn"
+        @click.native.prevent=""
       >
         {{ $t('supplierProduct.add') }}
-    </el-button>
+    </el-button> -->
     <!-- <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
         <span class="input-label">ID:</span>
         <el-input
           placeholder=""
-          v-model="targetClientSeq"
+          v-model="targetsupplierProductSeq"
           style="margin-top:10px; width:5%; margin-right:20px;"
           clearable
           >
@@ -34,7 +34,7 @@
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="resetList"
+          @click.native.prevent=""
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -42,18 +42,17 @@
           size="small"
           type="primary"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="checkSaerch"
+          @click.native.prevent=""
         >
           {{ $t('route.search') }}
         </el-button>
       </div>
-    </el-card> -->
+    </el-card>  -->
     <el-card class="box-card">
       <h5>仕入商品一覧</h5>
       <el-table
-        ref="clientsTable"
-        :data="clientsData"
-        @selection-change="testLog"
+        ref="supplierProductTable"
+        :data="supplierProductData"
         style="width: 100%">
         <!-- <el-table-column
           label=""
@@ -65,12 +64,12 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="clientsSeq"
+          prop="supplierProductSeq"
           label="ID"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="clientsName"
+          prop="supplierProductName"
           label="product name">
         </el-table-column>
       </el-table>
@@ -81,7 +80,7 @@
           <el-button
             type="primary"
             style="width:100%; margin-bottom:30px; margin-top:30px; "
-            @click.native.prevent="editSupplierProductBtn"
+            @click.native.prevent=""
           >
             {{ $t('route.edit') }}
           </el-button>
@@ -92,16 +91,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
-import { infoClient } from '@/api/client'
-
+import { infoSupplierProduct } from '@/api/supplier-product'
 
 
 @Component({
-  name: 'Client',
+  name: 'SupplierProduct',
   components :{
     backBtn
   }
@@ -109,83 +105,33 @@ import { infoClient } from '@/api/client'
 export default class extends Vue {
 
 
-  client = {
+  supplierProduct = {
     id: ''
     }
   
   checkLength = 0
 
   pageNo = 0
-  targetClientSeq = ''
+  targetsupplierProductSeq = ''
   searchName = ''
 
   
-  private clientsData = [{}]
+  private supplierProductData = [{}]
 
   created() {
     this.getList()
   }
+  
 
   private async getList() {
-    const { data } = await infoClient({})
-    this.clientsData = data.clients
+    const { data } = await infoSupplierProduct({})
+    this.supplierProductData = data.supplierProduct
   }
 
-  private async resetList() {
-    const { data } = await infoClient({})
-    this.clientsData = data.clients
-    this.targetClientSeq = ""
-    this.searchName = ""
-  }
-
-  private async checkSaerch(){
-    if(this.targetClientSeq != '' && this.searchName == ''){
-      const { data } = await infoClient({clientsSeq : this.targetClientSeq})
-      this.clientsData = data.clients
-    } else if (this.targetClientSeq == '' && this.searchName != ''){
-      const { data } = await infoClient({clientsName : this.searchName})
-      this.clientsData = data.clients
-    }else if (this.targetClientSeq != '' && this.searchName != ''){
-      const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.targetClientSeq})
-      this.clientsData = data.clients
-    }
-  }
-
-  private testLog(val : any){
-    this.client.id = val[0]['clientsSeq']
-    this.checkLength = val.length
-  }
-
-  createSupplierProductBtn() {
-    // ボタンが押されたときの処理
-    this.$router.push({
-    path:'save-supplier-product'
-    }).catch(err => {
-      console.warn(err)
-    })
-  }
-  editClientBtn() {
-    // ボタンが押されたときの処理
-    if(this.checkLength == 0){
-      this.$message({
-      message: this.$t('client.check0').toString(),
-      type: 'error'
-      })
-      return false
-    } else if (this.checkLength >= 2){
-      this.$message({
-      message: this.$t('client.check2').toString(),
-      type: 'error'
-      })
-      return false
-    }
-    ClientModule.EditClient(this.client)
-    this.$router.push({
-    path:'edit-client'
-    }).catch(err => {
-      console.warn(err)
-    })
-  }
+  // private testLog(val: any){
+  //   this.supplierProduct.id = val[0]['supplierProductSeq']
+  //   this.checkLength = val.length
+  // }
 }
 </script>
 
