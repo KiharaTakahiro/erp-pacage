@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export const infoSupplierProduct = (data: any) =>
   request({
-    url: '/supplier-product/info',
+    url: '/supplier-products/info',
     method: 'post',
     data
   })
