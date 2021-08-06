@@ -30,7 +30,16 @@ public class ControllerAdvice {
 	@InitBinder
 	public void requestLog(@RequestBody HttpServletRequest request){
 	
-		log.info("テスト" + request.getMethod());
+		log.info("テスト" + request);
+		
+	}
+	
+
+
+	@InitBinder
+	public void requestLog2(@RequestBody HttpServletRequest request){
+	
+		log.info("テスト" + IOUtils.toString(request.getReader()));
 		
 	}
 	
