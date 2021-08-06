@@ -70,7 +70,7 @@
         </el-table-column>
         <el-table-column
           prop="supplierProductName"
-          label="product name">
+          label="Supplier product name">
         </el-table-column>
       </el-table>
         <div class="left">
@@ -125,7 +125,7 @@ export default class extends Vue {
 
   private async getList() {
     const { data } = await infoSupplierProduct({})
-    this.supplierProductData = data.supplierProduct
+    this.supplierProductData = data.supplierProducts
   }
 
   // private testLog(val: any){
