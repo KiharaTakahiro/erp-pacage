@@ -1,20 +1,20 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.supplierProduct") }}</div>
-    <!-- <el-button
+    <el-button
         type="primary"
         style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent=""
+        @click.native.prevent="createSupplierProductBtn"
       >
         {{ $t('supplierProduct.add') }}
-    </el-button> -->
-    <!-- <el-card class="box-card">
+    </el-button>
+    <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
         <span class="input-label">ID:</span>
         <el-input
           placeholder=""
-          v-model="targetsupplierProductSeq"
+          v-model="targetSupplierProductSeq"
           style="margin-top:10px; width:5%; margin-right:20px;"
           clearable
           >
@@ -34,7 +34,7 @@
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent=""
+          @click.native.prevent="resetList"
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -42,17 +42,18 @@
           size="small"
           type="primary"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent=""
+          @click.native.prevent="checkSaerch"
         >
           {{ $t('route.search') }}
         </el-button>
       </div>
-    </el-card>  -->
+    </el-card>
     <el-card class="box-card">
       <h5>仕入商品一覧</h5>
       <el-table
         ref="supplierProductTable"
         :data="supplierProductData"
+        @selection-change="testLog"
         style="width: 100%">
         <!-- <el-table-column
           label=""
@@ -80,7 +81,7 @@
           <el-button
             type="primary"
             style="width:100%; margin-bottom:30px; margin-top:30px; "
-            @click.native.prevent=""
+            @click.native.prevent="checkSaerch"
           >
             {{ $t('route.edit') }}
           </el-button>
@@ -112,7 +113,7 @@ export default class extends Vue {
   checkLength = 0
 
   pageNo = 0
-  targetsupplierProductSeq = ''
+  targetSupplierProductSeq = ''
   searchName = ''
 
   
@@ -127,11 +128,39 @@ export default class extends Vue {
     const { data } = await infoSupplierProduct({})
     this.supplierProductData = data.supplierProducts
   }
+  private async resetList(){
+    const { data } = await infoSupplierProduct({})
+    this.supplierProductData = data.supplierProducts
+    this.targetSupplierProductSeq = ""
+    this.searchName = ""
+  }
 
-  // private testLog(val: any){
-  //   this.supplierProduct.id = val[0]['supplierProductSeq']
-  //   this.checkLength = val.length
-  // }
+  private async checkSaerch(){
+      if(this.targetSupplierProductSeq != '' && this.searchName == ''){
+      const { data } = await infoSupplierProduct({supplierProductSeq : this.targetSupplierProductSeq})
+      this.supplierProductData = data.supplierProducts
+    } else if (this.targetSupplierProductSeq == '' && this.searchName != ''){
+      const { data } = await infoSupplierProduct({supplierProductName : this.searchName})
+      this.supplierProductData = data.supplierProducts
+    }else if (this.targetSupplierProductSeq != '' && this.searchName != ''){
+      const { data } = await infoSupplierProduct({supplierProductName : this.searchName,supplierProductSeq : this.targetSupplierProductSeq})
+      this.supplierProductData = data.supplierProducts
+    }  
+  }
+
+  private testLog(val: any){
+    this.supplierProduct.id = val[0]['supplierProductSeq']
+    this.checkLength = val.length
+  }
+
+  createSupplierProductBtn() {
+    // ボタンが押されたときの処理
+    this.$router.push({
+    path:'save-supplier-products'
+    }).catch(err => {
+      console.warn(err)
+    })
+  }
 }
 </script>
 
