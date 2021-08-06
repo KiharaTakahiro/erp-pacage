@@ -25,8 +25,14 @@ public class SupplierProductEntity extends SupplierProductEntityFileds {
 
 		var entity = new SupplierProductEntity();
 		
-		// 仕入先名
+		// 仕入商品Seq
+		entity.setSupplierProductSeq(vo.getSupplierSeq());
+		// 仕入商品名
 		entity.setName(vo.getSupplierProductName());
+		// 値段
+		entity.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
+		// 消費税
+		entity.setTaxType(vo.getTaxType());	
 		
 		return entity;
 	}

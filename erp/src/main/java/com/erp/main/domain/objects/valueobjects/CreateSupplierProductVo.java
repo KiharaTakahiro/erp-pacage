@@ -1,9 +1,11 @@
 package com.erp.main.domain.objects.valueobjects;
 
+import com.erp.main.domain.common.enums.TaxType;
+
 import lombok.Data;
 
 /**
- * 取引先作成Vo
+ * 仕入れ商品作成Vo
  * @author 高山
  *
  */
@@ -11,7 +13,22 @@ import lombok.Data;
 @Data
 public class CreateSupplierProductVo {
 	/**
-	 * 取引先名
+	 * 仕入先Seq
 	 */
-	private String SupplierProductName;
+	private Long supplierSeq;
+	
+	/**
+	 *  仕入商品名
+	 */
+	private String supplierProductName;
+	
+	/**
+	 *  仕入単価
+	 */
+	private Long purchaseUnitPrice;
+	
+	/**
+	 *  税区分
+	 */
+	private TaxType taxType;
 }

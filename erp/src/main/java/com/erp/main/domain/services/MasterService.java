@@ -19,6 +19,7 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
@@ -26,6 +27,7 @@ import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueobjects.CreateLotVo;
 import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
@@ -37,6 +39,8 @@ import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.SupplierProductsRelationRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
@@ -60,6 +64,18 @@ public class MasterService {
 	 */
 	@Autowired
 	private SupplierRepository supplierRepository;
+	
+	/**
+	 * 仕入れ商品マスタのリポジトリ
+	 */
+	@Autowired
+	private SupplierProductsRepository supplierProductsRepository;
+	
+	/**
+	 * 仕入れ商品関連マスタのリポジトリ
+	 */
+	@Autowired
+	private SupplierProductsRelationRepository supplierProductsRelationRepository;
 	
 	/**
 	 * 取引先マスタのリポジトリ
@@ -111,6 +127,27 @@ public class MasterService {
 	public void createSupplier(CreateSupplierVo vo) {
 		SupplierEntity entity = SupplierEntity.create(vo);
 		this.supplierRepository.save(entity);
+		
+	}
+	
+	/**
+	 * 仕入商品マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createSupplierProduct(CreateSupplierProductVo vo) {
+		Optional<SupplierEntity> product = this.supplierRepository.findById(vo.getSupplierSeq());
+		if(product.isEmpty()) {
+			throw new AppException(String.format("対象の仕入先が取得できません。supplierySeq: %s",vo.getSupplierSeq()));
+		}
+		SupplierProductEntity entity = SupplierProductEntity.create(vo);
+		this.supplierProductsRepository.save(entity);
+		
+//		var relationVo = new SupplierProductRelationVo();
+//		relationVo.setSupplierSeq(vo.getSupplierSeq());
+//		relationVo.setSupplierProductSeq(null);
+//
+//   	SupplierProductRelationEntity relationEntity = SupplierProductsRelationEntity 
 		
 	}
 	
