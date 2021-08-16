@@ -12,5 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name="SupplierProductRelation")
 public class SupplierProductRelationEntity {
-
+	
+	/**
+	 * 仕入商品関連エンティティ生成
+	 * @param vo
+	 * @return
+	 */
+	public class SupplierProductRelationEntity extends(CreateSupplierProductRelationVo vo) {
+		
+	}
 }

@@ -39,6 +39,7 @@ import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.SupplierProductRelationRepository;
 import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
@@ -73,8 +74,8 @@ public class MasterService {
 	/**
 	 * 仕入れ商品関連マスタのリポジトリ
 	 */
-//	@Autowired
-//	private SupplierProductsRelationRepository supplierProductsRelationRepository;
+	@Autowired
+	private SupplierProductRelationRepository supplierProductRelationRepository;
 	
 	/**
 	 * 取引先マスタのリポジトリ
@@ -147,7 +148,7 @@ public class MasterService {
 //		relationVo.setSupplierSeq(vo.getSupplierSeq());
 //		relationVo.setSupplierProductSeq(null);
 //
-//   	SupplierProductRelationEntity relationEntity = SupplierProductsRelationEntity 
+//   	SupplierProductRelationEntity relationEntity = SupplierProductRelationEntity 
 		
 	}
 	
