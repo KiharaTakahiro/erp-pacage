@@ -39,7 +39,6 @@ import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
-import com.erp.main.domain.repository.SupplierProductsRelationRepository;
 import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
@@ -74,8 +73,8 @@ public class MasterService {
 	/**
 	 * 仕入れ商品関連マスタのリポジトリ
 	 */
-	@Autowired
-	private SupplierProductsRelationRepository supplierProductsRelationRepository;
+//	@Autowired
+//	private SupplierProductsRelationRepository supplierProductsRelationRepository;
 	
 	/**
 	 * 取引先マスタのリポジトリ
@@ -141,7 +140,8 @@ public class MasterService {
 			throw new AppException(String.format("対象の仕入先が取得できません。supplierySeq: %s",vo.getSupplierSeq()));
 		}
 		SupplierProductEntity entity = SupplierProductEntity.create(vo);
-		this.supplierProductsRepository.save(entity);
+		var tmp = this.supplierProductsRepository.save(entity);
+		
 		
 //		var relationVo = new SupplierProductRelationVo();
 //		relationVo.setSupplierSeq(vo.getSupplierSeq());
