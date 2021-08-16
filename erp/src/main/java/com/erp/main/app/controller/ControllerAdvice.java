@@ -36,12 +36,12 @@ public class ControllerAdvice {
 	
 
 
-	@InitBinder
-	public void requestLog2(@RequestBody HttpServletRequest request){
-	
-		log.info("テスト" + IOUtils.toString(request.getReader()));
-		
-	}
+//	@InitBinder
+//	public void requestLog2(@RequestBody HttpServletRequest request){
+//	
+//		log.info("テスト" + IOUtils.toString(request.getReader()));
+//		
+//	}
 	
 	@ExceptionHandler
 	public String handleException(Exception e) {
