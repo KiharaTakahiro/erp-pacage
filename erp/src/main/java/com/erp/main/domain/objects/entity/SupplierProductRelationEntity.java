@@ -3,22 +3,16 @@ package com.erp.main.domain.objects.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.erp.main.domain.objects.entity.fields.SupplierProductRelationEntityFields;
+
 /**
- * 仕入先
+ * 仕入れ先商品連関テーブルへのロジック
  * 
- * @author 高山
+ * @author 永戸
  *
  */
 @Entity
 @Table(name="SupplierProductRelation")
-public class SupplierProductRelationEntity {
-	
-	/**
-	 * 仕入商品関連エンティティ生成
-	 * @param vo
-	 * @return
-	 */
-	public class SupplierProductRelationEntity extends(CreateSupplierProductRelationVo vo) {
-		
-	}
+public class SupplierProductRelationEntity extends SupplierProductRelationEntityFields {
+
 }
