@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
+import com.erp.main.domain.objects.entity.fields.SupplierProductRelationKey;
 
 /**
  * 仕入先商品リポジトリ
@@ -13,6 +14,6 @@ import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
  *
  */
 @Repository
-public interface SupplierProductRelationRepository extends JpaRepository<SupplierProductRelationEntity, Long> , JpaSpecificationExecutor<SupplierProductRelationEntity> {
+public interface SupplierProductRelationRepository extends JpaRepository<SupplierProductRelationEntity, SupplierProductRelationKey> , JpaSpecificationExecutor<SupplierProductRelationEntity> {
 
 }

@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.SupplierProductRelationEntityFields;
 
+
 /**
  * 仕入れ先商品連関テーブルへのロジック
  * 

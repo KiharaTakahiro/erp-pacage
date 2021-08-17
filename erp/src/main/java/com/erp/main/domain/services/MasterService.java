@@ -33,6 +33,7 @@ import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsVo;
+import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
@@ -144,7 +145,7 @@ public class MasterService {
 		var tmp = this.supplierProductsRepository.save(entity);
 		
 		
-//		var relationVo = new SupplierProductRelationVo();
+		var relationVo = new SupplierProductRelationVo();
 //		relationVo.setSupplierSeq(vo.getSupplierSeq());
 //		relationVo.setSupplierProductSeq(null);
 //
