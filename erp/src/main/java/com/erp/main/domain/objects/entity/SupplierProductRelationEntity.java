@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.SupplierProductRelationEntityFields;
+import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 
 
 /**
@@ -15,5 +16,16 @@ import com.erp.main.domain.objects.entity.fields.SupplierProductRelationEntityFi
 @Entity
 @Table(name="SupplierProductRelation")
 public class SupplierProductRelationEntity extends SupplierProductRelationEntityFields {
+
+	public static SupplierProductRelationEntity create(SupplierProductRelationVo vo) {
+		var entity = new SupplierProductRelationEntity();
+		
+		// 仕入商品Seq
+		entity.setSupplierSeq(vo.getSupplierSeq());
+		// 仕入商品Seq
+		entity.setSupplierProductSeq(vo.getSupplierProductSeq());
+		
+		return entity;
+	}
 
 }

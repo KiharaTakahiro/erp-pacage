@@ -20,6 +20,7 @@ import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
+import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
@@ -142,14 +143,16 @@ public class MasterService {
 			throw new AppException(String.format("対象の仕入先が取得できません。supplierySeq: %s",vo.getSupplierSeq()));
 		}
 		SupplierProductEntity entity = SupplierProductEntity.create(vo);
-		var tmp = this.supplierProductsRepository.save(entity);
+		var tmp = this.supplierProductsRepository.saveAndFlush(entity);
 		
 		
 		var relationVo = new SupplierProductRelationVo();
-//		relationVo.setSupplierSeq(vo.getSupplierSeq());
-//		relationVo.setSupplierProductSeq(null);
-//
-//   	SupplierProductRelationEntity relationEntity = SupplierProductRelationEntity 
+		relationVo.setSupplierSeq(vo.getSupplierSeq());
+		relationVo.setSupplierProductSeq(tmp.getSupplierProductSeq());
+
+		SupplierProductRelationEntity relationEntity = SupplierProductRelationEntity.create(relationVo);
+		this.supplierProductRelationRepository.saveAndFlush(relationEntity);
+		
 		
 	}
 	

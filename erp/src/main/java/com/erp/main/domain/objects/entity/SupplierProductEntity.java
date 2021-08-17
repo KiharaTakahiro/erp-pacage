@@ -9,7 +9,7 @@ import com.erp.main.domain.objects.valueobjects.UpdateSupplierProductVo;
 /**
  * 商品テーブルへのロジック
  * 
- * @author 永戸
+ * @author 高山
  *
  */
 @Entity
