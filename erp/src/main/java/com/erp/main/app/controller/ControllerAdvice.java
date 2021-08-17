@@ -1,5 +1,10 @@
 package com.erp.main.app.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.WebDataBinder;
@@ -27,13 +32,15 @@ public class ControllerAdvice {
 	}
 	
 
-	@InitBinder
-	public void requestLog(@RequestBody HttpServletRequest request){
-	
-		log.info("テスト" + request);
-		
-	}
-	
+//	@InitBinder
+//	public void requestLog(@RequestBody HttpServletRequest request) throws IOException{
+//		BufferedReader reader = request.getReader();
+//	    Stream<String> lines = reader.lines();
+//	    String result = lines.collect(Collectors.joining("\r\n"));
+//		log.info("テスト" + result);
+//		
+//	}
+//	
 
 
 //	@InitBinder
