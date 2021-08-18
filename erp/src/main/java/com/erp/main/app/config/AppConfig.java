@@ -17,15 +17,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EntityScan(basePackages ={"com.erp.main.domain.objects.entity", "com.erp.main.domain.objects.entity.fields"})
 public class AppConfig implements WebMvcConfigurer{
 	
-  @Bean
-  public CommonsRequestLoggingFilter requestLoggingFilter() {
-    CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
-    filter.setIncludeClientInfo(true);
-    filter.setIncludeQueryString(true);
-    filter.setIncludeHeaders(true);
-    filter.setIncludePayload(true);
-    filter.setMaxPayloadLength(1024);
-    return filter;
-  }
-
+	/*
+	 * リクエストのログ出力
+	 * @author ngt
+	 */
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+	    CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+	    filter.setIncludeClientInfo(true);
+	    filter.setIncludeQueryString(true);
+	    filter.setIncludeHeaders(true);
+	    filter.setIncludePayload(true);
+	    filter.setMaxPayloadLength(1024);
+	    return filter;
+	}
 }
