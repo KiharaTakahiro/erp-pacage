@@ -12,9 +12,9 @@ public class GetSupplierProductsRequest {
 	// page no.
 	private Integer pageNo;
 	// 商品名seq
-	private Long SupplierProductSeq;
+	private Long supplierProductSeq;
 	// 商品名
-	private String SupplierProductName;
+	private String supplierProductName;
 	
     /**
      * リクエスト空ValueObjectへのマッピング

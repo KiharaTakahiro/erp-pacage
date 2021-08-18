@@ -183,7 +183,7 @@ public class MasterServiceTest {
 	 * 成功例
 	 */
 	@Test
-	public void registeSupplierProductSuccessCase1() {
+	void registeSupplierProductSuccessCase1() {
 		// 実行用のデータ作成
 		CreateSupplierProductVo vo = new CreateSupplierProductVo();
 		// 取得処理をモック化
@@ -229,7 +229,7 @@ public class MasterServiceTest {
 	 * 失敗例
 	 */
 	@Test
-	public void registeSupplierProductErrorCase1() {
+	void registeSupplierProductErrorCase1() {
 		// 実行用のデータ作成
 		CreateSupplierProductVo vo = new CreateSupplierProductVo();
 		// 取得処理をモック化
