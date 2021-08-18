@@ -16,6 +16,7 @@ logging:
     root: DEBUG
     org.springframework: DEBUG
     org.hibernate: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
   file: "./application.log"
 app:
   security:
