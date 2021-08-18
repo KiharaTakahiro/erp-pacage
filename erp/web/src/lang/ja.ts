@@ -2,7 +2,8 @@ export default {
   route: {
     dashboard: 'トップ',
     sales: '販売管理',
-    receivedOrder: '受注管理',
+    recievedOrder: '受注管理',
+    newRecievedOrder: '受注表作成',
     quotation: '見積管理',
     invoice: '請求管理',
     system: 'システム設定',
@@ -118,6 +119,10 @@ export default {
     name: '会社名',
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
+  },
+  recievedOrder: {
+    add: '受注票新規作成',
+    complete: '完了',
   },
   permission: {
     createRole: 'ロール追加',
