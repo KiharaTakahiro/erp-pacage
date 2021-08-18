@@ -22,20 +22,7 @@ public class ControllerAdvice {
 		
 		log.debug("initBinder : {}",dataBinder);
 	}
-//
-//	@InitBinder
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	    String result = request.getReader().lines().collect(Collectors.joining("\r\n"));
-//	    log.debug("てすと：{}", result);
-//	}
-	
 
-	
-//	@InitBinder
-//	public void requestLog2(HttpServletRequest request) throws IOException{
-//	
-//		log.debug("てすと：{}", request.getHeaderNames());
-//	}
 	
 	@ExceptionHandler
 	public String handleException(Exception e) {
