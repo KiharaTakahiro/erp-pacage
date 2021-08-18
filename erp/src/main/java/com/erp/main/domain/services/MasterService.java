@@ -1,5 +1,6 @@
 package com.erp.main.domain.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -245,5 +246,37 @@ public class MasterService {
 		return vo;
 	}
 	
+	/*
+	 * クライアント一覧のプルダウン
+	 * @params vo
+	 */
+	public GetClientsVo pullDownClients() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
+		
+		// 取引先一覧取得
+		List<ClientsEntity> entitys = this.clientsRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<ClientModel> clients =  new ArrayList<>();
+		
+		for(ClientsEntity entity: entitys) {		
+			var client = new ClientModel();
+			// 取引先SEQ
+			client.setClientsSeq(entity.getClientsSeq());
+			// 取引先名
+			client.setClientsName(entity.getName());
+			// リストに追加
+			clients.add(client);
+			
+		}
+	
+		var vo = new GetClientsVo();
+		// 取引先リストの設定
+		vo.setClients(clients);
+		
+		return vo;
+	}
 }
 

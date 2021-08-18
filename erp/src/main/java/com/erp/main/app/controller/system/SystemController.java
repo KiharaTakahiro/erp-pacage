@@ -1,6 +1,7 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,6 +77,18 @@ public class SystemController {
 	@PostMapping("/clients/register")
 	public void createClients( @RequestBody CreateClientsRequest request) {
 		this.masterService.createClients(request.mapTo());
+	}
+	
+	/**
+	 * 取引先プルダウンのエントリーポイント
+	 * @param req
+	 */
+	@GetMapping("/clients/pulldown")
+	public ClientsResponse pullDownClients( ) {
+		var vo = this.masterService.pullDownClients();
+		var response = new ClientsResponse();
+		response.setClients(vo.getClients());
+		return response;
 	}
 	
 	/**

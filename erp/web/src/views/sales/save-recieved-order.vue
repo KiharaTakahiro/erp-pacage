@@ -9,7 +9,7 @@
       autocomplete="on"
       label-position="left"
     >
-      <el-select v-model="recievedOrder.clienetsSeq" filterable  placeholder="取引先">
+      <el-select v-model="recievedOrder.clienetsSeq" filterable clearable  placeholder="取引先">
         <el-option
           v-for="client in clients"
           :key="client.clientsSeq"
@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { pullDownClient } from '@/api/client'
 @Component({
   name: 'save-recieved-order',
   components: {
@@ -52,18 +53,16 @@ export default class extends Vue {
     total: ''
   }
 
-  private clients = [{
-    clientsSeq: '1',
-    clientsName: 'Test'
-  },{
-    clientsSeq: '2',
-    clientsName: 'string'
-  },{
-    clientsSeq: '3',
-    clientsName: 'ngt'
-  },
-  ]
-  private clientValue = ''
+  private clients = [{}]
+
+  created() {
+    this.getList()
+  }
+
+  private async getList() {
+    const { data } = await pullDownClient()
+    this.clients = data.clients
+  }
 
 }
 
