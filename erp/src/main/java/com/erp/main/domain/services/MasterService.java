@@ -143,15 +143,15 @@ public class MasterService {
 			throw new AppException(String.format("対象の仕入先が取得できません。supplierySeq: %s",vo.getSupplierSeq()));
 		}
 		SupplierProductEntity entity = SupplierProductEntity.create(vo);
-		var tmp = this.supplierProductsRepository.saveAndFlush(entity);
+		var supplierProductEntity = this.supplierProductsRepository.saveAndFlush(entity);
 		
 		
 		var relationVo = new SupplierProductRelationVo();
 		relationVo.setSupplierSeq(vo.getSupplierSeq());
-		relationVo.setSupplierProductSeq(tmp.getSupplierProductSeq());
+		relationVo.setSupplierProductSeq(supplierProductEntity.getSupplierProductSeq());
 
 		SupplierProductRelationEntity relationEntity = SupplierProductRelationEntity.create(relationVo);
-		this.supplierProductRelationRepository.saveAndFlush(relationEntity);
+		this.supplierProductRelationRepository.save(relationEntity);
 		
 		
 	}
