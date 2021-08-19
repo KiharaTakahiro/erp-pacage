@@ -7,7 +7,7 @@
         { required: true, message: '取引先を選択してください', trigger: 'change' }
       ]"
     >
-      <el-select v-model="clientsSeq" filterable clearable v-on:change="submit" placeholder="取引先">
+      <el-select v-model="clientsSeqModel" filterable clearable v-on:change="submit" placeholder="取引先">
         <el-option
           v-for="client in clients"
           :key="client.clientsSeq"
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue} from 'vue-property-decorator'
+import { Component, Vue, Prop} from 'vue-property-decorator'
 import { pullDownClient } from '@/api/client'
 @Component({
   name: 'clientsPullDown',
@@ -32,10 +32,16 @@ export default class extends Vue {
 
   clients = [{}]
 
-  clientsSeq = ''
+
+  @Prop({ default: '' })
+  clientsSeq!: string;
+
+  clientsSeqModel = this.clientsSeq
+  
+
 
   private submit(): void {
-    this.$emit('clientsSeqSubmit', this.clientsSeq)
+    this.$emit('clientsSeqSubmit', this.clientsSeqModel)
   }
 
   created() {
