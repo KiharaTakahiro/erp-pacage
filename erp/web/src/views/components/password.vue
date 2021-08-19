@@ -36,7 +36,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 
 import '@/assets/custom-theme/index.css'
 
@@ -53,23 +53,16 @@ export default class extends Vue{
   @Prop({ default: '' })
   password2!: string;
 
-  
-  private submitPass(): void {
-    this.$emit('passSubmit', this.password)
+  @Emit('passSubmit')
+    submitPass(){
+    return this.password
   }
 
-  private submitCheckPass(): void {
-    this.$emit('checkPassSubmit', this.password2)
+  @Emit('checkPassSubmit')
+    submitCheckPass(){
+    return this.password2
   }
-  
 
-  // private validatePass = (rule: any, value: string, callback: Function) => {
-  //   if (value === '') {
-  //     callback(new Error('Please input the password'));
-  //   } else {
-  //     callback();
-  //   }
-  // }
   private validatePass2 = (rule: any, value: string, callback: Function) => {
     if (value === '') {
       callback(new Error('確認用パスワードを入力してください'));

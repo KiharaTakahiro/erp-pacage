@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop} from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
 import { pullDownClient } from '@/api/client'
 @Component({
   name: 'clientsPullDown',
@@ -36,11 +36,9 @@ export default class extends Vue {
   @Prop({ default: '' })
   clientsSeq!: string;
 
-  
-
-
-  private submit(): void {
-    this.$emit('clientsSeqSubmit', this.clientsSeq)
+  @Emit('clientsSeqSubmit')
+  submit() {
+    return this.clientsSeq
   }
 
   created() {

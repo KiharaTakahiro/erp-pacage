@@ -21,7 +21,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -32,10 +32,10 @@ export default class extends Vue{
   @Prop({ default: '' })
   lastName!: string;
 
-  private submit(): void {
-    this.$emit('lastNameSubmit', this.lastName)
+  @Emit('lastNameSubmit')
+  submit(){
+    return this.lastName
   }
-
 }
 
 
