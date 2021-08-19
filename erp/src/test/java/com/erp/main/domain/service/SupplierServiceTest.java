@@ -25,7 +25,7 @@ import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateOrderVo.CreateOrderDetailVo;
 import com.erp.main.domain.repository.OrderRepository;
-import com.erp.main.domain.repository.SupplierProductRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.services.SupplierService;
 /**
@@ -58,7 +58,7 @@ class SupplierServiceTest {
 	 * 仕入先商品のリポジトリ
 	 */
 	@Mock
-	private SupplierProductRepository supplierProductRepository;
+	private SupplierProductsRepository supplierProductsRepository;
 	
 	/**
 	 * 金額コンポーネント
@@ -80,7 +80,7 @@ class SupplierServiceTest {
 		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化 (仕入商品)
-		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		Mockito.when(this.supplierProductsRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
@@ -111,7 +111,7 @@ class SupplierServiceTest {
 		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化 (仕入商品)
-		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		Mockito.when(this.supplierProductsRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
@@ -132,7 +132,7 @@ class SupplierServiceTest {
 		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化 (仕入商品)
-		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		Mockito.when(this.supplierProductsRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
@@ -153,7 +153,7 @@ class SupplierServiceTest {
 		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化 (仕入商品)
-		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		Mockito.when(this.supplierProductsRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		// 処理の実行
@@ -173,7 +173,7 @@ class SupplierServiceTest {
 		// 取得処理をモック化 (仕入先情報)
 		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
 		// 取得処理をモック化 (仕入商品)
-		Mockito.when(this.supplierProductRepository.findById(2L)).thenReturn(supplierProduct);
+		Mockito.when(this.supplierProductsRepository.findById(2L)).thenReturn(supplierProduct);
 		// 消費税はサービスのテストでは10%として考える
 		Mockito.when(this.moneyComponent.computeTax(700L, null)).thenReturn(70L);
 		
@@ -329,5 +329,36 @@ class SupplierServiceTest {
 		detailEntity.setDeriveryDate("20210503");
 		return entity;
 	}
+	
+///*
+// * SupplierProducts	
+// */
+//
+//	/**
+//	 * 正常系
+//	 * 通常の登録ケース
+//	 */
+//	@Test
+//	void getSupplierProductsSucsessCase1() {
+//		// 実行用テストデータの作成
+//		GetSupplierProductsConditionVo condition = this.getSupplierProductsDefaultInputData2();	
+//		
+//		// 処理の実行
+//		this.supplierService.getSupplierProductsVo(condition);
+//	}
+//
+//	private GetSupplierProductsConditionVo getSupplierProductsDefaultInputData2() {
+//		GetSupplierProductsConditionVo getSupplierProductsConditionVo = new GetSupplierProductsConditionVo();
+//		// ページ番号
+//		getSupplierProductsConditionVo.setPageNo(0);
+//		// 仕入商品Seq
+//		getSupplierProductsConditionVo.setSupplierProductSeq(1L);
+//		// 仕入れ商品
+//		getSupplierProductsConditionVo.setSupplierProductName("test");
+//		
+//		return 	getSupplierProductsConditionVo;
+//	}
+	
+	
 	
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
 import com.erp.main.app.controller.system.request.CreateDepartmentRequest;
@@ -67,6 +68,15 @@ public class SystemController {
 	@PostMapping("/supplier/register")
 	public void createSupplier(@RequestBody CreateSupplierRequest request) {
 		this.masterService.createSupplier(request.mapTo());
+	}
+	
+	/*
+	 * 仕入商品作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/supplier-product/register")
+	public void createSupplierProduct(@RequestBody CreateSupplierProductRequest request) {
+		this.masterService.createSupplierProduct(request.mapTo());
 	}
 	
 	/**
@@ -149,11 +159,5 @@ public class SystemController {
 		response.setMaxpage(vo.getMaxpage());
 		response.setClients(vo.getClients());
 		return response;
-	}
-	
-	
-	
-	
-	
-	
+	}	
 }

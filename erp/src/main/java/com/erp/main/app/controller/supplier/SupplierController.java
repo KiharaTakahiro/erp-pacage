@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.supplier.request.CreateOrderRequest;
+import com.erp.main.app.controller.system.request.GetSupplierProductsRequest;
+import com.erp.main.app.controller.system.response.SupplierProductsResponse;
 import com.erp.main.domain.services.SupplierService;
 
 
@@ -31,6 +33,15 @@ public class SupplierController{
 	public void createOrder(@RequestBody CreateOrderRequest request) {
 		this.supplierService.createOrder(request.mapTo());
 	}
-	
-
+	/*
+	 * 仕入れ商品一覧処理
+	 */
+	@PostMapping("supplier-products/info")
+	public SupplierProductsResponse infosupplierSerrvice(@RequestBody GetSupplierProductsRequest request) {
+		var vo = this.supplierService.getSupplierProductsVo(request.mapTo());
+		var response = new SupplierProductsResponse();
+		response.setMaxpage(vo.getMaxpage());
+		response.setSupplierProducts(vo.getSupplierProducts());
+		return response;
+	}
 }

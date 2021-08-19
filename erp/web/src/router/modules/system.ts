@@ -40,6 +40,25 @@ const systemRoutes: RouteConfig = {
       name: 'edit-client',
       meta: {title: 'editClient', hidden: true },
     },
+    {
+      path: 'supplier-product',
+      component: () => import('@/views/system/supplier-product.vue'),
+      name: 'supplier-product',
+      meta: { title: 'supplierProduct' }
+    },
+    {
+      path: 'save-supplier-product',
+      component: () => import('@/views/system/save-supplier-product.vue'),
+      name: 'save-supplier-product',
+      meta: { title: 'saveSupplierProduct', hidden: true }
+    },
+    {
+      path: 'edit-supplier-product',
+      component: () => import('@/views/system/edit-supplier-product.vue'),
+      name: 'edit-supplier-product',
+      meta: { title: 'editSupplierProduct', hidden: true }
+    },
+
 
   ]
 }

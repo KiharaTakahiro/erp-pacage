@@ -11,6 +11,7 @@ export default {
     client: '取引先管理',
     newClient: '取引先追加',
     editClient: '取引先編集',
+    supplierProduct: '仕入商品管理',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -118,6 +119,15 @@ export default {
     name: '会社名',
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
+  },
+  supplierProduct: {
+    title: '仕入商品管理',
+    add: '仕入商品新規登録',
+    edit: '仕入商品編集',
+    complete: '完了',
+    name: '商品名',
+    check0: '商品が選択されていません',
+    check2: '商品が二つ以上選択されています'
   },
   permission: {
     createRole: 'ロール追加',
