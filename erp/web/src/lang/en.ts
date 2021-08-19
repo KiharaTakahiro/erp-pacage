@@ -3,6 +3,7 @@ export default {
     dashboard: 'Dashboard',
     sales: 'Sales',
     recievedOrder: 'Recieved Order',
+    newRecievedOrder: 'Create New Recived Order',
     quotation: 'Quotation',
     invoice: 'Invoice',
     system: 'Setting',

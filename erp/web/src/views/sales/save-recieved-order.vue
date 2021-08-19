@@ -9,14 +9,10 @@
       autocomplete="on"
       label-position="left"
     >
-      <el-select v-model="recievedOrder.clienetsSeq" filterable clearable  placeholder="取引先">
-        <el-option
-          v-for="client in clients"
-          :key="client.clientsSeq"
-          :label="client.clientsName"
-          :value="client.clientsSeq">
-        </el-option>
-      </el-select>
+    <clientsPullDown
+    :clientsSeq="recievedOrder.clienetsSeq"
+    @clientsSeqSubmit='clienetsSeqRecive'
+    />
 
 
       <div class="complete-btn">
@@ -34,16 +30,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { pullDownClient } from '@/api/client'
+import clientsPullDown from '@/views/components/clients-pulldown.vue'
 @Component({
   name: 'save-recieved-order',
   components: {
-    
+    clientsPullDown,
   }
 })
 export default class extends Vue {
   private recievedOrder = {
-    clienetsSeq: '',
+    clientsSeq: '',
     companySeq: '',
     departmentSeq: '',
     details: [{}],
@@ -53,15 +49,8 @@ export default class extends Vue {
     total: ''
   }
 
-  private clients = [{}]
-
-  created() {
-    this.getList()
-  }
-
-  private async getList() {
-    const { data } = await pullDownClient()
-    this.clients = data.clients
+  private clienetsSeqRecive(clientsSeq: any): void {
+    this.recievedOrder.clientsSeq = clientsSeq
   }
 
 }
