@@ -22,6 +22,7 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
@@ -29,6 +30,7 @@ import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueobjects.CreateLotVo;
 import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
@@ -38,6 +40,8 @@ import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.SupplierProductRelationRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.services.MasterService;
@@ -68,6 +72,18 @@ public class MasterServiceTest {
 	 */
 	@Mock
 	private SupplierRepository supplierRepository;
+	
+	/**
+	 * 仕入れ商品マスタのリポジトリ
+	 */
+	@Mock
+	private SupplierProductsRepository supplierProductsRepository;
+	
+	/**
+	 * 仕入れ商品関連マスタのリポジトリ
+	 */
+	@Mock
+	private SupplierProductRelationRepository supplierProductRelationRepository;
 	
 	/**
 	 * 取引先リポジトリ
@@ -162,6 +178,80 @@ public class MasterServiceTest {
 		Mockito.verify(this.supplierRepository, times(1)).save(entity);
 	}
 	
+	/**
+	 * 仕入商品作成用のテスト
+	 * 成功例
+	 */
+	@Test
+	void registeSupplierProductSuccessCase1() {
+		// 実行用のデータ作成
+		CreateSupplierProductVo vo = new CreateSupplierProductVo();
+		// 取得処理をモック化
+		Optional<SupplierEntity> supplier = this.createDefaultSupplierData();
+		Mockito.when(this.supplierRepository.findById(2L)).thenReturn(supplier);
+		
+		// 仕入先Seq
+		vo.setSupplierSeq(2L);
+		// 仕入商品名
+		vo.setSupplierProductName("test");
+		// 値段
+		vo.setPurchaseUnitPrice(2L);
+		// 消費税
+		vo.setTaxType(null);	
+		
+		var supplierProduct = this.createDefaultSupplierProductData();
+		SupplierProductEntity ProductEntity = SupplierProductEntity.create(vo);
+		Mockito.when(this.supplierProductsRepository.saveAndFlush(ProductEntity)).thenReturn(supplierProduct);
+		
+		
+		// 処理実行
+		this.masterService.createSupplierProduct(vo);
+		
+		
+		// 検証用のデータ作成
+		SupplierProductEntity entity = new SupplierProductEntity();
+		
+		// 仕入先Seq
+		entity.setSupplierProductSeq(2L);
+		// 仕入商品名
+		entity.setName("test");
+		// 値段
+		entity.setPurchaseUnitPrice(2L);
+		// 消費税
+		entity.setTaxType(null);
+		
+		Mockito.verify(this.supplierProductsRepository, times(1)).saveAndFlush(entity);
+		
+	}
+		
+	/**
+	 * 仕入商品作成用のテスト
+	 * 失敗例
+	 */
+	@Test
+	void registeSupplierProductErrorCase1() {
+		// 実行用のデータ作成
+		CreateSupplierProductVo vo = new CreateSupplierProductVo();
+		// 取得処理をモック化
+		Optional<SupplierEntity> supplier = this.createErrorSupplierData();
+		Mockito.when(this.supplierRepository.findById(1L)).thenReturn(supplier);
+		
+		// 仕入先Seq
+		vo.setSupplierSeq(1L);
+		// 仕入商品名
+		vo.setSupplierProductName("test");
+		// 値段
+		vo.setPurchaseUnitPrice(2L);
+		// 消費税
+		vo.setTaxType(null);	
+		
+		var supplierProduct = this.createDefaultSupplierProductData();
+		SupplierProductEntity ProductEntity = SupplierProductEntity.create(vo);
+		Mockito.when(this.supplierProductsRepository.saveAndFlush(ProductEntity)).thenReturn(supplierProduct);
+	
+		Assertions.assertThrows(AppException.class, () -> masterService.createSupplierProduct(vo));
+	}
+
 	/**
 	 * ロット作成用のテスト
 	 */
@@ -274,10 +364,10 @@ public class MasterServiceTest {
 		CreateDepartmentVo vo = new CreateDepartmentVo();
 		// 取得処理をモック化
 		Optional<CompanyEntity> departmentOpt = this.createDefaultCompanyData();
-		Mockito.when(this.companyRepository.findById(1L)).thenReturn(departmentOpt);
+		Mockito.when(this.companyRepository.findById(2L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
-		vo.setDepartmentCompanySeq(1L);
+		vo.setDepartmentCompanySeq(2L);
 		// 部署名
 		vo.setDepartmentName("test部");
 		
@@ -347,7 +437,7 @@ public class MasterServiceTest {
 		// 取引先名
 		client.setClientsName("TEST");	
 		// 取引先Seq
-		client.setClientsSeq(2L);		
+		client.setClientsSeq(1L);		
 		// クライアントモデルセット
 		vo.setClient(client);
 		
@@ -387,9 +477,47 @@ public class MasterServiceTest {
 		vo.setDepartmentName("test部");
 		
 		Assertions.assertThrows(AppException.class, () -> masterService.createDepartment(vo));
-		
 
 	}
+	
+	/**
+	 * エラー時の仕入先データ生成
+	 * @return
+	 */
+	private Optional<SupplierEntity> createErrorSupplierData() {
+		// 	取得する仕入先Seqの設定
+		return Optional.empty();
+	}
+	
+	/**
+	 * デフォルトの仕入先データ生成
+	 * @return
+	 */
+	private Optional<SupplierEntity> createDefaultSupplierData() {
+		// 	取得する仕入先Seqの設定
+		SupplierEntity entity = new SupplierEntity();
+		entity.setSupplierSeq(2L);
+		return Optional.of(entity);
+	}
+	/**
+	 * デフォルトの仕入商品データ生成
+	 * @return 
+	 * @return
+	 */
+	private SupplierProductEntity createDefaultSupplierProductData() {
+		// 	取得する会社Seqの設定
+		SupplierProductEntity entity = new SupplierProductEntity();
+		// 仕入先Seq
+		entity.setSupplierProductSeq(2L);
+		// 仕入商品名
+		entity.setName("test");
+		// 値段
+		entity.setPurchaseUnitPrice(2L);
+		// 消費税
+		entity.setTaxType(null);
+		return entity;
+	}
+	
 	/**
 	 * デフォルトの会社データ生成
 	 * @return
@@ -446,4 +574,5 @@ public class MasterServiceTest {
 		return Optional.empty();
 		
 	}
+	
 }

@@ -20,6 +20,8 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.LotEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.SupplierEntity;
+import com.erp.main.domain.objects.entity.SupplierProductEntity;
+import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
@@ -27,17 +29,21 @@ import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
 import com.erp.main.domain.objects.valueobjects.CreateLotVo;
 import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.CreateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsVo;
+import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.SupplierProductRelationRepository;
+import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
@@ -61,6 +67,18 @@ public class MasterService {
 	 */
 	@Autowired
 	private SupplierRepository supplierRepository;
+	
+	/**
+	 * 仕入れ商品マスタのリポジトリ
+	 */
+	@Autowired
+	private SupplierProductsRepository supplierProductsRepository;
+	
+	/**
+	 * 仕入れ商品関連マスタのリポジトリ
+	 */
+	@Autowired
+	private SupplierProductRelationRepository supplierProductRelationRepository;
 	
 	/**
 	 * 取引先マスタのリポジトリ
@@ -112,6 +130,30 @@ public class MasterService {
 	public void createSupplier(CreateSupplierVo vo) {
 		SupplierEntity entity = SupplierEntity.create(vo);
 		this.supplierRepository.save(entity);
+		
+	}
+	
+	/**
+	 * 仕入商品マスタ作成処理
+	 * @param vo
+	 */
+	@Transactional
+	public void createSupplierProduct(CreateSupplierProductVo vo) {
+		Optional<SupplierEntity> product = this.supplierRepository.findById(vo.getSupplierSeq());
+		if(product.isEmpty()) {
+			throw new AppException(String.format("対象の仕入先が取得できません。supplierySeq: %s",vo.getSupplierSeq()));
+		}
+		SupplierProductEntity entity = SupplierProductEntity.create(vo);
+		var supplierProductEntity = this.supplierProductsRepository.saveAndFlush(entity);
+		
+		
+		var relationVo = new SupplierProductRelationVo();
+		relationVo.setSupplierSeq(vo.getSupplierSeq());
+		relationVo.setSupplierProductSeq(supplierProductEntity.getSupplierProductSeq());
+
+		SupplierProductRelationEntity relationEntity = SupplierProductRelationEntity.create(relationVo);
+		this.supplierProductRelationRepository.save(relationEntity);
+		
 		
 	}
 	
@@ -200,13 +242,14 @@ public class MasterService {
 		if(client.isEmpty()) {
 			throw new AppException(String.format("該当の取引先を取得できませんでした。 client: %s", client));
 		}
+		
 		var clientEntity = client.get();
 		clientEntity.update(vo);	
 		this.clientsRepository.save(clientEntity);
 	}
 	
 	/*
-	 * 取引先一覧取得
+	 * 取引先一覧取
 	 * @param condition
 	 * @return
 	 */
@@ -215,7 +258,6 @@ public class MasterService {
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
 		}
-		
 		
 		// 検索条件の設定
 		Specification<ClientsEntity> spec = Specification.where(
@@ -226,7 +268,6 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		Page<ClientsEntity> pages = this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
-		
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
 			// 取引先Seq
@@ -236,8 +277,8 @@ public class MasterService {
 			return client;
 		}).collect(Collectors.toList());
 		
+		// 返却用のVo生成
 		var vo = new GetClientsVo();
-		
 		// トータルぺ―ジ
 		vo.setMaxpage(pages.getTotalPages());
 		// 取引先リストの設定

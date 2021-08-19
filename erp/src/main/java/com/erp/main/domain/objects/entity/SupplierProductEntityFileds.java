@@ -33,9 +33,9 @@ public class SupplierProductEntityFileds extends BaseEntityFields {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seqTable")
-    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "suppllier_product_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
+    @TableGenerator(name = "seqTable", table = "sequence", pkColumnName = "seq_name", pkColumnValue = "supplier_product_seq", valueColumnName = "seq_value", initialValue = 1, allocationSize = 1)
 	@Column(name = "SUPPLIER_PRODUCT_SEQ")
-	private Long SupplierProductSeq;
+	private Long supplierProductSeq;
 
 	/**
 	 * 商品名

@@ -2,6 +2,7 @@ package com.erp.main.domain.objects.entity.fields;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
+@IdClass(value=SupplierProductRelationKey.class)
 public class SupplierProductRelationEntityFields extends BaseEntityFields {
 	
 

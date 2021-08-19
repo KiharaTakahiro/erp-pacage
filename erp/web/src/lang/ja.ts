@@ -2,8 +2,7 @@ export default {
   route: {
     dashboard: 'トップ',
     sales: '販売管理',
-    recievedOrder: '受注管理',
-    newRecievedOrder: '受注表作成',
+    receivedOrder: '受注管理',
     quotation: '見積管理',
     invoice: '請求管理',
     system: 'システム設定',
@@ -12,6 +11,7 @@ export default {
     client: '取引先管理',
     newClient: '取引先追加',
     editClient: '取引先編集',
+    supplierProduct: '仕入商品管理',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -120,9 +120,14 @@ export default {
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
   },
-  recievedOrder: {
-    add: '受注票新規作成',
+  supplierProduct: {
+    title: '仕入商品管理',
+    add: '仕入商品新規登録',
+    edit: '仕入商品編集',
     complete: '完了',
+    name: '商品名',
+    check0: '商品が選択されていません',
+    check2: '商品が二つ以上選択されています'
   },
   permission: {
     createRole: 'ロール追加',

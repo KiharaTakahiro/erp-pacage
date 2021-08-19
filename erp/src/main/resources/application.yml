@@ -16,7 +16,8 @@ logging:
     root: DEBUG
     org.springframework: DEBUG
     org.hibernate: DEBUG
-  file: "./application.log"
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+  file.name: "C:/logs/application.log"
 app:
   security:
     exptration_time: 100000

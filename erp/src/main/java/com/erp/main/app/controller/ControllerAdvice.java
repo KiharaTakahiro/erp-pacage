@@ -16,10 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ControllerAdvice {
 
+
 	@InitBinder
 	public void initBuilder(WebDataBinder dataBinder) {
+		
 		log.debug("initBinder : {}",dataBinder);
 	}
+
 	
 	@ExceptionHandler
 	public String handleException(Exception e) {
