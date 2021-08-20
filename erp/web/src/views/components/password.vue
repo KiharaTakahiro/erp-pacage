@@ -72,8 +72,6 @@ export default class extends Vue{
       callback();
     }
   }
-
-
 }
 
 
