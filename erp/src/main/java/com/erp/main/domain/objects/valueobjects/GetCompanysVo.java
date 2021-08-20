@@ -2,18 +2,19 @@ package com.erp.main.domain.objects.valueobjects;
 
 import java.util.List;
 
-import com.erp.main.domain.objects.model.ClientModel;
+import com.erp.main.domain.objects.model.CompanyModel;
 
 import lombok.Data;
+
 /*
  * 取引先の取得VO
  * @author ngt
  */
 @Data
-public class GetClientsVo {
-	
+public class GetCompanysVo {
+
 	// 取引先リスト
-	List<ClientModel> clients;
+	List<CompanyModel> company;
 	// 全体のページ数
 	Integer maxpage;
 }

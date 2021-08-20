@@ -2,22 +2,23 @@ package com.erp.main.app.controller.system.response;
 
 import java.util.List;
 
-import com.erp.main.domain.objects.model.ClientModel;
+import com.erp.main.domain.objects.model.CompanyModel;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 取引先一覧レスポンス
+ * 会社一覧レスポンス
  * @author NGT
  *
  */
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class ClientsResponse extends BaseResponse {
-	// 最大ページ数
+public class CompanysResponse extends BaseResponse {
+	//最大ページ数
 	private Integer maxpage;
 	
-	// 取引先リスト
-	List<ClientModel> clients;
+	//会社一覧
+	List <CompanyModel> companys;
+
 }

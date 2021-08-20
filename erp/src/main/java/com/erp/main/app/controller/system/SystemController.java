@@ -20,6 +20,7 @@ import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
+import com.erp.main.app.controller.system.response.CompanysResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -91,7 +92,7 @@ public class SystemController {
 	
 	/**
 	 * 取引先プルダウンのエントリーポイント
-	 * @param req
+	 * @param 
 	 */
 	@GetMapping("/clients/pulldown")
 	public ClientsResponse pullDownClients( ) {
@@ -110,6 +111,17 @@ public class SystemController {
 		this.masterService.createCompany(request.mapTo());
 	}
 	
+	/*
+	 * 会社プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/company/pulldown")
+	public CompanysResponse pullDownCompanys( ) {
+		var vo = this.masterService.pullDownCompany();
+		var response = new CompanysResponse();
+		response.setCompanys(vo.getCompany());
+		return response;
+	}
 	
 	/**
 	 * 部署作成用のエントリーポイント
