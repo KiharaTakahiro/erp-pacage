@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
@@ -21,6 +22,7 @@ import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
+import com.erp.main.app.controller.system.response.DepatmentsResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -95,7 +97,7 @@ public class SystemController {
 	 * @param 
 	 */
 	@GetMapping("/clients/pulldown")
-	public ClientsResponse pullDownClients( ) {
+	public ClientsResponse pullDownClients() {
 		var vo = this.masterService.pullDownClients();
 		var response = new ClientsResponse();
 		response.setClients(vo.getClients());
@@ -130,6 +132,18 @@ public class SystemController {
 	@PostMapping("/department/register")
 	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
 		this.masterService.createDepartment(request.mapTo());
+	}
+	
+	/*
+	 * 部署プルダウンのエントリーポイント
+	 * 
+	 */
+	@PostMapping("/deartment/pulldown")
+	public DepatmentsResponse pullDownDepartments(@RequestBody GetDepartmentsRequest request) {
+		var vo = this.masterService.pullDownDepartment(request.mapTo());
+		var response = new DepatmentsResponse();
+		response.setDepartments(vo.getDepartment());
+		return response;
 	}
 	
 	/**

@@ -25,6 +25,7 @@ import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.model.CompanyModel;
+import com.erp.main.domain.objects.model.DepartmentModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -37,6 +38,8 @@ import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
+import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -49,6 +52,7 @@ import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
+import com.erp.main.domain.specification.DepartmentSpec;
 
 /**
  * マスターの管理用のサービス
@@ -187,9 +191,9 @@ public class MasterService {
 	 */
 	@Transactional
 	public void createDepartment(CreateDepartmentVo vo) {
-		Optional<CompanyEntity> product = this.companyRepository.findById(vo.getDepartmentCompanySeq());
+		Optional<CompanyEntity> product = this.companyRepository.findById(vo.getCompanySeq());
 		if(product.isEmpty()) {
-			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getDepartmentCompanySeq()));
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getCompanySeq()));
 		}
 		
 		DepartmentEntity entity = DepartmentEntity.create(vo);
@@ -351,6 +355,46 @@ public class MasterService {
 		var vo = new GetCompanysVo();
 		// 取引先リストの設定
 		vo.setCompany(companys);
+		
+		return vo;
+	}
+	
+	/*
+	 * 部署一覧のプルダウン
+	 * @params vo
+	 */
+	public GetDepartmentsVo pullDownDepartment(GetDepartmentConditionsVo condition) {
+		// 検索条件の設定
+		Specification<DepartmentEntity> spec = Specification.where(
+			DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq()))
+				.and(DepartmentSpec.companySeqEquals(condition.getCompanySeq()))
+				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName()));
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
+		
+		// 取引先一覧取得
+		List<DepartmentEntity> entitys = this.departmentRepository.findAll(spec, sort);
+		
+		// 値格納用のリスト作成
+		List<DepartmentModel> departments =  new ArrayList<>();
+		
+		for(DepartmentEntity entity: entitys) {		
+			var department = new DepartmentModel();
+			//
+			department.setDepartmentSeq(entity.getDepartmentSeq());
+			// 取引先SEQ
+			department.setCompanySeq(entity.getCompanySeq());
+			// 取引先名
+			department.setDepartmentName(entity.getName());
+			// リストに追加
+			departments.add(department);
+			
+		}
+	
+		var vo = new GetDepartmentsVo();
+		// 取引先リストの設定
+		vo.setDepartment(departments);
 		
 		return vo;
 	}

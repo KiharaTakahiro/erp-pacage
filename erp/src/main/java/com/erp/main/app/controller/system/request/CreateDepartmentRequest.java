@@ -27,7 +27,7 @@ public class CreateDepartmentRequest {
 		var vo = new CreateDepartmentVo();
 		
 		// 会社seq
-		vo.setDepartmentCompanySeq(this.getCompanySeq());
+		vo.setCompanySeq(this.getCompanySeq());
 		// 部署名
 		vo.setDepartmentName(this.getName());
 		
