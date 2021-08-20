@@ -1,6 +1,7 @@
 <template>
+<div>
   <div class="app-container">
-    <el-form-item 
+    <el-form-item
     label="取引先"
     prop="clientsSeq"
     :rules="[
@@ -17,6 +18,7 @@
       </el-select>
     </el-form-item>
   </div>
+</div>
 </template>
 
 <script lang="ts">

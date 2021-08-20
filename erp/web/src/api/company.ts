@@ -5,3 +5,10 @@ export const pullDownCompany = () =>
     url: '/company/pulldown',
     method: 'GET'
   })
+
+  export const pullDownDepartment = (data: any) =>
+  request({
+    url: '/department/pulldown',
+    method: 'POST',
+    data
+  })
