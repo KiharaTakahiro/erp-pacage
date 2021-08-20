@@ -23,6 +23,7 @@ import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
 import com.erp.main.app.controller.system.response.DepatmentsResponse;
+import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -63,6 +64,18 @@ public class SystemController {
 	@PostMapping("/product/register")
 	public void createProduct(@RequestBody CreateProductRequest request) {
 		this.masterService.createProduct(request.mapTo());
+	}
+	
+	/*
+	 * 商品プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/product/pulldown")
+	public ProductResponse pullDownpProduct( ) {
+		var vo = this.masterService.pullDownProduct();
+		var response = new ProductResponse();
+		response.setProduct(vo.getProduct());
+		return response;
 	}
 	
 	/**

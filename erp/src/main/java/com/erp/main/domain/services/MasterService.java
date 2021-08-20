@@ -26,6 +26,7 @@ import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.model.CompanyModel;
 import com.erp.main.domain.objects.model.DepartmentModel;
+import com.erp.main.domain.objects.model.ProductModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -40,6 +41,7 @@ import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
+import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -395,6 +397,43 @@ public class MasterService {
 		var vo = new GetDepartmentsVo();
 		// 取引先リストの設定
 		vo.setDepartment(departments);
+		
+		return vo;
+	}
+	
+	/*
+	 * 商品一覧のプルダウン
+	 * @params vo
+	 */
+	public GetProductsVo pullDownProduct() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		
+		// 取引先一覧取得
+		List<ProductEntity> entitys = this.productRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<ProductModel> products =  new ArrayList<>();
+		
+		for(ProductEntity entity: entitys) {		
+			var product = new ProductModel();
+			//
+			product.setProductSeq(entity.getProductSeq());
+			//
+			product.setProductName(entity.getName());
+			//
+			product.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
+			//
+			product.setTaxType(entity.getTaxType());
+			
+			products.add(product);
+			
+		}
+	
+		var vo = new GetProductsVo();
+		// 取引先リストの設定
+		vo.setProduct(products);
 		
 		return vo;
 	}
