@@ -13,6 +13,11 @@
     :clientsSeq="recievedOrder.clienetsSeq"
     @clientsSeqSubmit='clienetsSeqRecive'
     />
+    <company-pull-down
+      :companySeq="recievedOrder.companySeq"
+      @companySeqSubmit="companySeqRecive"
+    />
+
 
 
       <div class="complete-btn">
@@ -31,10 +36,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
+import companyPullDown from '@/views/components/company-pulldown.vue'
 @Component({
   name: 'save-recieved-order',
   components: {
     clientsPullDown,
+    companyPullDown,
   }
 })
 export default class extends Vue {
@@ -51,6 +58,10 @@ export default class extends Vue {
 
   private clienetsSeqRecive(clientsSeq: any): void {
     this.recievedOrder.clientsSeq = clientsSeq
+  }
+
+  private companySeqRecive(companySeq: any): void {
+    this.recievedOrder.companySeq = companySeq
   }
 
 }
