@@ -160,4 +160,11 @@ public class SystemController {
 		response.setClients(vo.getClients());
 		return response;
 	}	
+	
+//	/*
+//	 * 税区分一覧処理
+//	 */
+//	@PostMapping("/taxtype/info")
+//	public TaxTypeResponse taxTypePulldown
+//	
 }
