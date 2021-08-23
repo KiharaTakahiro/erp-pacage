@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <div>受注管理</div>
+    <div>{{ $t("route.recievedOrder") }}</div>
+      <el-button
+        type="primary"
+        style="width:25%; margin-bottom:30px; margin-top:30px;"
+        @click.native.prevent="createNewRecievedOrder"
+      >
+        {{ $t('recievedOrder.add') }}
+      </el-button>
   </div>
 </template>
 
@@ -9,9 +16,16 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'RecivedOrder'
+  name: 'RecievedOrder'
 })
 export default class extends Vue {
+  createNewRecievedOrder(){
+    this.$router.push({
+      path: 'save-recieved-order'
+    }).catch(err => {
+      console.warn(err)
+    })
+  }
 }
 </script>
 

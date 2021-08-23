@@ -13,14 +13,14 @@
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      v-on:blur='companyNameSend'
+      @input='companyNameSend'
     />
   </el-form-item>
 
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 
@@ -32,8 +32,9 @@ export default class extends Vue {
   @Prop({ default: '' })
   companyName!: string;
 
-  private companyNameSend(): void {
-    this.$emit('conpanyNameValue', this.companyName)
+  @Emit('conpanyNameValue')
+  companyNameSend() {
+    return this.companyName
   }
 
 }

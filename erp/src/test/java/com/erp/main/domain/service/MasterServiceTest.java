@@ -367,7 +367,7 @@ public class MasterServiceTest {
 		Mockito.when(this.companyRepository.findById(2L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
-		vo.setDepartmentCompanySeq(2L);
+		vo.setCompanySeq(2L);
 		// 部署名
 		vo.setDepartmentName("test部");
 		
@@ -472,7 +472,7 @@ public class MasterServiceTest {
 		Mockito.when(this.departmentRepository.findById(1L)).thenReturn(departmentOpt);
 		
 		// 会社Seq
-		vo.setDepartmentCompanySeq(1L);
+		vo.setCompanySeq(1L);
 		// 部署名
 		vo.setDepartmentName("test部");
 		

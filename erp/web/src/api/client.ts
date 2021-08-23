@@ -27,3 +27,9 @@ export const createClient = (data: any) =>
     method: 'post',
     data
   })
+
+  export const pullDownClient = () =>
+  request({
+    url: '/clients/pulldown',
+    method: 'GET'
+  })
