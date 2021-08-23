@@ -96,12 +96,12 @@ public enum TaxType implements BaseEnum<TaxType> {
 		            SerializerProvider provider) throws IOException,
 		            JsonProcessingException {
 		
-	    generator.writeStartObject();
-	    generator.writeFieldName("code");
-		generator.writeNumber(value.getCode());
-		generator.writeFieldName("disName");
-	    generator.writeString(value.getDisplayName());
-	    generator.writeEndObject();
+		    generator.writeStartObject();
+		    generator.writeFieldName("code");
+			generator.writeNumber(value.getCode());
+			generator.writeFieldName("disName");
+		    generator.writeString(value.getDisplayName());
+		    generator.writeEndObject();
 		}
 	}
 }

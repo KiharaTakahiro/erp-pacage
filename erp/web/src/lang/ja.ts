@@ -14,6 +14,8 @@ export default {
     editClient: '取引先編集',
     supplierProduct: '仕入商品管理',
     product: '商品管理',
+    newProduct: '商品追加',
+    editProduct: '商品編集',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',

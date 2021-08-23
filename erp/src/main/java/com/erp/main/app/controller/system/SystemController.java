@@ -1,12 +1,10 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
@@ -21,9 +19,6 @@ import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
-import com.erp.main.app.controller.system.response.CompanysResponse;
-import com.erp.main.app.controller.system.response.DepatmentsResponse;
-import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -66,18 +61,6 @@ public class SystemController {
 		this.masterService.createProduct(request.mapTo());
 	}
 	
-	/*
-	 * 商品プルダウンのエントリーポイント
-	 * 
-	 */
-	@GetMapping("/product/pulldown")
-	public ProductResponse pullDownpProduct( ) {
-		var vo = this.masterService.pullDownProduct();
-		var response = new ProductResponse();
-		response.setProduct(vo.getProduct());
-		return response;
-	}
-	
 	/**
 	 * 仕入れ先作成用のエントリーポイント
 	 * @param req
@@ -106,18 +89,6 @@ public class SystemController {
 	}
 	
 	/**
-	 * 取引先プルダウンのエントリーポイント
-	 * @param 
-	 */
-	@GetMapping("/clients/pulldown")
-	public ClientsResponse pullDownClients() {
-		var vo = this.masterService.pullDownClients();
-		var response = new ClientsResponse();
-		response.setClients(vo.getClients());
-		return response;
-	}
-	
-	/**
 	 * 会社作成用のエントリーポイント
 	 * @param req
 	 */
@@ -126,17 +97,6 @@ public class SystemController {
 		this.masterService.createCompany(request.mapTo());
 	}
 	
-	/*
-	 * 会社プルダウンのエントリーポイント
-	 * 
-	 */
-	@GetMapping("/company/pulldown")
-	public CompanysResponse pullDownCompanys( ) {
-		var vo = this.masterService.pullDownCompany();
-		var response = new CompanysResponse();
-		response.setCompanys(vo.getCompany());
-		return response;
-	}
 	
 	/**
 	 * 部署作成用のエントリーポイント
@@ -145,18 +105,6 @@ public class SystemController {
 	@PostMapping("/department/register")
 	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
 		this.masterService.createDepartment(request.mapTo());
-	}
-	
-	/*
-	 * 部署プルダウンのエントリーポイント
-	 * 
-	 */
-	@PostMapping("/deartment/pulldown")
-	public DepatmentsResponse pullDownDepartments(@RequestBody GetDepartmentsRequest request) {
-		var vo = this.masterService.pullDownDepartment(request.mapTo());
-		var response = new DepatmentsResponse();
-		response.setDepartments(vo.getDepartment());
-		return response;
 	}
 	
 	/**
@@ -213,10 +161,12 @@ public class SystemController {
 		return response;
 	}	
 	
-//	/*
-//	 * 税区分一覧処理
-//	 */
-//	@PostMapping("/taxtype/info")
-//	public TaxTypeResponse taxTypePulldown
-//	
+	/*
+	 * 税区分一覧処理
+	 */
+	@PostMapping("/taxtype/info")
+	public TaxTypeResponse taxTypePulldown{
+		
+	}
+	
 }

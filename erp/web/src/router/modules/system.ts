@@ -62,9 +62,14 @@ const systemRoutes: RouteConfig = {
       path: 'product',
       component: () => import('@/views/system/product.vue'),
       name: 'product',
-      meta: { title: 'supplierProduct' }
+      meta: { title: 'product' }
     },
-
+    {
+      path: 'save-product',
+      component: () => import('@/views/system/save-product.vue'),
+      name: 'save-product',
+      meta: { title: 'saveProduct' , hidden: true }
+    },
 
 
   ]
