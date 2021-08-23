@@ -1,10 +1,16 @@
 package com.erp.main.domain.common.enums;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
 
 /**
@@ -82,5 +88,20 @@ public enum TaxType implements BaseEnum<TaxType> {
 			return dbData == null? null : BaseEnum.of(TaxType.class, dbData);
 		}
 		
+	}
+	
+	public class TaxTypeSerializer extends JsonSerializer<TaxType> {
+
+		public void serialize(TaxType value, JsonGenerator generator,
+		            SerializerProvider provider) throws IOException,
+		            JsonProcessingException {
+		
+	    generator.writeStartObject();
+	    generator.writeFieldName("code");
+		generator.writeNumber(value.getCode());
+		generator.writeFieldName("disName");
+	    generator.writeString(value.getDisplayName());
+	    generator.writeEndObject();
+		}
 	}
 }

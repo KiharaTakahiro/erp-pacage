@@ -12,6 +12,7 @@ export default {
     newClient: '取引先追加',
     editClient: '取引先編集',
     supplierProduct: '仕入商品管理',
+    product: '商品管理',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -124,6 +125,15 @@ export default {
     title: '仕入商品管理',
     add: '仕入商品新規登録',
     edit: '仕入商品編集',
+    complete: '完了',
+    name: '商品名',
+    check0: '商品が選択されていません',
+    check2: '商品が二つ以上選択されています'
+  },
+  product: {
+    title: '商品管理',
+    add: '商品新規登録',
+    edit: '商品編集',
     complete: '完了',
     name: '商品名',
     check0: '商品が選択されていません',

@@ -58,6 +58,13 @@ const systemRoutes: RouteConfig = {
       name: 'edit-supplier-product',
       meta: { title: 'editSupplierProduct', hidden: true }
     },
+    {
+      path: 'product',
+      component: () => import('@/views/system/product.vue'),
+      name: 'product',
+      meta: { title: 'supplierProduct' }
+    },
+
 
 
   ]

@@ -40,4 +40,6 @@ public interface BaseEnum<E extends Enum<E>> {
                                                                                    code)));
     }
 	
+
+
 }
