@@ -20,13 +20,18 @@
       @departmentSeqSubmit="departmentSeqRecive"
     />
 
-
+    <product-detail
+    :productSeq="productSeq"
+    :quantity="quantity"
+    @productSeqSubmit="productSeqRecive"
+    @quantitySubmit="quantityRecive"
+      />
 
       <div class="complete-btn">
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent=""
+            @click.native.prevent="checkBtn"
           >
             {{ $t('recievedOrder.complete') }}
         </el-button>
@@ -39,11 +44,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
+import productDetail from '@/views/components/product-detail.vue'
 @Component({
   name: 'save-recieved-order',
   components: {
     clientsPullDown,
     companyPullDown,
+    productDetail,
   }
 })
 export default class extends Vue {
@@ -51,7 +58,8 @@ export default class extends Vue {
     clientsSeq: '',
     companySeq: '',
     departmentSeq: '',
-    details: [{}],
+    productSeq: '',
+    quantity: '',
     quotaionSeq: '',
     recivedOrderDate: '',
     tax: '',
@@ -71,8 +79,19 @@ export default class extends Vue {
     this.recievedOrder.departmentSeq = departmentSeq
   }
 
-}
+  private productSeqRecive(productSeq: any): void {
+    this.recievedOrder.productSeq = productSeq
+  }
 
+  private quantityRecive(quantity: any): void {
+    this.recievedOrder.quantity = quantity
+  }
+
+  private  checkBtn() {
+    
+  }
+
+}
 
 
 </script>

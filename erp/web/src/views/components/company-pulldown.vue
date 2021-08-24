@@ -8,7 +8,7 @@
           { required: true, message: '会社を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="companySeq" filterable clearable v-on:change="companySubmit" placeholder="取引先">
+        <el-select v-model="companySeq" filterable clearable v-on:change="companySubmit" placeholder="会社名">
           <el-option
             v-for="company in companys"
             :key="company.companySeq"
