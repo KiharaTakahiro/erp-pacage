@@ -26,7 +26,7 @@
           { required: true, message: '部署を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSubmit" placeholder="取引先">
+        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSubmit" placeholder="部署">
           <el-option
             v-for="department in departments"
             :key="department.departmentSeq"
@@ -50,6 +50,12 @@ import { pullDownCompany, pullDownDepartment } from '@/api/company'
 })
 export default class extends Vue {
 
+  @Prop({ default: '' })
+  companySeq!: string;
+
+  @Prop({ default: '' })
+  departmentSeq!: string;
+
   companys = [{}]
   departments = [{}]
 
@@ -64,17 +70,15 @@ export default class extends Vue {
   }
 
   private async checkDepartment(companySeq: any) {
-    const { data } = await pullDownDepartment({companySeq: companySeq})
-    this.departments = data.departments
+      this.departmentSeq = ''
+    if (this.companySeq == ''){
+      this.departments = [{}]
+    }else{
+      const { data } = await pullDownDepartment({companySeq: companySeq})
+      this.departments = data.departments
+    }
   }
 
-
-
-  @Prop({ default: '' })
-  companySeq!: string;
-
-  @Prop({ default: '' })
-  departmentSeq!: string;
 
   @Emit('companySeqSubmit')
   companySubmit(companySeq: any) {

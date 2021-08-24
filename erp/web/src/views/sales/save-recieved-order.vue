@@ -63,6 +63,7 @@ export default class extends Vue {
   }
 
   private companySeqRecive(companySeq: any): void {
+    this.recievedOrder.departmentSeq = ''
     this.recievedOrder.companySeq = companySeq
   }
 
