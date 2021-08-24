@@ -92,7 +92,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"

@@ -26,9 +26,9 @@
           { required: true, message: '部署を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSeq" placeholder="取引先">
+        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSubmit" placeholder="取引先">
           <el-option
-            v-for="department in departmens"
+            v-for="department in departments"
             :key="department.departmentSeq"
             :label="department.departmentName"
             :value="department.departmentSeq">
@@ -53,22 +53,7 @@ export default class extends Vue {
   companys = [{}]
   departments = [{}]
 
-
-  @Prop({ default: '' })
-  companySeq!: string;
-  @Prop({ default: '' })
-  departmentSeq!: string;
-
-  @Emit('companySeqSubmit')
-  companySubmit() {
-    return this.companySeq
-  }
-
-  @Emit('departmentSeqSubmit')
-  departmentSubmit() {
-    return this.departmentSeq
-  }
-
+  
   created() {
     this.getList()
   }
@@ -76,13 +61,30 @@ export default class extends Vue {
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
-    // const { data } = await pullDownDepartment({})
-    // this.departments = data.departments
   }
 
-  private async checkDepartment(value: any) {
-    const { data } = await pullDownDepartment({companySeq: value})
+  private async checkDepartment(companySeq: any) {
+    const { data } = await pullDownDepartment({companySeq: companySeq})
     this.departments = data.departments
+  }
+
+
+
+  @Prop({ default: '' })
+  companySeq!: string;
+
+  @Prop({ default: '' })
+  departmentSeq!: string;
+
+  @Emit('companySeqSubmit')
+  companySubmit(companySeq: any) {
+    this.checkDepartment(companySeq)
+    return this.companySeq
+  }
+
+  @Emit('departmentSeqSubmit')
+  departmentSubmit() {
+    return this.departmentSeq
   }
 
 }

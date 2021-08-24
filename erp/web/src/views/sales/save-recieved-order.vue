@@ -15,7 +15,9 @@
     />
     <company-pull-down
       :companySeq="recievedOrder.companySeq"
+      :departmentSeq="recievedOrder.departmentSeq"
       @companySeqSubmit="companySeqRecive"
+      @departmentSeqSubmit="departmentSeqRecive"
     />
 
 
@@ -62,6 +64,10 @@ export default class extends Vue {
 
   private companySeqRecive(companySeq: any): void {
     this.recievedOrder.companySeq = companySeq
+  }
+
+  private departmentSeqRecive(departmentSeq: any): void {
+    this.recievedOrder.departmentSeq = departmentSeq
   }
 
 }
