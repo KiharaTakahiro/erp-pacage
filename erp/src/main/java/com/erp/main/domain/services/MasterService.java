@@ -426,6 +426,8 @@ public class MasterService {
 			product.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
 			//
 			product.setTaxType(entity.getTaxType());
+			//
+			product.setUnitPrice(entity.getUnitPrice());
 			
 			products.add(product);
 			

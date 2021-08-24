@@ -13,7 +13,7 @@
           v-for="product in products"
           :key="product.productSeq"
           :label="product.productName"
-          :value="product.productSeq">
+          :value="product">
         </el-option>
       </el-select>
     </el-form-item>
@@ -51,6 +51,7 @@ export default class extends Vue {
 
   @Emit('productSeqSubmit')
   productSubmit() {
+    console.log(this.productSeq)
     return this.productSeq
   }
   @Emit('quantitySubmit')
