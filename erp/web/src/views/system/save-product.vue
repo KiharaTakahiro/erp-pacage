@@ -14,10 +14,16 @@
         @productNameSubmit="productNameRecieve"
         />
       <tax-type-pulldown
-        :TaxTypePulldown="product.taxType"
+        :taxTypePulldown="product.taxType"
+        @taxTypePulldownSubmit="taxTypePulldownRecieve"
         />
       <purchace-unit-price
         :purchaceUnitPrice="product.purchaceUnitPrice"
+        @purchaceUnitPriceSubmit="purchaceUnitPriceRecieve"
+        />
+      <unit-price
+        :unitPrice="product.unitPrice"
+        @unitPriceSubmit="unitPriceRecieve"
         />
       <div class="complete-btn">
         <el-button
@@ -38,15 +44,17 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
 import productName  from '@/views/components/product-name.vue'
-import TaxTypePulldown from '../components/tax-type-pulldown.vue'
+import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import purchaceUnitPrice from '@/views/components/purchace-unit-price.vue'
+import unitPrice from '@/views/components/unit-price.vue'
 
 @Component({
   name: 'product-save',
   components :{
     productName,
-    TaxTypePulldown,
-    purchaceUnitPrice
+    taxTypePulldown,
+    purchaceUnitPrice,
+    unitPrice
   }
 
 })
@@ -55,19 +63,26 @@ export default class extends Vue {
   private product = {
     productName:'',
     taxType:'',
-    purchaceUnitPrice:''
+    purchaceUnitPrice:'',
+    unitPrice:''
   }
   private productNameRecieve(productName: any): void{
     this.product.productName = productName
   }
-  private taxTypeRecieve(taxType: any): void{
+  private taxTypePulldownRecieve(taxType: any): void{
     this.product.taxType = taxType
   }
   private purchaceUnitPriceRecieve(purchaceUnitPrice: any): void{
     this.product.purchaceUnitPrice = purchaceUnitPrice
   }
+    private unitPriceRecieve(unitPrice: any): void{
+    this.product.unitPrice = unitPrice
+  }
   private createProduct(){
     console.log(this.product.productName)
+    console.log(this.product.purchaceUnitPrice)
+    console.log(this.product.taxType)
+    console.log(this.product.unitPrice)
   }
 
 }

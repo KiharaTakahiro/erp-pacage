@@ -143,6 +143,9 @@ export default {
     edit: '商品編集',
     complete: '完了',
     name: '商品名',
+    unitPrice: '定価',
+    taxType: '税区分',
+    purchaceUnitPrice: '仕入れ料金',
     check0: '商品が選択されていません',
     check2: '商品が二つ以上選択されています'
   },

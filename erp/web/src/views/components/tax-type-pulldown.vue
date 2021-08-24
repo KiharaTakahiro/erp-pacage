@@ -6,13 +6,13 @@
     >
     <el-select
       v-model="taxTypePulldown"
-      :placeholder="$t('route.taxType')"
+      :placeholder="$t('product.taxType')"
       >
       <el-option
-        v-for="item in taxTypeList"
+        v-for="item in options"
         :key="item.value"
         :label="item.label"
-        :value="item.value"
+        :value="value"
       >
       </el-option>
     </el-select>
@@ -30,7 +30,7 @@ import '@/assets/custom-theme/index.css'
 
 export default class extends Vue{
 
-  taxTypeList= [{
+  options= [{
     value: 'Option1',
     label: 'Option1'
   }, {
@@ -40,7 +40,15 @@ export default class extends Vue{
     value: 'Option3',
     label: 'Option3'
   }, ]
+    value=''
 
   @Prop({ default: '' })
-  TaxTypePulldown!: string;
+  taxTypePulldown!: string;
+
+  @Emit('taxTypeSubmit')
+  submit() {
+    return this.taxTypePulldown
+    }
 }
+
+</script>

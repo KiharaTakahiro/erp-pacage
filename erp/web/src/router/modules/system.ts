@@ -50,7 +50,7 @@ const systemRoutes: RouteConfig = {
       path: 'save-supplier-product',
       component: () => import('@/views/system/save-supplier-product.vue'),
       name: 'save-supplier-product',
-      meta: { title: 'saveSupplierProduct', hidden: true }
+      meta: { title: 'newSupplierProduct', hidden: true }
     },
     {
       path: 'edit-supplier-product',
@@ -68,7 +68,7 @@ const systemRoutes: RouteConfig = {
       path: 'save-product',
       component: () => import('@/views/system/save-product.vue'),
       name: 'save-product',
-      meta: { title: 'saveProduct' , hidden: true }
+      meta: { title: 'newProduct' , hidden: true }
     },
 
 

@@ -1,16 +1,17 @@
 <template>
   <div>
     <el-form-item
-      label="仕入れ料金"
+      label="定価"
       :rules="[
-          {required: true, message:'商品名は必ず入力して下さい。', trigger: 'blur'},
+          {required: true, message:'定価は必ず入力して下さい。', trigger: 'blur'},
           {pattern: /^(0|[1-9]|[1-9][0-9]+)$/, message:'半角数字で入力してください。', trigger: 'blur'}
         ]"
-      prop="purchaceUnitPrice"
+      prop="unitPrice"
     >
     <el-input
-      v-model="purchaceUnitPrice"
-      :placeholder="$t('product.purchaceUnitPrice')"
+      v-model="unitPrice"
+      :placeholder="$t('product.unitPrice')"
+      name="unitPrice"
       type="text"
       v-on:blur="submit"
     />
@@ -23,16 +24,17 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'purchaceUnitPrice'
+  name: 'unitPrice'
 })
 export default class extends Vue{
   @Prop({ default: '' })
-  purchaceUnitPrice!: bigint;
+  unitPrice!: bigint;
 
-  @Emit('purchaceUnitPriceSubmit')
+  @Emit('unitPriceSubmit')
   submit() {
-    return this.purchaceUnitPrice
+    return this.unitPrice
     }
 }
+
 
 </script>
