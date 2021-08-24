@@ -164,9 +164,9 @@ public class SystemController {
 	/*
 	 * 税区分一覧処理
 	 */
-	@PostMapping("/taxtype/info")
-	public TaxTypeResponse taxTypePulldown{
-		
-	}
+//	@PostMapping("/taxtype/info")
+//	public TaxTypeResponse taxTypePulldown{
+//		
+//	}
 	
 }
