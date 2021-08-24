@@ -12,7 +12,7 @@
         v-for="item in options"
         :key="item.value"
         :label="item.label"
-        :value="value"
+        :value="item.value"
       >
       </el-option>
     </el-select>
@@ -45,7 +45,7 @@ export default class extends Vue{
   @Prop({ default: '' })
   taxTypePulldown!: string;
 
-  @Emit('taxTypeSubmit')
+  @Emit('taxTypePulldownSubmit')
   submit() {
     return this.taxTypePulldown
     }
