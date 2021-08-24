@@ -16,6 +16,9 @@
       <tax-type-pulldown
         :TaxTypePulldown="product.taxType"
         />
+      <purchace-unit-price
+        :purchaceUnitPrice="product.purchaceUnitPrice"
+        />
       <div class="complete-btn">
         <el-button
             type="primary"
@@ -34,15 +37,16 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
-import productName  from "@/views/components/product-name.vue"
+import productName  from '@/views/components/product-name.vue'
 import TaxTypePulldown from '../components/tax-type-pulldown.vue'
-
+import purchaceUnitPrice from '@/views/components/purchace-unit-price.vue'
 
 @Component({
   name: 'product-save',
   components :{
     productName,
-    TaxTypePulldown
+    TaxTypePulldown,
+    purchaceUnitPrice
   }
 
 })
@@ -50,13 +54,17 @@ import TaxTypePulldown from '../components/tax-type-pulldown.vue'
 export default class extends Vue {
   private product = {
     productName:'',
-    taxType:''
+    taxType:'',
+    purchaceUnitPrice:''
   }
   private productNameRecieve(productName: any): void{
     this.product.productName = productName
   }
-  private taxTypeRecieve(productName: any): void{
-    this.product.taxType = productName
+  private taxTypeRecieve(taxType: any): void{
+    this.product.taxType = taxType
+  }
+  private purchaceUnitPriceRecieve(purchaceUnitPrice: any): void{
+    this.product.purchaceUnitPrice = purchaceUnitPrice
   }
   private createProduct(){
     console.log(this.product.productName)
