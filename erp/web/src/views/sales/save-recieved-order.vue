@@ -63,7 +63,8 @@ export default class extends Vue {
     quotaionSeq: '',
     recivedOrderDate: '',
     tax: '',
-    total: ''
+    total: '',
+    detail: []
   }
 
   private clienetsSeqRecive(clientsSeq: any): void {
