@@ -13,6 +13,7 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
+        v-on:click="submit"
       >
       </el-option>
     </el-select>

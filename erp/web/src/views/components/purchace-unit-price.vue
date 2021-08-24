@@ -3,7 +3,7 @@
     <el-form-item
       label="仕入れ料金"
       :rules="[
-          {required: true, message:'商品名は必ず入力して下さい。', trigger: 'blur'},
+          {required: true, message:'仕入れ料金は必ず入力して下さい。', trigger: 'blur'},
           {pattern: /^(0|[1-9]|[1-9][0-9]+)$/, message:'半角数字で入力してください。', trigger: 'blur'}
         ]"
       prop="purchaceUnitPrice"

@@ -83,6 +83,10 @@ export default class extends Vue {
     console.log(this.product.purchaceUnitPrice)
     console.log(this.product.taxType)
     console.log(this.product.unitPrice)
+    
+    // (this.$refs.user as ElForm).validate(async(valid: boolean) => {
+    //   if(valid){
+
   }
 
 }
