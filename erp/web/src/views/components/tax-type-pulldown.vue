@@ -32,14 +32,14 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue{
 
   options= [{
-    value: 'Option1',
-    label: 'Option1'
+    value: '税金なし',
+    label: '税金なし'
   }, {
-    value: 'Option2',
-    label: 'Option2'
+    value: '軽減税率',
+    label: '軽減税率'
   }, {
-    value: 'Option3',
-    label: 'Option3'
+    value: '通常',
+    label: '通常'
   }, ]
 
   @Prop({ default: '' })

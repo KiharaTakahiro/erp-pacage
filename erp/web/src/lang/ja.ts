@@ -145,7 +145,7 @@ export default {
     name: '商品名',
     unitPrice: '定価',
     taxType: '税区分',
-    purchaceUnitPrice: '仕入れ料金',
+    purchaceUnitPrice: '仕入料金',
     check0: '商品が選択されていません',
     check2: '商品が二つ以上選択されています'
   },
@@ -172,6 +172,7 @@ export default {
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
     changeLanguageTips: '言語切り替えの成功',
     createClients :'取引先の登録に成功',
+    createProduct :'商品の登録に成功',
     validation :'入力内容を確認してください'
   },
   table: {
