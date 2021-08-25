@@ -21,6 +21,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
+import { log } from 'node:console';
 
 
 @Component({
@@ -35,8 +36,8 @@ export default class extends Vue {
     return this.companyName
   }
 
-  set name(companyName) {
-    this.$emit('conpanyNameValue', companyName)
+  set name(value) {
+    this.$emit('conpanyNameValue', value)
   }
 
 }

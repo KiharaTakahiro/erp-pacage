@@ -8,11 +8,10 @@
     prop="userId"
   >
     <el-input
-      v-model="userId"
+      v-model="id"
       :placeholder="$t('user.id')"
       name="userId"
       type="text"
-      v-on:blur="submit"
     />
 </el-form-item>
 </div>
@@ -29,10 +28,14 @@ export default class extends Vue{
   @Prop({ default: '' })
   userId!: string;
 
-  @Emit('userIdSubmit')
-  submit() {
+  
+  get id() {
     return this.userId
-    }
+  }
+
+  set id(value) {
+    this.$emit('userIdSubmit', value)
+  }
 
 }
 

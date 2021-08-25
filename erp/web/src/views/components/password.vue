@@ -9,9 +9,8 @@
     >
       <el-input
         type="password"
-        v-model="password"
         autocomplete="off"
-        v-on:blur="submitPass"
+        v-model="pass1"
         max="50"
         />
     </el-form-item>
@@ -25,9 +24,8 @@
       >
       <el-input
         type="password"
-        v-model="password2"
+        v-model="pass2"
         autocomplete="off"
-        v-on:blur="submitCheckPass"
         
       />
     </el-form-item>
@@ -52,15 +50,23 @@ export default class extends Vue{
 
   @Prop({ default: '' })
   password2!: string;
-
-  @Emit('passSubmit')
-    submitPass(){
+  
+  
+  get pass1() {
     return this.password
   }
 
-  @Emit('checkPassSubmit')
-    submitCheckPass(){
+  set pass1(value) {
+    this.$emit('passSubmit', value)
+  }
+
+  
+  get pass2() {
     return this.password2
+  }
+
+  set pass2(value) {
+    this.$emit('checkPassSubmit', value)
   }
 
   private validatePass2 = (rule: any, value: string, callback: Function) => {

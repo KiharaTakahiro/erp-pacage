@@ -27,8 +27,8 @@
       />
 
       <password
-      :pass="user.password"
-      :checkPass="user.password2"
+      :password="user.password"
+      :password2="user.password2"
       @passSubmit='passRecive'
       @checkPassSubmit='checkPassRecive'
       />
