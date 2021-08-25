@@ -13,10 +13,10 @@
         :productName="product.productName"
         @productNameSubmit="productNameRecieve"
         />
-      <!-- <tax-type-pulldown
+      <tax-type-pulldown
         :taxTypePulldown="product.taxType"
         @taxTypePulldownSubmit="taxTypePulldownRecieve"
-        /> -->
+        />
       <purchace-unit-price
         :purchaceUnitPrice="product.purchaceUnitPrice"
         @purchaceUnitPriceSubmit="purchaceUnitPriceRecieve"

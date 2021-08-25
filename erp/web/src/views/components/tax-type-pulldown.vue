@@ -5,8 +5,9 @@
       prop="taxTypePulldown"
     >
     <el-select
-      v-model="taxTypePulldown"
+      v-model="value"
       :placeholder="$t('product.taxType')"
+      v-on:change="submit"
       >
       <el-option
         v-for="item in options"
@@ -17,7 +18,7 @@
       </el-option>
     </el-select>
     </el-form-item>
-  </div>  
+  </div>
 </template>
 
 <script lang='ts'>
@@ -40,14 +41,13 @@ export default class extends Vue{
     value: 'Option3',
     label: 'Option3'
   }, ]
-    value=''
 
   @Prop({ default: '' })
-  taxTypePulldown!: string;
+  value!: string;
 
   @Emit('taxTypePulldownSubmit')
   submit() {
-    return this.taxTypePulldown
+    return this.value
     }
 }
 
