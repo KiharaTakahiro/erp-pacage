@@ -43,10 +43,14 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { Dictionary } from 'vue-router/types/router'
+import '@/assets/custom-theme/index.css'
+import { component } from 'node_modules/vue/types/umd'
 import productName  from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import purchaceUnitPrice from '@/views/components/purchace-unit-price.vue'
 import unitPrice from '@/views/components/unit-price.vue'
+import { ProductModule } from '@/store/modules/product'
+
 
 @Component({
   name: 'product-save',
@@ -78,18 +82,31 @@ export default class extends Vue {
     private unitPriceRecieve(unitPrice: any): void{
     this.product.unitPrice = unitPrice
   }
-  private createProduct(){
-    console.log(this.product.productName)
-    console.log(this.product.purchaceUnitPrice)
-    console.log(this.product.taxType)
-    console.log(this.product.unitPrice)
-    
-    // (this.$refs.user as ElForm).validate(async(valid: boolean) => {
-    //   if(valid){
+  private createProduct(){    
+    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
+    if(valid){
+      await ProductModule.CreateProduct(this.product)
+      this.$router.push({
+          path: 'product'
+        }).catch(err => {
+          console.warn(err)
+        })
+      this.$message({
+      message: this.$t('components.createProduct').toString(),
+      type: 'success'
+    })
+      }else {
+        this.$message({
+        message: this.$t('components.validation').toString(),
+        type: 'error'
+        })
+        return false
+      }
+    })
 
   }
-
 }
+
 
 
 

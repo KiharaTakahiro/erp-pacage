@@ -6,7 +6,13 @@ export const pullDownProduct = () =>
     method: 'GET'
   })
 
-  
+export const createProduct = (data: any) =>
+request({
+  url: '/product/register',
+  method: 'post',
+  data
+})
+
 export const getProduct = (data: JSON) =>
 request({
   url: '/product/edit',

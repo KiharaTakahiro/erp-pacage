@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-form-item
-      label="仕入れ料金"
+      label="仕入料金"
       :rules="[
-          {required: true, message:'仕入れ料金は必ず入力して下さい。', trigger: 'blur'},
+          {required: true, message:'仕入料金は必ず入力して下さい。', trigger: 'blur'},
           {pattern: /^(0|[1-9]|[1-9][0-9]+)$/, message:'半角数字で入力してください。', trigger: 'blur'}
         ]"
       prop="purchaceUnitPrice"
@@ -27,7 +27,7 @@ import '@/assets/custom-theme/index.css'
 })
 export default class extends Vue{
   @Prop({ default: '' })
-  purchaceUnitPrice!: bigint;
+  purchaceUnitPrice!: string;
 
   @Emit('purchaceUnitPriceSubmit')
   submit() {
