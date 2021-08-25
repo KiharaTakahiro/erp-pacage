@@ -2,10 +2,10 @@
 <div>
   <div class="app-container">
     <el-form-item
-    label="取引先"
+    label="商品"
     prop="productSeq"
     :rules="[
-        { required: true, message: '取引先を選択してください', trigger: 'change' }
+        { required: true, message: '商品を選択してください', trigger: 'change' }
       ]"
     >
       <el-select v-model="productSeq" filterable clearable v-on:change="productSubmit" placeholder="商品">
