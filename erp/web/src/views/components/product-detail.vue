@@ -32,7 +32,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
-import { pullDownProduct } from '@/api/product'
+import { pullDownProduct, getProduct } from '@/api/product'
+import productDetail from '@/views/components/product-detail.vue'
 @Component({
   name: 'productsPullDown',
   components: {
@@ -66,6 +67,7 @@ export default class extends Vue {
     const { data } = await pullDownProduct()
     this.products = data.product
   }
+
 
 }
 

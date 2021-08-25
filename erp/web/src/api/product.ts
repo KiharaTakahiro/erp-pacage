@@ -5,3 +5,11 @@ export const pullDownProduct = () =>
     url: '/product/pulldown',
     method: 'GET'
   })
+
+  
+export const getProduct = (data: JSON) =>
+request({
+  url: '/product/edit',
+  method: 'POST',
+  data
+})
