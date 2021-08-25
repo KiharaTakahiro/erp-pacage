@@ -41,6 +41,7 @@ import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
+import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
@@ -438,6 +439,21 @@ public class MasterService {
 		vo.setProduct(products);
 		
 		return vo;
+	}
+	
+	/**
+	 * 商品詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetProductVo getProductVo(Long productSeq){
+		Optional<ProductEntity> client = productRepository.findById(productSeq);
+		if(client.isEmpty()) {
+			throw new AppException(String.format("該当の商品を取得できませんでした。 productSeq: %s", productSeq));
+		}
+		
+		return GetProductVo.mapTo(client.get());
+	
 	}
 }
 

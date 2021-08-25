@@ -18,12 +18,14 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
+import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
 import com.erp.main.app.controller.system.response.DepatmentsResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
+import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -67,13 +69,31 @@ public class SystemController {
 	}
 	
 	/*
+	 * 商品詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/product/edit")
+	public ProductResponse getClient(@RequestBody GetProductRequest request) {
+		Long id = request.getProductSeq(); 
+		var vo = this.masterService.getProductVo(id).getProduct();
+		var response = new ProductResponse();
+		response.setProductSeq(vo.getProductSeq());
+		response.setProductName(vo.getProductName());
+		response.setUnitPrice(vo.getUnitPrice());
+		response.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
+		response.setTaxType(vo.getTaxType());
+		return response;
+		
+	}
+	
+	/*
 	 * 商品プルダウンのエントリーポイント
 	 * 
 	 */
 	@GetMapping("/product/pulldown")
-	public ProductResponse pullDownpProduct( ) {
+	public ProductsResponse pullDownpProduct( ) {
 		var vo = this.masterService.pullDownProduct();
-		var response = new ProductResponse();
+		var response = new ProductsResponse();
 		response.setProduct(vo.getProduct());
 		return response;
 	}
@@ -103,6 +123,43 @@ public class SystemController {
 	@PostMapping("/clients/register")
 	public void createClients( @RequestBody CreateClientsRequest request) {
 		this.masterService.createClients(request.mapTo());
+	}
+	
+
+	/*
+	 * 取引先詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/clients/edit")
+	public ClientResponse getClient(@RequestBody GetClientRequest request) {
+		Long id = request.getClientsSeq(); 
+		var vo = this.masterService.getClientVo(id);
+		var response = new ClientResponse();
+		response.setClientsName(vo.getClient().getClientsName());
+		response.setClientsSeq(vo.getClient().getClientsSeq());
+		return response;
+		
+	}
+	
+	/*
+	 * 取引先更新処理
+	 * @param req
+	 */
+	@PostMapping("/client/update")
+	public void updateClient(@RequestBody UpdateClientRequest request) {
+		this.masterService.updateClient(request.mapTo());
+	}
+	
+	/*
+	 * 取引先一覧処理
+	 */
+	@PostMapping("/clients/info")
+	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
+		var vo = this.masterService.getClientsVo(request.mapTo());
+		var response = new ClientsResponse();
+		response.setMaxpage(vo.getMaxpage());
+		response.setClients(vo.getClients());
+		return response;
 	}
 	
 	/**
@@ -176,40 +233,5 @@ public class SystemController {
 	public void createLot(@RequestBody CreateLotRequest request) {
 		this.masterService.createLot(request.mapTo());
 	}
-
-	/*
-	 * 取引先詳細取得のエントリーポイント
-	 * @param responce
-	 */
-	@PostMapping("/clients/edit")
-	public ClientResponse getClient(@RequestBody GetClientRequest request) {
-		Long id = request.getClientsSeq(); 
-		var vo = this.masterService.getClientVo(id);
-		var response = new ClientResponse();
-		response.setClientsName(vo.getClient().getClientsName());
-		response.setClientsSeq(vo.getClient().getClientsSeq());
-		return response;
-		
-	}
 	
-	/*
-	 * 取引先更新処理
-	 * @param req
-	 */
-	@PostMapping("/client/update")
-	public void updateClient(@RequestBody UpdateClientRequest request) {
-		this.masterService.updateClient(request.mapTo());
-	}
-	
-	/*
-	 * 取引先一覧処理
-	 */
-	@PostMapping("/clients/info")
-	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
-		var vo = this.masterService.getClientsVo(request.mapTo());
-		var response = new ClientsResponse();
-		response.setMaxpage(vo.getMaxpage());
-		response.setClients(vo.getClients());
-		return response;
-	}	
 }
