@@ -7,13 +7,12 @@
       prop="name"
     >
     <el-input
-      v-model='companyName'
+      v-model='name'
       :placeholder="$t('client.name')"
       type="text"
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      @input='companyNameSend'
     />
   </el-form-item>
 
@@ -32,9 +31,12 @@ export default class extends Vue {
   @Prop({ default: '' })
   companyName!: string;
 
-  @Emit('conpanyNameValue')
-  companyNameSend() {
+  get name() {
     return this.companyName
+  }
+
+  set name(companyName) {
+    this.$emit('conpanyNameValue', companyName)
   }
 
 }

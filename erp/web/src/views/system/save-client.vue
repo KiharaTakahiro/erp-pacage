@@ -50,11 +50,13 @@ export default class extends Vue {
 
   private conpanyName(name: any): void {
     this.client.name = name
-  }
+    }
 
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {
+      
+      console.log(this.client.name)
       if(valid){
         await ClientModule.CreateClient(this.client)
         this.$router.push({
