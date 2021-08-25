@@ -9,10 +9,10 @@
       autocomplete="on"
       label-position="left"
     >
-    <clientsPullDown
-    :clientsSeq="recievedOrder.clienetsSeq"
-    @clientsSeqSubmit='clienetsSeqRecive'
-    />
+    <clients-pull-down
+      :clientsSeq="recievedOrder.clientsSeq"
+      @clientsSeqSubmit="clienetsSeqRecive"
+      />
     <company-pull-down
       :companySeq="recievedOrder.companySeq"
       :departmentSeq="recievedOrder.departmentSeq"
@@ -20,12 +20,6 @@
       @departmentSeqSubmit="departmentSeqRecive"
     />
 
-    <product-detail
-    :productSeq="productSeq"
-    :quantity="quantity"
-    @productSeqSubmit="productSeqRecive"
-    @quantitySubmit="quantityRecive"
-      />
 
       <div class="complete-btn">
         <el-button
@@ -80,13 +74,6 @@ export default class extends Vue {
     this.recievedOrder.departmentSeq = departmentSeq
   }
 
-  private productSeqRecive(productSeq: any): void {
-    this.recievedOrder.productSeq = productSeq
-  }
-
-  private quantityRecive(quantity: any): void {
-    this.recievedOrder.quantity = quantity
-  }
 
   private  checkBtn() {
     

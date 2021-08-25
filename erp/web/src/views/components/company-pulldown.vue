@@ -8,7 +8,7 @@
           { required: true, message: '会社を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="companySeq" filterable clearable v-on:change="companySubmit" placeholder="会社名">
+        <el-select v-model="comSeq" filterable clearable placeholder="会社名">
           <el-option
             v-for="company in companys"
             :key="company.companySeq"
@@ -26,7 +26,7 @@
           { required: true, message: '部署を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSubmit" placeholder="部署">
+        <el-select v-model="depSeq" filterable clearable placeholder="部署">
           <el-option
             v-for="department in departments"
             :key="department.departmentSeq"
@@ -63,15 +63,32 @@ export default class extends Vue {
   created() {
     this.getList()
   }
-
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
   }
 
+  
+  get comSeq() {
+    return this.companySeq
+  }
+
+  set comSeq(value) {
+    this.companySubmit(value)
+  }
+
+  
+  get depSeq() {
+    return this.departmentSeq
+  }
+
+  set depSeq(value) {
+    this.departmentSubmit(value)
+  }
+
   private async checkDepartment(companySeq: any) {
-      this.departmentSeq = ''
-    if (this.companySeq == ''){
+    this.departmentSeq = ''
+    if (companySeq == ''){
       this.departments = [{}]
     }else{
       const { data } = await pullDownDepartment({companySeq: companySeq})
@@ -83,12 +100,12 @@ export default class extends Vue {
   @Emit('companySeqSubmit')
   companySubmit(companySeq: any) {
     this.checkDepartment(companySeq)
-    return this.companySeq
+    return companySeq
   }
 
   @Emit('departmentSeqSubmit')
-  departmentSubmit() {
-    return this.departmentSeq
+  departmentSubmit(value :any) {
+    return value
   }
 
 }
