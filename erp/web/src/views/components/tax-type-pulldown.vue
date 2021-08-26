@@ -14,6 +14,7 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
+        :disabled="item.disabled"
       >
       </el-option>
     </el-select>
@@ -32,13 +33,14 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue{
 
   options= [{
-    value: '税金なし',
-    label: '税金なし'
+    value: '1',
+    label: '税金なし',
+    disabled: true
   }, {
-    value: '軽減税率',
+    value: '2',
     label: '軽減税率'
   }, {
-    value: '通常',
+    value: '3',
     label: '通常'
   }, ]
 

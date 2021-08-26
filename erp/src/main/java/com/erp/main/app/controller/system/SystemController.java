@@ -16,9 +16,11 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
+import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
+import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -168,5 +170,16 @@ public class SystemController {
 //	public TaxTypeResponse taxTypePulldown{
 //		
 //	}
+	
+	/*
+	 * 取引先一覧処理
+	 */
+	@PostMapping("/product/info")
+	public ProductResponse infoProduct(@RequestBody GetProductRequest request) {
+		var vo = this.masterService.getProductVo(request.mapTo());
+		var response = new ProductResponse();
+//		response.setMaxpage(vo.getMaxpage());
+		
+	}
 	
 }
