@@ -50,7 +50,8 @@ export default class extends Vue {
   }
 
   private conpanyName(name: any): void {
-    this.client.name = name
+    this.$store.commit('SET_NAME', name)
+    this.client.name = ClientModule.name
   }
 
   private updateClient(){
