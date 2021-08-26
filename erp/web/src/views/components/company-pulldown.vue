@@ -77,7 +77,6 @@ export default class extends Vue {
     this.companySubmit(value)
   }
 
-  
   get depSeq() {
     return this.departmentSeq
   }
