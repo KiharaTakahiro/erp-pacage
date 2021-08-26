@@ -83,7 +83,7 @@ export default class extends Vue {
     this.product.unitPrice = unitPrice
   }
   private createProduct(){    
-    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
+    (this.$refs.product as ElForm).validate(async(valid: boolean) => {
     if(valid){
       await ProductModule.CreateProduct(this.product)
       this.$router.push({
