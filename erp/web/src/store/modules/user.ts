@@ -66,7 +66,7 @@ class User extends VuexModule implements IUserState {
   }
 
   @Mutation
-  private SET_FRISTNAME(firstName: string) {
+  private SET_FIRSTNAME(firstName: string) {
     this.firstName = firstName
   }
   
