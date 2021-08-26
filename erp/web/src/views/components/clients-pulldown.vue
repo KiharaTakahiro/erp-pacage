@@ -8,7 +8,7 @@
         { required: true, message: '取引先を選択してください', trigger: 'change' }
       ]"
     >
-      <el-select v-model="clientsSeq" filterable clearable v-on:change="submit" placeholder="取引先">
+      <el-select v-model="seq" filterable clearable placeholder="取引先">
         <el-option
           v-for="client in clients"
           :key="client.clientsSeq"
@@ -38,11 +38,19 @@ export default class extends Vue {
   @Prop({ default: '' })
   clientsSeq!: string;
 
-  @Emit('clientsSeqSubmit')
-  submit() {
+  
+  get seq() {
     return this.clientsSeq
   }
-
+  
+  set seq(value) {
+    this.clientsSeqSubmit(value)
+  }
+  
+  @Emit('clientsSeqSubmit')
+  clientsSeqSubmit(value: any) {
+    return value
+  }
   created() {
     this.getList()
   }

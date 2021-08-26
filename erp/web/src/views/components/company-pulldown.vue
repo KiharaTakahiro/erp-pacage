@@ -8,7 +8,7 @@
           { required: true, message: '会社を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="companySeq" filterable clearable v-on:change="companySubmit" placeholder="取引先">
+        <el-select v-model="comSeq" filterable clearable placeholder="会社名">
           <el-option
             v-for="company in companys"
             :key="company.companySeq"
@@ -26,9 +26,9 @@
           { required: true, message: '部署を選択してください', trigger: 'change' }
         ]"
       >
-        <el-select v-model="departmentSeq" filterable clearable v-on:change="departmentSeq" placeholder="取引先">
+        <el-select v-model="depSeq" filterable clearable placeholder="部署">
           <el-option
-            v-for="department in departmens"
+            v-for="department in departments"
             :key="department.departmentSeq"
             :label="department.departmentName"
             :value="department.departmentSeq">
@@ -50,39 +50,61 @@ import { pullDownCompany, pullDownDepartment } from '@/api/company'
 })
 export default class extends Vue {
 
-  companys = [{}]
-  departments = [{}]
-
-
   @Prop({ default: '' })
   companySeq!: string;
+
   @Prop({ default: '' })
   departmentSeq!: string;
 
-  @Emit('companySeqSubmit')
-  companySubmit() {
-    return this.companySeq
-  }
+  companys = [{}]
+  departments = [{}]
 
-  @Emit('departmentSeqSubmit')
-  departmentSubmit() {
-    return this.departmentSeq
-  }
-
+  
   created() {
     this.getList()
   }
-
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
-    // const { data } = await pullDownDepartment({})
-    // this.departments = data.departments
   }
 
-  private async checkDepartment(value: any) {
-    const { data } = await pullDownDepartment({companySeq: value})
-    this.departments = data.departments
+  
+  get comSeq() {
+    return this.companySeq
+  }
+
+  set comSeq(value) {
+    this.companySubmit(value)
+  }
+
+  get depSeq() {
+    return this.departmentSeq
+  }
+
+  set depSeq(value) {
+    this.departmentSubmit(value)
+  }
+
+  private async checkDepartment(companySeq: any) {
+    this.departmentSeq = ''
+    if (companySeq == ''){
+      this.departments = [{}]
+    }else{
+      const { data } = await pullDownDepartment({companySeq: companySeq})
+      this.departments = data.departments
+    }
+  }
+
+
+  @Emit('companySeqSubmit')
+  companySubmit(companySeq: any) {
+    this.checkDepartment(companySeq)
+    return companySeq
+  }
+
+  @Emit('departmentSeqSubmit')
+  departmentSubmit(value :any) {
+    return value
   }
 
 }

@@ -4,7 +4,10 @@ import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 
 import lombok.Data;
-
+/*
+ * 取引先取得用のVO
+ * @author ngt
+ */
 @Data
 public class GetClientVo {
 	private ClientModel client;
@@ -16,8 +19,7 @@ public class GetClientVo {
 		model.setClientsSeq(entity.getClientsSeq());
 		model.setClientsName(entity.getName());
 		vo.setClient(model);
-		
-		
+				
 		return vo;
 		
 	}

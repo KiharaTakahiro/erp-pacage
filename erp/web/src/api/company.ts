@@ -8,7 +8,7 @@ export const pullDownCompany = () =>
 
   export const pullDownDepartment = (data: any) =>
   request({
-    url: '/department/pulldown',
+    url: '/deartment/pulldown',
     method: 'POST',
     data
   })

@@ -7,14 +7,13 @@
   prop="firstName"
   >
   <el-input
-    v-model="firstName"
+    v-model="name"
     :placeholder="$t('user.firstName')"
     name="firstName"
     type="text"
     tabindex="1"
     autocomplete="on"
     max="50"
-    v-on:blur="submit"
     />
 </el-form-item>
 
@@ -32,9 +31,12 @@ export default class extends Vue{
   @Prop({ default: '' })
   firstName!: string;
 
-  @Emit('firstNameSubmit')
-  submit() {
+  get name() {
     return this.firstName
+  }
+
+  set name(value) {
+    this.$emit('firstNameSubmit', value)
   }
 
 }

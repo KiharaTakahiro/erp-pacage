@@ -3,6 +3,7 @@ import { createClient, getClient, updateClient } from '@/api/client'
 import store from '@/store'
 import elementVariables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
+import { getUserByName } from '@/api/users'
 export interface IClientState {
   id: string,
   name: string
@@ -29,6 +30,11 @@ class Client extends VuexModule implements IClientState {
     name = name.trim()
     await createClient({ clientsName: name })
   }
+
+  // @Action
+  // public async setClientsName(name: string) {
+  //   this.SET_NAME(name)
+  // }
 
   
   @Action({ rawError: true })

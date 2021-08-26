@@ -1,24 +1,31 @@
 package com.erp.main.app.controller.system.response;
 
-import java.util.List;
-
-import com.erp.main.domain.objects.model.ProductModel;
+import com.erp.main.domain.common.enums.TaxType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 商品一覧レスポンス
- * @author NGT
+ * 商品詳細レスポンス
+ * @author ngt
  *
  */
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class ProductResponse extends BaseResponse {
-	// 最大ページ数
-	private Integer maxpage;
-	
-	// 取引先リスト
-	List<ProductModel> product;
+public class ProductResponse extends BaseResponse{
+	// 取引先SEQ
+    private Long productSeq;
+    
+    // 取引先名
+    private String productName;
+    
+    // 販売単価
+    private Long unitPrice;
+    
+    // 仕入れ単価
+    private Long purchaseUnitPrice;
+    
+    // 税区分
+    private TaxType taxType;
 
 }

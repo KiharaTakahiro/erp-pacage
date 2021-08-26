@@ -9,11 +9,10 @@
       prop="productName"
     >
     <el-input
-      v-model="productName"
+      v-model="name"
       :placeholder="$t('product.name')"
       name="productName"
       type="text"
-      v-on:blur="submit"
     />
     </el-form-item>
   </div>  
@@ -30,10 +29,15 @@ export default class extends Vue{
   @Prop({ default: '' })
   productName!: string;
 
-  @Emit('productNameSubmit')
-  submit() {
+  
+  get name() {
     return this.productName
-    }
+  }
+
+  set name(value) {
+    this.$emit('productNameSubmit', value)
+  }
+
 }
 
 

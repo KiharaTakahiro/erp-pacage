@@ -9,22 +9,23 @@
       autocomplete="on"
       label-position="left"
     >
-    <clientsPullDown
-    :clientsSeq="recievedOrder.clienetsSeq"
-    @clientsSeqSubmit='clienetsSeqRecive'
-    />
+    <clients-pull-down
+      :clientsSeq="recievedOrder.clientsSeq"
+      @clientsSeqSubmit="clienetsSeqRecive"
+      />
     <company-pull-down
       :companySeq="recievedOrder.companySeq"
+      :departmentSeq="recievedOrder.departmentSeq"
       @companySeqSubmit="companySeqRecive"
+      @departmentSeqSubmit="departmentSeqRecive"
     />
-
 
 
       <div class="complete-btn">
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent=""
+            @click.native.prevent="checkBtn"
           >
             {{ $t('recievedOrder.complete') }}
         </el-button>
@@ -37,11 +38,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
+import productDetail from '@/views/components/product-detail.vue'
 @Component({
   name: 'save-recieved-order',
   components: {
     clientsPullDown,
     companyPullDown,
+    productDetail,
   }
 })
 export default class extends Vue {
@@ -49,11 +52,13 @@ export default class extends Vue {
     clientsSeq: '',
     companySeq: '',
     departmentSeq: '',
-    details: [{}],
+    productSeq: '',
+    quantity: '',
     quotaionSeq: '',
     recivedOrderDate: '',
     tax: '',
-    total: ''
+    total: '',
+    detail: []
   }
 
   private clienetsSeqRecive(clientsSeq: any): void {
@@ -61,11 +66,20 @@ export default class extends Vue {
   }
 
   private companySeqRecive(companySeq: any): void {
+    this.recievedOrder.departmentSeq = ''
     this.recievedOrder.companySeq = companySeq
   }
 
-}
+  private departmentSeqRecive(departmentSeq: any): void {
+    this.recievedOrder.departmentSeq = departmentSeq
+  }
 
+
+  private  checkBtn() {
+    
+  }
+
+}
 
 
 </script>

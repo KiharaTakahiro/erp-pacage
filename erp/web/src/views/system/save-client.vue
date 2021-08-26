@@ -10,7 +10,7 @@
       label-position="left"
     >
       <company-name
-        :companyName="client.name"
+        :companyName="name"
         @conpanyNameValue='conpanyName'
         />
       <div class="complete-btn">
@@ -29,12 +29,9 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
 import { ClientModule } from '@/store/modules/client'
 import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console'
-import { toNamespacedPath } from 'node:path'
 
 @Component({
   name: 'Client-save',
@@ -45,12 +42,17 @@ import { toNamespacedPath } from 'node:path'
 export default class extends Vue {
 
   client = {
-  name: ''
+  name: ClientModule.name
+  }
+  get name() {
+    return ClientModule.name
   }
 
+
   private conpanyName(name: any): void {
-    this.client.name = name
-  }
+    this.$store.commit('SET_NAME', name)
+    this.client.name = ClientModule.name
+    }
 
 
   private createClient(){

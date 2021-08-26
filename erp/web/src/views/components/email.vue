@@ -8,14 +8,13 @@
   prop="email"
   >
   <el-input
-    v-model="email"
+    v-model="mail"
     :placeholder="$t('user.email')"
     name="email"
-    type="text"
+    type="email"
     tabindex="1"
     autocomplete="on"
     max="50"
-    v-on:blur="submit"
     />
 </el-form-item>
 
@@ -33,9 +32,13 @@ export default class extends Vue{
   @Prop({ default: '' })
   email!: string;
 
-  @Emit('emailSubmit')
-  submit() {
+  
+  get mail() {
     return this.email
+  }
+
+  set mail(value) {
+    this.$emit('emailSubmit', value)
   }
 
 }

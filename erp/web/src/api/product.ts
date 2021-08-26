@@ -1,5 +1,11 @@
 import request from '@/utils/request'
 
+export const pullDownProduct = () =>
+  request({
+    url: '/product/pulldown',
+    method: 'GET'
+  })
+
 export const createProduct = (data: any) =>
 request({
   url: '/product/register',
@@ -7,9 +13,9 @@ request({
   data
 })
 
-export const infoProduct = (data: any) =>
+export const getProduct = (data: JSON) =>
 request({
-  url: '/product/info',
-  method: 'post',
+  url: '/product/edit',
+  method: 'POST',
   data
 })
