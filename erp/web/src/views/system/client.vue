@@ -119,7 +119,7 @@ export default class extends Vue {
   searchName = ''
 
   
-  private clientsData = [{}]
+  private clientsData: JSON[] = []
 
   created() {
     this.getList()
@@ -127,6 +127,7 @@ export default class extends Vue {
 
   private async getList() {
     const { data } = await infoClient({})
+    console.log(data)
     this.clientsData = data.clients
   }
 

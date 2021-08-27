@@ -1,18 +1,17 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { createClient, getClient, updateClient } from '@/api/client'
+import { createClient, getClient, updateClient, infoClient } from '@/api/client'
 import store from '@/store'
-import elementVariables from '@/styles/element-variables.scss'
-import defaultSettings from '@/settings'
-import { getUserByName } from '@/api/users'
 export interface IClientState {
   id: string,
-  name: string
+  name: string,
+  list: JSON[]
 }
 
 @Module({ dynamic: true, store, name: 'client' })
 class Client extends VuexModule implements IClientState {
   public id = ''
   public name = ''
+  public list: JSON[] = []
 
   @Mutation
   private SET_ID(id: string){
@@ -22,6 +21,11 @@ class Client extends VuexModule implements IClientState {
   @Mutation
   private SET_NAME(name: string){
     this.name = name
+  }
+
+  @Mutation
+  private SET_LIST(list: JSON[]){
+    this.list = list
   }
 
   @Action
@@ -52,6 +56,12 @@ class Client extends VuexModule implements IClientState {
     let {id, name } = clientInfo
     name = name.trim()
     await updateClient({ clientsName: name, clientsSeq: id })
+  }
+
+  @Action
+  public async ClientList(clientInfo: JSON){
+    const { data } = await infoClient(clientInfo)
+    store.commit('SET_LIST', clientInfo)
   }
 }
 
