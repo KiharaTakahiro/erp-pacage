@@ -118,7 +118,6 @@ export default class extends Vue {
   targetClientSeq = ''
   searchName = ''
 
-  
   private clientsData = [{}]
   created() {
     this.getList()
