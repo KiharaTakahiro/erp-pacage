@@ -58,11 +58,12 @@ class Client extends VuexModule implements IClientState {
     await updateClient({ clientsName: name, clientsSeq: id })
   }
 
-  @Action
-  public async ClientList(clientInfo: JSON){
+  @Action({ rawError: true })
+  public async ClientList(clientInfo: any){
     const { data } = await infoClient(clientInfo)
-    store.commit('SET_LIST', clientInfo)
-  }
+    return data.clients
+
+    }
 }
 
 export const ClientModule = getModule(Client)

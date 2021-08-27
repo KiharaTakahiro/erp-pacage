@@ -119,35 +119,28 @@ export default class extends Vue {
   searchName = ''
 
   
-  private clientsData: JSON[] = []
-
+  private clientsData = [{}]
   created() {
     this.getList()
   }
 
   private async getList() {
-    const { data } = await infoClient({})
-    console.log(data)
-    this.clientsData = data.clients
+    this.clientsData = await ClientModule.ClientList({})
   }
 
   private async resetList() {
-    const { data } = await infoClient({})
-    this.clientsData = data.clients
+    this.clientsData = await ClientModule.ClientList({})
     this.targetClientSeq = ""
     this.searchName = ""
   }
 
   private async checkSaerch(){
     if(this.targetClientSeq != '' && this.searchName == ''){
-      const { data } = await infoClient({clientsSeq : this.targetClientSeq})
-      this.clientsData = data.clients
+      this.clientsData = await ClientModule.ClientList({clientsSeq : this.targetClientSeq})
     } else if (this.targetClientSeq == '' && this.searchName != ''){
-      const { data } = await infoClient({clientsName : this.searchName})
-      this.clientsData = data.clients
+      this.clientsData = await ClientModule.ClientList({clientsName : this.searchName})
     }else if (this.targetClientSeq != '' && this.searchName != ''){
-      const { data } = await infoClient({clientsName : this.searchName, clientsSeq : this.targetClientSeq})
-      this.clientsData = data.clients
+      this.clientsData = await ClientModule.ClientList({clientsName : this.searchName, clientsSeq : this.targetClientSeq})
     }
   }
 
