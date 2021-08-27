@@ -31,10 +31,11 @@ class Client extends VuexModule implements IClientState {
     await createClient({ clientsName: name })
   }
 
-  // @Action
-  // public async setClientsName(name: string) {
-  //   this.SET_NAME(name)
-  // }
+  @Action
+  public setClientsName(name: string) {
+    this.SET_NAME(name)
+    console.log(this.name)
+  }
 
   
   @Action({ rawError: true })
