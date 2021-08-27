@@ -33,8 +33,9 @@ class Client extends VuexModule implements IClientState {
 
   @Action
   public setClientsName(name: string) {
-    this.SET_NAME(name)
-    console.log(this.name)
+    // 公式的にはcommitをしなきゃいけないらしい。（コンポーネントで呼び出すか、ストアで呼び出すかは非同期処理でなければどっちでもいいらしい。）
+    // this.SET_NAME(name)
+    store.commit('SET_NAME', name)
   }
 
   

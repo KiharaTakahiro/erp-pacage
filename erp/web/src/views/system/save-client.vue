@@ -42,10 +42,10 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue {
 
   client = {
-  name: ClientModule.name
+  name: this.$store.getters.name
   }
   get name() {
-    return ClientModule.name
+    return  this.$store.getters.name
   }
 
 
