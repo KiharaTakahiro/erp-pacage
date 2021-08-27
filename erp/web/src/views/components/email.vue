@@ -8,21 +8,20 @@
   prop="email"
   >
   <el-input
-    v-model="email"
+    v-model="mail"
     :placeholder="$t('user.email')"
     name="email"
-    type="text"
+    type="email"
     tabindex="1"
     autocomplete="on"
     max="50"
-    v-on:blur="submit"
     />
 </el-form-item>
 
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -33,8 +32,13 @@ export default class extends Vue{
   @Prop({ default: '' })
   email!: string;
 
-  private submit(): void {
-    this.$emit('emailSubmit', this.email)
+  
+  get mail() {
+    return this.email
+  }
+
+  set mail(value) {
+    this.$emit('emailSubmit', value)
   }
 
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 取引先一覧
+ * 取引先一覧レスポンス
  * @author NGT
  *
  */

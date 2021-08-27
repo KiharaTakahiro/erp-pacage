@@ -8,18 +8,17 @@
     prop="userId"
   >
     <el-input
-      v-model="userId"
+      v-model="id"
       :placeholder="$t('user.id')"
       name="userId"
       type="text"
-      v-on:blur="submit"
     />
 </el-form-item>
 </div>
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 @Component({
   name: 'UserId'
@@ -29,8 +28,13 @@ export default class extends Vue{
   @Prop({ default: '' })
   userId!: string;
 
-  private submit(): void {
-    this.$emit('userIdSubmit', this.userId)
+  
+  get id() {
+    return this.userId
+  }
+
+  set id(value) {
+    this.$emit('userIdSubmit', value)
   }
 
 }

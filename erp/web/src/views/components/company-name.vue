@@ -7,21 +7,21 @@
       prop="name"
     >
     <el-input
-      v-model='companyName'
+      v-model='name'
       :placeholder="$t('client.name')"
       type="text"
       maxlength="50"
       tabindex="1"
       autocomplete="on"
-      v-on:blur='companyNameSend'
     />
   </el-form-item>
 
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
+import { log } from 'node:console';
 
 
 @Component({
@@ -32,8 +32,12 @@ export default class extends Vue {
   @Prop({ default: '' })
   companyName!: string;
 
-  private companyNameSend(): void {
-    this.$emit('conpanyNameValue', this.companyName)
+  get name() {
+    return this.companyName
+  }
+
+  set name(value) {
+    this.$emit('conpanyNameValue', value)
   }
 
 }

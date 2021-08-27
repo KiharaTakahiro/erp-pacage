@@ -27,7 +27,7 @@ public class DepartmentEntity extends DepartmentEntityFileds {
 		var entity = new DepartmentEntity();
 			
 		// 部署SEQ
-		entity.setCompanySeq(vo.getDepartmentCompanySeq());
+		entity.setCompanySeq(vo.getCompanySeq());
 		// 部署名
 		entity.setName(vo.getDepartmentName());
 		

@@ -27,8 +27,8 @@
       />
 
       <password
-      :pass="user.password"
-      :checkPass="user.password2"
+      :password="user.password"
+      :password2="user.password2"
       @passSubmit='passRecive'
       @checkPassSubmit='checkPassRecive'
       />
@@ -80,39 +80,47 @@ import { component } from 'node_modules/vue/types/umd'
 export default class extends Vue {
 
   private user = {
-    userId: '',
-    name: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    password2: ''
+    userId: UserModule.userId,
+    name: UserModule.name,
+    firstName: UserModule.firstName,
+    lastName: UserModule.lastName,
+    email: UserModule.email,
+    password: UserModule.password,
+    password2: UserModule.password2
   }
 
   private userIdRecive(userId: any): void {
-    this.user.userId = userId
+    this.$store.commit('SET_USER_ID' ,userId)
+    this.user.userId = UserModule.userId
   }
 
   private firstNameRecive(firstName: any): void {
-    this.user.firstName = firstName
+    this.$store.commit('SET_FIRSTNAME', firstName)
+    this.user.firstName = UserModule.firstName
   }
 
   private lastNameRecive(lastName: any): void {
+    this.$store.commit('SET_LASTNAME', lastName)
     this.user.lastName = lastName
   }
 
   private emailRecive(email: any): void {
+    this.$store.commit('SET_EMAIL', email)
     this.user.email = email
   }
 
   
   private passRecive(password: any): void {
-    this.user.password = password
+    
+    this.$store.commit('SET_PASSWORD', password)
+    this.user.password = UserModule.password
   }
 
   
   private checkPassRecive(password2: any): void {
-    this.user.password2 = password2
+    
+    this.$store.commit('SET_PASSWORD2', password2)
+    this.user.password2 = UserModule.password2
   }
 
   private createUser(){

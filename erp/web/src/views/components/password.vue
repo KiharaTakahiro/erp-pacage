@@ -9,9 +9,8 @@
     >
       <el-input
         type="password"
-        v-model="password"
         autocomplete="off"
-        v-on:blur="submitPass"
+        v-model="pass1"
         max="50"
         />
     </el-form-item>
@@ -25,9 +24,8 @@
       >
       <el-input
         type="password"
-        v-model="password2"
+        v-model="pass2"
         autocomplete="off"
-        v-on:blur="submitCheckPass"
         
       />
     </el-form-item>
@@ -36,7 +34,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 
 import '@/assets/custom-theme/index.css'
 
@@ -52,24 +50,25 @@ export default class extends Vue{
 
   @Prop({ default: '' })
   password2!: string;
-
   
-  private submitPass(): void {
-    this.$emit('passSubmit', this.password)
+  
+  get pass1() {
+    return this.password
   }
 
-  private submitCheckPass(): void {
-    this.$emit('checkPassSubmit', this.password2)
+  set pass1(value) {
+    this.$emit('passSubmit', value)
   }
-  
 
-  // private validatePass = (rule: any, value: string, callback: Function) => {
-  //   if (value === '') {
-  //     callback(new Error('Please input the password'));
-  //   } else {
-  //     callback();
-  //   }
-  // }
+  
+  get pass2() {
+    return this.password2
+  }
+
+  set pass2(value) {
+    this.$emit('checkPassSubmit', value)
+  }
+
   private validatePass2 = (rule: any, value: string, callback: Function) => {
     if (value === '') {
       callback(new Error('確認用パスワードを入力してください'));
@@ -79,8 +78,6 @@ export default class extends Vue{
       callback();
     }
   }
-
-
 }
 
 

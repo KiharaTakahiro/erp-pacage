@@ -1,17 +1,17 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { createClient, getClient, updateClient } from '@/api/client'
+import { createClient, getClient, updateClient, infoClient } from '@/api/client'
 import store from '@/store'
-import elementVariables from '@/styles/element-variables.scss'
-import defaultSettings from '@/settings'
 export interface IClientState {
   id: string,
-  name: string
+  name: string,
+  list: JSON[]
 }
 
 @Module({ dynamic: true, store, name: 'client' })
 class Client extends VuexModule implements IClientState {
   public id = ''
   public name = ''
+  public list: JSON[] = []
 
   @Mutation
   private SET_ID(id: string){
@@ -23,11 +23,23 @@ class Client extends VuexModule implements IClientState {
     this.name = name
   }
 
+  @Mutation
+  private SET_LIST(list: JSON[]){
+    this.list = list
+  }
+
   @Action
   public async CreateClient(clientInfo: { name: string }) {
     let { name } = clientInfo
     name = name.trim()
     await createClient({ clientsName: name })
+  }
+
+  @Action
+  public setClientsName(name: string) {
+    // 公式的にはcommitをしなきゃいけないらしい。（コンポーネントで呼び出すか、ストアで呼び出すかは非同期処理でなければどっちでもいいらしい。）
+    // this.SET_NAME(name)
+    store.commit('SET_NAME', name)
   }
 
   
@@ -45,6 +57,13 @@ class Client extends VuexModule implements IClientState {
     name = name.trim()
     await updateClient({ clientsName: name, clientsSeq: id })
   }
+
+  @Action({ rawError: true })
+  public async ClientList(clientInfo: any){
+    const { data } = await infoClient(clientInfo)
+    return data.clients
+
+    }
 }
 
 export const ClientModule = getModule(Client)

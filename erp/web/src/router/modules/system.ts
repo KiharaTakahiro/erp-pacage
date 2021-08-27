@@ -50,13 +50,25 @@ const systemRoutes: RouteConfig = {
       path: 'save-supplier-product',
       component: () => import('@/views/system/save-supplier-product.vue'),
       name: 'save-supplier-product',
-      meta: { title: 'saveSupplierProduct', hidden: true }
+      meta: { title: 'newSupplierProduct', hidden: true }
     },
     {
       path: 'edit-supplier-product',
       component: () => import('@/views/system/edit-supplier-product.vue'),
       name: 'edit-supplier-product',
       meta: { title: 'editSupplierProduct', hidden: true }
+    },
+    {
+      path: 'product',
+      component: () => import('@/views/system/product.vue'),
+      name: 'product',
+      meta: { title: 'product' }
+    },
+    {
+      path: 'save-product',
+      component: () => import('@/views/system/save-product.vue'),
+      name: 'save-product',
+      meta: { title: 'newProduct' , hidden: true }
     },
 
 

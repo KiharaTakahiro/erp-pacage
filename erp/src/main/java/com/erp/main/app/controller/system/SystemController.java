@@ -1,10 +1,12 @@
 package com.erp.main.app.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
 import com.erp.main.app.controller.system.request.CreateCompanyRequest;
@@ -16,9 +18,14 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
+import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
+import com.erp.main.app.controller.system.response.CompanysResponse;
+import com.erp.main.app.controller.system.response.DepatmentsResponse;
+import com.erp.main.app.controller.system.response.ProductResponse;
+import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.UserService;
 
@@ -61,6 +68,36 @@ public class SystemController {
 		this.masterService.createProduct(request.mapTo());
 	}
 	
+	/*
+	 * 商品詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/product/edit")
+	public ProductResponse getClient(@RequestBody GetProductRequest request) {
+		Long id = request.getProductSeq(); 
+		var vo = this.masterService.getProductVo(id).getProduct();
+		var response = new ProductResponse();
+		response.setProductSeq(vo.getProductSeq());
+		response.setProductName(vo.getProductName());
+		response.setUnitPrice(vo.getUnitPrice());
+		response.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
+		response.setTaxType(vo.getTaxType());
+		return response;
+		
+	}
+	
+	/*
+	 * 商品プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/product/pulldown")
+	public ProductsResponse pullDownpProduct( ) {
+		var vo = this.masterService.pullDownProduct();
+		var response = new ProductsResponse();
+		response.setProduct(vo.getProduct());
+		return response;
+	}
+	
 	/**
 	 * 仕入れ先作成用のエントリーポイント
 	 * @param req
@@ -88,42 +125,6 @@ public class SystemController {
 		this.masterService.createClients(request.mapTo());
 	}
 	
-	/**
-	 * 会社作成用のエントリーポイント
-	 * @param req
-	 */
-	@PostMapping("/company/register")
-	public void createCompany(@RequestBody CreateCompanyRequest request) {
-		this.masterService.createCompany(request.mapTo());
-	}
-	
-	
-	/**
-	 * 部署作成用のエントリーポイント
-	 * @param req
-	 */
-	@PostMapping("/department/register")
-	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
-		this.masterService.createDepartment(request.mapTo());
-	}
-	
-	/**
-	 * 倉庫作成用のエントリーポイント
-	 * @param req
-	 */
-	@PostMapping("/warehouse/register")
-	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
-		this.masterService.createWarehouse(request.mapTo());
-	}
-	
-	/**
-	 * ロット作成用のエントリーポイント
-	 * @param req
-	 */
-	@PostMapping("/lot/register")
-	public void createLot(@RequestBody CreateLotRequest request) {
-		this.masterService.createLot(request.mapTo());
-	}
 
 	/*
 	 * 取引先詳細取得のエントリーポイント
@@ -159,5 +160,78 @@ public class SystemController {
 		response.setMaxpage(vo.getMaxpage());
 		response.setClients(vo.getClients());
 		return response;
-	}	
+	}
+	
+	/**
+	 * 取引先プルダウンのエントリーポイント
+	 * @param 
+	 */
+	@GetMapping("/clients/pulldown")
+	public ClientsResponse pullDownClients() {
+		var vo = this.masterService.pullDownClients();
+		var response = new ClientsResponse();
+		response.setClients(vo.getClients());
+		return response;
+	}
+	
+	/**
+	 * 会社作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/company/register")
+	public void createCompany(@RequestBody CreateCompanyRequest request) {
+		this.masterService.createCompany(request.mapTo());
+	}
+	
+	/*
+	 * 会社プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/company/pulldown")
+	public CompanysResponse pullDownCompanys( ) {
+		var vo = this.masterService.pullDownCompany();
+		var response = new CompanysResponse();
+		response.setCompanys(vo.getCompany());
+		return response;
+	}
+	
+	/**
+	 * 部署作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/department/register")
+	public void createDepartment(@RequestBody CreateDepartmentRequest request) {
+		this.masterService.createDepartment(request.mapTo());
+	}
+	
+	/*
+	 * 部署プルダウンのエントリーポイント
+	 * 
+	 */
+	@PostMapping("/deartment/pulldown")
+	public DepatmentsResponse pullDownDepartments(@RequestBody GetDepartmentsRequest request) {
+		var vo = this.masterService.pullDownDepartment(request.mapTo());
+		var response = new DepatmentsResponse();
+		response.setDepartments(vo.getDepartment());
+		return response;
+	}
+	
+	/**
+	 * 倉庫作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/warehouse/register")
+	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
+		this.masterService.createWarehouse(request.mapTo());
+	}
+	
+	/**
+	 * ロット作成用のエントリーポイント
+	 * @param req
+	 */
+	@PostMapping("/lot/register")
+	public void createLot(@RequestBody CreateLotRequest request) {
+		this.masterService.createLot(request.mapTo());
+	}
+	
 }

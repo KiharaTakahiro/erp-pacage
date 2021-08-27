@@ -18,10 +18,10 @@ const purchasingRoutes: RouteConfig = {
       meta: { title: 'quotation' }
     },
     {
-      path: 'received-order',
-      component: () => import('@/views/sales/received-order.vue'),
-      name: 'receivedOrder',
-      meta: { title: 'receivedOrder' }
+      path: 'recieved-order',
+      component: () => import('@/views/sales/recieved-order.vue'),
+      name: 'recievedOrder',
+      meta: { title: 'recievedOrder' }
     },
     {
       path: 'invoice',

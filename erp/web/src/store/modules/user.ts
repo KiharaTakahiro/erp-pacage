@@ -61,8 +61,34 @@ class User extends VuexModule implements IUserState {
   }
 
   @Mutation
+  private SET_USER_ID(userId: string) {
+    this.userId = userId
+  }
+
+  @Mutation
+  private SET_FIRSTNAME(firstName: string) {
+    this.firstName = firstName
+  }
+  
+  @Mutation
+  private SET_LASTNAME(lastName: string) {
+    this.lastName = lastName
+  }
+
+  
+  @Mutation
   private SET_EMAIL(email: string) {
     this.email = email
+  }
+
+  @Mutation
+  private SET_PASSWORD(password: string) {
+    this.password = password
+  }
+
+  @Mutation
+  private SET_PASSWORD2(password2: string) {
+    this.password2 = password2
   }
 
   @Action

@@ -1,5 +1,6 @@
 package com.erp.main.domain.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +24,9 @@ import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.entity.SupplierProductRelationEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
+import com.erp.main.domain.objects.model.CompanyModel;
+import com.erp.main.domain.objects.model.DepartmentModel;
+import com.erp.main.domain.objects.model.ProductModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -34,6 +38,11 @@ import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetClientsVo;
+import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
+import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
+import com.erp.main.domain.objects.valueobjects.GetProductVo;
+import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -46,6 +55,7 @@ import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
+import com.erp.main.domain.specification.DepartmentSpec;
 
 /**
  * マスターの管理用のサービス
@@ -184,9 +194,9 @@ public class MasterService {
 	 */
 	@Transactional
 	public void createDepartment(CreateDepartmentVo vo) {
-		Optional<CompanyEntity> product = this.companyRepository.findById(vo.getDepartmentCompanySeq());
+		Optional<CompanyEntity> product = this.companyRepository.findById(vo.getCompanySeq());
 		if(product.isEmpty()) {
-			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getDepartmentCompanySeq()));
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getCompanySeq()));
 		}
 		
 		DepartmentEntity entity = DepartmentEntity.create(vo);
@@ -286,5 +296,164 @@ public class MasterService {
 		return vo;
 	}
 	
+	/*
+	 * クライアント一覧のプルダウン
+	 * @params vo
+	 */
+	public GetClientsVo pullDownClients() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
+		
+		// 取引先一覧取得
+		List<ClientsEntity> entitys = this.clientsRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<ClientModel> clients =  new ArrayList<>();
+		
+		for(ClientsEntity entity: entitys) {		
+			var client = new ClientModel();
+			// 取引先SEQ
+			client.setClientsSeq(entity.getClientsSeq());
+			// 取引先名
+			client.setClientsName(entity.getName());
+			// リストに追加
+			clients.add(client);
+			
+		}
+	
+		var vo = new GetClientsVo();
+		// 取引先リストの設定
+		vo.setClients(clients);
+		
+		return vo;
+	}
+	
+	/*
+	 * 会社一覧のプルダウン
+	 * @params vo
+	 */
+	public GetCompanysVo pullDownCompany() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "companySeq");
+		
+		// 取引先一覧取得
+		List<CompanyEntity> entitys = this.companyRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<CompanyModel> companys =  new ArrayList<>();
+		
+		for(CompanyEntity entity: entitys) {		
+			var company = new CompanyModel();
+			// 取引先SEQ
+			company.setCompanySeq(entity.getCompanySeq());
+			// 取引先名
+			company.setCompanyName(entity.getName());
+			// リストに追加
+			companys.add(company);
+			
+		}
+	
+		var vo = new GetCompanysVo();
+		// 取引先リストの設定
+		vo.setCompany(companys);
+		
+		return vo;
+	}
+	
+	/*
+	 * 部署一覧のプルダウン
+	 * @params vo
+	 */
+	public GetDepartmentsVo pullDownDepartment(GetDepartmentConditionsVo condition) {
+		// 検索条件の設定
+		Specification<DepartmentEntity> spec = Specification.where(
+			DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq()))
+				.and(DepartmentSpec.companySeqEquals(condition.getCompanySeq()))
+				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName()));
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
+		
+		// 取引先一覧取得
+		List<DepartmentEntity> entitys = this.departmentRepository.findAll(spec, sort);
+		
+		// 値格納用のリスト作成
+		List<DepartmentModel> departments =  new ArrayList<>();
+		
+		for(DepartmentEntity entity: entitys) {		
+			var department = new DepartmentModel();
+			//
+			department.setDepartmentSeq(entity.getDepartmentSeq());
+			// 取引先SEQ
+			department.setCompanySeq(entity.getCompanySeq());
+			// 取引先名
+			department.setDepartmentName(entity.getName());
+			// リストに追加
+			departments.add(department);
+			
+		}
+	
+		var vo = new GetDepartmentsVo();
+		// 取引先リストの設定
+		vo.setDepartment(departments);
+		
+		return vo;
+	}
+	
+	/*
+	 * 商品一覧のプルダウン
+	 * @params vo
+	 */
+	public GetProductsVo pullDownProduct() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		
+		// 取引先一覧取得
+		List<ProductEntity> entitys = this.productRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<ProductModel> products =  new ArrayList<>();
+		
+		for(ProductEntity entity: entitys) {		
+			var product = new ProductModel();
+			//
+			product.setProductSeq(entity.getProductSeq());
+			//
+			product.setProductName(entity.getName());
+			//
+			product.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
+			//
+			product.setTaxType(entity.getTaxType());
+			//
+			product.setUnitPrice(entity.getUnitPrice());
+			
+			products.add(product);
+			
+		}
+	
+		var vo = new GetProductsVo();
+		// 取引先リストの設定
+		vo.setProduct(products);
+		
+		return vo;
+	}
+	
+	/**
+	 * 商品詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetProductVo getProductVo(Long productSeq){
+		Optional<ProductEntity> client = productRepository.findById(productSeq);
+		if(client.isEmpty()) {
+			throw new AppException(String.format("該当の商品を取得できませんでした。 productSeq: %s", productSeq));
+		}
+		
+		return GetProductVo.mapTo(client.get());
+	
+	}
 }
 

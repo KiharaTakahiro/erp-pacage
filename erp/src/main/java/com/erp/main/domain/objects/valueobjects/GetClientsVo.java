@@ -5,7 +5,10 @@ import java.util.List;
 import com.erp.main.domain.objects.model.ClientModel;
 
 import lombok.Data;
-
+/*
+ * 取引先の取得VO
+ * @author ngt
+ */
 @Data
 public class GetClientsVo {
 	

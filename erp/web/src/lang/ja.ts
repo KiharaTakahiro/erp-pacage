@@ -2,8 +2,9 @@ export default {
   route: {
     dashboard: 'トップ',
     sales: '販売管理',
-    receivedOrder: '受注管理',
+    recievedOrder: '受注管理',
     quotation: '見積管理',
+    newRecievedOrder: '受注表作成',
     invoice: '請求管理',
     system: 'システム設定',
     users: 'ユーザ管理',
@@ -12,6 +13,9 @@ export default {
     newClient: '取引先追加',
     editClient: '取引先編集',
     supplierProduct: '仕入商品管理',
+    product: '商品管理',
+    newProduct: '商品追加',
+    editProduct: '商品編集',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -120,12 +124,28 @@ export default {
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
   },
+  recievedOrder: {
+    add: '受注表作成',
+    complete: '完了',
+  },
   supplierProduct: {
     title: '仕入商品管理',
     add: '仕入商品新規登録',
     edit: '仕入商品編集',
     complete: '完了',
     name: '商品名',
+    check0: '商品が選択されていません',
+    check2: '商品が二つ以上選択されています'
+  },
+  product: {
+    title: '商品管理',
+    add: '商品新規登録',
+    edit: '商品編集',
+    complete: '完了',
+    name: '商品名',
+    unitPrice: '定価',
+    taxType: '税区分',
+    purchaceUnitPrice: '仕入料金',
     check0: '商品が選択されていません',
     check2: '商品が二つ以上選択されています'
   },
@@ -152,6 +172,7 @@ export default {
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
     changeLanguageTips: '言語切り替えの成功',
     createClients :'取引先の登録に成功',
+    createProduct :'商品の登録に成功',
     validation :'入力内容を確認してください'
   },
   table: {

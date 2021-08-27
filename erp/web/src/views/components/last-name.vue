@@ -7,21 +7,20 @@
   prop="lastName"
   >
   <el-input
-    v-model="lastName"
+    v-model="name"
     :placeholder="$t('user.lastName')"
     name="lastName"
     type="text"
     tabindex="1"
     autocomplete="on"
     max="50"
-    v-on:blur="submit"
     />
 </el-form-item>
 
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -32,10 +31,14 @@ export default class extends Vue{
   @Prop({ default: '' })
   lastName!: string;
 
-  private submit(): void {
-    this.$emit('lastNameSubmit', this.lastName)
+  
+  get name() {
+    return this.lastName
   }
 
+  set name(value) {
+    this.$emit('lastNameSubmit', value)
+  }
 }
 
 

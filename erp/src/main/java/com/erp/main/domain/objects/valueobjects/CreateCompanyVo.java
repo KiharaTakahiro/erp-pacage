@@ -3,6 +3,7 @@ package com.erp.main.domain.objects.valueobjects;
 import lombok.Data;
 
 /**
+ * 
  * 会社作成のためのValueObject
  * @author 永戸
  *
