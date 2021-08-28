@@ -18,15 +18,18 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
+import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
 import com.erp.main.app.controller.system.response.DepatmentsResponse;
+import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.domain.services.MasterService;
+import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
 
 /**
@@ -48,6 +51,13 @@ public class SystemController {
 	 */
 	@Autowired
 	private MasterService masterService;
+	
+
+	/**
+	 * システム関連サービス
+	 */
+	@Autowired
+	private SystemService systemService;
 	
 	/**
 	 * ユーザ作成用のエントリーポイント
@@ -234,4 +244,16 @@ public class SystemController {
 		this.masterService.createLot(request.mapTo());
 	}
 	
+	/**
+	 * コード取得用のエントリーポイント
+	 * @param request
+	 * @return
+	 * @throws ClassNotFoundException 
+	 */
+	@PostMapping("/system/getcode")
+	public GetCodeResponse getCode(@RequestBody GetCodeRequest request) throws ClassNotFoundException {
+		var map = systemService.getEnums(request.getCodeType());
+		return GetCodeResponse.mapTo(map);
+		
+	}
 }
