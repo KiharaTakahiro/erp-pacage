@@ -254,6 +254,5 @@ public class SystemController {
 	public GetCodeResponse getCode(@RequestBody GetCodeRequest request) throws ClassNotFoundException {
 		var map = systemService.getEnums(request.getCodeType());
 		return GetCodeResponse.mapTo(map);
-		
 	}
 }
