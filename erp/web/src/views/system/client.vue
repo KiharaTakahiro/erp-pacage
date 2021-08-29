@@ -34,7 +34,7 @@
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="resetList"
+          @click.native.prevent="resetBtn"
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -42,7 +42,7 @@
           size="small"
           type="primary"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="checkSaerch"
+          @click.native.prevent="searchBtn"
         >
           {{ $t('route.search') }}
         </el-button>
@@ -74,6 +74,16 @@
           label="Client name">
         </el-table-column>
       </el-table>
+      <div class="page">
+        <el-pagination
+            background
+            page-size=15
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="totalItemsNum"
+            :current-page.sync="pageNo">
+        </el-pagination>
+      </div>
         <div class="left">
           <back-btn/>
         </div>
@@ -95,9 +105,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { ClientModule } from '@/store/modules/client'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
-import { infoClient } from '@/api/client'
-
-
 
 @Component({
   name: 'Client',
@@ -107,57 +114,99 @@ import { infoClient } from '@/api/client'
 })
 export default class extends Vue {
 
-
+  // 編集用条件
   client = {
     id: ''
-    }
-  
+  }
   checkLength = 0
 
-  pageNo = 0
+  // ページング条件
+  pageNo = 1
+  internalPage: any
+
+  // 検索条件
   targetClientSeq = ''
   searchName = ''
-
-  private clientsData = [{}]
+  
+  /**
+   * 作成時
+   */
   created() {
     this.getList()
   }
 
+  /**
+   * ストアが更新されたら件数を算出
+   */
+  get totalItemsNum() {
+    return ClientModule.totalItem
+  }
+
+  /**
+   * ストアが更新されたらクライアントを算出
+   */
+  get clientsData () {
+    return ClientModule.list
+  }
+
+  /**
+   * APIへリスト取得処理
+   */
   private async getList() {
-    this.clientsData = await ClientModule.ClientList({})
-  }
-
-  private async resetList() {
-    this.clientsData = await ClientModule.ClientList({})
-    this.targetClientSeq = ""
-    this.searchName = ""
-  }
-
-  private async checkSaerch(){
-    if(this.targetClientSeq != '' && this.searchName == ''){
-      this.clientsData = await ClientModule.ClientList({clientsSeq : this.targetClientSeq})
-    } else if (this.targetClientSeq == '' && this.searchName != ''){
-      this.clientsData = await ClientModule.ClientList({clientsName : this.searchName})
-    }else if (this.targetClientSeq != '' && this.searchName != ''){
-      this.clientsData = await ClientModule.ClientList({clientsName : this.searchName, clientsSeq : this.targetClientSeq})
+    
+    // 検索パラメタを生成する
+    let searchData = { 
+      pageNo: this.pageNo - 1, 
+      clientsSeq : this.targetClientSeq == '' ? null : this.targetClientSeq,
+      clientsName: this.searchName == '' ? null : this.searchName
     }
+
+    // APIの取得結果をもとにModelを更新する
+    await ClientModule.ClientList(searchData)
   }
 
+  /**
+   * 画面時のボタンセレクト条件
+   */
+  // TODO: 適切な名前に変更する
   private testLog(val : any){
     this.client.id = val[0]['clientsSeq']
     this.checkLength = val.length
   }
 
+  /**
+   * リセットボタン押下時の処理
+   */
+  resetBtn() {
+    this.targetClientSeq = ""
+    this.searchName = ""
+    this.pageNo = 1
+    this.getList()
+  }
+
+  /**
+   * 検索ボタン押下時の処理
+   */
+  searchBtn() {
+    this.pageNo = 1
+    this.getList()
+  }
+
+  /**
+   * 新規作成ボタン押下時の処理
+   */
   createClientBtn() {
-    // ボタンが押されたときの処理
     this.$router.push({
     path:'save-client'
     }).catch(err => {
       console.warn(err)
     })
   }
+
+  /**
+   * 編集ボタン押下時の処理
+   */
   editClientBtn() {
-    // ボタンが押されたときの処理
     if(this.checkLength == 0){
       this.$message({
       message: this.$t('client.check0').toString(),
@@ -178,6 +227,15 @@ export default class extends Vue {
       console.warn(err)
     })
   }
+
+  /**
+   * ページが変更される時の処理
+   */
+  handleCurrentChange(val: any) {
+    this.pageNo = val
+    this.getList()
+  }
+
 }
 </script>
 
@@ -206,6 +264,13 @@ export default class extends Vue {
 
 .left {
   float: left;
+}
+
+.page {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-label {

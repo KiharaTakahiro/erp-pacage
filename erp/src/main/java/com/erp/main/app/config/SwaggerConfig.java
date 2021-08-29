@@ -30,6 +30,7 @@ public class SwaggerConfig {
 	 * APIの情報
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	private ApiInfo apiInfo() {
 		// TODO: Deprecatedされていないものに変更する
 		return new ApiInfo(

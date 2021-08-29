@@ -33,7 +33,7 @@ public interface BaseEnum<E extends Enum<E>> {
 	@SuppressWarnings("rawtypes")
 	public static <E extends BaseEnum> E of(Class<E> enumClass, int code) {
         return Arrays.stream(enumClass.getEnumConstants()) 
-                     .filter(it -> it.getCode() == code) 
+                     .filter(it -> it.getCode().equals(code)) 
                      .findFirst()
                      .orElseThrow(() -> new IllegalArgumentException(String.format("%s 該当のコードが見つかりません。 => [%s]",
                                                                                    enumClass.getSimpleName(),

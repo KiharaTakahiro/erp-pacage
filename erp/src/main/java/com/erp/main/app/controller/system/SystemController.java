@@ -167,7 +167,7 @@ public class SystemController {
 	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
 		var vo = this.masterService.getClientsVo(request.mapTo());
 		var response = new ClientsResponse();
-		response.setMaxpage(vo.getMaxpage());
+		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setClients(vo.getClients());
 		return response;
 	}
