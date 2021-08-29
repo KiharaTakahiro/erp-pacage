@@ -1,9 +1,13 @@
 package com.erp.main.app.controller.system;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
@@ -58,6 +62,17 @@ public class SystemController {
 	 */
 	@Autowired
 	private SystemService systemService;
+	
+	/**
+	 * フィルタでエラーが発生した場合にマッピングされる
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/error_filter")
+	public HttpServletResponse jwtError(HttpServletResponse response) {
+		response.setStatus(HttpStatus.BAD_REQUEST.value());
+		return response;
+	}
 	
 	/**
 	 * ユーザ作成用のエントリーポイント
