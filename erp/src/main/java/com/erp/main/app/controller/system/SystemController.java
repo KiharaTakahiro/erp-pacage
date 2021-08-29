@@ -19,6 +19,7 @@ import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
+import com.erp.main.app.controller.system.request.GetProductsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
@@ -95,6 +96,17 @@ public class SystemController {
 		var vo = this.masterService.pullDownProduct();
 		var response = new ProductsResponse();
 		response.setProduct(vo.getProduct());
+		return response;
+	}
+	
+	/*
+	 * 商品一覧処理
+	 */
+	@PostMapping("/product/info")
+	public ProductsResponse infoProduct(@RequestBody GetProductsRequest request) {
+		var vo = this.masterService.getProductsVo(request.mapTo());
+		var response = new ProductsResponse();
+		response.setMaxpage(vo.getMaxpage());
 		return response;
 	}
 	
@@ -233,15 +245,5 @@ public class SystemController {
 		this.masterService.createLot(request.mapTo());
 	}
 	
-	/*
-	 * 取引先一覧処理
-	 */
-//	@PostMapping("/product/info")
-//	public ProductResponse infoProduct(@RequestBody GetProductRequest request) {
-//		var vo = this.masterService.getProductVo(request.mapTo());
-//		var response = new ProductResponse();
-//		response.setMaxpage(vo.getMaxpage());
-		
-//	}
-	
+
 }

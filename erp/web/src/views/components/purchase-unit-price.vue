@@ -6,11 +6,11 @@
           {required: true, message:'仕入料金は必ず入力して下さい。', trigger: 'blur'},
           {pattern: /^(0|[1-9]|[1-9][0-9]+)$/, message:'半角数字で入力してください。', trigger: 'blur'}
         ]"
-      prop="purchaceUnitPrice"
+      prop="purchaseUnitPrice"
     >
     <el-input
-      v-model="purchaceUnitPrice"
-      :placeholder="$t('product.purchaceUnitPrice')"
+      v-model="purchaseUnitPrice"
+      :placeholder="$t('product.purchaseUnitPrice')"
       type="text"
       v-on:blur="submit"
     />
@@ -23,15 +23,15 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'purchaceUnitPrice'
+  name: 'purchaseUnitPrice'
 })
 export default class extends Vue{
   @Prop({ default: '' })
-  purchaceUnitPrice!: string;
+  purchaseUnitPrice!: string;
 
-  @Emit('purchaceUnitPriceSubmit')
+  @Emit('purchaseUnitPriceSubmit')
   submit() {
-    return this.purchaceUnitPrice
+    return this.purchaseUnitPrice
     }
 }
 

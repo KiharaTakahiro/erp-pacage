@@ -17,9 +17,9 @@
         :taxTypePulldown="product.taxType"
         @taxTypePulldownSubmit="taxTypePulldownRecieve"
         />
-      <purchace-unit-price
-        :purchaceUnitPrice="product.purchaceUnitPrice"
-        @purchaceUnitPriceSubmit="purchaceUnitPriceRecieve"
+      <purchase-unit-price
+        :purchaseUnitPrice="product.purchaseUnitPrice"
+        @purchaseUnitPriceSubmit="purchaseUnitPriceRecieve"
         />
       <unit-price
         :unitPrice="product.unitPrice"
@@ -47,7 +47,7 @@ import '@/assets/custom-theme/index.css'
 import { component } from 'node_modules/vue/types/umd'
 import productName  from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
-import purchaceUnitPrice from '@/views/components/purchace-unit-price.vue'
+import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
 import unitPrice from '@/views/components/unit-price.vue'
 import { ProductModule } from '@/store/modules/product'
 
@@ -57,7 +57,7 @@ import { ProductModule } from '@/store/modules/product'
   components :{
     productName,
     taxTypePulldown,
-    purchaceUnitPrice,
+    purchaseUnitPrice,
     unitPrice
   }
 
@@ -67,7 +67,7 @@ export default class extends Vue {
   private product = {
     productName:'',
     taxType:'',
-    purchaceUnitPrice:'',
+    purchaseUnitPrice:'',
     unitPrice:''
   }
   private productNameRecieve(productName: any): void{
@@ -76,8 +76,8 @@ export default class extends Vue {
   private taxTypePulldownRecieve(taxType: any): void{
     this.product.taxType = taxType
   }
-  private purchaceUnitPriceRecieve(purchaceUnitPrice: any): void{
-    this.product.purchaceUnitPrice = purchaceUnitPrice
+  private purchaseUnitPriceRecieve(purchaseUnitPrice: any): void{
+    this.product.purchaseUnitPrice = purchaseUnitPrice
   }
     private unitPriceRecieve(unitPrice: any): void{
     this.product.unitPrice = unitPrice
