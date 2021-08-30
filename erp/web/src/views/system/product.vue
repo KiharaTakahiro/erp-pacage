@@ -20,6 +20,7 @@
           >
         </el-input>
         <span class="input-label">Name:</span>
+        <!-- 名前あいまい検索 -->
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -28,6 +29,16 @@
           clearable
           >
         </el-input>
+        <!-- 税区分
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchtaxtype"
+          style="margin-top:10px; width:40%;"
+          clearable
+          >
+        </el-input> -->
+
       </div>
       <div class="right">
         <el-button
