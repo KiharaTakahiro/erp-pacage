@@ -132,6 +132,7 @@ public class SystemController {
 		var vo = this.masterService.getProductsVo(request.mapTo());
 		var response = new ProductsResponse();
 		response.setMaxpage(vo.getMaxpage());
+		response.setProduct(vo.getProduct());
 		return response;
 	}
 	

@@ -93,7 +93,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
-// import { ProductModule } from '@/store/modules/product'
+import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
 import { infoProduct } from '@/api/product'
@@ -108,14 +108,16 @@ import { infoProduct } from '@/api/product'
 })
 export default class extends Vue {
 
-
   product = {
     id: ''
     }
-  
   checkLength = 0
 
-  pageNo = 0
+  // ページング条件
+  pageNo = 1
+  internalPage: any
+
+  // 検索条件
   targetProductSeq = ''
   searchName = ''
 

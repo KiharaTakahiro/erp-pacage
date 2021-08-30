@@ -1,5 +1,5 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { createProduct } from '@/api/product'
+import {  createProduct, getProduct, updateProduct, infoProduct } from '@/api/product'
 import store from '@/store'
 
 export interface IProductState {
@@ -31,6 +31,7 @@ class Product extends VuexModule implements IProductState{
   private SET_UNITPRICE(unitPrice: string){
     this.unitPrice = unitPrice
   }
+
   @Action
   public async CreateProduct(productInfo: { productName: string,  taxType: string, purchaseUnitPrice: string, unitPrice: string }) {
     let { productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
