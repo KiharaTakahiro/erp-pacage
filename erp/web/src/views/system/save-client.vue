@@ -42,15 +42,15 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue {
 
   client = {
-  name: ClientModule.name
+  name: this.$store.getters.name
   }
   get name() {
-    return ClientModule.name
+    return  this.$store.getters.name
   }
 
 
   private conpanyName(name: any): void {
-    this.$store.commit('SET_NAME', name)
+    ClientModule.setClientsName(name)
     this.client.name = ClientModule.name
     }
 
