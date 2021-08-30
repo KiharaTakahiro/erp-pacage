@@ -23,7 +23,8 @@
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="searchName"
+          v-model="search
+          Name"
           style="margin-top:10px; width:40%;"
           clearable
           >
@@ -53,13 +54,8 @@
       <el-table
         ref="clientsTable"
         :data="clientsData"
-        @selection-change="testLog"
+        @selection-change="checkNo"
         style="width: 100%">
-        <!-- <el-table-column
-          label=""
-          type="selection"
-          width="180">
-        </el-table-column> -->
         <el-table-column
           type="selection"
           width="55">
@@ -77,11 +73,12 @@
       <div class="page">
         <el-pagination
             background
-            page-size=15
+            :page-size=15
             @current-change="handleCurrentChange"
             layout="prev, pager, next"
             :total="totalItemsNum"
-            :current-page.sync="pageNo">
+            :current-page.sync="pageNo"
+            >
         </el-pagination>
       </div>
         <div class="left">
@@ -103,6 +100,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { ClientModule } from '@/store/modules/client'
+import { ClientListModule } from '@/store/modules/client_list'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
 
@@ -118,11 +116,11 @@ export default class extends Vue {
   client = {
     id: ''
   }
+  // チェックのバリデーション用の数字
   checkLength = 0
 
   // ページング条件
   pageNo = 1
-  internalPage: any
 
   // 検索条件
   targetClientSeq = ''
@@ -139,14 +137,14 @@ export default class extends Vue {
    * ストアが更新されたら件数を算出
    */
   get totalItemsNum() {
-    return ClientModule.totalItem
+    return ClientListModule.totalItem
   }
 
   /**
    * ストアが更新されたらクライアントを算出
    */
   get clientsData () {
-    return ClientModule.list
+    return ClientListModule.list
   }
 
   /**
@@ -162,14 +160,14 @@ export default class extends Vue {
     }
 
     // APIの取得結果をもとにModelを更新する
-    await ClientModule.ClientList(searchData)
+    await ClientListModule.ClientList(searchData)
   }
 
   /**
    * 画面時のボタンセレクト条件
    */
   // TODO: 適切な名前に変更する
-  private testLog(val : any){
+  private checkNo(val : any){
     this.client.id = val[0]['clientsSeq']
     this.checkLength = val.length
   }
