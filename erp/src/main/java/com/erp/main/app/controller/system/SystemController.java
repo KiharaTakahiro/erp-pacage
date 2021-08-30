@@ -1,9 +1,13 @@
 package com.erp.main.app.controller.system;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
@@ -18,15 +22,18 @@ import com.erp.main.app.controller.system.request.CreateUserRequest;
 import com.erp.main.app.controller.system.request.CreateWarehouseRequest;
 import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
+import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
 import com.erp.main.app.controller.system.response.DepatmentsResponse;
+import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.domain.services.MasterService;
+import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
 
 /**
@@ -48,6 +55,24 @@ public class SystemController {
 	 */
 	@Autowired
 	private MasterService masterService;
+	
+
+	/**
+	 * システム関連サービス
+	 */
+	@Autowired
+	private SystemService systemService;
+	
+	/**
+	 * フィルタでエラーが発生した場合にマッピングされる
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/error_filter")
+	public HttpServletResponse jwtError(HttpServletResponse response) {
+		response.setStatus(HttpStatus.BAD_REQUEST.value());
+		return response;
+	}
 	
 	/**
 	 * ユーザ作成用のエントリーポイント
@@ -157,7 +182,7 @@ public class SystemController {
 	public ClientsResponse infoClients(@RequestBody GetClientsRequest request) {
 		var vo = this.masterService.getClientsVo(request.mapTo());
 		var response = new ClientsResponse();
-		response.setMaxpage(vo.getMaxpage());
+		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setClients(vo.getClients());
 		return response;
 	}
@@ -234,4 +259,15 @@ public class SystemController {
 		this.masterService.createLot(request.mapTo());
 	}
 	
+	/**
+	 * コード取得用のエントリーポイント
+	 * @param request
+	 * @return
+	 * @throws ClassNotFoundException 
+	 */
+	@PostMapping("/system/getcode")
+	public GetCodeResponse getCode(@RequestBody GetCodeRequest request) throws ClassNotFoundException {
+		var map = systemService.getEnums(request.getCodeType());
+		return GetCodeResponse.mapTo(map);
+	}
 }

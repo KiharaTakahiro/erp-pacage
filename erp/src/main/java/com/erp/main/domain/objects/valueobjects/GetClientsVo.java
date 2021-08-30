@@ -15,5 +15,5 @@ public class GetClientsVo {
 	// 取引先リスト
 	List<ClientModel> clients;
 	// 全体のページ数
-	Integer maxpage;
+	Long totalItemsNum;
 }
