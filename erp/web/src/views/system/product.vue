@@ -49,7 +49,7 @@
       </div>
     </el-card>
     <el-card class="box-card">
-      <h5>取引先一覧</h5>
+      <h5>商品一覧</h5>
       <el-table
         ref="productTable"
         :data="productData"
