@@ -39,6 +39,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
+import { RecievedOrderModule } from '@/store/modules/recieved-order'
 @Component({
   name: 'save-recieved-order',
   components: {
@@ -49,29 +50,31 @@ import productDetail from '@/views/components/product-detail.vue'
 })
 export default class extends Vue {
   private recievedOrder = {
-    clientsSeq: '',
-    companySeq: '',
-    departmentSeq: '',
-    productSeq: '',
-    quantity: '',
-    quotaionSeq: '',
-    recivedOrderDate: '',
-    tax: '',
-    total: '',
-    detail: []
+    clientsSeq: RecievedOrderModule.clientId,
+    companySeq: RecievedOrderModule.companyId,
+    departmentSeq: RecievedOrderModule.departmentId,
+    detail: RecievedOrderModule.details,
+    quotationSeq: RecievedOrderModule.quotationId,
+    RecievedOrderDate: RecievedOrderModule.recievedOrderDate,
+    tax: RecievedOrderModule.tax,
+    total: RecievedOrderModule.total
   }
 
   private clienetsSeqRecive(clientsSeq: any): void {
-    this.recievedOrder.clientsSeq = clientsSeq
+    RecievedOrderModule.setClientsID(clientsSeq)
+    this.recievedOrder.clientsSeq = RecievedOrderModule.clientId
   }
 
   private companySeqRecive(companySeq: any): void {
-    this.recievedOrder.departmentSeq = ''
-    this.recievedOrder.companySeq = companySeq
+    RecievedOrderModule.setDepartmentId('')
+    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
+    RecievedOrderModule.setCompanyId(companySeq)
+    this.recievedOrder.companySeq = RecievedOrderModule.companyId
   }
 
   private departmentSeqRecive(departmentSeq: any): void {
-    this.recievedOrder.departmentSeq = departmentSeq
+    RecievedOrderModule.setDepartmentId(departmentSeq)
+    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
   }
 
 

@@ -60,6 +60,21 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   private SET_TOTAL(total: number){
     this.total = total
   }
+
+  @Action
+  public setClientsID(id: any){
+    this.SET_CLIENT_ID(id)
+  }
+
+  @Action
+  public setCompanyId(id: any){
+    this.SET_COMPANY_ID(id)
+  }
+
+  @Action
+  public setDepartmentId(id: any){
+    this.SET_DEPARTMENT_ID(id)
+  }
 }
 
 export const RecievedOrderModule = getModule(RecievedOrder)

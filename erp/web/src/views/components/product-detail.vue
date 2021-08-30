@@ -25,6 +25,7 @@
         ]"
     >
       <el-input-number v-model="quantity" @change="quantitySubmit" :min="1" :max="10"></el-input-number>
+      
     </el-form-item>
   </div>
 </div>
