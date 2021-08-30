@@ -23,8 +23,7 @@
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="search
-          Name"
+          v-model="searchName"
           style="margin-top:10px; width:40%;"
           clearable
           >
@@ -56,6 +55,11 @@
         :data="clientsData"
         @selection-change="checkNo"
         style="width: 100%">
+        <!-- <el-table-column
+          label=""
+          type="selection"
+          width="180">
+        </el-table-column> -->
         <el-table-column
           type="selection"
           width="55">

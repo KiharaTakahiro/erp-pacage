@@ -33,7 +33,6 @@ class ClientList extends VuexModule implements IClientListState {
     const { data } = await infoClient(clientInfo)
     this.SET_LIST(data.clients)
     this.SET_TOTAL_ITEM(data.totalItemsNum)
-
   }
 }
 
