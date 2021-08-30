@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,11 +34,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(req, res);
             return;
         }
+        
+        try {
+            // AuthorizationヘッダのBearer Prefixである場合
+            UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 
-        // AuthorizationヘッダのBearer Prefixである場合
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);        	
+        } catch (Exception e) {
+            RequestDispatcher rd = req.getRequestDispatcher("/error_filter");
+            rd.forward(req, res);
+            return;
+        }
         chain.doFilter(req, res);
     }
     

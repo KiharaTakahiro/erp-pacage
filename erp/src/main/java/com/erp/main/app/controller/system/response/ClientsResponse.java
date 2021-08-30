@@ -15,8 +15,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class ClientsResponse extends BaseResponse {
-	// 最大ページ数
-	private Integer maxpage;
+	// 全データの総数
+	private Long totalItemsNum;
 	
 	// 取引先リスト
 	List<ClientModel> clients;

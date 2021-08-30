@@ -5,6 +5,7 @@ export interface IClientState {
   id: string,
   name: string,
   list: JSON[]
+  totalItem: number
 }
 
 @Module({ dynamic: true, store, name: 'client' })
@@ -12,6 +13,7 @@ class Client extends VuexModule implements IClientState {
   public id = ''
   public name = ''
   public list: JSON[] = []
+  public totalItem=0
 
   @Mutation
   private SET_ID(id: string){
@@ -26,6 +28,11 @@ class Client extends VuexModule implements IClientState {
   @Mutation
   private SET_LIST(list: JSON[]){
     this.list = list
+  }
+
+  @Mutation
+  private SET_TOTAL_ITEM(totalItem: number) {
+    this.totalItem = totalItem
   }
 
   @Action
@@ -61,9 +68,9 @@ class Client extends VuexModule implements IClientState {
   @Action({ rawError: true })
   public async ClientList(clientInfo: any){
     const { data } = await infoClient(clientInfo)
-    return data.clients
-
-    }
+    this.SET_LIST(data.clients)
+    this.SET_TOTAL_ITEM(data.totalItemsNum)
+  }
 }
 
 export const ClientModule = getModule(Client)

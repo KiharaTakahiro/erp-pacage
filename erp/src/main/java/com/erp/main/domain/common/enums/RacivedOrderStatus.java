@@ -16,7 +16,8 @@ public enum RacivedOrderStatus implements BaseEnum<RacivedOrderStatus> {
 	
 	READY(1,"受注準備中"),
 	ORDERED(2,"受注済み"),
-	CANCEL(3,"失注");
+	DERIVERY(3,"納品済み"),
+	CANCEL(4,"失注");
 	
 	// コード
 	private Integer code;
@@ -55,7 +56,7 @@ public enum RacivedOrderStatus implements BaseEnum<RacivedOrderStatus> {
 	 */
 	@Override
 	public List<RacivedOrderStatus> getEnums() {
-		return Arrays.asList(READY,ORDERED,CANCEL);
+		return Arrays.asList(READY,ORDERED,DERIVERY,CANCEL);
 	}
 	
 	/**
