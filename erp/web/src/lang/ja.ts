@@ -5,6 +5,7 @@ export default {
     recievedOrder: '受注管理',
     quotation: '見積管理',
     newRecievedOrder: '受注表作成',
+    OrderDetail: '注文詳細',
     invoice: '請求管理',
     system: 'システム設定',
     users: 'ユーザ管理',

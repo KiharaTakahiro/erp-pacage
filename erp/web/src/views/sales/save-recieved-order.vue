@@ -19,6 +19,8 @@
       @companySeqSubmit="companySeqRecive"
       @departmentSeqSubmit="departmentSeqRecive"
     />
+    <div>{{ $t("route.OrderDetail") }}</div>
+    <product-detail/>
 
 
       <div class="complete-btn">
@@ -79,7 +81,7 @@ export default class extends Vue {
 
 
   private  checkBtn() {
-    
+    console.log(this.recievedOrder)
   }
 
 }
@@ -93,7 +95,7 @@ export default class extends Vue {
 }
 
 .app-container{
-  width: 50%;
+  width: 100%;
 }
 
 .box-card {

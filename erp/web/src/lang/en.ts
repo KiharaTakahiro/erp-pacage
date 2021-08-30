@@ -4,6 +4,7 @@ export default {
     sales: 'Sales',
     recievedOrder: 'Recieved Order',
     newRecievedOrder: 'Create New Recived Order',
+    OrderDetail: 'Order Detail',
     quotation: 'Quotation',
     invoice: 'Invoice',
     system: 'Setting',
