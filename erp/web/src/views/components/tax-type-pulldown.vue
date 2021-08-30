@@ -25,6 +25,7 @@
 <script lang='ts'>
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
+import { getCode } from '@/api/system'
 
 @Component({
   name: 'taxTypePulldown'
@@ -32,25 +33,25 @@ import '@/assets/custom-theme/index.css'
 
 export default class extends Vue{
 
-  options= [{
-    value: '1',
-    label: '税金なし',
-    disabled: true
-  }, {
-    value: '2',
-    label: '軽減税率'
-  }, {
-    value: '3',
-    label: '通常'
-  }, ]
+  options = []
 
   @Prop({ default: '' })
   value!: string;
 
+  created() {
+    this.getCode()
+  }
+
+  private async getCode(){
+    const { data } = await getCode({codeType: "TaxType"})
+    this.options = data.codes
+
+  }
+
   @Emit('taxTypePulldownSubmit')
   submit() {
     return this.value
-    }
+  }
 }
 
 </script>
