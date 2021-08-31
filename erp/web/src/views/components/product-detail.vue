@@ -3,13 +3,10 @@
     <el-row>
       <el-col :span="8">
         <el-form-item
-        label="商品"
+        label="商品名"
         prop="productSeq"
-        :rules="[
-            { required: true, message: '商品を選択してください', trigger: 'change' }
-          ]"
         >
-          <el-select v-model="productSeq" filterable clearable v-on:change="productSubmit" placeholder="商品">
+          <el-select v-model="productSeqVal" filterable clearable placeholder="商品">
             <el-option
               v-for="product in products"
               :key="product.productSeq"
@@ -20,10 +17,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-input-number v-model="count" @change="quantitySubmit" :min="1" :max="10"></el-input-number>
+        <el-input-number v-model="countVal" :step="1" :min="0" :max="100"></el-input-number>
       </el-col>
       <el-col :span="6">
-        <el-input v-model="price"></el-input>
+        <el-input v-model="priceVal"></el-input>
       </el-col>
     </el-row>
   </div>
@@ -33,6 +30,7 @@
 import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import productDetail from '@/views/components/product-detail.vue'
+import { RecievedOrderModule } from '@/store/modules/recieved-order'
 @Component({
   name: 'productsPullDown',
   components: {
@@ -41,27 +39,56 @@ import productDetail from '@/views/components/product-detail.vue'
 })
 export default class extends Vue {
 
+  //商品一覧
   products = [{}]
-  productPrice = 0
-  price = 0
-  count = 1
+  //計算用の商品価格
+  productPrice: bigint = 0n
+  //税区分
   taxType = ''
+  num=0
 
-
+  //商品Seq
   @Prop({ default: '' })
   productSeq!: string;
-  @Prop()
-  quantity!: Number;
+  //個数
+  @Prop({ default: 0 })
+  quantity!: number;
+  //値段
+  @Prop({ default: 0 })
+  price!: string;
 
-  @Emit('productSeqSubmit')
-  productSubmit() {
-    this.getProductDetail(this.productSeq)
+  //商品用のゲッター
+  get productSeqVal(){
     return this.productSeq
   }
-  @Emit('quantitySubmit')
-  quantitySubmit() {
-    this.getTotalPrice()
+  //商品用セッター
+  set productSeqVal(productSeq){
+    this.productEmit(productSeq)
+  }
+  //商品用エミット
+  @Emit('productSeqSubmit')
+  productEmit(productSeq: any){
+    return productSeq
+  }
+
+  get countVal(){
     return this.quantity
+  }
+  set countVal(quantity){
+    this.qutantityEmit(quantity)
+  }
+
+  @Emit('quantitySubmit')
+  qutantityEmit(quantity: any){
+    return quantity
+  }
+
+  get priceVal(){
+    return this.price
+  }
+
+  set priceVal(value){
+    this.$emit('priceSubmit', value)
   }
 
   created() {
@@ -80,9 +107,9 @@ export default class extends Vue {
     this.taxType = data.taxType
   }
 
-  private getTotalPrice(){
-    this.price = this.productPrice * this.count
-  }
+  // private getTotalPrice(){
+  //   this.price = this.productPrice * this.quantity
+  // }
 
 
 }

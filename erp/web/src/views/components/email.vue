@@ -32,7 +32,6 @@ export default class extends Vue{
   @Prop({ default: '' })
   email!: string;
 
-  
   get mail() {
     return this.email
   }

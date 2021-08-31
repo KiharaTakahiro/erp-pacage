@@ -20,7 +20,11 @@
       @departmentSeqSubmit="departmentSeqRecive"
     />
     <div>{{ $t("route.OrderDetail") }}</div>
-    <product-detail/>
+    <product-detail
+      :productSeq="detail.productSeq"
+      @productSeqSubmit="productSeqRecive"
+      :quantity="detail.quantity"
+      />
 
 
       <div class="complete-btn">
@@ -51,6 +55,7 @@ import { RecievedOrderModule } from '@/store/modules/recieved-order'
   }
 })
 export default class extends Vue {
+  // フォームのモデル
   private recievedOrder = {
     clientsSeq: RecievedOrderModule.clientId,
     companySeq: RecievedOrderModule.companyId,
@@ -61,24 +66,35 @@ export default class extends Vue {
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
   }
-
+  // 詳細用のモデル
+  private detail = {
+    productSeq: '',
+    quantity: ''
+  }
+  //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
     RecievedOrderModule.setClientsID(clientsSeq)
     this.recievedOrder.clientsSeq = RecievedOrderModule.clientId
   }
-
+  //会社のエミットっと
   private companySeqRecive(companySeq: any): void {
+    //部署リセット
     RecievedOrderModule.setDepartmentId('')
     this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
     RecievedOrderModule.setCompanyId(companySeq)
     this.recievedOrder.companySeq = RecievedOrderModule.companyId
   }
 
+  //部署のエミット
   private departmentSeqRecive(departmentSeq: any): void {
     RecievedOrderModule.setDepartmentId(departmentSeq)
     this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
   }
-
+  
+  //商品のエミット
+  private productSeqRecive(productSeq: any): void {
+    this.detail.productSeq = productSeq
+  }
 
   private  checkBtn() {
     console.log(this.recievedOrder)
