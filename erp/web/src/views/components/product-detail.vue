@@ -55,7 +55,7 @@ export default class extends Vue {
   quantity!: number;
   //値段
   @Prop({ default: 0 })
-  price!: string;
+  price!: number;
 
   //商品用のゲッター
   get productSeqVal(){
@@ -63,6 +63,7 @@ export default class extends Vue {
   }
   //商品用セッター
   set productSeqVal(productSeq){
+    // this.getProductDetail(productSeq)
     this.productEmit(productSeq)
   }
   //商品用エミット
@@ -71,24 +72,31 @@ export default class extends Vue {
     return productSeq
   }
 
+  //個数用ゲッター
   get countVal(){
     return this.quantity
   }
+  //個数用セッター
   set countVal(quantity){
-    this.qutantityEmit(quantity)
+    this.quantityEmit(quantity)
   }
-
+  //個数用エミット
   @Emit('quantitySubmit')
-  qutantityEmit(quantity: any){
+  quantityEmit(quantity: any){
     return quantity
   }
-
+  //商品ゲッター
   get priceVal(){
     return this.price
   }
-
+  //商品セッター
   set priceVal(value){
-    this.$emit('priceSubmit', value)
+    this.priceEmit(value)
+  }
+  //商品エミット
+  @Emit('priceSubmit')
+  priceEmit(price: number){
+    return price
   }
 
   created() {
@@ -99,17 +107,6 @@ export default class extends Vue {
     const { data } = await pullDownProduct()
     this.products = data.product
   }
-
-  private async getProductDetail(productSeq: any){
-    let {data} = await getProduct({productSeq: productSeq})
-    this.productPrice = data.unitPrice
-    this.price = data.unitPrice
-    this.taxType = data.taxType
-  }
-
-  // private getTotalPrice(){
-  //   this.price = this.productPrice * this.quantity
-  // }
 
 
 }

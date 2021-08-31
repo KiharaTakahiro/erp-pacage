@@ -24,6 +24,9 @@
       :productSeq="detail.productSeq"
       @productSeqSubmit="productSeqRecive"
       :quantity="detail.quantity"
+      @quantitySubmit="quantityRecive"
+      :price="detail.price"
+      @priceSubmit="priceRecive"
       />
 
 
@@ -46,6 +49,7 @@ import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
 import { RecievedOrderModule } from '@/store/modules/recieved-order'
+import { getProduct } from '@/api/product'
 @Component({
   name: 'save-recieved-order',
   components: {
@@ -69,8 +73,12 @@ export default class extends Vue {
   // 詳細用のモデル
   private detail = {
     productSeq: '',
-    quantity: ''
+    quantity: 0,
+    price: 0
   }
+
+  private mockPrice = 0
+
   //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
     RecievedOrderModule.setClientsID(clientsSeq)
@@ -94,10 +102,30 @@ export default class extends Vue {
   //商品のエミット
   private productSeqRecive(productSeq: any): void {
     this.detail.productSeq = productSeq
+    this.detail.quantity = 1
+    this.getProductDetail(productSeq)
+  }
+  
+  //個数エミット
+  private quantityRecive(quantity: any){
+    this.detail.quantity = quantity
+    this.detail.price = this.mockPrice * quantity
+  }
+  //金額エミット
+  private priceRecive(price: any){
+    this.detail.price = price
   }
 
+  //デバック用
   private  checkBtn() {
     console.log(this.recievedOrder)
+  }
+
+    private async getProductDetail(productSeq: any){
+    let {data} = await getProduct({productSeq: productSeq})
+    this.detail.price = data.unitPrice
+    this.mockPrice = data.unitPrice
+    // this.taxType = data.taxType
   }
 
 }
