@@ -75,6 +75,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   public setDepartmentId(id: any){
     this.SET_DEPARTMENT_ID(id)
   }
+
+  @Action
+  public pushDetail(detail: JSON){
+    this.SET_DETAILS(detail)
+  }
 }
 
 export const RecievedOrderModule = getModule(RecievedOrder)

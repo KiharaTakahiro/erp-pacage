@@ -22,6 +22,12 @@
       <el-col :span="6">
         <el-input v-model="priceVal"></el-input>
       </el-col>
+      <el-col :span="2">
+        <el-button 
+          type="info" 
+          icon="el-icon-plus"
+          @click.native.prevent="jsonCommit"/>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -31,12 +37,16 @@ import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import productDetail from '@/views/components/product-detail.vue'
 import { RecievedOrderModule } from '@/store/modules/recieved-order'
+
+
+
 @Component({
   name: 'productsPullDown',
   components: {
     
   }
 })
+
 export default class extends Vue {
 
   //商品一覧
@@ -106,6 +116,22 @@ export default class extends Vue {
   private async getList() {
     const { data } = await pullDownProduct()
     this.products = data.product
+  }
+
+  
+  detail : JSON ={
+    deriveryDate: 'test',
+    discount: 0,
+    lotSeq: 2,
+    productSeq: this.productSeq,
+    quantity: this.quantity,
+    status: 1
+    }
+
+
+  jsonCommit(){
+    RecievedOrderModule.pushDetail(this.detail)
+    console.log(RecievedOrderModule.details)
   }
 
 
