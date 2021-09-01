@@ -20,6 +20,26 @@
       @departmentSeqSubmit="departmentSeqRecive"
     />
     <div>{{ $t("route.OrderDetail") }}</div>
+    <div class="complete-btn">
+      <el-button 
+        type="info" 
+        icon="el-icon-plus"
+        @click.native.prevent="jsonCommit"/>
+    </div>
+    
+    <product-detail
+      :productSeq="detail.productSeq"
+      @productSeqSubmit="productSeqRecive"
+      :quantity="detail.quantity"
+      @quantitySubmit="quantityRecive"
+      :discount="detail.discount"
+      @discountSubmit="discountRecive"
+      :status="detail.status"
+      @statusSubmit="statusRecive"
+      :date="detail.deriveryDate"
+      @dateSubmit="dateRecive"
+      />
+      
     <el-table
       :data="recievedOrder.detail"
       style="width: 100%">
@@ -29,14 +49,6 @@
         width="180">
       </el-table-column>
     </el-table>
-    <product-detail
-      :productSeq="detail.productSeq"
-      @productSeqSubmit="productSeqRecive"
-      :quantity="detail.quantity"
-      @quantitySubmit="quantityRecive"
-      :price="detail.price"
-      @priceSubmit="priceRecive"
-      />
 
 
       <div class="complete-btn">
@@ -82,11 +94,14 @@ export default class extends Vue {
   // 詳細用のモデル
   private detail = {
     productSeq: '',
-    quantity: 0,
-    price: 0
+    quantity: '',
+    discount: '',
+    deriveryDate: '',
+    lotSeq: 1,//仮
+    status: ''
+    
   }
 
-  private mockPrice = 0
 
   //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
@@ -111,31 +126,35 @@ export default class extends Vue {
   //商品のエミット
   private productSeqRecive(productSeq: any): void {
     this.detail.productSeq = productSeq
-    this.detail.quantity = 1
-    this.getProductDetail(productSeq)
   }
   
   //個数エミット
   private quantityRecive(quantity: any){
     this.detail.quantity = quantity
-    this.detail.price = this.mockPrice * quantity
   }
   //金額エミット
-  private priceRecive(price: any){
-    this.detail.price = price
+  private discountRecive(discount: any){
+    this.detail.discount = discount
+  }
+  //配送状況エミット
+  private statusRecive(status: any){
+    this.detail.status = status
   }
 
+  //配送日エミット
+  private dateRecive(date: any){
+    this.detail.deriveryDate = date
+  }
   //デバック用
   private  checkBtn() {
-    console.log(this.recievedOrder)
+    console.log(this.detail)
+  }
+  
+  jsonCommit(){
+    RecievedOrderModule.pushDetail(this.detail)
+    console.log(RecievedOrderModule.details)
   }
 
-    private async getProductDetail(productSeq: any){
-    let {data} = await getProduct({productSeq: productSeq})
-    this.detail.price = data.unitPrice
-    this.mockPrice = data.unitPrice
-    // this.taxType = data.taxType
-  }
 
 }
 
