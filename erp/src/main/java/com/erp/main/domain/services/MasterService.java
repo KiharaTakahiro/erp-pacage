@@ -433,8 +433,11 @@ public class MasterService {
 		// 検索条件の設定
 		Specification<ProductEntity> spec = Specification.where(
 				ProductSpec.productSeqEquals(condition.getProductSeq()))
-				.and(ProductSpec.productNameEquals(condition.getProductName()));
-		
+				.and(ProductSpec.productNameEquals(condition.getProductName()))
+				.and(ProductSpec.unitPriceFrom(condition.getUnitPriceFrom()))
+				.and(ProductSpec.unitPriceTo(condition.getUnitPriceTo()))
+				.and(ProductSpec.purchaseUnitPriceFrom(condition.getPurchaseUnitPriceFrom()))
+				.and(ProductSpec.purchaseUnitPriceTo(condition.getPurchaseUnitPriceTo()));
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
 		

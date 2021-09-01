@@ -4,41 +4,45 @@ import store from '@/store'
 
 export interface IProductState {
   productName: string
-  taxType: string
-  purchaseUnitPrice: string
-  unitPrice: string
+  taxType: number
+  purchaseUnitPrice: bigint
+  unitPrice: bigint
+  totalItem: number
 }
 @Module({ dynamic: true, store, name: 'product' })
 class Product extends VuexModule implements IProductState{
   public productName = ''
-  public taxType = ''
-  public purchaseUnitPrice = ''
-  public unitPrice = ''
+  public taxType = 0
+  public purchaseUnitPrice = 0n
+  public unitPrice = 0n
+  public totalItem = 0
   
   @Mutation
   private SET_NAME(productName: string){
     this.productName = productName
   }
   @Mutation
-  private SET_TAXTYPE(taxType: string){
+  private SET_TAXTYPE(taxType: number){
     this.taxType = taxType
   }
   @Mutation
-  private SET_PURCHACEUNITPRICE(purchaseUnitPrice: string){
+  private SET_PURCHACEUNITPRICE(purchaseUnitPrice: bigint){
     this.purchaseUnitPrice = purchaseUnitPrice
   }
   @Mutation
-  private SET_UNITPRICE(unitPrice: string){
+  private SET_UNITPRICE(unitPrice: bigint){
     this.unitPrice = unitPrice
   }
 
+  @Mutation
+  private SET_TOTAL_ITEM(totalItem: number) {
+    this.totalItem = totalItem
+  }
+
   @Action
-  public async CreateProduct(productInfo: { productName: string,  taxType: string, purchaseUnitPrice: string, unitPrice: string }) {
+  public async CreateProduct(productInfo: { productName: string,  taxType: number, purchaseUnitPrice: bigint, unitPrice: bigint }) {
     let { productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
-    taxType = taxType.trim()
-    purchaseUnitPrice = purchaseUnitPrice.trim()
-    unitPrice = unitPrice.trim()
     await createProduct({ productName: productName, taxType: taxType, purchaseUnitPrice: purchaseUnitPrice, unitPrice: unitPrice})
   }
 

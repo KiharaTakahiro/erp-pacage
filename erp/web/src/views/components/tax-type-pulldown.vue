@@ -11,10 +11,9 @@
       >
       <el-option
         v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-        :disabled="item.disabled"
+        :key="item.key"
+        :label="item.value"
+        :value="item.key"
       >
       </el-option>
     </el-select>
@@ -35,8 +34,8 @@ export default class extends Vue{
 
   options = []
 
-  @Prop({ default: '' })
-  value!: string;
+  @Prop({ default: null })
+  value!: number;
 
   created() {
     this.getCode()

@@ -26,8 +26,8 @@ import '@/assets/custom-theme/index.css'
   name: 'purchaseUnitPrice'
 })
 export default class extends Vue{
-  @Prop({ default: '' })
-  purchaseUnitPrice!: string;
+  @Prop({ default: 0n })
+  purchaseUnitPrice!: bigint;
 
   @Emit('purchaseUnitPriceSubmit')
   submit() {

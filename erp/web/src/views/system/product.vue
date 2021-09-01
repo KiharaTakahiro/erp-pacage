@@ -20,24 +20,34 @@
           >
         </el-input>
         <span class="input-label">Name:</span>
-        <!-- 名前あいまい検索 -->
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
           v-model="searchName"
-          style="margin-top:10px; width:40%;"
+          style="margin-top:10px; width:30%;"
           clearable
           >
         </el-input>
-        <!-- 税区分
+        <!-- 定価検索FROM -->
+        <span class="input-label">UnitPrice:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="searchtaxtype"
-          style="margin-top:10px; width:40%;"
+          v-model="serchUnitPriceFrom"
+          style="margin-top:10px; width:20%;"
           clearable
           >
-        </el-input> -->
+        </el-input>
+        <!-- 定価検索TO -->
+        <span class="input-label">UnitPrice:</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="serchUnitPriceTo"
+          style="margin-top:10px; width:20%;"
+          clearable
+          >
+        </el-input>
 
       </div>
       <div class="right">
@@ -84,7 +94,25 @@
           prop="productName"
           label="Product name">
         </el-table-column>
+        <el-table-column
+          prop="purchaseUnitPrice"
+          label="purchase unit price">
+        </el-table-column>
+        <el-table-column
+          prop="unitPrice"
+          label="unitprice">
+        </el-table-column>
       </el-table>
+      <div class="page">
+        <el-pagination
+            background
+            page-size=15
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="totalItemsNum"
+            :current-page.sync="pageNo">
+        </el-pagination>
+      </div>
         <div class="left">
           <back-btn/>
         </div>
@@ -131,12 +159,21 @@ export default class extends Vue {
   // 検索条件
   targetProductSeq = ''
   searchName = ''
+  serchUnitPriceFrom = ''
+  serchUnitPriceTo = ''
 
   
   private productData = [{}]
 
   created() {
     this.getList()
+  }
+
+    /**
+   * ストアが更新されたら件数を算出
+   */
+  get totalItemsNum() {
+    return ProductModule.totalItem
   }
 
   private async getList() {
@@ -149,17 +186,28 @@ export default class extends Vue {
     this.productData = data.product
     this.targetProductSeq = ""
     this.searchName = ""
+    this.serchUnitPriceFrom = ''
+    this.serchUnitPriceTo = ''
   }
 
   private async checkSaerch(){
-    if(this.targetProductSeq != '' && this.searchName == ''){
+    if(this.targetProductSeq != '' && this.searchName == '' && this.serchUnitPrice == ''){
       const { data } = await infoProduct({productSeq : this.targetProductSeq})
       this.productData = data.product
-    } else if (this.targetProductSeq == '' && this.searchName != ''){
+    } else if (this.targetProductSeq == '' && this.searchName != ''  && this.serchUnitPrice == ''){
       const { data } = await infoProduct({productName : this.searchName})
       this.productData = data.product
-    }else if (this.targetProductSeq != '' && this.searchName != ''){
+    }else if (this.targetProductSeq != '' && this.searchName != ''  && this.serchUnitPrice == ''){
       const { data } = await infoProduct({productName : this.searchName, productSeq : this.targetProductSeq})
+      this.productData = data.product
+    }else if(this.targetProductSeq != '' && this.searchName == ''  && this.serchUnitPrice != ''){
+      const { data } = await infoProduct({productSeq : this.targetProductSeq, unitPrice : this.serchUnitPrice})
+      this.productData = data.product
+    } else if (this.targetProductSeq == '' && this.searchName != '' && this.serchUnitPrice != ''){
+      const { data } = await infoProduct({productName : this.searchName, unitPrice : this.serchUnitPrice})
+      this.productData = data.product
+    }else if (this.targetProductSeq != '' && this.searchName != '' && this.serchUnitPrice != ''){
+      const { data } = await infoProduct({productName : this.searchName, productSeq : this.targetProductSeq, unitPrice : this.serchUnitPrice})
       this.productData = data.product
     }
   }
@@ -199,6 +247,14 @@ export default class extends Vue {
     //   console.warn(err)
     // })
   }
+
+    /**
+   * ページが変更される時の処理
+   */
+  handleCurrentChange(val: any) {
+    this.pageNo = val
+    this.getList()
+  }
 }
 </script>
 
@@ -227,6 +283,13 @@ export default class extends Vue {
 
 .left {
   float: left;
+}
+
+.page {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-label {

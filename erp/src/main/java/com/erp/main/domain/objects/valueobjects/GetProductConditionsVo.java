@@ -17,10 +17,14 @@ public class GetProductConditionsVo {
 	private Long productSeq;
 	// 商品名
 	private String productName;
-	// 単価
-	private Long unitPrice;
-	// 仕入れ単価
-	private Long purchaseUnitPrice;
+	// 定価from
+	private Long unitPriceFrom;
+	// 定価to
+	private Long unitPriceTo;
+	// 仕入料金from
+	private Long purchaseUnitPriceFrom;
+	// 仕入料金to
+	private Long purchaseUnitPriceTo;
 	// 税区分
 	// HACK: ここでEnumで受けることもできる気がしますが、一旦これで進める
 	private TaxType taxType;

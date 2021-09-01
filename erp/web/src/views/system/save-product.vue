@@ -66,20 +66,20 @@ import { ProductModule } from '@/store/modules/product'
 export default class extends Vue {
   private product = {
     productName:'',
-    taxType:'',
-    purchaseUnitPrice:'',
-    unitPrice:''
+    taxType:0,
+    purchaseUnitPrice:0n,
+    unitPrice:0n
   }
-  private productNameRecieve(productName: any): void{
+  private productNameRecieve(productName: string): void{
     this.product.productName = productName
   }
-  private taxTypePulldownRecieve(taxType: any): void{
+  private taxTypePulldownRecieve(taxType: number): void{
     this.product.taxType = taxType
   }
-  private purchaseUnitPriceRecieve(purchaseUnitPrice: any): void{
+  private purchaseUnitPriceRecieve(purchaseUnitPrice: bigint): void{
     this.product.purchaseUnitPrice = purchaseUnitPrice
   }
-    private unitPriceRecieve(unitPrice: any): void{
+    private unitPriceRecieve(unitPrice: bigint): void{
     this.product.unitPrice = unitPrice
   }
   private createProduct(){    
@@ -106,9 +106,6 @@ export default class extends Vue {
 
   }
 }
-
-
-
 
 </script>
 
