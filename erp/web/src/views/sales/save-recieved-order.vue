@@ -38,6 +38,7 @@
       @statusSubmit="statusRecive"
       :date="detail.deriveryDate"
       @dateSubmit="dateRecive"
+      @priceSubmit="priceRecive"
       />
       
     <el-table
@@ -142,8 +143,15 @@ export default class extends Vue {
 
   //配送日エミット
   private dateRecive(date: any){
+    // 日付を文字列に
     var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     this.detail.deriveryDate = formatted
+  }
+
+  private priceRecive(price: any){
+    RecievedOrderModule.total += price
+    this.recievedOrder.total = RecievedOrderModule.total
+    console.log(this.recievedOrder.total)
   }
   //デバック用
   private  checkBtn() {

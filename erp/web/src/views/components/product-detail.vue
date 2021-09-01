@@ -87,12 +87,13 @@ export default class extends Vue {
   //商品一覧
   products = [{}]
   //計算用の商品価格
-  productPrice: bigint = 0n
+  productPrice = 0
   //税区分
   taxType = ''
   // 商品単価
   price = 0
-
+  // 合計金額
+  totalPrice = 0
   //商品Seq
   @Prop({ default: '' })
   productSeq!: string;
@@ -129,6 +130,7 @@ export default class extends Vue {
   }
   //個数用セッター
   set countVal(quantity){
+    this.totalPrice = this.productPrice * quantity
     this.quantityEmit(quantity)
   }
   //個数用エミット
@@ -177,11 +179,25 @@ export default class extends Vue {
   dateEmit(date: any){
     return date
   }
+
+  @Emit('priceSubmit')
+  priceEmit(){
+    return this.productPrice
+  }
   
   // 商品の情報問合せ
   private async getProductDetail(productSeq: any){
     let {data} = await getProduct({productSeq: productSeq})
     this.price = data.unitPrice
+    this.taxType = data.taxType
+    console.log(data.taxtype)
+    if(this.taxType == 'REDUCED_RATE'){
+      this.productPrice = this.price * 1.08
+    }else if(this.taxType == 'NOMAL'){
+      this.productPrice = this.price * 1.1
+    }else{
+      this.productPrice = this.price
+    }
   }
 
   created() {
