@@ -39,6 +39,7 @@
       :date="detail.deriveryDate"
       @dateSubmit="dateRecive"
       @priceSubmit="priceRecive"
+      @taxSubmit="taxRecive"
       />
       
     <el-table
@@ -151,7 +152,11 @@ export default class extends Vue {
   private priceRecive(price: any){
     RecievedOrderModule.total += price
     this.recievedOrder.total = RecievedOrderModule.total
-    console.log(this.recievedOrder.total)
+  }
+  
+  private taxRecive(tax: any){
+    RecievedOrderModule.tax += tax
+    this.recievedOrder.tax = RecievedOrderModule.tax
   }
   //デバック用
   private  checkBtn() {
@@ -159,8 +164,10 @@ export default class extends Vue {
   }
   
   jsonCommit(){
+    const pdObj = new productDetail()
+    pdObj.submitTotal()
     RecievedOrderModule.pushDetail(this.detail)
-    console.log(RecievedOrderModule.details)
+    console.log(this.recievedOrder)
   }
 
 
