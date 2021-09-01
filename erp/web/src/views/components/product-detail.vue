@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-col :span="8">
+      <el-col :span="4">
         <el-form-item
         label="商品名"
         prop="productSeq"
@@ -16,11 +16,41 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
-        <el-input-number v-model="countVal" :step="1" :min="0" :max="100"></el-input-number>
+      <el-col :span="3">
+        <el-form-item
+        label="商品単価：￥"
+        >
+        {{price}}
+        </el-form-item>
+      </el-col>
+        
+      <el-col :span="4">
+        <el-form-item
+        label="個数"
+        >
+        <el-input-number v-model="countVal" :step="1" :min="0" :max="100" style="width:80%;"/>
+        </el-form-item>
+      </el-col>
+      <el-col :span="4">
+        <el-form-item
+        label="値引"
+        >
+        <el-input v-model="priceVal" style="width:80%;"/>
+        </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-input v-model="priceVal"></el-input>
+        <el-form-item
+        label="配送状況"
+        >
+          <el-select v-model="satsus" filterable clearable placeholder="商品">
+            <el-option
+              v-for="status in RecivedOrderSatsus"
+              :key="status.key"
+              :label="status.value"
+              :value="status.key">
+            </el-option>
+          </el-select>
+        </el-form-item>
       </el-col>
       <el-col :span="2">
         <el-button 
@@ -66,6 +96,9 @@ export default class extends Vue {
   //値段
   @Prop({ default: 0 })
   price!: number;
+
+  @Prop({default: 1})
+  status!: number;
 
   //商品用のゲッター
   get productSeqVal(){
@@ -118,21 +151,25 @@ export default class extends Vue {
     this.products = data.product
   }
 
+  private RecivedOrderSatsus = [
+    { key: 1, value: "受注準備中" }
+    ]
+
   
-  detail : JSON ={
-    deriveryDate: 'test',
-    discount: 0,
-    lotSeq: 2,
-    productSeq: this.productSeq,
-    quantity: this.quantity,
-    status: 1
-    }
+  // detail  ={
+  //   deriveryDate: string;
+  //   discount: number;
+  //   lotSeq: string;
+  //   productSeq: string;
+  //   quantity: number;
+  //   status: string;
+  //   }
 
 
-  jsonCommit(){
-    RecievedOrderModule.pushDetail(this.detail)
-    console.log(RecievedOrderModule.details)
-  }
+  // jsonCommit(){
+  //   RecievedOrderModule.pushDetail(this.detail)
+  //   console.log(RecievedOrderModule.details)
+  // }
 
 
 }

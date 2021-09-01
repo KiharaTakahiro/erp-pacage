@@ -6,7 +6,7 @@ export interface IRecievedOrderState {
   clientId: string,
   companyId: string,
   departmentId: string,
-  details: JSON[],
+  details: any[],
   quotationId: string,
   recievedOrderDate: string,
   tax: number
@@ -19,7 +19,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   public clientId = ''
   public companyId = ''
   public departmentId = ''
-  public details:JSON[] = []
+  public details:any[] = []
   public quotationId = ''
   public recievedOrderDate = ''
   public tax = 0
@@ -45,7 +45,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.departmentId = departmentId
   }
   @Mutation
-  private SET_DETAILS(detail: JSON){
+  private SET_DETAILS(detail: any){
     this.details.push(detail)
   }
   @Mutation
@@ -77,7 +77,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   }
 
   @Action
-  public pushDetail(detail: JSON){
+  public pushDetail(detail: any){
     this.SET_DETAILS(detail)
   }
 }
