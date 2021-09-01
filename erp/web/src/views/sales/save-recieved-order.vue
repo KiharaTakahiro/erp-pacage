@@ -99,7 +99,6 @@ export default class extends Vue {
     deriveryDate: '',
     lotSeq: 1,//仮
     status: ''
-    
   }
 
 
@@ -143,7 +142,8 @@ export default class extends Vue {
 
   //配送日エミット
   private dateRecive(date: any){
-    this.detail.deriveryDate = date
+    var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    this.detail.deriveryDate = formatted
   }
   //デバック用
   private  checkBtn() {

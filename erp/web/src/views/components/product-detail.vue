@@ -114,7 +114,6 @@ export default class extends Vue {
   }
   //商品用セッター
   set productSeqVal(productSeq){
-    // this.getProductDetail(productSeq)
     this.productEmit(productSeq)
   }
   //商品用エミット
@@ -198,15 +197,6 @@ export default class extends Vue {
   private RecivedOrderSatsus = [
     { key: 1, value: "受注準備中" }
     ]
-
-
-
-  jsonCommit(){
-    RecievedOrderModule.pushDetail(this.detail)
-    console.log(RecievedOrderModule.details)
-  }
-
-
 }
 
 
