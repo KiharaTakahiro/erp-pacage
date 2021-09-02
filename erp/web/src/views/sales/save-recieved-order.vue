@@ -19,6 +19,14 @@
       @companySeqSubmit="companySeqRecive"
       @departmentSeqSubmit="departmentSeqRecive"
     />
+    
+  <div class="app-container">
+    <date-form
+    :label='label'
+    :date="recievedOrder.recievedOrderDate"
+    @dateSubmit="recievedOrderDateRecive"/>
+  </div>
+
     <div>{{ $t("route.OrderDetail") }}</div>
     <div class="complete-btn">
       <el-button 
@@ -38,8 +46,6 @@
       @statusSubmit="statusRecive"
       :date="detail.deriveryDate"
       @dateSubmit="dateRecive"
-      @priceSubmit="priceRecive"
-      @taxSubmit="taxRecive"
       />
       
     <el-table
@@ -71,14 +77,17 @@ import { Component, Vue } from 'vue-property-decorator'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
+import dateForm from '@/views/components/date-form.vue'
 import { RecievedOrderModule } from '@/store/modules/recieved-order'
 import { getProduct } from '@/api/product'
+import DateForm from '@/views/components/date-form.vue'
 @Component({
   name: 'save-recieved-order',
   components: {
     clientsPullDown,
     companyPullDown,
     productDetail,
+    DateForm,
   }
 })
 export default class extends Vue {
@@ -89,7 +98,7 @@ export default class extends Vue {
     departmentSeq: RecievedOrderModule.departmentId,
     detail: RecievedOrderModule.details,
     quotationSeq: RecievedOrderModule.quotationId,
-    RecievedOrderDate: RecievedOrderModule.recievedOrderDate,
+    recievedOrderDate: RecievedOrderModule.recievedOrderDate,
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
   }
@@ -102,6 +111,8 @@ export default class extends Vue {
     lotSeq: 1,//仮
     status: ''
   }
+
+  label = '配送日'
 
 
   //取引先のエミット
@@ -148,24 +159,20 @@ export default class extends Vue {
     var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     this.detail.deriveryDate = formatted
   }
-  //金額エミット
-  private priceRecive(price: any){
-    RecievedOrderModule.total += price
-    this.recievedOrder.total = RecievedOrderModule.total
+
+  private recievedOrderDateRecive(date: any){
+    // 日付を文字列に
+    var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    RecievedOrderModule.setRecievedOrderDate(formatted)
+    this.recievedOrder.recievedOrderDate = RecievedOrderModule.recievedOrderDate
   }
-  //税金エミット
-  private taxRecive(tax: any){
-    RecievedOrderModule.tax += tax
-    this.recievedOrder.tax = RecievedOrderModule.tax
-  }
+
   //デバック用
   private  checkBtn() {
     console.log(this.recievedOrder)
   }
   
   jsonCommit(){
-    const pdObj = new productDetail()
-    pdObj.submitTotal()
     RecievedOrderModule.pushDetail(this.detail)
   }
 

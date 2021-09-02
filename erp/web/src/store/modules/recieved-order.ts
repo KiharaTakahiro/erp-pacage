@@ -60,6 +60,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   private SET_TOTAL(total: number){
     this.total = total
   }
+  
+  @Mutation
+  private SET_RECIEVED_ORDER_DATE(date: any){
+    this.recievedOrderDate = date
+  }
 
   @Action
   public setClientsID(id: any){
@@ -79,6 +84,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   @Action
   public pushDetail(detail: any){
     this.SET_DETAILS(detail)
+  }
+
+  @Action
+  public setRecievedOrderDate(date: any){
+    this.SET_RECIEVED_ORDER_DATE(date)
   }
 }
 
