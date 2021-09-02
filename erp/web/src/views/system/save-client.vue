@@ -10,7 +10,7 @@
       label-position="left"
     >
       <company-name
-        :companyName="name"
+        :companyName="client.name"
         @conpanyNameValue='conpanyName'
         />
       <div class="complete-btn">
@@ -42,12 +42,8 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue {
 
   client = {
-  name: this.$store.getters.name
+    name: ClientModule.name
   }
-  get name() {
-    return  this.$store.getters.name
-  }
-
 
   private conpanyName(name: any): void {
     ClientModule.setClientsName(name)
