@@ -42,6 +42,7 @@
         <date-form
           :date="dateVal"
           :label="haisoubi"
+          @dateSubmit="dateRecive"
         />
         <!-- <el-form-item
         label="配送日"
@@ -181,6 +182,10 @@ export default class extends Vue {
   @Emit('dateSubmit')
   dateEmit(date: any){
     return date
+  }
+  //日付のエミットをエミット
+  private dateRecive(date: any){
+    this.dateEmit(date)
   }
 
 
