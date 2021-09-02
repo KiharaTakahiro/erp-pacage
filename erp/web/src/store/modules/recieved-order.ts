@@ -9,7 +9,7 @@ export interface IRecievedOrderState {
   details: any[],
   quotationId: string,
   recievedOrderDate: string,
-  tax: number
+  tax: number,
   total: number
 }
 
@@ -49,7 +49,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.details.push(detail)
   }
   @Mutation
-  private SET_QUOTAION_IS(quotationId: any){
+  private SET_QUOTAION_ID(quotationId: any){
     this.quotationId = quotationId
   }
   @Mutation
@@ -60,6 +60,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   private SET_TOTAL(total: number){
     this.total = total
   }
+
   
   @Mutation
   private SET_RECIEVED_ORDER_DATE(date: any){
@@ -90,6 +91,18 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   public setRecievedOrderDate(date: any){
     this.SET_RECIEVED_ORDER_DATE(date)
   }
+
+  @Action
+  public setQuotationId(id: any){
+    this.SET_QUOTAION_ID(id)
+  }
+
+  @Action
+  public async createReciverdOrder(orderInfo:{recievedOrderId: string, clientId: string,companyId: string, departmentId: string, details: any[], quotationId: string, recievedOrderDate: string, tax: number, total: number}){
+    let {recievedOrderId, clientId,companyId, departmentId, details, quotationId, recievedOrderDate, tax, total} = orderInfo
+    await createRecivedOrder({recievedOrderId: recievedOrderId, clientId: clientId,companyId: companyId, departmentId: departmentId, details: details, quotationId: quotationId, recievedOrderDate: recievedOrderDate, tax: tax, total: total})
+  }
+
 }
 
 export const RecievedOrderModule = getModule(RecievedOrder)

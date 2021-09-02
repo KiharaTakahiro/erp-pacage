@@ -2,6 +2,9 @@
   <div class="app-container">
     <div>{{ $t("route.newRecievedOrder") }}</div>
     <br>
+    <div class="app-container">
+      見積番号：{{recievedOrder.quotationSeq}}
+    </div>
     <br>
     <el-form
       ref="recievedOrderr"
@@ -63,7 +66,7 @@
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent="checkBtn"
+            @click.native.prevent="submit"
           >
             {{ $t('recievedOrder.complete') }}
         </el-button>
@@ -74,12 +77,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
-import dateForm from '@/views/components/date-form.vue'
 import { RecievedOrderModule } from '@/store/modules/recieved-order'
-import { getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
 @Component({
   name: 'save-recieved-order',
@@ -106,13 +108,20 @@ export default class extends Vue {
   private detail = {
     productSeq: '',
     quantity: '',
-    discount: '',
+    discount: 0,
     deriveryDate: '',
-    lotSeq: 1,//仮
+    lotSeq: 2,//仮
     status: ''
   }
 
+  // 受注日のラベル
   juchuubi = '受注日'
+
+  // 作成時（仮）
+  //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
+  created(){
+    RecievedOrderModule.setQuotationId(2)
+  }
 
 
   //取引先のエミット
@@ -168,8 +177,27 @@ export default class extends Vue {
   }
 
   //デバック用
-  private  checkBtn() {
-    console.log(this.recievedOrder)
+  private  submit() {
+    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
+      if(valid){
+        await RecievedOrderModule.createReciverdOrder(this.recievedOrder)
+        this.$router.push({
+          path: 'users'
+        }).catch(err => {
+          console.warn(err)
+        })
+      this.$message({
+      message: this.$t('components.createClients').toString(),
+      type: 'success'
+    })
+      }else {
+        this.$message({
+        message: this.$t('components.validation').toString(),
+        type: 'error'
+        })
+        return false
+      }
+    })
   }
   
   jsonCommit(){

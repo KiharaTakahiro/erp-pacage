@@ -4,7 +4,6 @@
       <el-col :span="4">
         <el-form-item
         label="商品名"
-        prop="productSeq"
         >
           <el-select v-model="productSeqVal" filterable clearable placeholder="商品">
             <el-option
