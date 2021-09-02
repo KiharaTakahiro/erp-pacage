@@ -29,7 +29,7 @@
           >
         </el-input>
         <!-- 定価検索FROM -->
-        <span class="input-label">UnitPrice:</span>
+        <span class="input-label">単価</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -39,7 +39,7 @@
           >
         </el-input>
         <!-- 定価検索TO -->
-        <span class="input-label">UnitPrice:</span>
+        <span class="input-label">～</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -63,7 +63,7 @@
           size="small"
           type="primary"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="checkSaerch"
+          @click.native.prevent="searchBtn"
         >
           {{ $t('route.search') }}
         </el-button>
@@ -163,8 +163,6 @@ export default class extends Vue {
   serchUnitPriceTo = ''
 
   
-  private productData = [{}]
-
   created() {
     this.getList()
   }
@@ -176,45 +174,55 @@ export default class extends Vue {
     return ProductModule.totalItem
   }
 
+    /**
+   * ストアが更新されたらクライアントを算出
+   */
+  get productData () {
+    return ProductModule.list
+  }
+  /**
+   * APIへリスト取得処理
+   */
   private async getList() {
-    const { data } = await infoProduct({})
-    this.productData = data.product
-  }
-
-  private async resetList() {
-    const { data } = await infoProduct({})
-    this.productData = data.product
-    this.targetProductSeq = ""
-    this.searchName = ""
-    this.serchUnitPriceFrom = ''
-    this.serchUnitPriceTo = ''
-  }
-
-  private async checkSaerch(){
-    if(this.targetProductSeq != '' && this.searchName == '' && this.serchUnitPrice == ''){
-      const { data } = await infoProduct({productSeq : this.targetProductSeq})
-      this.productData = data.product
-    } else if (this.targetProductSeq == '' && this.searchName != ''  && this.serchUnitPrice == ''){
-      const { data } = await infoProduct({productName : this.searchName})
-      this.productData = data.product
-    }else if (this.targetProductSeq != '' && this.searchName != ''  && this.serchUnitPrice == ''){
-      const { data } = await infoProduct({productName : this.searchName, productSeq : this.targetProductSeq})
-      this.productData = data.product
-    }else if(this.targetProductSeq != '' && this.searchName == ''  && this.serchUnitPrice != ''){
-      const { data } = await infoProduct({productSeq : this.targetProductSeq, unitPrice : this.serchUnitPrice})
-      this.productData = data.product
-    } else if (this.targetProductSeq == '' && this.searchName != '' && this.serchUnitPrice != ''){
-      const { data } = await infoProduct({productName : this.searchName, unitPrice : this.serchUnitPrice})
-      this.productData = data.product
-    }else if (this.targetProductSeq != '' && this.searchName != '' && this.serchUnitPrice != ''){
-      const { data } = await infoProduct({productName : this.searchName, productSeq : this.targetProductSeq, unitPrice : this.serchUnitPrice})
-      this.productData = data.product
+    
+    // 検索パラメタを生成する
+    let searchData = { 
+      pageNo: this.pageNo - 1, 
+      productSeq : this.targetProductSeq == '' ? null : this.targetProductSeq,
+      productName: this.searchName == '' ? null : this.searchName,
+      unitPriceFrom : this.serchUnitPriceFrom == '' ? null : this.serchUnitPriceFrom,
+      unitPriceTo : this.serchUnitPriceTo == '' ? null : this.serchUnitPriceTo
     }
+
+    // APIの取得結果をもとにModelを更新する
+    await ProductModule.ProductList(searchData)
   }
+
 
   private testLog(val : any){
     this.product.id = val[0]['productSeq']
     this.checkLength = val.length
+  }
+
+  
+  /**
+   * リセットボタン押下時の処理
+   */
+  resetBtn() {
+    this.targetProductSeq = ""
+    this.searchName = ""
+    this.serchUnitPriceFrom = ''
+    this.serchUnitPriceTo = ''
+    this.pageNo = 1
+    this.getList()
+  }
+
+  /**
+   * 検索ボタン押下時の処理
+   */
+  searchBtn() {
+    this.pageNo = 1
+    this.getList()
   }
 
   createProductBtn() {
