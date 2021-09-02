@@ -9,6 +9,22 @@
       autocomplete="on"
       label-position="left"
     >
+    <product-name
+        :productName="product.productName"
+        @productNameSubmit="productNameRecieve"
+        />
+      <tax-type-pulldown
+        :taxTypePulldown="product.taxType"
+        @taxTypePulldownSubmit="taxTypePulldownRecieve"
+        />
+      <purchase-unit-price
+        :purchaseUnitPrice="product.purchaseUnitPrice"
+        @purchaseUnitPriceSubmit="purchaseUnitPriceRecieve"
+        />
+      <unit-price
+        :unitPrice="product.unitPrice"
+        @unitPriceSubmit="unitPriceRecieve"
+        />
       <div class="complete-btn">
         <el-button
             type="primary"
@@ -30,27 +46,34 @@ import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import { log } from 'node:console'
 import { toNamespacedPath } from 'node:path'
+import productName  from '@/views/components/product-name.vue'
+import taxTypePulldown from '../components/tax-type-pulldown.vue'
+import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
+import unitPrice from '@/views/components/unit-price.vue'
 
 @Component({
   name: 'Product-save',
-  components: {
-    CompanyName
+  components :{
+    productName,
+    taxTypePulldown,
+    purchaseUnitPrice,
+    unitPrice
   }
 })
 export default class extends Vue {
 
   product = {
     id: ProductModule.id,
-    name: ProductModule.name,
+    productName: ProductModule.productName,
     taxType: ProductModule.taxType,
     purchaseUnitPrice: ProductModule.purchaseUnitPrice,
     unitPrice: ProductModule.unitPrice
   }
 
-  private conpanyName(name: any): void {
-    this.$store.commit('SET_NAME', name)
-    this.product.name = ProductModule.name
-  }
+  // private conpanyName(name: any): void {
+  //   this.$store.commit('SET_NAME', name)
+  //   this.product.name = ProductModule.name
+  // }
 
   private updateProduct(){
     (this.$refs.product as ElForm).validate(async(valid: boolean) => {

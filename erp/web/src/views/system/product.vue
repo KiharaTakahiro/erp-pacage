@@ -92,15 +92,15 @@
         </el-table-column>
         <el-table-column
           prop="productName"
-          label="Product name">
+          label="名前">
         </el-table-column>
         <el-table-column
           prop="purchaseUnitPrice"
-          label="purchase unit price">
+          label="仕入れ価格">
         </el-table-column>
         <el-table-column
           prop="unitPrice"
-          label="unitprice">
+          label="単価">
         </el-table-column>
       </el-table>
       <div class="page">
