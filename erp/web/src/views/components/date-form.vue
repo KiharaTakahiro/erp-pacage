@@ -5,7 +5,8 @@
     <el-date-picker
       v-model="dateVal"
       type="date"
-      v-bind:placeholder="label">
+      v-bind:placeholder="label"
+      :clearable="false">
     </el-date-picker>
   </el-form-item>
 </template>
