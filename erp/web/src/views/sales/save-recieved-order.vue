@@ -22,7 +22,7 @@
     
   <div class="app-container">
     <date-form
-    :label='label'
+    :label='juchuubi'
     :date="recievedOrder.recievedOrderDate"
     @dateSubmit="recievedOrderDateRecive"/>
   </div>
@@ -112,7 +112,7 @@ export default class extends Vue {
     status: ''
   }
 
-  label = '配送日'
+  juchuubi = '受注日'
 
 
   //取引先のエミット

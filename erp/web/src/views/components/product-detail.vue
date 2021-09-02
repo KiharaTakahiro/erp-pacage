@@ -38,8 +38,12 @@
         <el-input v-model="discountVal" style="width:50%;"/>
         </el-form-item>
       </el-col>
-      <el-col :span="3">
-        <el-form-item
+      <el-col :span="4">
+        <date-form
+          :date="dateVal"
+          :label="haisoubi"
+        />
+        <!-- <el-form-item
         label="配送日"
         >
       <el-date-picker
@@ -48,7 +52,7 @@
       placeholder="配送日"
       style="width:60%;">
     </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
       </el-col>
       <el-col :span="4">
         <el-form-item
@@ -72,12 +76,14 @@
 import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import { RecievedOrderModule } from '@/store/modules/recieved-order'
+import DateForm from '@/views/components/date-form.vue'
 
 
 
 @Component({
   name: 'productsPullDown',
   components: {
+    DateForm
     
   }
 })
@@ -86,7 +92,11 @@ export default class extends Vue {
 
   //商品一覧
   products = [{}]
+  // 単価
   price = 0
+  // ラベル名
+  haisoubi = '配送日'
+
   //商品Seq
   @Prop({ default: '' })
   productSeq!: string;
