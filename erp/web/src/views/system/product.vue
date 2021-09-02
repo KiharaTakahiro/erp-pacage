@@ -55,7 +55,7 @@
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="resetList"
+          @click.native.prevent="resetBtn"
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -193,12 +193,15 @@ export default class extends Vue {
       unitPriceFrom : this.serchUnitPriceFrom == '' ? null : this.serchUnitPriceFrom,
       unitPriceTo : this.serchUnitPriceTo == '' ? null : this.serchUnitPriceTo
     }
-
+    console.log(searchData)
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
   }
 
-
+  /**
+   * 画面時のボタンセレクト条件
+   */
+  // TODO: 適切な名前に変更する
   private testLog(val : any){
     this.product.id = val[0]['productSeq']
     this.checkLength = val.length
@@ -248,12 +251,12 @@ export default class extends Vue {
       })
       return false
     }
-    // ProductModule.EditProduct(this.product)
-    // this.$router.push({
-    // path:'edit-product'
-    // }).catch(err => {
-    //   console.warn(err)
-    // })
+    ProductModule.EditProduct(this.product)
+    this.$router.push({
+    path:'edit-product'
+    }).catch(err => {
+      console.warn(err)
+    })
   }
 
     /**
