@@ -173,6 +173,7 @@ export default {
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
     changeLanguageTips: '言語切り替えの成功',
     createClients :'取引先の登録に成功',
+    createRecive: '受注票の作成に成功',
     createProduct :'商品の登録に成功',
     validation :'入力内容を確認してください'
   },

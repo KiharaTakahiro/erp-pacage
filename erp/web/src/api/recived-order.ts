@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export const createRecivedOrder = (data: any) =>
   request({
-    url: '/reivedorder/register',
+    url: '/recivedorder/register',
     method: 'POST',
     data
   })

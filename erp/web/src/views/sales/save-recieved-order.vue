@@ -7,7 +7,7 @@
     </div>
     <br>
     <el-form
-      ref="recievedOrderr"
+      ref="recievedOrder"
       :model="recievedOrder"
       autocomplete="on"
       label-position="left"
@@ -95,11 +95,11 @@ import DateForm from '@/views/components/date-form.vue'
 export default class extends Vue {
   // フォームのモデル
   private recievedOrder = {
-    clientsSeq: RecievedOrderModule.clientId,
-    companySeq: RecievedOrderModule.companyId,
-    departmentSeq: RecievedOrderModule.departmentId,
-    detail: RecievedOrderModule.details,
-    quotationSeq: RecievedOrderModule.quotationId,
+    clientsSeq: RecievedOrderModule.clientsSeq,
+    companySeq: RecievedOrderModule.companySeq,
+    departmentSeq: RecievedOrderModule.departmentSeq,
+    details: RecievedOrderModule.details,
+    quotationSeq: RecievedOrderModule.quotationSeq,
     recievedOrderDate: RecievedOrderModule.recievedOrderDate,
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
@@ -127,21 +127,21 @@ export default class extends Vue {
   //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
     RecievedOrderModule.setClientsID(clientsSeq)
-    this.recievedOrder.clientsSeq = RecievedOrderModule.clientId
+    this.recievedOrder.clientsSeq = RecievedOrderModule.clientsSeq
   }
   //会社のエミットっと
   private companySeqRecive(companySeq: any): void {
     //部署リセット
     RecievedOrderModule.setDepartmentId('')
-    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
+    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentSeq
     RecievedOrderModule.setCompanyId(companySeq)
-    this.recievedOrder.companySeq = RecievedOrderModule.companyId
+    this.recievedOrder.companySeq = RecievedOrderModule.companySeq
   }
 
   //部署のエミット
   private departmentSeqRecive(departmentSeq: any): void {
     RecievedOrderModule.setDepartmentId(departmentSeq)
-    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentId
+    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
   
   //商品のエミット
@@ -178,11 +178,11 @@ export default class extends Vue {
 
   //デバック用
   private  submit() {
-    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
+    (this.$refs.recievedOrder as ElForm).validate(async(valid: boolean) => {
       if(valid){
         await RecievedOrderModule.createReciverdOrder(this.recievedOrder)
         this.$router.push({
-          path: 'users'
+          path: 'recieved-order'
         }).catch(err => {
           console.warn(err)
         })
