@@ -20,7 +20,7 @@ request({
   data
 })
 
-export const getProduct = (data: JSON) =>
+export const getProduct = (data: any) =>
 request({
   url: '/product/edit',
   method: 'POST',
