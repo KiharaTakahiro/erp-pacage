@@ -137,6 +137,7 @@ export default class extends Vue {
   set countVal(quantity){
     this.totalPrice = this.productPrice * quantity
     this.totalTax = this.tax * quantity
+    console.log(this.totalPrice)
     this.quantityEmit(quantity)
   }
   //個数用エミット
@@ -188,12 +189,14 @@ export default class extends Vue {
 
   @Emit('priceSubmit')
   priceEmit(){
+    console.log(this.totalPrice)
     return this.totalPrice
   }
 
   @Emit('taxSubmit')
   taxEmit(){
-    return this.tax
+    console.log(this.totalTax)
+    return this.totalTax
   }
   // 商品の情報問合せ
   private async getProductDetail(productSeq: any){
@@ -211,7 +214,7 @@ export default class extends Vue {
       this.productPrice = this.price
     }
   }
-
+  //FIXME 合計金額と税金計をエミットしたい
   submitTotal(){
     this.priceEmit()
     this.taxEmit()

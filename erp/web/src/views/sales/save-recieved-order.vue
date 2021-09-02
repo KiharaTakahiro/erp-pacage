@@ -148,26 +148,25 @@ export default class extends Vue {
     var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     this.detail.deriveryDate = formatted
   }
-
+  //金額エミット
   private priceRecive(price: any){
     RecievedOrderModule.total += price
     this.recievedOrder.total = RecievedOrderModule.total
   }
-  
+  //税金エミット
   private taxRecive(tax: any){
     RecievedOrderModule.tax += tax
     this.recievedOrder.tax = RecievedOrderModule.tax
   }
   //デバック用
   private  checkBtn() {
-    console.log(this.detail)
+    console.log(this.recievedOrder)
   }
   
   jsonCommit(){
     const pdObj = new productDetail()
     pdObj.submitTotal()
     RecievedOrderModule.pushDetail(this.detail)
-    console.log(this.recievedOrder)
   }
 
 
