@@ -24,17 +24,38 @@
           placeholder=""
           prefix-icon="el-icon-search"
           v-model="searchName"
-          style="margin-top:10px; width:40%;"
+          style="margin-top:10px; width:30%;"
           clearable
           >
         </el-input>
+        <!-- 定価検索FROM -->
+        <span class="input-label">単価</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="serchUnitPriceFrom"
+          style="margin-top:10px; width:20%;"
+          clearable
+          >
+        </el-input>
+        <!-- 定価検索TO -->
+        <span class="input-label">～</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="serchUnitPriceTo"
+          style="margin-top:10px; width:20%;"
+          clearable
+          >
+        </el-input>
+
       </div>
       <div class="right">
         <el-button
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="resetList"
+          @click.native.prevent="resetBtn"
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -42,14 +63,14 @@
           size="small"
           type="primary"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="checkSaerch"
+          @click.native.prevent="searchBtn"
         >
           {{ $t('route.search') }}
         </el-button>
       </div>
     </el-card>
     <el-card class="box-card">
-      <h5>取引先一覧</h5>
+      <h5>商品一覧</h5>
       <el-table
         ref="productTable"
         :data="productData"
@@ -71,9 +92,27 @@
         </el-table-column>
         <el-table-column
           prop="productName"
-          label="Product name">
+          label="名前">
+        </el-table-column>
+        <el-table-column
+          prop="purchaseUnitPrice"
+          label="仕入れ価格">
+        </el-table-column>
+        <el-table-column
+          prop="unitPrice"
+          label="単価">
         </el-table-column>
       </el-table>
+      <div class="page">
+        <el-pagination
+            background
+            page-size=15
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="totalItemsNum"
+            :current-page.sync="pageNo">
+        </el-pagination>
+      </div>
         <div class="left">
           <back-btn/>
         </div>
@@ -93,7 +132,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
-// import { ProductModule } from '@/store/modules/product'
+import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
 import { infoProduct } from '@/api/product'
@@ -108,52 +147,85 @@ import { infoProduct } from '@/api/product'
 })
 export default class extends Vue {
 
-
   product = {
     id: ''
     }
-  
   checkLength = 0
 
-  pageNo = 0
+  // ページング条件
+  pageNo = 1
+  internalPage: any
+
+  // 検索条件
   targetProductSeq = ''
   searchName = ''
+  serchUnitPriceFrom = ''
+  serchUnitPriceTo = ''
 
   
-  private productData = [{}]
-
   created() {
     this.getList()
   }
 
+    /**
+   * ストアが更新されたら件数を算出
+   */
+  get totalItemsNum() {
+    return ProductModule.totalItem
+  }
+
+    /**
+   * ストアが更新されたらクライアントを算出
+   */
+  get productData () {
+    return ProductModule.list
+  }
+  /**
+   * APIへリスト取得処理
+   */
   private async getList() {
-    const { data } = await infoProduct({})
-    this.productData = data.product
-  }
-
-  private async resetList() {
-    const { data } = await infoProduct({})
-    this.productData = data.product
-    this.targetProductSeq = ""
-    this.searchName = ""
-  }
-
-  private async checkSaerch(){
-    if(this.targetProductSeq != '' && this.searchName == ''){
-      const { data } = await infoProduct({productSeq : this.targetProductSeq})
-      this.productData = data.product
-    } else if (this.targetProductSeq == '' && this.searchName != ''){
-      const { data } = await infoProduct({productName : this.searchName})
-      this.productData = data.product
-    }else if (this.targetProductSeq != '' && this.searchName != ''){
-      const { data } = await infoProduct({productName : this.searchName, productSeq : this.targetProductSeq})
-      this.productData = data.product
+    
+    // 検索パラメタを生成する
+    let searchData = { 
+      pageNo: this.pageNo - 1, 
+      productSeq : this.targetProductSeq == '' ? null : this.targetProductSeq,
+      productName: this.searchName == '' ? null : this.searchName,
+      unitPriceFrom : this.serchUnitPriceFrom == '' ? null : this.serchUnitPriceFrom,
+      unitPriceTo : this.serchUnitPriceTo == '' ? null : this.serchUnitPriceTo
     }
+    console.log(searchData)
+    // APIの取得結果をもとにModelを更新する
+    await ProductModule.ProductList(searchData)
   }
 
+  /**
+   * 画面時のボタンセレクト条件
+   */
+  // TODO: 適切な名前に変更する
   private testLog(val : any){
     this.product.id = val[0]['productSeq']
     this.checkLength = val.length
+  }
+
+  
+  /**
+   * リセットボタン押下時の処理
+   */
+  resetBtn() {
+    this.targetProductSeq = ""
+    this.searchName = ""
+    this.serchUnitPriceFrom = ''
+    this.serchUnitPriceTo = ''
+    this.pageNo = 1
+    this.getList()
+  }
+
+  /**
+   * 検索ボタン押下時の処理
+   */
+  searchBtn() {
+    this.pageNo = 1
+    this.getList()
   }
 
   createProductBtn() {
@@ -179,12 +251,20 @@ export default class extends Vue {
       })
       return false
     }
-    // ProductModule.EditProduct(this.product)
-    // this.$router.push({
-    // path:'edit-product'
-    // }).catch(err => {
-    //   console.warn(err)
-    // })
+    ProductModule.EditProduct(this.product)
+    this.$router.push({
+    path:'edit-product'
+    }).catch(err => {
+      console.warn(err)
+    })
+  }
+
+    /**
+   * ページが変更される時の処理
+   */
+  handleCurrentChange(val: any) {
+    this.pageNo = val
+    this.getList()
   }
 }
 </script>
@@ -214,6 +294,13 @@ export default class extends Vue {
 
 .left {
   float: left;
+}
+
+.page {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-label {

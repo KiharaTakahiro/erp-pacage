@@ -24,6 +24,7 @@ import com.erp.main.app.controller.system.request.GetClientRequest;
 import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
+import com.erp.main.app.controller.system.request.GetProductsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
@@ -123,6 +124,18 @@ public class SystemController {
 		return response;
 	}
 	
+	/*
+	 * 商品一覧処理
+	 */
+	@PostMapping("/product/info")
+	public ProductsResponse infoProduct(@RequestBody GetProductsRequest request) {
+		var vo = this.masterService.getProductsVo(request.mapTo());
+		var response = new ProductsResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setProduct(vo.getProduct());
+		return response;
+	}
+	
 	/**
 	 * 仕入れ先作成用のエントリーポイント
 	 * @param req
@@ -150,7 +163,6 @@ public class SystemController {
 		this.masterService.createClients(request.mapTo());
 	}
 	
-
 	/*
 	 * 取引先詳細取得のエントリーポイント
 	 * @param responce

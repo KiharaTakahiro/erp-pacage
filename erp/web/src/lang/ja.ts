@@ -146,7 +146,7 @@ export default {
     name: '商品名',
     unitPrice: '定価',
     taxType: '税区分',
-    purchaceUnitPrice: '仕入料金',
+    purchaseUnitPrice: '仕入料金',
     check0: '商品が選択されていません',
     check2: '商品が二つ以上選択されています'
   },

@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class GetProductRequest {
+	// 商品SEQ
     private Long productSeq;
-    
 }
