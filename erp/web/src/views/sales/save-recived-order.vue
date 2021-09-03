@@ -3,22 +3,22 @@
     <div>{{ $t("route.newRecievedOrder") }}</div>
     <br>
     <div class="app-container">
-      見積番号：{{recievedOrder.quotationSeq}}
+      見積番号：{{recivedOrder.quotationSeq}}
     </div>
     <br>
     <el-form
-      ref="recievedOrder"
-      :model="recievedOrder"
+      ref="recivedOrder"
+      :model="recivedOrder"
       autocomplete="on"
       label-position="left"
     >
     <clients-pull-down
-      :clientsSeq="recievedOrder.clientsSeq"
+      :clientsSeq="recivedOrder.clientsSeq"
       @clientsSeqSubmit="clienetsSeqRecive"
       />
     <company-pull-down
-      :companySeq="recievedOrder.companySeq"
-      :departmentSeq="recievedOrder.departmentSeq"
+      :companySeq="recivedOrder.companySeq"
+      :departmentSeq="recivedOrder.departmentSeq"
       @companySeqSubmit="companySeqRecive"
       @departmentSeqSubmit="departmentSeqRecive"
     />
@@ -26,8 +26,8 @@
   <div class="app-container">
     <date-form
     :label='juchuubi'
-    :date="recievedOrder.recievedOrderDate"
-    @dateSubmit="recievedOrderDateRecive"/>
+    :date="recivedOrder.recivedOrderDate"
+    @dateSubmit="recivedOrderDateRecive"/>
   </div>
 
     <div>{{ $t("route.OrderDetail") }}</div>
@@ -52,7 +52,7 @@
       />
       
     <el-table
-      :data="recievedOrder.detail"
+      :data="recivedOrder.detail"
       style="width: 100%">
       <el-table-column
         prop="date"
@@ -68,7 +68,7 @@
             style="width:100%;"
             @click.native.prevent="submit"
           >
-            {{ $t('recievedOrder.complete') }}
+            {{ $t('recivedOrder.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -81,10 +81,10 @@ import { Form as ElForm } from 'element-ui'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
-import { RecievedOrderModule } from '@/store/modules/recieved-order'
+import { RecievedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
 @Component({
-  name: 'save-recieved-order',
+  name: 'save-recived-order',
   components: {
     clientsPullDown,
     companyPullDown,
@@ -94,13 +94,13 @@ import DateForm from '@/views/components/date-form.vue'
 })
 export default class extends Vue {
   // フォームのモデル
-  private recievedOrder = {
+  private recivedOrder = {
     clientsSeq: RecievedOrderModule.clientsSeq,
     companySeq: RecievedOrderModule.companySeq,
     departmentSeq: RecievedOrderModule.departmentSeq,
     details: RecievedOrderModule.details,
     quotationSeq: RecievedOrderModule.quotationSeq,
-    recievedOrderDate: RecievedOrderModule.recievedOrderDate,
+    recivedOrderDate: RecievedOrderModule.recivedOrderDate,
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
   }
@@ -127,21 +127,21 @@ export default class extends Vue {
   //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
     RecievedOrderModule.setClientsID(clientsSeq)
-    this.recievedOrder.clientsSeq = RecievedOrderModule.clientsSeq
+    this.recivedOrder.clientsSeq = RecievedOrderModule.clientsSeq
   }
   //会社のエミットっと
   private companySeqRecive(companySeq: any): void {
     //部署リセット
     RecievedOrderModule.setDepartmentId('')
-    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentSeq
+    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
     RecievedOrderModule.setCompanyId(companySeq)
-    this.recievedOrder.companySeq = RecievedOrderModule.companySeq
+    this.recivedOrder.companySeq = RecievedOrderModule.companySeq
   }
 
   //部署のエミット
   private departmentSeqRecive(departmentSeq: any): void {
     RecievedOrderModule.setDepartmentId(departmentSeq)
-    this.recievedOrder.departmentSeq = RecievedOrderModule.departmentSeq
+    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
   
   //商品のエミット
@@ -169,21 +169,21 @@ export default class extends Vue {
     this.detail.deriveryDate = formatted
   }
 
-  private recievedOrderDateRecive(date: any){
+  private recivedOrderDateRecive(date: any){
     // 日付を文字列に
     var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     RecievedOrderModule.setRecievedOrderDate(formatted)
-    this.recievedOrder.recievedOrderDate = RecievedOrderModule.recievedOrderDate
+    this.recivedOrder.recivedOrderDate = RecievedOrderModule.recivedOrderDate
   }
 
   //デバック用
   private  submit() {
-    (this.$refs.recievedOrder as ElForm).validate(async(valid: boolean) => {
-    console.log(this.recievedOrder)
+    (this.$refs.recivedOrder as ElForm).validate(async(valid: boolean) => {
+    console.log(this.recivedOrder)
       if(valid){
-        await RecievedOrderModule.createReciverdOrder(this.recievedOrder)
+        await RecievedOrderModule.createReciverdOrder(this.recivedOrder)
         this.$router.push({
-          path: 'recieved-order'
+          path: 'recived-order'
         }).catch(err => {
           console.warn(err)
         })

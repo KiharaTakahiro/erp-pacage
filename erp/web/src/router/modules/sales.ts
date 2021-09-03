@@ -18,15 +18,15 @@ const salesRoutes: RouteConfig = {
       meta: { title: 'quotation' }
     },
     {
-      path: 'recieved-order',
-      component: () => import('@/views/sales/recieved-order.vue'),
-      name: 'recievedOrder',
-      meta: { title: 'recievedOrder'}
+      path: 'recived-order',
+      component: () => import('@/views/sales/recived-order.vue'),
+      name: 'recivedOrder',
+      meta: { title: 'recivedOrder'}
     },
     {
-      path: 'save-recieved-order',
-      component: () => import('@/views/sales/save-recieved-order.vue'),
-      name: 'save-recievedOrder',
+      path: 'save-recived-order',
+      component: () => import('@/views/sales/save-recived-order.vue'),
+      name: 'save-recivedOrder',
       meta: { title: 'newRecievedOrder', hidden: true }
     },
     {

@@ -2,7 +2,7 @@ export default {
   route: {
     dashboard: 'Dashboard',
     sales: 'Sales',
-    recievedOrder: 'Recieved Order',
+    recivedOrder: 'Recieved Order',
     newRecievedOrder: 'Create New Recived Order',
     OrderDetail: 'Order Detail',
     quotation: 'Quotation',
@@ -117,7 +117,7 @@ export default {
     check0: 'No company selected',
     check2: 'Two or more companies have been selected'
   },
-  recievedOrder: {
+  recivedOrder: {
     add: 'Create New Recieved Order',
     complete: 'complete',
   },

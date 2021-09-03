@@ -75,7 +75,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
-import { RecievedOrderModule } from '@/store/modules/recieved-order'
+import { RecievedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
 
 

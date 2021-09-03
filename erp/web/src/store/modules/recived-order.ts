@@ -2,32 +2,32 @@ import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-dec
 import { createRecivedOrder } from '@/api/recived-order'
 import store from '@/store'
 export interface IRecievedOrderState {
-  recievedOrderSeq: string,
+  recivedOrderSeq: string,
   clientsSeq: string,
   companySeq: string,
   departmentSeq: string,
   details: any[],
   quotationSeq: string,
-  recievedOrderDate: string,
+  recivedOrderDate: string,
   tax: number,
   total: number
 }
 
-@Module({ dynamic: true, store, name: 'recievedOrder' })
+@Module({ dynamic: true, store, name: 'recivedOrder' })
 class RecievedOrder extends VuexModule implements IRecievedOrderState {
-  public recievedOrderSeq = ''
+  public recivedOrderSeq = ''
   public clientsSeq = ''
   public companySeq = ''
   public departmentSeq = ''
   public details:any[] = []
   public quotationSeq = ''
-  public recievedOrderDate = ''
+  public recivedOrderDate = ''
   public tax = 0
   public total = 0
 
   @Mutation
   private SET_RECIEVED_ORDER_ID(id: any){
-    this.recievedOrderSeq = id
+    this.recivedOrderSeq = id
   }
 
   @Mutation
@@ -64,7 +64,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   
   @Mutation
   private SET_RECIEVED_ORDER_DATE(date: any){
-    this.recievedOrderDate = date
+    this.recivedOrderDate = date
   }
 
   @Action
@@ -98,9 +98,9 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   }
 
   @Action
-  public async createReciverdOrder(orderInfo:{clientsSeq: string,companySeq: string, departmentSeq: string, details: any[], quotationSeq: string, recievedOrderDate: string, tax: number, total: number}){
-    let { clientsSeq,companySeq, departmentSeq, details, quotationSeq, recievedOrderDate, tax, total} = orderInfo
-    await createRecivedOrder({clientsSeq: clientsSeq,companySeq: companySeq, departmentSeq: departmentSeq, details: details, quotationSeq: quotationSeq, recievedOrderDate: recievedOrderDate, tax: tax, total: total})
+  public async createReciverdOrder(orderInfo:{clientsSeq: string,companySeq: string, departmentSeq: string, details: any[], quotationSeq: string, recivedOrderDate: string, tax: number, total: number}){
+    let { clientsSeq,companySeq, departmentSeq, details, quotationSeq, recivedOrderDate, tax, total} = orderInfo
+    await createRecivedOrder({clientsSeq: clientsSeq,companySeq: companySeq, departmentSeq: departmentSeq, details: details, quotationSeq: quotationSeq, recivedOrderDate: recivedOrderDate, tax: tax, total: total})
   }
 
 }

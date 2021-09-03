@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.recievedOrder") }}</div>
+    <div>{{ $t("route.recivedOrder") }}</div>
       <el-button
         type="primary"
         style="width:25%; margin-bottom:30px; margin-top:30px;"
         @click.native.prevent="createNewRecievedOrder"
       >
-        {{ $t('recievedOrder.add') }}
+        {{ $t('recivedOrder.add') }}
       </el-button>
   </div>
 </template>
@@ -21,7 +21,7 @@ import '@/assets/custom-theme/index.css'
 export default class extends Vue {
   createNewRecievedOrder(){
     this.$router.push({
-      path: 'save-recieved-order'
+      path: 'save-recived-order'
     }).catch(err => {
       console.warn(err)
     })

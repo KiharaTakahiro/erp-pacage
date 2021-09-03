@@ -2,7 +2,7 @@ export default {
   route: {
     dashboard: 'トップ',
     sales: '販売管理',
-    recievedOrder: '受注管理',
+    recivedOrder: '受注管理',
     quotation: '見積管理',
     newRecievedOrder: '受注表作成',
     OrderDetail: '注文詳細',
@@ -125,7 +125,7 @@ export default {
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
   },
-  recievedOrder: {
+  recivedOrder: {
     add: '受注表作成',
     complete: '完了',
   },
