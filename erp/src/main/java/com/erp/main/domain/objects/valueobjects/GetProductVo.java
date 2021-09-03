@@ -14,16 +14,14 @@ public class GetProductVo {
 	private ProductModel product;
 	
 	public static GetProductVo mapTo(ProductEntity entity) {
+		
 		var vo = new GetProductVo();
 		var model = new ProductModel();
 		model.setProductSeq(entity.getProductSeq());
 		model.setProductName(entity.getName());
-		model.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
-		model.setUnitPrice(entity.getUnitPrice());
-		model.setTaxType(entity.getTaxType());
 		vo.setProduct(model);
-		
+				
 		return vo;
+		
 	}
-
 }

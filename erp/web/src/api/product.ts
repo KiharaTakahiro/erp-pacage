@@ -13,9 +13,23 @@ request({
   data
 })
 
-export const getProduct = (data: JSON) =>
+export const updateProduct = (data: any) =>
+request({
+  url: '/Product/update',
+  method: 'post',
+  data
+})
+
+export const getProduct = (data: any) =>
 request({
   url: '/product/edit',
   method: 'POST',
+  data
+})
+
+export const infoProduct = (data: any) =>
+request({
+  url: '/product/info',
+  method: 'post',
   data
 })

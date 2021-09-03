@@ -41,6 +41,7 @@ import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
+import com.erp.main.domain.objects.valueobjects.GetProductConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
@@ -56,6 +57,7 @@ import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
 import com.erp.main.domain.specification.DepartmentSpec;
+import com.erp.main.domain.specification.ProductSpec;
 
 /**
  * マスターの管理用のサービス
@@ -402,6 +404,68 @@ public class MasterService {
 		return vo;
 	}
 	
+	
+	/**
+	 * 商品詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetProductVo getProductVo(Long productSeq){
+		Optional<ProductEntity> product = productRepository.findById(productSeq);
+		if(product.isEmpty()) {
+			throw new AppException(String.format("該当の取引先を取得できませんでした。 productsSeq: %s", productSeq));
+		}
+		
+		return GetProductVo.mapTo(product.get());
+	
+	}
+	
+	/**
+	 * 商品一覧取得
+	 * @param vo
+	 */
+	public GetProductsVo getProductsVo(GetProductConditionsVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<ProductEntity> spec = Specification.where(
+				ProductSpec.productSeqEquals(condition.getProductSeq()))
+				.and(ProductSpec.productNameEquals(condition.getProductName()))
+				.and(ProductSpec.unitPriceFrom(condition.getUnitPriceFrom()))
+				.and(ProductSpec.unitPriceTo(condition.getUnitPriceTo()))
+				.and(ProductSpec.purchaseUnitPriceFrom(condition.getPurchaseUnitPriceFrom()))
+				.and(ProductSpec.purchaseUnitPriceTo(condition.getPurchaseUnitPriceTo()));
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		
+		Page<ProductEntity> pages = this.productRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		List<ProductModel> products = pages.get().map(e -> {
+			var product = new ProductModel();
+			// 商品seq
+			product.setProductSeq(e.getProductSeq());
+			// 商品名
+			product.setProductName(e.getName());
+			// 仕入れ料金
+			product.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
+			// 税区分
+			product.setTaxType(e.getTaxType());
+			// 定価
+			product.setUnitPrice(e.getUnitPrice());
+			return product;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetProductsVo();
+		// トータルぺ―ジ
+		vo.setTotalItemsNum(pages.getTotalElements());
+		// 取引先リストの設定
+		vo.setProduct(products);
+		
+		return vo;
+	}
 	/*
 	 * 商品一覧のプルダウン
 	 * @params vo
@@ -419,15 +483,15 @@ public class MasterService {
 		
 		for(ProductEntity entity: entitys) {		
 			var product = new ProductModel();
-			//
+			// 商品seq
 			product.setProductSeq(entity.getProductSeq());
-			//
+			// 商品名
 			product.setProductName(entity.getName());
-			//
+			// 仕入れ料金
 			product.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
-			//
+			// 税区分
 			product.setTaxType(entity.getTaxType());
-			//
+			// 定価
 			product.setUnitPrice(entity.getUnitPrice());
 			
 			products.add(product);
@@ -440,20 +504,6 @@ public class MasterService {
 		
 		return vo;
 	}
-	
-	/**
-	 * 商品詳細画面のレスポンス
-	 * @param vo
-	 */
-	@Transactional
-	public GetProductVo getProductVo(Long productSeq){
-		Optional<ProductEntity> client = productRepository.findById(productSeq);
-		if(client.isEmpty()) {
-			throw new AppException(String.format("該当の商品を取得できませんでした。 productSeq: %s", productSeq));
-		}
-		
-		return GetProductVo.mapTo(client.get());
-	
-	}
+			
 }
 

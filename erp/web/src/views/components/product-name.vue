@@ -11,8 +11,10 @@
     <el-input
       v-model="name"
       :placeholder="$t('product.name')"
-      name="productName"
       type="text"
+      maxlength="50"
+      tabindex="1"
+      autocomplete="on"
     />
     </el-form-item>
   </div>  
