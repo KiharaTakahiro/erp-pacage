@@ -50,16 +50,7 @@
       :date="detail.deriveryDate"
       @dateSubmit="dateRecive"
       />
-      
-    <el-table
-      :data="recivedOrder.detail"
-      style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="Date"
-        width="180">
-      </el-table-column>
-    </el-table>
+      <div class="detail"></div>
 
 
       <div class="complete-btn">
@@ -203,6 +194,10 @@ export default class extends Vue {
   
   jsonCommit(){
     RecievedOrderModule.pushDetail(this.detail)
+    // var ComponentClass = Vue.extend(clientsPullDown)
+    // var instance = new ComponentClass()
+    // instance.$mount()
+    // $('.detail').append(instance.$el)
   }
 
 
