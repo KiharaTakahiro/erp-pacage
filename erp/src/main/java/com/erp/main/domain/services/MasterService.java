@@ -413,7 +413,7 @@ public class MasterService {
 	public GetProductVo getProductVo(Long productSeq){
 		Optional<ProductEntity> product = productRepository.findById(productSeq);
 		if(product.isEmpty()) {
-			throw new AppException(String.format("該当の取引先を取得できませんでした。 productsSeq: %s", productSeq));
+			throw new AppException(String.format("該当の商品を取得できませんでした。 productsSeq: %s", productSeq));
 		}
 		
 		return GetProductVo.mapTo(product.get());

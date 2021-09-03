@@ -21,7 +21,7 @@ const salesRoutes: RouteConfig = {
       path: 'recived-order',
       component: () => import('@/views/sales/recived-order.vue'),
       name: 'recivedOrder',
-      meta: { title: 'recivedOrder'}
+      meta: { title: 'recivedOrder' }
     },
     {
       path: 'save-recived-order',
@@ -34,7 +34,7 @@ const salesRoutes: RouteConfig = {
       component: () => import('@/views/sales/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
-    },
+    }
   ]
 }
 

@@ -101,14 +101,8 @@ public class SystemController {
 	@PostMapping("/product/edit")
 	public ProductResponse getClient(@RequestBody GetProductRequest request) {
 		Long id = request.getProductSeq(); 
-		var vo = this.masterService.getProductVo(id).getProduct();
-		var response = new ProductResponse();
-		response.setProductSeq(vo.getProductSeq());
-		response.setProductName(vo.getProductName());
-		response.setUnitPrice(vo.getUnitPrice());
-		response.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
-		response.setTaxType(vo.getTaxType());
-		return response;
+		var vo = this.masterService.getProductVo(id);
+		return ProductResponse.mapTo(vo);
 		
 	}
 	

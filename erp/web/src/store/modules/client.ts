@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { createClient, getClient, updateClient, infoClient } from '@/api/client'
+import { createClient, getClient, updateClient } from '@/api/client'
 import store from '@/store'
 export interface IClientState {
   id: string,

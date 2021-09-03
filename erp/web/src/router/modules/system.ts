@@ -16,11 +16,11 @@ const systemRoutes: RouteConfig = {
       component: () => import('@/views/system/users.vue'),
       name: 'users',
       meta: { title: 'users' }
-    },{
+    }, {
       path: 'save-users',
       component: () => import('@/views/system/save-users.vue'),
       name: 'users',
-      meta: { title: 'createUsre', hidden: true  }
+      meta: { title: 'createUsre', hidden: true }
     },
     {
       path: 'clinet',
@@ -32,13 +32,13 @@ const systemRoutes: RouteConfig = {
       path: 'save-client',
       component: () => import('@/views/system/save-client.vue'),
       name: 'save-client',
-      meta: {title: 'newClient', hidden: true },
+      meta: { title: 'newClient', hidden: true }
     },
     {
       path: 'edit-client',
       component: () => import('@/views/system/edit-client.vue'),
       name: 'edit-client',
-      meta: {title: 'editClient', hidden: true },
+      meta: { title: 'editClient', hidden: true }
     },
     {
       path: 'supplier-product',
@@ -68,14 +68,14 @@ const systemRoutes: RouteConfig = {
       path: 'save-product',
       component: () => import('@/views/system/save-product.vue'),
       name: 'save-product',
-      meta: { title: 'newProduct' , hidden: true }
+      meta: { title: 'newProduct', hidden: true }
     },
     {
       path: 'edit-product',
       component: () => import('@/views/system/edit-product.vue'),
       name: 'edit-product',
-      meta: { title: 'editProduct' , hidden: true }
-    },
+      meta: { title: 'editProduct', hidden: true }
+    }
 
   ]
 }

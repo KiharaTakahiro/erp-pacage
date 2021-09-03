@@ -14,7 +14,7 @@
         @productNameSubmit="productNameRecieve"
         />
       <tax-type-pulldown
-        :taxTypePulldown="product.taxType"
+        :value="product.taxType"
         @taxTypePulldownSubmit="taxTypePulldownRecieve"
         />
       <purchase-unit-price

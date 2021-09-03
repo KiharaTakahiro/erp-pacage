@@ -253,7 +253,7 @@ export default class extends Vue {
     }
     ProductModule.EditProduct(this.product)
     this.$router.push({
-    path:'edit-product'
+      path: 'edit-product'
     }).catch(err => {
       console.warn(err)
     })

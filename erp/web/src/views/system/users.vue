@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -22,7 +22,7 @@ export default class extends Vue {
   onClickButton() {
     // ボタンが押されたときの処理
     this.$router.push({
-    path:'save-users'
+      path: 'save-users'
     }).catch(err => {
       console.warn(err)
     })

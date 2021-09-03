@@ -93,18 +93,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
-import backBtn from "@/views/components/back-button.vue"
+import backBtn from '@/views/components/back-button.vue'
 import { infoSupplierProduct } from '@/api/supplier-product'
-
 
 @Component({
   name: 'SupplierProduct',
-  components :{
+  components: {
     backBtn
   }
 })
 export default class extends Vue {
-
 
   supplierProduct = {
     id: ''
