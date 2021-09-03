@@ -460,7 +460,7 @@ public class MasterService {
 		// 返却用のVo生成
 		var vo = new GetProductsVo();
 		// トータルぺ―ジ
-		vo.setMaxpage(pages.getTotalPages());
+		vo.setTotalItemsNum(pages.getTotalElements());
 		// 取引先リストの設定
 		vo.setProduct(products);
 		

@@ -19,6 +19,10 @@ public class GetProductsRequest {
     private String productName;
     // 仕入料金
 	private Long purchaseUnitPrice;
+    // 仕入料金From
+	private Long purchaseUnitPriceFrom;
+    // 仕入料金To
+	private Long purchaseUnitPriceTo;
     // 定価
 	private Long unitPrice;
 	// 税区分
@@ -32,10 +36,22 @@ public class GetProductsRequest {
         var vo = new GetProductConditionsVo();
         // ページ番号
         vo.setPageNo(this.getPageNo());
-        // 取引先SEQ
+        // 商品SEQ
         vo.setProductSeq(this.getProductSeq());
-        // 取引先名
+        // 商品名
         vo.setProductName(this.getProductName());
+        // 仕入料金
+//    	vo.setPurchaseUnitPrice(this.getPurchaseUnitPrice());
+        // 仕入料金From
+    	vo.setPurchaseUnitPriceFrom(this.getPurchaseUnitPrice());
+        // 仕入料金To
+    	vo.setPurchaseUnitPriceTo(this.getPurchaseUnitPrice());
+        // 定価
+//    	vo.setUnitPrice(this.getPurchaseUnitPrice());
+    	// 税区分
+    	vo.setTaxType(this.getTaxType());
+        
+        
         return vo;
     }
 }

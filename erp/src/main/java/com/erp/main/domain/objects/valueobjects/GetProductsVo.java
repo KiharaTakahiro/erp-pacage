@@ -15,6 +15,6 @@ public class GetProductsVo {
 	// 取引先リスト
 	List<ProductModel> product;
 	// 全体のページ数
-	Integer maxpage;
+	Long totalItemsNum;
 
 }

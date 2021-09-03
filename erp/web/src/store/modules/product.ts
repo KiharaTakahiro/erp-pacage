@@ -74,6 +74,9 @@ class Product extends VuexModule implements IProductState{
     const { data } = await getProduct({ productSeq: id })
     this.SET_ID(data.productSeq)
     this.SET_NAME(data.productName)
+    this.SET_PURCHACEUNITPRICE(data.purchaseUnitPrice)
+    this.SET_UNITPRICE(data.unitPrice)
+    this.SET_TAXTYPE(data.taxType)
   }
 
   @Action({ rawError: true })

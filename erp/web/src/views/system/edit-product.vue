@@ -70,32 +70,30 @@ export default class extends Vue {
     unitPrice: ProductModule.unitPrice
   }
 
-  // private conpanyName(name: any): void {
-  //   this.$store.commit('SET_NAME', name)
-  //   this.product.name = ProductModule.name
-  // }
 
   private updateProduct(){
-    (this.$refs.product as ElForm).validate(async(valid: boolean) => {
-      if(valid){
-        await ProductModule.UpdateProduct(this.product)
-        this.$router.push({
-          path: 'product' 
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createProduct').toString(),
-      type: 'success'
-    })
-      }else {
-        this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
-        })
-        return false
-      }
-    })
+    
+    console.log(this.product)
+    // (this.$refs.product as ElForm).validate(async(valid: boolean) => {
+    //   if(valid){
+    //     await ProductModule.UpdateProduct(this.product)
+    //     this.$router.push({
+    //       path: 'product' 
+    //     }).catch(err => {
+    //       console.warn(err)
+    //     })
+    //   this.$message({
+    //   message: this.$t('components.createProduct').toString(),
+    //   type: 'success'
+    // })
+    //   }else {
+    //     this.$message({
+    //     message: this.$t('components.validation').toString(),
+    //     type: 'error'
+    //     })
+    //     return false
+    //   }
+    // })
   }
 }
 
