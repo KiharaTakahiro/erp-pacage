@@ -118,6 +118,9 @@ public class CreateRecivedOrderRequest {
 			detailVo.setDiscount(detail.getDiscount());
 			// 状態
 			detailVo.setStatus(detail.getStatus());
+			// ロットSeq
+			detailVo.setLotSeq(detail.getLotSeq());
+			// リストに追加
 			detailVos.add(detailVo);
 		}
 		
