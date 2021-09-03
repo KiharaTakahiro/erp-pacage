@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.erp.main.app.annotations.datevalidation.DateValidation;
 import com.erp.main.domain.objects.valueobjects.CreateQuotationVo;
 import com.erp.main.domain.objects.valueobjects.CreateQuotationVo.CreateQuotationDetailVo;
 
@@ -34,7 +33,6 @@ public class CreateQuotationRequest {
 	private String quotationNo;
 	
 	// 作成日
-	@DateValidation
 	private String createDate;
 	
 	// 件名
