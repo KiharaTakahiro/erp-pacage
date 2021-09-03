@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.erp.main.app.annotations.datevalidation.DateValidation;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 
@@ -33,7 +32,6 @@ public class CreateRecivedOrderRequest {
 	private Long quotationSeq;
 	
 	// 受注日
-	@DateValidation
 	private String recivedOrderDate;
 	
 	// 消費税
@@ -56,7 +54,7 @@ public class CreateRecivedOrderRequest {
 	public static class CreateRecivedOrderDetailRequest {
 
 		// 配送日
-		@DateValidation
+		@NotNull
 		private String deriveryDate;
 		
 		// 値引
@@ -120,6 +118,9 @@ public class CreateRecivedOrderRequest {
 			detailVo.setDiscount(detail.getDiscount());
 			// 状態
 			detailVo.setStatus(detail.getStatus());
+			// ロットSeq
+			detailVo.setLotSeq(detail.getLotSeq());
+			// リストに追加
 			detailVos.add(detailVo);
 		}
 		

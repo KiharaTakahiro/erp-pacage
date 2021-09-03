@@ -81,7 +81,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // loginIdからtokenを設定してヘッダにセットする
         String token = Jwts.builder()
                 .setSubject(((AuthUserVo)auth.getPrincipal()).getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 300000L))
+                .setExpiration(new Date(System.currentTimeMillis() + 30000000L))
                 .signWith(SignatureAlgorithm.HS512, "APP_KEY")
                 .compact();
         res.addHeader(WebSecurityConfig.AUTH_KEY_NAME,  WebSecurityConfig.TOKEN_PREFIX + token);

@@ -2,9 +2,10 @@ export default {
   route: {
     dashboard: 'トップ',
     sales: '販売管理',
-    recievedOrder: '受注管理',
+    recivedOrder: '受注管理',
     quotation: '見積管理',
     newRecievedOrder: '受注表作成',
+    OrderDetail: '注文詳細',
     invoice: '請求管理',
     system: 'システム設定',
     users: 'ユーザ管理',
@@ -124,7 +125,7 @@ export default {
     check0: '会社が選択されていません',
     check2: '会社が二つ以上選択されています'
   },
-  recievedOrder: {
+  recivedOrder: {
     add: '受注表作成',
     complete: '完了',
   },
@@ -172,6 +173,7 @@ export default {
     imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
     changeLanguageTips: '言語切り替えの成功',
     createClients :'取引先の登録に成功',
+    createRecive: '受注票の作成に成功',
     createProduct :'商品の登録に成功',
     validation :'入力内容を確認してください'
   },

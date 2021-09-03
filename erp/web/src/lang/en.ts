@@ -2,8 +2,9 @@ export default {
   route: {
     dashboard: 'Dashboard',
     sales: 'Sales',
-    recievedOrder: 'Recieved Order',
+    recivedOrder: 'Recieved Order',
     newRecievedOrder: 'Create New Recived Order',
+    OrderDetail: 'Order Detail',
     quotation: 'Quotation',
     invoice: 'Invoice',
     system: 'Setting',
@@ -116,7 +117,7 @@ export default {
     check0: 'No company selected',
     check2: 'Two or more companies have been selected'
   },
-  recievedOrder: {
+  recivedOrder: {
     add: 'Create New Recieved Order',
     complete: 'complete',
   },
@@ -147,6 +148,7 @@ export default {
     imageUploadTips: 'Since I was using only the vue@1 version, and it is not compatible with mockjs at the moment, I modified it myself, and if you are going to use it, it is better to use official version.',
     changeLanguageTips: 'Switch Language Success',
     createClients :'Create Client Success',
+    createRecive: 'Create Recived Order Success',
     validation :'Please check your entries'
   },
   table: {
