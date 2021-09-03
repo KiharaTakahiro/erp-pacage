@@ -18,4 +18,12 @@ request({
   url: '/product/edit',
   method: 'POST',
   data
+  
+})
+
+export const infoProduct = (data: any) =>
+request({
+  url: '/product/info',
+  method: 'post',
+  data
 })
