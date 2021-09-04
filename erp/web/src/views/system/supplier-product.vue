@@ -34,7 +34,7 @@
           size="small"
           type="info"
           style="width:45%; margin-top:10px;"
-          @click.native.prevent="resetList"
+          @click.native.prevent="resetBtn"
         >
           {{ $t('route.reset') }}
         </el-button>
@@ -94,7 +94,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
-import { infoSupplierProduct } from '@/api/supplier-product'
+import { SupplierProductModule } from '@/store/modules/supplier-product-list'
 
 @Component({
   name: 'SupplierProduct',
@@ -106,7 +106,7 @@ export default class extends Vue {
 
   supplierProduct = {
     id: ''
-    }
+  }
   
   checkLength = 0
 
@@ -114,36 +114,23 @@ export default class extends Vue {
   targetSupplierProductSeq = ''
   searchName = ''
 
-  
-  private supplierProductData = [{}]
-
   created() {
     this.getList()
   }
-  
 
   private async getList() {
-    const { data } = await infoSupplierProduct({})
-    this.supplierProductData = data.supplierProducts
+    let searchData = {
+      pageNo: this.pageNo - 1,
+      supplierProductSeq: this.targetSupplierProductSeq == '' ? null : this.targetSupplierProductSeq,
+      supplierProductName: this.searchName == '' ? null : this.searchName
+    }
+    SupplierProductModule.SupplierProductList(searchData)
   }
-  private async resetList(){
-    const { data } = await infoSupplierProduct({})
-    this.supplierProductData = data.supplierProducts
+  private async resetBtn(){
     this.targetSupplierProductSeq = ""
     this.searchName = ""
-  }
-
-  private async checkSaerch(){
-      if(this.targetSupplierProductSeq != '' && this.searchName == ''){
-      const { data } = await infoSupplierProduct({supplierProductSeq : this.targetSupplierProductSeq})
-      this.supplierProductData = data.supplierProducts
-    } else if (this.targetSupplierProductSeq == '' && this.searchName != ''){
-      const { data } = await infoSupplierProduct({supplierProductName : this.searchName})
-      this.supplierProductData = data.supplierProducts
-    }else if (this.targetSupplierProductSeq != '' && this.searchName != ''){
-      const { data } = await infoSupplierProduct({supplierProductName : this.searchName,supplierProductSeq : this.targetSupplierProductSeq})
-      this.supplierProductData = data.supplierProducts
-    }  
+    this.pageNo = 1
+    this.getList()
   }
 
   private testLog(val: any){
@@ -154,7 +141,7 @@ export default class extends Vue {
   createSupplierProductBtn() {
     // ボタンが押されたときの処理
     this.$router.push({
-    path:'save-supplier-products'
+      path:'save-supplier-product'
     }).catch(err => {
       console.warn(err)
     })

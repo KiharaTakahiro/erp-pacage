@@ -120,6 +120,7 @@ export default class extends Vue {
   client = {
     id: ''
   }
+
   // チェックのバリデーション用の数字
   checkLength = 0
 
@@ -158,7 +159,7 @@ export default class extends Vue {
     
     // 検索パラメタを生成する
     let searchData = { 
-      pageNo: this.pageNo - 1, 
+      pageNo: this.pageNo - 1,
       clientsSeq : this.targetClientSeq == '' ? null : this.targetClientSeq,
       clientsName: this.searchName == '' ? null : this.searchName
     }
@@ -199,7 +200,7 @@ export default class extends Vue {
    */
   createClientBtn() {
     this.$router.push({
-    path:'save-client'
+      path:'save-client'
     }).catch(err => {
       console.warn(err)
     })

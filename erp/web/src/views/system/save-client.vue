@@ -7,18 +7,14 @@
       ref="client"
       :model="client"
       autocomplete="on"
-      label-position="left"
-    >
+      label-position="left">
       <company-name
-        :companyName="client.name"
-        @conpanyNameValue='conpanyName'
-        />
+        :companyName.sync="client.name"/>
       <div class="complete-btn">
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent="createClient"
-          >
+            @click.native.prevent="createClient">
             {{ $t('client.complete') }}
         </el-button>
       </div>
@@ -27,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
@@ -44,12 +40,6 @@ export default class extends Vue {
   client = {
     name: ClientModule.name
   }
-
-  private conpanyName(name: any): void {
-    ClientModule.setClientsName(name)
-    this.client.name = ClientModule.name
-    }
-
 
   private createClient(){
     (this.$refs.client as ElForm).validate(async(valid: boolean) => {

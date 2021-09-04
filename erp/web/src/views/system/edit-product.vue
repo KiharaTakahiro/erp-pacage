@@ -12,10 +12,20 @@
         :productName.sync="product.productName"/>
       <tax-type-pulldown
         :taxTypeValue.sync="product.taxType"/>
-      <purchase-unit-price
-        :purchaseUnitPrice.sync="product.purchaseUnitPrice"/>
-      <unit-price
-        :unitPrice.sync="product.unitPrice"/>
+      <money
+        label="仕入料金"
+        prop="purchaseUnitPrice"
+        :required="true"
+        :placeholder="$t('product.purchaseUnitPrice')"
+        :priceValue.sync="product.purchaseUnitPrice"
+        />
+      <money
+        label="定価"
+        prop="unitPrice"
+        :required="true"
+        :placeholder="$t('product.unitPrice')"
+        :priceValue.sync="product.unitPrice"
+        />
       <div class="complete-btn">
         <el-button
             type="primary"
@@ -34,8 +44,8 @@ import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import productName  from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
-import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
-import unitPrice from '@/views/components/unit-price.vue'
+import money from '@/views/components/money.vue'
+
 import { Form as ElForm } from 'element-ui'
 
 @Component({
@@ -43,8 +53,7 @@ import { Form as ElForm } from 'element-ui'
   components :{
     productName,
     taxTypePulldown,
-    purchaseUnitPrice,
-    unitPrice
+    money
   }
 })
 export default class extends Vue {

@@ -19,25 +19,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'CompanyName'
 })
 export default class extends Vue {
-
-  @Prop({ default: '' })
-  companyName!: string;
-
-  get name() {
-    return this.companyName
-  }
-
-  set name(value) {
-    this.$emit('conpanyNameValue', value)
-  }
-
+  @PropSync('companyName', { type: String }) name!: string
 }
 
 </script>

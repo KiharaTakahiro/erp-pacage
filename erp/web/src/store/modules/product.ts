@@ -57,16 +57,7 @@ class Product extends VuexModule implements IProductState {
   }
 
   @Action
-  public async RestProduct(){
-    this.SET_ID('')
-    this.SET_NAME('')
-    this.SET_PURCHACEUNITPRICE(0)
-    this.SET_UNITPRICE(0)
-    this.SET_TAXTYPE(1)
-  }
-
-  @Action
-  public async CreateProduct(productInfo: { productName: string,  taxType: number, purchaseUnitPrice: bigint, unitPrice: bigint }) {
+  public async CreateProduct(productInfo: { productName: string,  taxType: number, purchaseUnitPrice: number, unitPrice: number }) {
     let { productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
     await createProduct({ productName: productName, taxType: taxType, purchaseUnitPrice: purchaseUnitPrice, unitPrice: unitPrice})

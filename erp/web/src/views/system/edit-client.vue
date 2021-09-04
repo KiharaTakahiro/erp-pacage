@@ -10,8 +10,7 @@
       label-position="left"
     >
       <company-name
-        :companyName="client.name"
-        @conpanyNameValue='conpanyName'
+        :companyName.sync="client.name"
         />
       <div class="complete-btn">
         <el-button
@@ -44,11 +43,6 @@ export default class extends Vue {
   client = {
     id: ClientModule.id,
     name: ClientModule.name
-  }
-
-  private conpanyName(name: any): void {
-    this.$store.commit('SET_NAME', name)
-    this.client.name = ClientModule.name
   }
 
   private updateClient(){
