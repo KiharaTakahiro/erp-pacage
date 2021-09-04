@@ -7,7 +7,6 @@
     <el-select
       v-model="value"
       :placeholder="$t('product.taxType')"
-      v-on:change="submit"
       >
       <el-option
         v-for="item in options"
@@ -22,20 +21,18 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 import { getCode } from '@/api/system'
 
 @Component({
   name: 'taxTypePulldown'
 })
-
 export default class extends Vue{
 
   options = []
 
-  @Prop({ default: null })
-  value!: number;
+  @PropSync('taxTypeValue', { type: Number }) value!: number
 
   created() {
     this.getCode()
@@ -44,13 +41,7 @@ export default class extends Vue{
   private async getCode(){
     const { data } = await getCode({codeType: "TaxType"})
     this.options = data.codes
-
   }
 
-  @Emit('taxTypePulldownSubmit')
-  submit() {
-    return this.value
-  }
 }
-
 </script>

@@ -131,13 +131,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import backBtn from "@/views/components/back-button.vue"
-import { infoProduct } from '@/api/product'
-
-
 
 @Component({
   name: 'Product',
@@ -229,9 +225,13 @@ export default class extends Vue {
   }
 
   createProductBtn() {
+    // FIXME: 商品編集画面を表示時に商品追加画面を表示すると
+    // 表示されている商品編集画面が初期化されてしまう
+    // 防止するためには新規追加用と編集用で別のstoreをもつべき
     // ボタンが押されたときの処理
+    ProductModule.RestProduct()
     this.$router.push({
-    path:'save-product'
+      path:'save-product'
     }).catch(err => {
       console.warn(err)
     })

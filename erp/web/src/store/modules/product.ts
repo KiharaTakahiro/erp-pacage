@@ -3,55 +3,66 @@ import { createProduct, getProduct, updateProduct, infoProduct } from '@/api/pro
 import store from '@/store'
 
 export interface IProductState {
-  id: string,
+  id: string
   productName: string
   taxType: number
-  purchaseUnitPrice: bigint
-  unitPrice: bigint
+  purchaseUnitPrice: number
+  unitPrice: number
   list: JSON[]
   totalItem: number
 }
 @Module({ dynamic: true, store, name: 'product' })
-class Product extends VuexModule implements IProductState{
+class Product extends VuexModule implements IProductState {
   public id = ''
   public productName = ''
   public taxType = 0
-  public purchaseUnitPrice = 0n
-  public unitPrice = 0n
+  public purchaseUnitPrice = 0
+  public unitPrice = 0
   public list: JSON[] = []
   public totalItem = 0
-  
+
   @Mutation
-  private SET_ID(id: string){
+  private SET_ID(id: string) {
     this.id = id
   }
 
   @Mutation
-  private SET_NAME(productName: string){
+  private SET_NAME(productName: string) {
     this.productName = productName
   }
+  
   @Mutation
-  private SET_TAXTYPE(taxType: number){
+  private SET_TAXTYPE(taxType: number) {
     this.taxType = taxType
   }
+  
   @Mutation
-  private SET_PURCHACEUNITPRICE(purchaseUnitPrice: bigint){
+  private SET_PURCHACEUNITPRICE(purchaseUnitPrice: number) {
     this.purchaseUnitPrice = purchaseUnitPrice
   }
+
   @Mutation
-  private SET_UNITPRICE(unitPrice: bigint){
+  private SET_UNITPRICE(unitPrice: number) {
     this.unitPrice = unitPrice
   }
 
-  
   @Mutation
-  private SET_LIST(list: JSON[]){
+  private SET_LIST(list: JSON[]) {
     this.list = list
   }
 
   @Mutation
   private SET_TOTAL_ITEM(totalItem: number) {
     this.totalItem = totalItem
+  }
+
+  @Action
+  public async RestProduct(){
+    this.SET_ID('')
+    this.SET_NAME('')
+    this.SET_PURCHACEUNITPRICE(0)
+    this.SET_UNITPRICE(0)
+    this.SET_TAXTYPE(1)
   }
 
   @Action
@@ -63,9 +74,7 @@ class Product extends VuexModule implements IProductState{
 
   @Action
   public setProductName(productName: string) {
-    // 公式的にはcommitをしなきゃいけないらしい。（コンポーネントで呼び出すか、ストアで呼び出すかは非同期処理でなければどっちでもいいらしい。）
-    // this.SET_NAME(productName)
-    store.commit('SET_NAME', productName)
+    this.SET_NAME(productName)
   }
 
   @Action({ rawError: true })
@@ -80,14 +89,14 @@ class Product extends VuexModule implements IProductState{
   }
 
   @Action({ rawError: true })
-  public async UpdateProduct(productInfo: { id: string, productName: string,  taxType: number, purchaseUnitPrice: bigint, unitPrice: bigint }) {
+  public async UpdateProduct(productInfo: { id: string, productName: string,  taxType: number, purchaseUnitPrice: number, unitPrice: number }) {
     let {id, productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
     await updateProduct({ productSeq: id, productName: productName, unitPrice: unitPrice, purchaseUnitPrice: purchaseUnitPrice, taxType: taxType})
   }
 
   @Action({ rawError: true })
-  public async ProductList(productInfo: any){
+  public async ProductList(productInfo: any) {
     const { data } = await infoProduct(productInfo)
     this.SET_LIST(data.product)
     this.SET_TOTAL_ITEM(data.totalItemsNum)

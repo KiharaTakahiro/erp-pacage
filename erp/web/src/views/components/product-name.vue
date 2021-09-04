@@ -3,8 +3,8 @@
     <el-form-item
       label="商品名"
       :rules="[
-          {required: true, message:'商品名は必ず入力して下さい。', trigger: 'blur'},
-          {max: 50, message:'50文字以内で入力してください。', trigger: 'blur'}
+          { required: true, message:'商品名は必ず入力して下さい。', trigger: 'blur'},
+          { max: 50, message:'50文字以内で入力してください。', trigger: 'blur'}
         ]"
       prop="productName"
     >
@@ -21,26 +21,16 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'productName'
 })
-export default class extends Vue{
-  @Prop({ default: '' })
-  productName!: string;
+export default class extends Vue {
 
-  
-  get name() {
-    return this.productName
-  }
-
-  set name(value) {
-    this.$emit('productNameSubmit', value)
-  }
+  @PropSync('productName', { type: String }) name!: string
 
 }
-
 
 </script>

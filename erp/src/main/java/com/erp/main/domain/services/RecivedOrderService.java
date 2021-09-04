@@ -22,7 +22,6 @@ import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
-import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 
 /*
@@ -40,8 +39,9 @@ public class RecivedOrderService {
 	/**
 	 * 見積リポジトリ
 	 */
-	@Autowired
-	private QuotationRepository quotationRepository;
+	// TODO: 使われないため一時的にコメントアウトする
+	//	@Autowired
+	//	private QuotationRepository quotationRepository;
 
 	/**
 	 * 商品リポジトリ

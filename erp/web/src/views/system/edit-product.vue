@@ -7,30 +7,20 @@
       ref="product"
       :model="product"
       autocomplete="on"
-      label-position="left"
-    >
-    <product-name
-        :productName="productName"
-        @productNameSubmit="productName"
-        />
+      label-position="left">
+      <product-name
+        :productName.sync="product.productName"/>
       <tax-type-pulldown
-        :value="taxType"
-        @taxTypePulldownSubmit="taxType"
-        />
+        :taxTypeValue.sync="product.taxType"/>
       <purchase-unit-price
-        :purchaseUnitPrice="purchaseUnitPrice"
-        @purchaseUnitPriceSubmit="purchaseUnitPrice"
-        />
+        :purchaseUnitPrice.sync="product.purchaseUnitPrice"/>
       <unit-price
-        :unitPrice="unitPrice"
-        @unitPriceSubmit="unitPrice"
-        />
+        :unitPrice.sync="product.unitPrice"/>
       <div class="complete-btn">
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent="updateProduct"
-          >
+            @click.native.prevent="updateProduct">
             {{ $t('product.complete') }}
         </el-button>
       </div>
@@ -66,22 +56,6 @@ export default class extends Vue {
     purchaseUnitPrice: ProductModule.purchaseUnitPrice,
     unitPrice: ProductModule.unitPrice
   }
-  
-  get productName() {
-    return ProductModule.productName
-  }
-
-  get taxType() {
-    return ProductModule.taxType
-  }
-
-  get purchaseUnitPrice() {
-    return ProductModule.purchaseUnitPrice
-  }
-
-  get unitPrice() {
-    return ProductModule.unitPrice
-  }
 
   private updateProduct(){
     
@@ -107,9 +81,6 @@ export default class extends Vue {
     })
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -135,7 +106,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
 

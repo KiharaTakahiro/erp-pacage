@@ -10,27 +10,18 @@
       label-position="left"
     >
       <product-name
-        :productName="product.productName"
-        @productNameSubmit="productNameRecieve"
-        />
+        :productName.sync="product.productName"/>
       <tax-type-pulldown
-        :taxTypePulldown="product.taxType"
-        @taxTypePulldownSubmit="taxTypePulldownRecieve"
-        />
+        :taxTypeValue.sync="product.taxType"/>
       <purchase-unit-price
-        :purchaseUnitPrice="product.purchaseUnitPrice"
-        @purchaseUnitPriceSubmit="purchaseUnitPriceRecieve"
-        />
+        :purchaseUnitPrice.sync="product.purchaseUnitPrice"/>
       <unit-price
-        :unitPrice="product.unitPrice"
-        @unitPriceSubmit="unitPriceRecieve"
-        />
+        :unitPrice.sync="product.unitPrice"/>
       <div class="complete-btn">
         <el-button
             type="primary"
             style="width:100%;"
-            @click.native.prevent="createProduct"
-          >
+            @click.native.prevent="createProduct">
     
             {{ $t('product.complete') }}
         </el-button>
@@ -40,11 +31,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
-import { component } from 'node_modules/vue/types/umd'
 import productName  from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
@@ -64,25 +53,14 @@ import { ProductModule } from '@/store/modules/product'
 })
 
 export default class extends Vue {
-  private product = {
-    productName:'',
-    taxType:0,
-    purchaseUnitPrice:0n,
-    unitPrice:0n
+  product = {
+    productName: ProductModule.productName,
+    taxType: ProductModule.taxType,
+    purchaseUnitPrice: ProductModule.purchaseUnitPrice,
+    unitPrice: ProductModule.unitPrice
   }
-  private productNameRecieve(productName: string): void{
-    this.product.productName = productName
-  }
-  private taxTypePulldownRecieve(taxType: number): void{
-    this.product.taxType = taxType
-  }
-  private purchaseUnitPriceRecieve(purchaseUnitPrice: bigint): void{
-    this.product.purchaseUnitPrice = purchaseUnitPrice
-  }
-    private unitPriceRecieve(unitPrice: bigint): void{
-    this.product.unitPrice = unitPrice
-  }
-  private createProduct(){    
+
+private createProduct(){    
     (this.$refs.product as ElForm).validate(async(valid: boolean) => {
     if(valid){
       await ProductModule.CreateProduct(this.product)

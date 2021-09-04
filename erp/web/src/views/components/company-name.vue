@@ -21,8 +21,6 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console';
-
 
 @Component({
   name: 'CompanyName'
