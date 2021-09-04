@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +33,7 @@ public class RecivedOrderEntityFileds extends BaseEntityFields {
 	/**
 	 * 見積SEQ
 	 */
-	@NotNull
+	// TODO: not nullの制約は一旦なしにする
 	@Column(name = "QUOTATION_SEQ")
 	private Long quotationSeq;
 	
@@ -53,14 +52,12 @@ public class RecivedOrderEntityFileds extends BaseEntityFields {
 	/**
 	 * 受注日
 	 */
-	@NotNull
 	@Column(name="RECIVED_ORDER_DATE")
 	private String recivedOrderDate;
 	
 	/**
 	 * 取引先SEQ
 	 */
-	@NotNull
 	@Column(name="CLIENTS_SEQ")
 	private Long clientsSeq;
 	

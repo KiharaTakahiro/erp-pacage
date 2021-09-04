@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
-import javax.validation.constraints.NotNull;
 
 import com.erp.main.domain.common.enums.RacivedOrderStatus;
 import com.erp.main.domain.common.enums.RacivedOrderStatus.RacivedOrderStatusConverter;
@@ -40,14 +39,12 @@ public class RecivedOrderDetailEntityFileds extends BaseEntityFields {
 	/**
 	 * 受注SEQ
 	 */
-	@NotNull
 	@Column(name = "RECIVED_ORDER_SEQ")
 	private Long recivedOrderSeq;
 
 	/**
 	 * ロットSEQ
 	 */
-	@NotNull
 	@Column(name = "LOT_SEQ")
 	private Long lotSeq;
 
@@ -60,29 +57,24 @@ public class RecivedOrderDetailEntityFileds extends BaseEntityFields {
 	/**
 	 * 数量
 	 */
-	@NotNull
 	@Column(name="QUANTITY")
 	private Integer quantity;
 	
 	/**
 	 * 値引
 	 */
-	@NotNull
 	@Column(name="DISCOUNT")
 	private Long discount;
 	
 	/**
 	 * 納期
 	 */
-	@NotNull
 	@Column(name="DERIVERY_DATE")
 	private String deriveryDate;
 	
 	/**
 	 * 受注ステータス
 	 */
-	// TODO: Enumに変更する
-	@NotNull
 	@Column(name="STATUS")
 	@Convert(converter = RacivedOrderStatusConverter.class)
 	@Enumerated(EnumType.ORDINAL)

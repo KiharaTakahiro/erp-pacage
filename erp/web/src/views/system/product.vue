@@ -106,7 +106,7 @@
       <div class="page">
         <el-pagination
             background
-            page-size=15
+            :page-size=15
             @current-change="handleCurrentChange"
             layout="prev, pager, next"
             :total="totalItemsNum"
@@ -193,7 +193,7 @@ export default class extends Vue {
       unitPriceFrom : this.serchUnitPriceFrom == '' ? null : this.serchUnitPriceFrom,
       unitPriceTo : this.serchUnitPriceTo == '' ? null : this.serchUnitPriceTo
     }
-    console.log(searchData)
+
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
   }

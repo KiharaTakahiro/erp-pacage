@@ -1,5 +1,5 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import {  createProduct, getProduct, updateProduct, infoProduct } from '@/api/product'
+import { createProduct, getProduct, updateProduct, infoProduct } from '@/api/product'
 import store from '@/store'
 
 export interface IProductState {
@@ -81,9 +81,9 @@ class Product extends VuexModule implements IProductState{
 
   @Action({ rawError: true })
   public async UpdateProduct(productInfo: { id: string, productName: string,  taxType: number, purchaseUnitPrice: bigint, unitPrice: bigint }) {
-    let {id, productName } = productInfo
+    let {id, productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
-    await updateProduct({ productName: productName, productsSeq: id })
+    await updateProduct({ productSeq: id, productName: productName, unitPrice: unitPrice, purchaseUnitPrice: purchaseUnitPrice, taxType: taxType})
   }
 
   @Action({ rawError: true })

@@ -46,6 +46,7 @@ import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
+import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -264,6 +265,7 @@ public class MasterService {
 	 * @param condition
 	 * @return
 	 */
+	@Transactional
 	public GetClientsVo getClientsVo(GetClientsConditionsVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
@@ -302,6 +304,7 @@ public class MasterService {
 	 * クライアント一覧のプルダウン
 	 * @params vo
 	 */
+	@Transactional
 	public GetClientsVo pullDownClients() {
 		
 		// ソートの設定
@@ -335,6 +338,7 @@ public class MasterService {
 	 * 会社一覧のプルダウン
 	 * @params vo
 	 */
+	@Transactional
 	public GetCompanysVo pullDownCompany() {
 		
 		// ソートの設定
@@ -368,6 +372,7 @@ public class MasterService {
 	 * 部署一覧のプルダウン
 	 * @params vo
 	 */
+	@Transactional
 	public GetDepartmentsVo pullDownDepartment(GetDepartmentConditionsVo condition) {
 		// 検索条件の設定
 		Specification<DepartmentEntity> spec = Specification.where(
@@ -424,6 +429,7 @@ public class MasterService {
 	 * 商品一覧取得
 	 * @param vo
 	 */
+	@Transactional
 	public GetProductsVo getProductsVo(GetProductConditionsVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
@@ -466,10 +472,12 @@ public class MasterService {
 		
 		return vo;
 	}
+	
 	/*
 	 * 商品一覧のプルダウン
 	 * @params vo
 	 */
+	@Transactional
 	public GetProductsVo pullDownProduct() {
 		
 		// ソートの設定
@@ -503,6 +511,25 @@ public class MasterService {
 		vo.setProduct(products);
 		
 		return vo;
+	}
+	
+	/**
+	 * 商品更新処理
+	 * @param vo
+	 */
+	@Transactional
+	public void updateProducts(UpdateProductVo vo) {
+		// 商品を取得
+		var product= this.productRepository.findById(vo.getProduct().getProductSeq());
+		
+		// 対象の商品が取得できない場合はエラー
+		if(product.isEmpty()) {
+			throw new AppException(String.format("該当の商品を取得できませんでした。 productSeq: %s", vo.getProduct().getProductSeq()));			
+		}
+		
+		var productEntity = product.get();
+		productEntity.update(vo);
+		this.productRepository.save(productEntity);
 	}
 			
 }

@@ -15,7 +15,7 @@ request({
 
 export const updateProduct = (data: any) =>
 request({
-  url: '/Product/update',
+  url: '/product/update',
   method: 'post',
   data
 })

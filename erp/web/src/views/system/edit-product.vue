@@ -10,20 +10,20 @@
       label-position="left"
     >
     <product-name
-        :productName="product.productName"
-        @productNameSubmit="productNameRecieve"
+        :productName="productName"
+        @productNameSubmit="productName"
         />
       <tax-type-pulldown
-        :value="product.taxType"
-        @taxTypePulldownSubmit="taxTypePulldownRecieve"
+        :value="taxType"
+        @taxTypePulldownSubmit="taxType"
         />
       <purchase-unit-price
-        :purchaseUnitPrice="product.purchaseUnitPrice"
-        @purchaseUnitPriceSubmit="purchaseUnitPriceRecieve"
+        :purchaseUnitPrice="purchaseUnitPrice"
+        @purchaseUnitPriceSubmit="purchaseUnitPrice"
         />
       <unit-price
-        :unitPrice="product.unitPrice"
-        @unitPriceSubmit="unitPriceRecieve"
+        :unitPrice="unitPrice"
+        @unitPriceSubmit="unitPrice"
         />
       <div class="complete-btn">
         <el-button
@@ -39,17 +39,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console'
-import { toNamespacedPath } from 'node:path'
 import productName  from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
 import unitPrice from '@/views/components/unit-price.vue'
+import { Form as ElForm } from 'element-ui'
 
 @Component({
   name: 'Product-save',
@@ -69,31 +66,45 @@ export default class extends Vue {
     purchaseUnitPrice: ProductModule.purchaseUnitPrice,
     unitPrice: ProductModule.unitPrice
   }
+  
+  get productName() {
+    return ProductModule.productName
+  }
 
+  get taxType() {
+    return ProductModule.taxType
+  }
+
+  get purchaseUnitPrice() {
+    return ProductModule.purchaseUnitPrice
+  }
+
+  get unitPrice() {
+    return ProductModule.unitPrice
+  }
 
   private updateProduct(){
     
-    console.log(this.product)
-    // (this.$refs.product as ElForm).validate(async(valid: boolean) => {
-    //   if(valid){
-    //     await ProductModule.UpdateProduct(this.product)
-    //     this.$router.push({
-    //       path: 'product' 
-    //     }).catch(err => {
-    //       console.warn(err)
-    //     })
-    //   this.$message({
-    //   message: this.$t('components.createProduct').toString(),
-    //   type: 'success'
-    // })
-    //   }else {
-    //     this.$message({
-    //     message: this.$t('components.validation').toString(),
-    //     type: 'error'
-    //     })
-    //     return false
-    //   }
-    // })
+    (this.$refs.product as ElForm).validate(async(valid: boolean) => {
+      if(valid){
+        await ProductModule.UpdateProduct(this.product)
+        this.$router.push({
+          path: 'product' 
+        }).catch(err => {
+          console.warn(err)
+        })
+      this.$message({
+      message: this.$t('components.createProduct').toString(),
+      type: 'success'
+    })
+      }else {
+        this.$message({
+        message: this.$t('components.validation').toString(),
+        type: 'error'
+        })
+        return false
+      }
+    })
   }
 }
 
