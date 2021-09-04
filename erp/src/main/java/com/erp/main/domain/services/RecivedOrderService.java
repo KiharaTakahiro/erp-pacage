@@ -25,13 +25,10 @@ import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /*
  * 受注のサービス
  * @author nagato
  */
-@Slf4j
 @Service
 public class RecivedOrderService {
 	/*
