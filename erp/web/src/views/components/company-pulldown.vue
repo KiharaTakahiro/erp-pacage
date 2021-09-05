@@ -12,7 +12,7 @@
           }
         ]"
       >
-        <el-select v-model="comSeq" filterable clearable placeholder="会社名">
+        <el-select :value="comSeq" @input="changeCompany" filterable clearable placeholder="会社名">
           <el-option
             v-for="company in companys"
             :key="company.companySeq"
@@ -57,8 +57,8 @@ import { pullDownCompany, pullDownDepartment } from '@/api/company'
   components: {}
 })
 export default class extends Vue {
-  @PropSync('companySeq', { type: String }) comSeq!: string
-  @PropSync('departmentSeq', { type: String }) depSeq!: string
+  @PropSync('companySeq', { type: [String, Number] }) comSeq!: string
+  @PropSync('departmentSeq', { type: [String, Number] }) depSeq!: string
 
   companys = [{}]
   departments = [{}]
@@ -69,6 +69,11 @@ export default class extends Vue {
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
+  }
+
+  changeCompany(value: any){
+    this.comSeq = value
+    this.checkDepartment(value)
   }
 
   private async checkDepartment(companySeq: any) {

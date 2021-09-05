@@ -42,7 +42,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="4">
-        <date-form :date="dateVal" :label="haisoubi" @dateSubmit="dateRecive" />
+        <date-form :date.sync="dateValue" label="配送日" />
         <!-- <el-form-item
         label="配送日"
         >
@@ -92,8 +92,6 @@ export default class extends Vue {
   products = [{}]
   // 単価
   price = 0
-  // ラベル名
-  haisoubi = '配送日'
 
   //商品Seq
   @Prop({ default: '' })
@@ -167,22 +165,19 @@ export default class extends Vue {
     return status
   }
 
-  //配送日用のゲッター
-  get dateVal() {
+  get dateValue() {
     return this.date
   }
-  //配送日況用セッター
-  set dateVal(date) {
-    this.dateEmit(date)
+
+  set dateValue(value) {
+    this.date = value
+    this.dateEmit(value)
   }
-  //配送日用エミット
+
+　//配送日用エミット
   @Emit('dateSubmit')
   dateEmit(date: any) {
     return date
-  }
-  //日付のエミットをエミット
-  private dateRecive(date: any) {
-    this.dateEmit(date)
   }
 
   // 商品の情報問合せ

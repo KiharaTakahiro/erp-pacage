@@ -3,7 +3,7 @@
     <el-date-picker
       v-model="dateVal"
       type="date"
-      v-bind:placeholder="label"
+      :placeholder="label"
       :clearable="false"
     >
     </el-date-picker>
@@ -18,7 +18,7 @@ import '@/assets/custom-theme/index.css'
   name: 'dateForm'
 })
 export default class extends Vue {
-  @PropSync('date', { type: String }) dateSubmit!: string
+  @PropSync('date', { type: String }) dateVal!: string
 
   @Prop({ default: '日付' })
   label!: string
