@@ -47,7 +47,7 @@ class Client extends VuexModule implements IClientState {
   }
 
   @Action({ rawError: true })
-  public async UpdateClient(clientInfo: { id: string; name: string }) {
+  public async UpdateClient(clientInfo: { id: string, name: string }) {
     let { id, name } = clientInfo
     name = name.trim()
     await updateClient({ clientsName: name, clientsSeq: id })

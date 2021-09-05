@@ -4,9 +4,9 @@
       {
         required: true,
         message: '会社名は必ず入力してください',
-        trigger: 'blur'
+        trigger: 'blur',
       },
-      { max: 50, message: '文字数は50文字までにしてください' }
+      { max: 50, message: '文字数は50文字までにしてください' },
     ]"
     prop="name"
   >
@@ -26,10 +26,10 @@ import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: "CompanyName"
+  name: 'CompanyName',
 })
 export default class extends Vue {
-  @PropSync("companyName", { type: String }) name!: string
+  @PropSync('companyName', { type: String }) name!: string
 }
 </script>
 
