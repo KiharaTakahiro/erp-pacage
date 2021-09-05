@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.supplierProduct") }}</div>
-    <br>
-    <br>
+    <br />
+    <br />
     <el-form
       ref="client"
       :model="client"
@@ -11,11 +11,11 @@
     >
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="createSupplierProduct"
-          >
-            {{ $t('client.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="createSupplierProduct"
+        >
+          {{ $t("client.complete") }}
         </el-button>
       </div>
     </el-form>
@@ -28,23 +28,17 @@ import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'SaveSupplierProduct',
-  components: {
-    
-  }
+  name: "SaveSupplierProduct",
+  components: {}
 })
 export default class extends Vue {
-
   supplierProduct = {
-    name: ''
-  }
-  createSupplierProduct(){
+    name: ""
+  };
+  createSupplierProduct() {
     // TODO: 処理を記載する
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +46,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -70,8 +64,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

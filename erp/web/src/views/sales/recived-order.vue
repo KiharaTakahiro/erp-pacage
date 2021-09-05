@@ -1,30 +1,32 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.recivedOrder") }}</div>
-      <el-button
-        type="primary"
-        style="width:25%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="createNewRecievedOrder"
-      >
-        {{ $t('recivedOrder.add') }}
-      </el-button>
+    <el-button
+      type="primary"
+      style="width:25%; margin-bottom:30px; margin-top:30px;"
+      @click.native.prevent="createNewRecievedOrder"
+    >
+      {{ $t("recivedOrder.add") }}
+    </el-button>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'RecievedOrder'
+  name: "RecievedOrder"
 })
 export default class extends Vue {
-  createNewRecievedOrder(){
-    this.$router.push({
-      path: 'save-recived-order'
-    }).catch(err => {
-      console.warn(err)
-    })
+  createNewRecievedOrder() {
+    this.$router
+      .push({
+        path: "save-recived-order"
+      })
+      .catch(err => {
+        console.warn(err)
+      })
   }
 }
 </script>

@@ -1,13 +1,17 @@
 <template>
-  <el-form-item 
+  <el-form-item
     :rules="[
-      { required: true, message: '会社名は必ず入力してください', trigger: 'blur'},
-      { max: 50, message: '文字数は50文字までにしてください'}
+      {
+        required: true,
+        message: '会社名は必ず入力してください',
+        trigger: 'blur'
+      },
+      { max: 50, message: '文字数は50文字までにしてください' }
     ]"
-      prop="name"
-    >
+    prop="name"
+  >
     <el-input
-      v-model='name'
+      v-model="name"
       :placeholder="$t('client.name')"
       type="text"
       maxlength="50"
@@ -15,7 +19,6 @@
       autocomplete="on"
     />
   </el-form-item>
-
 </template>
 
 <script lang="ts">
@@ -23,12 +26,11 @@ import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'CompanyName'
+  name: "CompanyName"
 })
 export default class extends Vue {
-  @PropSync('companyName', { type: String }) name!: string
+  @PropSync("companyName", { type: String }) name!: string
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -36,7 +38,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -54,8 +56,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

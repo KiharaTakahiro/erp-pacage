@@ -2,11 +2,11 @@
   <div class="app-container">
     <div>{{ $t("route.supplierProduct") }}</div>
     <el-button
-        type="primary"
-        style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="createSupplierProductBtn"
-      >
-        {{ $t('supplierProduct.add') }}
+      type="primary"
+      style="width:13%; margin-bottom:30px; margin-top:30px;"
+      @click.native.prevent="createSupplierProductBtn"
+    >
+      {{ $t("supplierProduct.add") }}
     </el-button>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
@@ -17,7 +17,7 @@
           v-model="targetSupplierProductSeq"
           style="margin-top:10px; width:5%; margin-right:20px;"
           clearable
-          >
+        >
         </el-input>
         <span class="input-label">Name:</span>
         <el-input
@@ -26,7 +26,7 @@
           v-model="searchName"
           style="margin-top:10px; width:40%;"
           clearable
-          >
+        >
         </el-input>
       </div>
       <div class="right">
@@ -36,7 +36,7 @@
           style="width:45%; margin-top:10px;"
           @click.native.prevent="resetBtn"
         >
-          {{ $t('route.reset') }}
+          {{ $t("route.reset") }}
         </el-button>
         <el-button
           size="small"
@@ -44,7 +44,7 @@
           style="width:45%; margin-top:10px;"
           @click.native.prevent="checkSaerch"
         >
-          {{ $t('route.search') }}
+          {{ $t("route.search") }}
         </el-button>
       </div>
     </el-card>
@@ -54,38 +54,34 @@
         ref="supplierProductTable"
         :data="supplierProductData"
         @selection-change="testLog"
-        style="width: 100%">
+        style="width: 100%"
+      >
         <!-- <el-table-column
           label=""
           type="selection"
           width="180">
         </el-table-column> -->
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
-        <el-table-column
-          prop="supplierProductSeq"
-          label="ID"
-          width="180">
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column prop="supplierProductSeq" label="ID" width="180">
         </el-table-column>
         <el-table-column
           prop="supplierProductName"
-          label="Supplier product name">
+          label="Supplier product name"
+        >
         </el-table-column>
       </el-table>
-        <div class="left">
-          <back-btn/>
-        </div>
-        <div class="right">
-          <el-button
-            type="primary"
-            style="width:100%; margin-bottom:30px; margin-top:30px; "
-            @click.native.prevent="checkSaerch"
-          >
-            {{ $t('route.edit') }}
-          </el-button>
-        </div>
+      <div class="left">
+        <back-btn />
+      </div>
+      <div class="right">
+        <el-button
+          type="primary"
+          style="width:100%; margin-bottom:30px; margin-top:30px; "
+          @click.native.prevent="checkSaerch"
+        >
+          {{ $t("route.edit") }}
+        </el-button>
+      </div>
     </el-card>
   </div>
 </template>
@@ -97,22 +93,21 @@ import backBtn from '@/views/components/back-button.vue'
 import { SupplierProductModule } from '@/store/modules/supplier-product-list'
 
 @Component({
-  name: 'SupplierProduct',
+  name: "SupplierProduct",
   components: {
     backBtn
   }
 })
 export default class extends Vue {
-
   supplierProduct = {
-    id: ''
+    id: ""
   }
-  
+
   checkLength = 0
 
   pageNo = 0
-  targetSupplierProductSeq = ''
-  searchName = ''
+  targetSupplierProductSeq = ""
+  searchName = ""
 
   created() {
     this.getList()
@@ -121,30 +116,35 @@ export default class extends Vue {
   private async getList() {
     let searchData = {
       pageNo: this.pageNo - 1,
-      supplierProductSeq: this.targetSupplierProductSeq == '' ? null : this.targetSupplierProductSeq,
-      supplierProductName: this.searchName == '' ? null : this.searchName
+      supplierProductSeq:
+        this.targetSupplierProductSeq == ""
+          ? null
+          : this.targetSupplierProductSeq,
+      supplierProductName: this.searchName == "" ? null : this.searchName
     }
     SupplierProductModule.SupplierProductList(searchData)
   }
-  private async resetBtn(){
+  private async resetBtn() {
     this.targetSupplierProductSeq = ""
     this.searchName = ""
     this.pageNo = 1
     this.getList()
   }
 
-  private testLog(val: any){
-    this.supplierProduct.id = val[0]['supplierProductSeq']
+  private testLog(val: any) {
+    this.supplierProduct.id = val[0]["supplierProductSeq"]
     this.checkLength = val.length
   }
 
   createSupplierProductBtn() {
     // ボタンが押されたときの処理
-    this.$router.push({
-      path:'save-supplier-product'
-    }).catch(err => {
-      console.warn(err)
-    })
+    this.$router
+      .push({
+        path: "save-supplier-product"
+      })
+      .catch(err => {
+        console.warn(err)
+      })
   }
 }
 </script>
@@ -179,10 +179,10 @@ export default class extends Vue {
 .input-label {
   display: inline-block;
   width: 5%;
-  }
+}
 
 .box-card {
   width: 100%;
   padding: 15px;
-  }
+}
 </style>

@@ -1,65 +1,64 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.newRecievedOrder") }}</div>
-    <br>
-    <div class="app-container">
-      見積番号：{{recivedOrder.quotationSeq}}
-    </div>
-    <br>
+    <br />
+    <div class="app-container">見積番号：{{ recivedOrder.quotationSeq }}</div>
+    <br />
     <el-form
       ref="recivedOrder"
       :model="recivedOrder"
       autocomplete="on"
       label-position="left"
     >
-    <clients-pull-down
-      :clientsSeq="recivedOrder.clientsSeq"
-      @clientsSeqSubmit="clienetsSeqRecive"
+      <clients-pull-down
+        :clientsSeq="recivedOrder.clientsSeq"
+        @clientsSeqSubmit="clienetsSeqRecive"
       />
-    <company-pull-down
-      :companySeq="recivedOrder.companySeq"
-      :departmentSeq="recivedOrder.departmentSeq"
-      @companySeqSubmit="companySeqRecive"
-      @departmentSeqSubmit="departmentSeqRecive"
-    />
-    
-  <div class="app-container">
-    <date-form
-    :label='juchuubi'
-    :date="recivedOrder.recivedOrderDate"
-    @dateSubmit="recivedOrderDateRecive"/>
-  </div>
+      <company-pull-down
+        :companySeq="recivedOrder.companySeq"
+        :departmentSeq="recivedOrder.departmentSeq"
+        @companySeqSubmit="companySeqRecive"
+        @departmentSeqSubmit="departmentSeqRecive"
+      />
 
-    <div>{{ $t("route.OrderDetail") }}</div>
-    <div class="complete-btn">
-      <el-button 
-        type="info" 
-        icon="el-icon-plus"
-        @click.native.prevent="jsonCommit"/>
-    </div>
-    
-    <product-detail
-      :productSeq="detail.productSeq"
-      @productSeqSubmit="productSeqRecive"
-      :quantity="detail.quantity"
-      @quantitySubmit="quantityRecive"
-      :discount="detail.discount"
-      @discountSubmit="discountRecive"
-      :status="detail.status"
-      @statusSubmit="statusRecive"
-      :date="detail.deriveryDate"
-      @dateSubmit="dateRecive"
+      <div class="app-container">
+        <date-form
+          :label="juchuubi"
+          :date="recivedOrder.recivedOrderDate"
+          @dateSubmit="recivedOrderDateRecive"
+        />
+      </div>
+
+      <div>{{ $t("route.OrderDetail") }}</div>
+      <div class="complete-btn">
+        <el-button
+          type="info"
+          icon="el-icon-plus"
+          @click.native.prevent="jsonCommit"
+        />
+      </div>
+
+      <product-detail
+        :productSeq="detail.productSeq"
+        @productSeqSubmit="productSeqRecive"
+        :quantity="detail.quantity"
+        @quantitySubmit="quantityRecive"
+        :discount="detail.discount"
+        @discountSubmit="discountRecive"
+        :status="detail.status"
+        @statusSubmit="statusRecive"
+        :date="detail.deriveryDate"
+        @dateSubmit="dateRecive"
       />
       <div class="detail"></div>
 
-
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="submit"
-          >
-            {{ $t('recivedOrder.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="submit"
+        >
+          {{ $t("recivedOrder.complete") }}
         </el-button>
       </div>
     </el-form>
@@ -75,12 +74,12 @@ import productDetail from '@/views/components/product-detail.vue'
 import { RecievedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
 @Component({
-  name: 'save-recived-order',
+  name: "save-recived-order",
   components: {
     clientsPullDown,
     companyPullDown,
     productDetail,
-    DateForm,
+    DateForm
   }
 })
 export default class extends Vue {
@@ -94,26 +93,25 @@ export default class extends Vue {
     recivedOrderDate: RecievedOrderModule.recivedOrderDate,
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
-  }
+  };
   // 詳細用のモデル
   private detail = {
-    productSeq: '',
-    quantity: '',
+    productSeq: "",
+    quantity: "",
     discount: 0,
-    deriveryDate: '',
-    lotSeq: 2,//仮
-    status: ''
-  }
+    deriveryDate: "",
+    lotSeq: 2, //仮
+    status: ""
+  };
 
   // 受注日のラベル
-  juchuubi = '受注日'
+  juchuubi = "受注日"
 
   // 作成時（仮）
   //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
-  created(){
+  created() {
     RecievedOrderModule.setQuotationId(2)
   }
-
 
   //取引先のエミット
   private clienetsSeqRecive(clientsSeq: any): void {
@@ -123,7 +121,7 @@ export default class extends Vue {
   //会社のエミットっと
   private companySeqRecive(companySeq: any): void {
     //部署リセット
-    RecievedOrderModule.setDepartmentId('')
+    RecievedOrderModule.setDepartmentId("")
     this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
     RecievedOrderModule.setCompanyId(companySeq)
     this.recivedOrder.companySeq = RecievedOrderModule.companySeq
@@ -134,76 +132,76 @@ export default class extends Vue {
     RecievedOrderModule.setDepartmentId(departmentSeq)
     this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
-  
+
   //商品のエミット
   private productSeqRecive(productSeq: any): void {
     this.detail.productSeq = productSeq
   }
-  
+
   //個数エミット
-  private quantityRecive(quantity: any){
+  private quantityRecive(quantity: any) {
     this.detail.quantity = quantity
   }
   //金額エミット
-  private discountRecive(discount: any){
+  private discountRecive(discount: any) {
     this.detail.discount = discount
   }
   //配送状況エミット
-  private statusRecive(status: any){
+  private statusRecive(status: any) {
     this.detail.status = status
   }
 
   //配送日エミット
-  private dateRecive(date: any){
+  private dateRecive(date: any) {
     // 日付を文字列に
-    var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    var formatted = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`
     this.detail.deriveryDate = formatted
   }
 
-  private recivedOrderDateRecive(date: any){
+  private recivedOrderDateRecive(date: any) {
     // 日付を文字列に
-    var formatted = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
-    RecievedOrderModule.setRecievedOrderDate(formatted)
+    var formatted = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`;
+    RecievedOrderModule.setRecievedOrderDate(formatted);
     this.recivedOrder.recivedOrderDate = RecievedOrderModule.recivedOrderDate
   }
 
   //デバック用
-  private  submit() {
-    (this.$refs.recivedOrder as ElForm).validate(async(valid: boolean) => {
-    console.log(this.recivedOrder)
-      if(valid){
+  private submit() {
+    (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
+      console.log(this.recivedOrder)
+      if (valid) {
         await RecievedOrderModule.createReciverdOrder(this.recivedOrder)
-        this.$router.push({
-          path: 'recived-order'
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
+        this.$router
+          .push({
+            path: "recived-order"
+          })
+          .catch(err => {
+            console.warn(err);
+          })
         this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
+          message: this.$t("components.createClients").toString(),
+          type: "success"
+        })
+      } else {
+        this.$message({
+          message: this.$t("components.validation").toString(),
+          type: "error"
         })
         return false
       }
     })
   }
-  
-  jsonCommit(){
+
+  jsonCommit() {
     RecievedOrderModule.pushDetail(this.detail)
     // var ComponentClass = Vue.extend(clientsPullDown)
     // var instance = new ComponentClass()
     // instance.$mount()
     // $('.detail').append(instance.$el)
   }
-
-
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -211,7 +209,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 100%;
 }
 
@@ -229,8 +227,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

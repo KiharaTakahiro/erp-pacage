@@ -1,21 +1,22 @@
 <template>
   <div class="app-container">
     <div>{{ $t("route.newClient") }}</div>
-    <br>
-    <br>
+    <br />
+    <br />
     <el-form
       ref="client"
       :model="client"
       autocomplete="on"
-      label-position="left">
-      <company-name
-        :companyName.sync="client.name"/>
+      label-position="left"
+    >
+      <company-name :companyName.sync="client.name" />
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="createClient">
-            {{ $t('client.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="createClient"
+        >
+          {{ $t("client.complete") }}
         </el-button>
       </div>
     </el-form>
@@ -30,43 +31,41 @@ import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'Client-save',
+  name: "Client-save",
   components: {
     CompanyName
   }
 })
 export default class extends Vue {
-
   client = {
     name: ClientModule.name
   }
 
-  private createClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      if(valid){
+  private createClient() {
+    (this.$refs.client as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
         await ClientModule.CreateClient(this.client)
-        this.$router.push({
-          path: 'clinet' 
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
+        this.$router
+          .push({
+            path: "clinet"
+          })
+          .catch(err => {
+            console.warn(err)
+          })
         this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
+          message: this.$t("components.createClients").toString(),
+          type: "success"
+        })
+      } else {
+        this.$message({
+          message: this.$t("components.validation").toString(),
+          type: "error"
         })
         return false
       }
     })
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -74,7 +73,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -92,8 +91,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

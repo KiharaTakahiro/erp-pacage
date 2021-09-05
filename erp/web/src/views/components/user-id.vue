@@ -1,23 +1,27 @@
 <template>
-<div>
-  <el-form-item 
-    label="ユーザーID"
-    :rules="[
-        { required: true, message: 'ユーザーIDは必ず入力してください', trigger: 'blur'}
+  <div>
+    <el-form-item
+      label="ユーザーID"
+      :rules="[
+        {
+          required: true,
+          message: 'ユーザーIDは必ず入力してください',
+          trigger: 'blur'
+        }
       ]"
-    prop="userId"
-  >
-    <el-input
-      v-model="id"
-      :placeholder="$t('user.id')"
-      name="userId"
-      type="text"
-    />
-</el-form-item>
-</div>
+      prop="userId"
+    >
+      <el-input
+        v-model="id"
+        :placeholder="$t('user.id')"
+        name="userId"
+        type="text"
+      />
+    </el-form-item>
+  </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { Component, Vue, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 

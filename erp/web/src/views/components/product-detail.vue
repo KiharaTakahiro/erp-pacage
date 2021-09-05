@@ -2,47 +2,47 @@
   <div class="app-container">
     <el-row>
       <el-col :span="4">
-        <el-form-item
-        label="商品名"
-        >
-          <el-select v-model="productSeqVal" filterable clearable placeholder="商品">
+        <el-form-item label="商品名">
+          <el-select
+            v-model="productSeqVal"
+            filterable
+            clearable
+            placeholder="商品"
+          >
             <el-option
               v-for="product in products"
               :key="product.productSeq"
               :label="product.productName"
-              :value="product.productSeq">
+              :value="product.productSeq"
+            >
             </el-option>
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="3">
-        <el-form-item
-        label="商品単価：￥"
-        >
-        {{price}}
+        <el-form-item label="商品単価：￥">
+          {{ price }}
         </el-form-item>
       </el-col>
-        
+
       <el-col :span="4">
-        <el-form-item
-        label="個数"
-        >
-        <el-input-number v-model="countVal" :step="1" :min="0" :max="100" style="width:60%;"/>
+        <el-form-item label="個数">
+          <el-input-number
+            v-model="countVal"
+            :step="1"
+            :min="0"
+            :max="100"
+            style="width:60%;"
+          />
         </el-form-item>
       </el-col>
       <el-col :span="2">
-        <el-form-item
-        label="値引"
-        >
-        <el-input v-model="discountVal" style="width:50%;"/>
+        <el-form-item label="値引">
+          <el-input v-model="discountVal" style="width:50%;" />
         </el-form-item>
       </el-col>
       <el-col :span="4">
-        <date-form
-          :date="dateVal"
-          :label="haisoubi"
-          @dateSubmit="dateRecive"
-        />
+        <date-form :date="dateVal" :label="haisoubi" @dateSubmit="dateRecive" />
         <!-- <el-form-item
         label="配送日"
         >
@@ -55,15 +55,19 @@
         </el-form-item> -->
       </el-col>
       <el-col :span="4">
-        <el-form-item
-        label="配送状況"
-        >
-          <el-select v-model="statusVal" filterable clearable placeholder="配送状況">
+        <el-form-item label="配送状況">
+          <el-select
+            v-model="statusVal"
+            filterable
+            clearable
+            placeholder="配送状況"
+          >
             <el-option
               v-for="status in RecivedOrderSatsus"
               :key="status.key"
               :label="status.value"
-              :value="status.key">
+              :value="status.key"
+            >
             </el-option>
           </el-select>
         </el-form-item>
@@ -73,23 +77,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit} from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
-import { RecievedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
-
-
 
 @Component({
   name: 'productsPullDown',
   components: {
     DateForm
-    
   }
 })
-
 export default class extends Vue {
-
   //商品一覧
   products = [{}]
   // 単価
@@ -99,98 +97,97 @@ export default class extends Vue {
 
   //商品Seq
   @Prop({ default: '' })
-  productSeq!: string;
+  productSeq!: string
   //個数
   @Prop()
-  quantity!: number;
+  quantity!: number
   //値下げ
   @Prop()
-  discount!: number;
+  discount!: number
   //配送状況
   @Prop()
-  status!: number;
+  status!: number
   // 配送日
-  @Prop({ default:'' })
-  date!: string;
+  @Prop({ default: '' })
+  date!: string
 
   //商品用のゲッター
-  get productSeqVal(){
+  get productSeqVal() {
     return this.productSeq
   }
   //商品用セッター
-  set productSeqVal(productSeq){
+  set productSeqVal(productSeq) {
     this.productEmit(productSeq)
   }
   //商品用エミット
   @Emit('productSeqSubmit')
-  productEmit(productSeq: any){
+  productEmit(productSeq: any) {
     this.getProductDetail(productSeq)
     return productSeq
   }
 
   //個数用ゲッター
-  get countVal(){
+  get countVal() {
     return this.quantity
   }
   //個数用セッター
-  set countVal(quantity){
+  set countVal(quantity) {
     this.quantityEmit(quantity)
   }
   //個数用エミット
   @Emit('quantitySubmit')
-  quantityEmit(quantity: any){
+  quantityEmit(quantity: any) {
     return quantity
   }
   //商品ゲッター
-  get discountVal(){
+  get discountVal() {
     return this.discount
   }
   //商品セッター
-  set discountVal(value){
+  set discountVal(value) {
     this.discountEmit(value)
   }
   //商品エミット
   @Emit('discountSubmit')
-  discountEmit(discount: number){
+  discountEmit(discount: number) {
     return discount
   }
 
   //配送状況用のゲッター
-  get statusVal(){
+  get statusVal() {
     return this.status
   }
   //配送状況用セッター
-  set statusVal(status){
+  set statusVal(status) {
     this.statusEmit(status)
   }
   //配送状況用エミット
   @Emit('statusSubmit')
-  statusEmit(status: any){
+  statusEmit(status: any) {
     return status
   }
-  
+
   //配送日用のゲッター
-  get dateVal(){
+  get dateVal() {
     return this.date
   }
   //配送日況用セッター
-  set dateVal(date){
+  set dateVal(date) {
     this.dateEmit(date)
   }
   //配送日用エミット
   @Emit('dateSubmit')
-  dateEmit(date: any){
+  dateEmit(date: any) {
     return date
   }
   //日付のエミットをエミット
-  private dateRecive(date: any){
+  private dateRecive(date: any) {
     this.dateEmit(date)
   }
 
-
   // 商品の情報問合せ
-  private async getProductDetail(productSeq: any){
-    let {data} = await getProduct({productSeq: productSeq})
+  private async getProductDetail(productSeq: any) {
+    let { data } = await getProduct({ productSeq: productSeq })
     this.price = data.unitPrice
   }
 
@@ -205,17 +202,12 @@ export default class extends Vue {
   }
 
   // FIXME: APIでプルダウンすること
-  private RecivedOrderSatsus = [
-    { key: 1, value: "受注準備中" }
-    ]
+  private RecivedOrderSatsus = [{ key: 1, value: '受注準備中' }]
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
-.container{
+.container {
   display: inline-flex;
 }
 </style>

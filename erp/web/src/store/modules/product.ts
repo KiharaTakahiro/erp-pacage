@@ -1,5 +1,16 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { createProduct, getProduct, updateProduct, infoProduct } from '@/api/product'
+import {
+  VuexModule,
+  Module,
+  Action,
+  Mutation,
+  getModule
+} from 'vuex-module-decorators'
+import {
+  createProduct,
+  getProduct,
+  updateProduct,
+  infoProduct
+} from '@/api/product'
 import store from '@/store'
 
 export interface IProductState {
@@ -30,12 +41,12 @@ class Product extends VuexModule implements IProductState {
   private SET_NAME(productName: string) {
     this.productName = productName
   }
-  
+
   @Mutation
   private SET_TAXTYPE(taxType: number) {
     this.taxType = taxType
   }
-  
+
   @Mutation
   private SET_PURCHACEUNITPRICE(purchaseUnitPrice: number) {
     this.purchaseUnitPrice = purchaseUnitPrice
@@ -57,10 +68,20 @@ class Product extends VuexModule implements IProductState {
   }
 
   @Action
-  public async CreateProduct(productInfo: { productName: string,  taxType: number, purchaseUnitPrice: number, unitPrice: number }) {
+  public async CreateProduct(productInfo: {
+    productName: string
+    taxType: number
+    purchaseUnitPrice: number
+    unitPrice: number
+  }) {
     let { productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
-    await createProduct({ productName: productName, taxType: taxType, purchaseUnitPrice: purchaseUnitPrice, unitPrice: unitPrice})
+    await createProduct({
+      productName: productName,
+      taxType: taxType,
+      purchaseUnitPrice: purchaseUnitPrice,
+      unitPrice: unitPrice
+    })
   }
 
   @Action
@@ -80,10 +101,22 @@ class Product extends VuexModule implements IProductState {
   }
 
   @Action({ rawError: true })
-  public async UpdateProduct(productInfo: { id: string, productName: string,  taxType: number, purchaseUnitPrice: number, unitPrice: number }) {
-    let {id, productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
+  public async UpdateProduct(productInfo: {
+    id: string
+    productName: string
+    taxType: number
+    purchaseUnitPrice: number
+    unitPrice: number
+  }) {
+    let { id, productName, taxType, purchaseUnitPrice, unitPrice } = productInfo
     productName = productName.trim()
-    await updateProduct({ productSeq: id, productName: productName, unitPrice: unitPrice, purchaseUnitPrice: purchaseUnitPrice, taxType: taxType})
+    await updateProduct({
+      productSeq: id,
+      productName: productName,
+      unitPrice: unitPrice,
+      purchaseUnitPrice: purchaseUnitPrice,
+      taxType: taxType
+    })
   }
 
   @Action({ rawError: true })
@@ -92,6 +125,5 @@ class Product extends VuexModule implements IProductState {
     this.SET_LIST(data.product)
     this.SET_TOTAL_ITEM(data.totalItemsNum)
   }
-
 }
 export const ProductModule = getModule(Product)

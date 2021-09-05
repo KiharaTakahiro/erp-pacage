@@ -1,8 +1,14 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  getModule
+} from 'vuex-module-decorators'
 import { createClient, getClient, updateClient } from '@/api/client'
 import store from '@/store'
 export interface IClientState {
-  id: string,
+  id: string
   name: string
 }
 
@@ -11,15 +17,14 @@ class Client extends VuexModule implements IClientState {
   public id = ''
   public name = ''
   @Mutation
-  private SET_ID(id: string){
+  private SET_ID(id: string) {
     this.id = id
   }
 
   @Mutation
-  private SET_NAME(name: string){
+  private SET_NAME(name: string) {
     this.name = name
   }
-
 
   @Action
   public async CreateClient(clientInfo: { name: string }) {
@@ -41,10 +46,9 @@ class Client extends VuexModule implements IClientState {
     this.SET_NAME(data.clientsName)
   }
 
-  
   @Action({ rawError: true })
-  public async UpdateClient(clientInfo: { id: string, name: string }) {
-    let {id, name } = clientInfo
+  public async UpdateClient(clientInfo: { id: string; name: string }) {
+    let { id, name } = clientInfo
     name = name.trim()
     await updateClient({ clientsName: name, clientsSeq: id })
   }

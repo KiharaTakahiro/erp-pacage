@@ -1,32 +1,29 @@
 <template>
-  <el-form-item
-    v-bind:label="label"
-    >
+  <el-form-item v-bind:label="label">
     <el-date-picker
       v-model="dateVal"
       type="date"
       v-bind:placeholder="label"
-      :clearable="false">
+      :clearable="false"
+    >
     </el-date-picker>
   </el-form-item>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'dateForm'
 })
-
-export default class extends Vue{
+export default class extends Vue {
   @Prop({ default: '' })
-  date!: string;
+  date!: string
 
-  @Prop({ default: '日付'})
-  label!: string;
+  @Prop({ default: '日付' })
+  label!: string
 
-  
   get dateVal() {
     return this.date
   }
@@ -35,10 +32,8 @@ export default class extends Vue{
     this.dateEmit(value)
   }
   @Emit('dateSubmit')
-  dateEmit(value: any){
+  dateEmit(value: any) {
     return value
   }
 }
-
-
 </script>

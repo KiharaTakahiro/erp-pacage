@@ -1,10 +1,8 @@
-<!-- だみーでいれてます！！　-->
-
 <template>
   <div class="app-container">
     <div>{{ $t("route.editClient") }}</div>
-    <br>
-    <br>
+    <br />
+    <br />
     <el-form
       ref="client"
       :model="client"
@@ -13,15 +11,15 @@
     >
       <company-name
         :companyName="client.name"
-        @conpanyNameValue='conpanyName'
-        />
+        @conpanyNameValue="conpanyName"
+      />
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="updateClient"
-          >
-            {{ $t('client.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="updateClient"
+        >
+          {{ $t("client.complete") }}
         </el-button>
       </div>
     </el-form>
@@ -29,23 +27,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import { ClientModule } from '@/store/modules/client'
 import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console'
-import { toNamespacedPath } from 'node:path'
 
 @Component({
-  name: 'Client-save',
+  name: "Client-save",
   components: {
     CompanyName
   }
 })
 export default class extends Vue {
-
   client = {
     id: ClientModule.id,
     name: ClientModule.name
@@ -55,32 +49,31 @@ export default class extends Vue {
     this.client.name = name
   }
 
-  private updateClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      if(valid){
+  private updateClient() {
+    (this.$refs.client as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
         await ClientModule.UpdateClient(this.client)
-        this.$router.push({
-          path: 'clinet' 
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
+        this.$router
+          .push({
+            path: "clinet"
+          })
+          .catch(err => {
+            console.warn(err)
+          })
         this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
+          message: this.$t("components.createClients").toString(),
+          type: "success"
+        })
+      } else {
+        this.$message({
+          message: this.$t("components.validation").toString(),
+          type: "error"
         })
         return false
       }
     })
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +81,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -106,8 +99,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>
