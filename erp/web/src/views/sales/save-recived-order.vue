@@ -35,16 +35,13 @@
       </div>
 
       <product-detail
-        :productSeq="detail.productSeq"
-        @productSeqSubmit="productSeqRecive"
-        :quantity="detail.quantity"
-        @quantitySubmit="quantityRecive"
-        :discount="detail.discount"
-        @discountSubmit="discountRecive"
-        :status="detail.status"
-        @statusSubmit="statusRecive"
-        :date="detail.deriveryDate"
-        @dateSubmit="dateRecive"
+        v-for="(detail, index) in recivedOrder.details"
+        :key="index"
+        :productSeq.sync="detail.productSeq"
+        :quantity.sync="detail.quantity"
+        :discount.sync="detail.discount"
+        :status.sync="detail.status"
+        :date.sync="detail.deriveryDate"
       />
       <div class="detail"></div>
 
@@ -90,54 +87,20 @@ export default class extends Vue {
     tax: RecievedOrderModule.tax,
     total: RecievedOrderModule.total
   }
-  // 詳細用のモデル
-  private detail = {
-    productSeq: '',
-    quantity: '',
-    discount: 0,
-    deriveryDate: '',
-    lotSeq: 2, //仮
-    status: ''
-  }
 
   // 作成時（仮）
-  //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
   created() {
+    //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
     RecievedOrderModule.setQuotationId(2)
-  }
-
-  //商品のエミット
-  private productSeqRecive(productSeq: any): void {
-    this.detail.productSeq = productSeq
-  }
-
-  //個数エミット
-  private quantityRecive(quantity: any) {
-    this.detail.quantity = quantity
-  }
-  //金額エミット
-  private discountRecive(discount: any) {
-    this.detail.discount = discount
-  }
-  //配送状況エミット
-  private statusRecive(status: any) {
-    this.detail.status = status
-  }
-
-  //配送日エミット
-  private dateRecive(date: any) {
-    // 日付を文字列に
-    var formatted = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`
-    this.detail.deriveryDate = formatted
-  }
-
-  private recivedOrderDateRecive(date: any) {
-    // 日付を文字列に
-    var formatted = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`
-    RecievedOrderModule.setRecievedOrderDate(formatted)
-    this.recivedOrder.recivedOrderDate = RecievedOrderModule.recivedOrderDate
+    // 初期表示時にpushする
+    RecievedOrderModule.pushDetail({
+      productSeq: '',
+      quantity: '',
+      discount: 0,
+      deriveryDate: '',
+      lotSeq: 2, //仮
+      status: ''    
+  })
   }
 
   //デバック用
@@ -168,11 +131,14 @@ export default class extends Vue {
   }
 
   jsonCommit() {
-    RecievedOrderModule.pushDetail(this.detail)
-    // var ComponentClass = Vue.extend(clientsPullDown)
-    // var instance = new ComponentClass()
-    // instance.$mount()
-    // $('.detail').append(instance.$el)
+  RecievedOrderModule.pushDetail({
+      productSeq: '',
+      quantity: '',
+      discount: 0,
+      deriveryDate: '',
+      lotSeq: 2, //仮
+      status: ''    
+  })
   }
 }
 </script>

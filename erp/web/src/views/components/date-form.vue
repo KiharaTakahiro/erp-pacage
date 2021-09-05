@@ -1,7 +1,8 @@
 <template>
   <el-form-item v-bind:label="label">
     <el-date-picker
-      v-model="dateVal"
+      :value="dateVal"
+      @input="changeDateValue"
       type="date"
       :placeholder="label"
       :clearable="false"
@@ -22,5 +23,10 @@ export default class extends Vue {
 
   @Prop({ default: '日付' })
   label!: string
+
+  // 配送日変更時の処理
+  private changeDateValue(date: any) {
+    this.dateVal = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+  }
 }
 </script>
