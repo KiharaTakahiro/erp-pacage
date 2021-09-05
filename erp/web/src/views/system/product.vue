@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.product") }}</div>
+    <div>{{ $t('route.product') }}</div>
     <el-button
       type="primary"
       style="width:13%; margin-bottom:30px; margin-top:30px;"
       @click.native.prevent="createProductBtn"
     >
-      {{ $t("product.add") }}
+      {{ $t('product.add') }}
     </el-button>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
@@ -56,7 +56,7 @@
           style="width:45%; margin-top:10px;"
           @click.native.prevent="resetBtn"
         >
-          {{ $t("route.reset") }}
+          {{ $t('route.reset') }}
         </el-button>
         <el-button
           size="small"
@@ -64,7 +64,7 @@
           style="width:45%; margin-top:10px;"
           @click.native.prevent="searchBtn"
         >
-          {{ $t("route.search") }}
+          {{ $t('route.search') }}
         </el-button>
       </div>
     </el-card>
@@ -109,7 +109,7 @@
           style="width:100%; margin-bottom:30px; margin-top:30px; "
           @click.native.prevent="editProductBtn"
         >
-          {{ $t("route.edit") }}
+          {{ $t('route.edit') }}
         </el-button>
       </div>
     </el-card>
@@ -123,14 +123,14 @@ import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
 
 @Component({
-  name: "Product",
+  name: 'Product',
   components: {
     backBtn
   }
 })
 export default class extends Vue {
   product = {
-    id: ""
+    id: ''
   }
   checkLength = 0
 
@@ -139,10 +139,10 @@ export default class extends Vue {
   internalPage: any
 
   // 検索条件
-  targetProductSeq = ""
-  searchName = ""
-  serchUnitPriceFrom = ""
-  serchUnitPriceTo = ""
+  targetProductSeq = ''
+  searchName = ''
+  serchUnitPriceFrom = ''
+  serchUnitPriceTo = ''
 
   created() {
     this.getList()
@@ -168,11 +168,11 @@ export default class extends Vue {
     // 検索パラメタを生成する
     let searchData = {
       pageNo: this.pageNo - 1,
-      productSeq: this.targetProductSeq == "" ? null : this.targetProductSeq,
-      productName: this.searchName == "" ? null : this.searchName,
+      productSeq: this.targetProductSeq === '' ? null : this.targetProductSeq,
+      productName: this.searchName === '' ? null : this.searchName,
       unitPriceFrom:
-        this.serchUnitPriceFrom == "" ? null : this.serchUnitPriceFrom,
-      unitPriceTo: this.serchUnitPriceTo == "" ? null : this.serchUnitPriceTo
+        this.serchUnitPriceFrom === '' ? null : this.serchUnitPriceFrom,
+      unitPriceTo: this.serchUnitPriceTo === '' ? null : this.serchUnitPriceTo
     }
 
     // APIの取得結果をもとにModelを更新する
@@ -184,7 +184,7 @@ export default class extends Vue {
    */
   // TODO: 適切な名前に変更する
   private testLog(val: any) {
-    this.product.id = val[0]["productSeq"]
+    this.product.id = val[0]['productSeq']
     this.checkLength = val.length
   }
 
@@ -192,10 +192,10 @@ export default class extends Vue {
    * リセットボタン押下時の処理
    */
   resetBtn() {
-    this.targetProductSeq = ""
-    this.searchName = ""
-    this.serchUnitPriceFrom = ""
-    this.serchUnitPriceTo = ""
+    this.targetProductSeq = ''
+    this.searchName = ''
+    this.serchUnitPriceFrom = ''
+    this.serchUnitPriceTo = ''
     this.pageNo = 1
     this.getList()
   }
@@ -211,31 +211,32 @@ export default class extends Vue {
   createProductBtn() {
     this.$router
       .push({
-        path: "save-product"
+        path: 'save-product'
       })
       .catch(err => {
-        console.warn(err);
+        console.warn(err)
       })
   }
+
   editProductBtn() {
     // ボタンが押されたときの処理
-    if (this.checkLength == 0) {
+    if (this.checkLength === 0) {
       this.$message({
-        message: this.$t("product.check0").toString(),
-        type: "error"
+        message: this.$t('product.check0').toString(),
+        type: 'error'
       })
       return false
     } else if (this.checkLength >= 2) {
       this.$message({
-        message: this.$t("product.check2").toString(),
-        type: "error"
+        message: this.$t('product.check2').toString(),
+        type: 'error'
       })
       return false
     }
     ProductModule.EditProduct(this.product)
     this.$router
       .push({
-        path: "edit-product"
+        path: 'edit-product'
       })
       .catch(err => {
         console.warn(err)

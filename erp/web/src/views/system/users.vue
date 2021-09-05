@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.createUsre") }}</div>
+    <div>{{ $t('route.createUsre') }}</div>
     <el-button
       type="primary"
       style="width:25%; margin-bottom:30px; margin-top:30px;"
       @click.native.prevent="onClickButton"
     >
-      {{ $t("user.add") }}
+      {{ $t('user.add') }}
     </el-button>
   </div>
 </template>
@@ -16,14 +16,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: "Users"
+  name: 'Users'
 })
 export default class extends Vue {
   onClickButton() {
     // ボタンが押されたときの処理
     this.$router
       .push({
-        path: "save-users"
+        path: 'save-users'
       })
       .catch(err => {
         console.warn(err)

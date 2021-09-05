@@ -9,7 +9,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: "Quotation"
+  name: 'Quotation'
 })
 export default class extends Vue {}
 </script>

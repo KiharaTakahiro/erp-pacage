@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.createUsre") }}</div>
+    <div>{{ $t('route.createUsre') }}</div>
     <br />
     <br />
     <el-form ref="user" :model="user" autocomplete="on" label-position="left">
@@ -18,7 +18,7 @@
           style="width:100%;"
           @click.native.prevent="createUser"
         >
-          {{ $t("client.complete") }}
+          {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -37,7 +37,7 @@ import Email from '@/views/components/email.vue'
 import Password from '@/views/components/password.vue'
 
 @Component({
-  name: "user-save",
+  name: 'user-save',
   components: {
     UserId,
     FirstName,
@@ -63,19 +63,19 @@ export default class extends Vue {
         await UserModule.CreateUser(this.user)
         this.$router
           .push({
-            path: "users"
+            path: 'users'
           })
           .catch(err => {
             console.warn(err)
           })
         this.$message({
-          message: this.$t("components.createClients").toString(),
-          type: "success"
+          message: this.$t('components.createClients').toString(),
+          type: 'success'
         })
       } else {
         this.$message({
-          message: this.$t("components.validation").toString(),
-          type: "error"
+          message: this.$t('components.validation').toString(),
+          type: 'error'
         })
         return false
       }

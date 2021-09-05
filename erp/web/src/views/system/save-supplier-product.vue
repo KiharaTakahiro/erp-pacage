@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.supplierProduct") }}</div>
+    <div>{{ $t('route.supplierProduct') }}</div>
     <br />
     <br />
     <el-form
@@ -15,7 +15,7 @@
           style="width:100%;"
           @click.native.prevent="createSupplierProduct"
         >
-          {{ $t("client.complete") }}
+          {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -28,13 +28,13 @@ import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: "SaveSupplierProduct",
+  name: 'SaveSupplierProduct',
   components: {}
 })
 export default class extends Vue {
   supplierProduct = {
-    name: ""
-  };
+    name: ''
+  }
   createSupplierProduct() {
     // TODO: 処理を記載する
   }

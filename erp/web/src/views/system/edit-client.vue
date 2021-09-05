@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.editClient") }}</div>
+    <div>{{ $t('route.editClient') }}</div>
     <br />
     <br />
     <el-form
@@ -16,7 +16,7 @@
           style="width:100%;"
           @click.native.prevent="updateClient"
         >
-          {{ $t("client.complete") }}
+          {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -31,7 +31,7 @@ import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: "Client-save",
+  name: 'Client-save',
   components: {
     CompanyName
   }
@@ -40,7 +40,7 @@ export default class extends Vue {
   client = {
     id: ClientModule.id,
     name: ClientModule.name
-  };
+  }
 
   private updateClient() {
     (this.$refs.client as ElForm).validate(async (valid: boolean) => {
@@ -48,19 +48,19 @@ export default class extends Vue {
         await ClientModule.UpdateClient(this.client)
         this.$router
           .push({
-            path: "clinet"
+            path: 'clinet'
           })
           .catch(err => {
             console.warn(err)
-          });
+          })
         this.$message({
-          message: this.$t("components.createClients").toString(),
-          type: "success"
+          message: this.$t('components.createClients').toString(),
+          type: 'success'
         })
       } else {
         this.$message({
-          message: this.$t("components.validation").toString(),
-          type: "error"
+          message: this.$t('components.validation').toString(),
+          type: 'error'
         })
         return false
       }

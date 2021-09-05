@@ -149,10 +149,10 @@ export default class extends Vue {
    */
   private async getList() {
     // 検索パラメタを生成する
-    let searchData = {
+    const searchData = {
       pageNo: this.pageNo - 1,
-      clientsSeq: this.targetClientSeq == '' ? null : this.targetClientSeq,
-      clientsName: this.searchName == '' ? null : this.searchName
+      clientsSeq: this.targetClientSeq === '' ? null : this.targetClientSeq,
+      clientsName: this.searchName === '' ? null : this.searchName
     }
 
     // APIの取得結果をもとにModelを更新する
@@ -203,7 +203,7 @@ export default class extends Vue {
    * 編集ボタン押下時の処理
    */
   editClientBtn() {
-    if (this.checkLength == 0) {
+    if (this.checkLength === 0) {
       this.$message({
         message: this.$t('client.check0').toString(),
         type: 'error'

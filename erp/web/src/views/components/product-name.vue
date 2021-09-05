@@ -8,7 +8,7 @@
           message: '商品名は必ず入力して下さい。',
           trigger: 'blur'
         },
-        { max: 50, message: '50文字以内で入力してください。', trigger: 'blur' }
+        {max: 50, message: '50文字以内で入力してください。', trigger: 'blur'}
       ]"
       prop="productName"
     >

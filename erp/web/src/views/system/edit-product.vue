@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.editProduct") }}</div>
+    <div>{{ $t('route.editProduct') }}</div>
     <br />
     <br />
     <el-form
@@ -31,7 +31,7 @@
           style="width:100%;"
           @click.native.prevent="updateProduct"
         >
-          {{ $t("product.complete") }}
+          {{ $t('product.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -48,7 +48,7 @@ import money from '@/views/components/money.vue'
 import { Form as ElForm } from 'element-ui'
 
 @Component({
-  name: "Product-save",
+  name: 'Product-save',
   components: {
     productName,
     taxTypePulldown,
@@ -70,19 +70,19 @@ export default class extends Vue {
         await ProductModule.UpdateProduct(this.product)
         this.$router
           .push({
-            path: "product"
+            path: 'product'
           })
           .catch(err => {
             console.warn(err)
-          });
+          })
         this.$message({
-          message: this.$t("components.createProduct").toString(),
-          type: "success"
+          message: this.$t('components.createProduct').toString(),
+          type: 'success'
         })
       } else {
         this.$message({
-          message: this.$t("components.validation").toString(),
-          type: "error"
+          message: this.$t('components.validation').toString(),
+          type: 'error'
         })
         return false
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.newProduct") }}</div>
+    <div>{{ $t('route.newProduct') }}</div>
     <br />
     <br />
     <el-form
@@ -31,7 +31,7 @@
           style="width:100%;"
           @click.native.prevent="createProduct"
         >
-          {{ $t("product.complete") }}
+          {{ $t('product.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -48,7 +48,7 @@ import money from '@/views/components/money.vue'
 import { ProductModule } from '@/store/modules/product'
 
 @Component({
-  name: "product-save",
+  name: 'product-save',
   components: {
     productName,
     taxTypePulldown,
@@ -57,7 +57,7 @@ import { ProductModule } from '@/store/modules/product'
 })
 export default class extends Vue {
   product = {
-    productName: "",
+    productName: '',
     taxType: 1,
     purchaseUnitPrice: 0,
     unitPrice: 0
@@ -69,19 +69,19 @@ export default class extends Vue {
         await ProductModule.CreateProduct(this.product)
         this.$router
           .push({
-            path: "product"
+            path: 'product'
           })
           .catch(err => {
             console.warn(err)
           })
         this.$message({
-          message: this.$t("components.createProduct").toString(),
-          type: "success"
+          message: this.$t('components.createProduct').toString(),
+          type: 'success'
         })
       } else {
         this.$message({
-          message: this.$t("components.validation").toString(),
-          type: "error"
+          message: this.$t('components.validation').toString(),
+          type: 'error'
         })
         return false
       }
