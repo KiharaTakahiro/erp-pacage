@@ -63,6 +63,10 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.details.push(detail)
   }
   @Mutation
+  private REMOVE_DETAILS(index: number){
+    this.details.splice(index, 1)
+  }
+  @Mutation
   private SET_QUOTAION_ID(quotationSeq: any) {
     this.quotationSeq = quotationSeq
   }
@@ -108,6 +112,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   @Action
   public setQuotationId(id: any) {
     this.SET_QUOTAION_ID(id)
+  }
+
+  @Action
+  public removeDetails(key: number) {
+    this.REMOVE_DETAILS(key)
   }
 
   @Action

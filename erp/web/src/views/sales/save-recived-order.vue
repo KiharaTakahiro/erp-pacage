@@ -37,11 +37,13 @@
       <product-detail
         v-for="(detail, index) in recivedOrder.details"
         :key="index"
+        :detailKey="index"
         :productSeq.sync="detail.productSeq"
         :quantity.sync="detail.quantity"
         :discount.sync="detail.discount"
         :status.sync="detail.status"
         :date.sync="detail.deriveryDate"
+        @clickMinusBtn="minusBtnClick"
       />
       <div class="detail"></div>
 
@@ -130,15 +132,19 @@ export default class extends Vue {
     })
   }
 
+  minusBtnClick(key: number) {
+    RecievedOrderModule.removeDetails(key)
+  }
+
   jsonCommit() {
-  RecievedOrderModule.pushDetail({
-      productSeq: '',
-      quantity: '',
-      discount: 0,
-      deriveryDate: '',
-      lotSeq: 2, //仮
-      status: ''    
-  })
+    RecievedOrderModule.pushDetail({
+        productSeq: '',
+        quantity: '',
+        discount: 0,
+        deriveryDate: '',
+        lotSeq: 2, //仮
+        status: ''    
+    })
   }
 }
 </script>

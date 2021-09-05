@@ -72,6 +72,15 @@
           </el-select>
         </el-form-item>
       </el-col>
+      <el-col>
+        <div class="complete-btn">
+          <el-button
+            type="info"
+            icon="el-icon-minus"
+            @click.native.prevent="minusBtnClick"
+          />
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -95,6 +104,9 @@ export default class extends Vue {
 
   // 単価
   price = 0
+
+  // 詳細画面を判定するためのkey
+  @Prop() detailKey!: number
 
   // 商品SEQ
   @PropSync('productSeq', { type: String }) productSeqVal!: string
@@ -131,6 +143,14 @@ export default class extends Vue {
     this.products = data.product
   }
 
+  minusBtnClick(){
+    this.clickMinusBtn()
+  }
+
+  @Emit('clickMinusBtn')
+  clickMinusBtn() {
+    return this.detailKey
+  }
 }
 </script>
 
