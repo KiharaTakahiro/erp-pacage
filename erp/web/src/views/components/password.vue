@@ -44,15 +44,16 @@ export default class extends Vue {
 
   private validatePass = (rule: any, value: string, callback: Function) => {
     // NOTE: Property 'XXX' does not exist on type 'CombinedVueInstanceが発生するのを防ぐ
-    //
     // @ts-ignore
     let pass1_input = this.password
 
     // 必須チェックはそれぞれ別にするためこの処理では空文字があれば除外
-    if (value == '') {
+    if (value === '') {
       callback(new Error('確認用パスワードは必ず入力してください'))
       return
     }
+
+    // 確認用のパスワードと入力したパスワードが異なる場合はエラー
     if (pass1_input !== value) {
       callback(new Error('パスワードが一致しません'))
       return

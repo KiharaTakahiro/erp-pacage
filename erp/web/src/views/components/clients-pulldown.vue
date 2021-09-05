@@ -27,30 +27,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import { pullDownClient } from '@/api/client'
 @Component({
-  name: "clientsPullDown",
+  name: 'clientsPullDown',
   components: {}
 })
 export default class extends Vue {
   clients = [{}]
+  @PropSync('clientsSeq', { type: String }) seq!: string
 
-  @Prop({ default: "" })
-  clientsSeq!: string
-
-  get seq() {
-    return this.clientsSeq
-  }
-
-  set seq(value) {
-    this.clientsSeqSubmit(value)
-  }
-
-  @Emit("clientsSeqSubmit")
-  clientsSeqSubmit(value: any) {
-    return value
-  }
   created() {
     this.getList()
   }

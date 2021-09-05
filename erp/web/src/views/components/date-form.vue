@@ -11,29 +11,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'dateForm'
 })
 export default class extends Vue {
-  @Prop({ default: '' })
-  date!: string
+  @PropSync('date', { type: String }) dateSubmit!: string
 
   @Prop({ default: '日付' })
   label!: string
-
-  get dateVal() {
-    return this.date
-  }
-
-  set dateVal(value) {
-    this.dateEmit(value)
-  }
-  @Emit('dateSubmit')
-  dateEmit(value: any) {
-    return value
-  }
 }
 </script>

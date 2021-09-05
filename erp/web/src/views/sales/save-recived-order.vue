@@ -11,21 +11,17 @@
       label-position="left"
     >
       <clients-pull-down
-        :clientsSeq="recivedOrder.clientsSeq"
-        @clientsSeqSubmit="clienetsSeqRecive"
+        :clientsSeq.sync="recivedOrder.clientsSeq"
       />
       <company-pull-down
-        :companySeq="recivedOrder.companySeq"
-        :departmentSeq="recivedOrder.departmentSeq"
-        @companySeqSubmit="companySeqRecive"
-        @departmentSeqSubmit="departmentSeqRecive"
+        :companySeq.sync="recivedOrder.companySeq"
+        :departmentSeq.sync="recivedOrder.departmentSeq"
       />
 
       <div class="app-container">
         <date-form
-          :label="juchuubi"
-          :date="recivedOrder.recivedOrderDate"
-          @dateSubmit="recivedOrderDateRecive"
+          label="受注日"
+          :date.sync="recivedOrder.recivedOrderDate"
         />
       </div>
 
@@ -104,33 +100,10 @@ export default class extends Vue {
     status: ''
   }
 
-  // 受注日のラベル
-  juchuubi = '受注日'
-
   // 作成時（仮）
   //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
   created() {
     RecievedOrderModule.setQuotationId(2)
-  }
-
-  //取引先のエミット
-  private clienetsSeqRecive(clientsSeq: any): void {
-    RecievedOrderModule.setClientsID(clientsSeq)
-    this.recivedOrder.clientsSeq = RecievedOrderModule.clientsSeq
-  }
-  //会社のエミットっと
-  private companySeqRecive(companySeq: any): void {
-    //部署リセット
-    RecievedOrderModule.setDepartmentId('')
-    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
-    RecievedOrderModule.setCompanyId(companySeq)
-    this.recivedOrder.companySeq = RecievedOrderModule.companySeq
-  }
-
-  //部署のエミット
-  private departmentSeqRecive(departmentSeq: any): void {
-    RecievedOrderModule.setDepartmentId(departmentSeq)
-    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
 
   //商品のエミット

@@ -50,18 +50,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import { pullDownCompany, pullDownDepartment } from '@/api/company'
 @Component({
-  name: "companyPullDown",
+  name: 'companyPullDown',
   components: {}
 })
 export default class extends Vue {
-  @Prop({ default: "" })
-  companySeq!: string
-
-  @Prop({ default: "" })
-  departmentSeq!: string
+  @PropSync('companySeq', { type: String }) comSeq!: string
+  @PropSync('departmentSeq', { type: String }) depSeq!: string
 
   companys = [{}]
   departments = [{}]
@@ -74,41 +71,15 @@ export default class extends Vue {
     this.companys = data.companys
   }
 
-  get comSeq() {
-    return this.companySeq
-  }
-
-  set comSeq(value) {
-    this.companySubmit(value)
-  }
-
-  get depSeq() {
-    return this.departmentSeq
-  }
-
-  set depSeq(value) {
-    this.departmentSubmit(value)
-  }
-
   private async checkDepartment(companySeq: any) {
-    this.departmentSeq = ""
-    if (companySeq == "") {
+    // @ts-ignore
+    this.departmentSeq = ''
+    if (companySeq === '') {
       this.departments = [{}]
     } else {
       const { data } = await pullDownDepartment({ companySeq: companySeq })
       this.departments = data.departments
     }
-  }
-
-  @Emit("companySeqSubmit")
-  companySubmit(companySeq: any) {
-    this.checkDepartment(companySeq)
-    return companySeq
-  }
-
-  @Emit("departmentSeqSubmit")
-  departmentSubmit(value: any) {
-    return value
   }
 }
 </script>
