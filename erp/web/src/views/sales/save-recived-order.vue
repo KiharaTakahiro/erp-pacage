@@ -30,7 +30,7 @@
         <el-button
           type="info"
           icon="el-icon-plus"
-          @click.native.prevent="jsonCommit"
+          @click.native.prevent="addBtnClick"
         />
       </div>
 
@@ -92,6 +92,9 @@ export default class extends Vue {
 
   // 作成時（仮）
   created() {
+    // 初期表示時にはモデルをリセットする
+    // TODO: 必要な処理だが初回起動時にうまく動かないのでコメントアウト
+    // RecievedOrderModule.reset()
     //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
     RecievedOrderModule.setQuotationId(2)
     // 初期表示時にpushする
@@ -136,7 +139,7 @@ export default class extends Vue {
     RecievedOrderModule.removeDetails(key)
   }
 
-  jsonCommit() {
+  addBtnClick() {
     RecievedOrderModule.pushDetail({
         productSeq: '',
         quantity: '',

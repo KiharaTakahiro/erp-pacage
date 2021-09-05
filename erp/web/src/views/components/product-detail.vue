@@ -4,7 +4,8 @@
       <el-col :span="4">
         <el-form-item label="商品名">
           <el-select
-            v-model="productSeqVal"
+            :value="productSeqVal"
+            @input="changeProduct"
             filterable
             clearable
             placeholder="商品"
@@ -41,6 +42,12 @@
           <el-input v-model="discountVal" style="width:50%;" />
         </el-form-item>
       </el-col>
+      <el-col :span="3">
+        <el-form-item label="小計：￥">
+          {{ subTotalValue }}
+        </el-form-item>
+      </el-col>
+
       <el-col :span="4">
         <date-form :date.sync="dateValue" label="配送日" />
         <!-- <el-form-item
@@ -108,12 +115,25 @@ export default class extends Vue {
   // 詳細画面を判定するためのkey
   @Prop() detailKey!: number
 
+  // マイナスボタンを押下時のイベント発火
+  @Emit('clickMinusBtn')
+  clickMinusBtn() {
+    return this.detailKey
+  }
+
+  // NOTE: 合計計算に使えるかもしれないのでEmitしておく
+  // 使えなかったらEmitは不要
+  @Emit('subtotal')
+  computeSubtotal(){
+    return this.subTotalValue
+  }
+
   // 商品SEQ
   @PropSync('productSeq', { type: String }) productSeqVal!: string
   // 個数
-  @PropSync('quantity', { type: String }) countVal!: string
+  @PropSync('quantity', { type: Number }) countVal!: number
   // 値下げ
-  @PropSync('discount', { type: String }) discountVal!: number
+  @PropSync('discount', { type: Number }) discountVal!: number
   // 配送状況
   @PropSync('status', { type: String }) statusVal!: string
   // 配送日
@@ -123,6 +143,20 @@ export default class extends Vue {
   private async getProductDetail(productSeq: any) {
     let { data } = await getProduct({ productSeq: productSeq })
     this.price = data.unitPrice
+  }
+
+  // 商品情報変更時の処理
+  private changeProduct(value: any) {
+    this.getProductDetail(value)
+    this.productSeqVal = value
+  }
+
+  // 小計の計算
+  get subTotalValue() {
+    if (this.price == null || this.countVal == null || this.discountVal == null) {
+      return 0
+    }
+      return (this.price * this.countVal) - this.discountVal
   }
 
   // 作成時
@@ -147,10 +181,6 @@ export default class extends Vue {
     this.clickMinusBtn()
   }
 
-  @Emit('clickMinusBtn')
-  clickMinusBtn() {
-    return this.detailKey
-  }
 }
 </script>
 

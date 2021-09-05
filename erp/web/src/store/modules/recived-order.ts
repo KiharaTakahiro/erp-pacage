@@ -63,6 +63,10 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.details.push(detail)
   }
   @Mutation
+  private RESET_DETAILS() {
+    this.details = []
+  }
+  @Mutation
   private REMOVE_DETAILS(index: number){
     this.details.splice(index, 1)
   }
@@ -117,6 +121,17 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   @Action
   public removeDetails(key: number) {
     this.REMOVE_DETAILS(key)
+  }
+
+  @Action
+  public reset() {
+    this.SET_RECIEVED_ORDER_ID('')
+    this.SET_CLIENT_ID('')
+    this.SET_COMPANY_ID('')
+    this.SET_DEPARTMENT_ID('')
+    this.SET_TAX(0)
+    this.SET_TOTAL(0)
+    this.RESET_DETAILS()
   }
 
   @Action
