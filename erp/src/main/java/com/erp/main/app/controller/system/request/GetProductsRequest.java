@@ -1,6 +1,5 @@
 package com.erp.main.app.controller.system.request;
 
-import com.erp.main.domain.common.enums.TaxType;
 import com.erp.main.domain.objects.valueobjects.GetProductConditionsVo;
 
 import lombok.Data;
@@ -19,14 +18,18 @@ public class GetProductsRequest {
     private String productName;
     // 仕入料金
 	private Long purchaseUnitPrice;
-    // 仕入料金From
+    // 原価From
 	private Long purchaseUnitPriceFrom;
-    // 仕入料金To
+    // 原価To
 	private Long purchaseUnitPriceTo;
     // 定価
 	private Long unitPrice;
+    // 単価From
+	private Long unitPriceFrom;
+    // 単価To
+	private Long unitPriceTo;
 	// 税区分
-	private TaxType taxType;
+	private Integer taxType;
 	
     /**
      * リクエスト空ValueObjectへのマッピング
@@ -40,14 +43,14 @@ public class GetProductsRequest {
         vo.setProductSeq(this.getProductSeq());
         // 商品名
         vo.setProductName(this.getProductName());
-        // 仕入料金
-//    	vo.setPurchaseUnitPrice(this.getPurchaseUnitPrice());
-        // 仕入料金From
+        // 原価From
     	vo.setPurchaseUnitPriceFrom(this.getPurchaseUnitPrice());
-        // 仕入料金To
+        // 原価To
     	vo.setPurchaseUnitPriceTo(this.getPurchaseUnitPrice());
-        // 定価
-//    	vo.setUnitPrice(this.getPurchaseUnitPrice());
+    	// 単価From
+    	vo.setUnitPriceFrom(this.getUnitPrice());
+        // 単価To
+    	vo.setUnitPriceTo(this.getUnitPrice());
     	// 税区分
     	vo.setTaxType(this.getTaxType());
         

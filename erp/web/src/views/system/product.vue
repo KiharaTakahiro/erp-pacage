@@ -33,8 +33,8 @@
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="serchUnitPriceFrom"
-          style="margin-top:10px; width:20%;"
+          v-model="searchUnitPriceFrom"
+          style="margin-top:30px; width:20%;"
           clearable
         >
         </el-input>
@@ -43,7 +43,27 @@
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="serchUnitPriceTo"
+          v-model="searchUnitPriceTo"
+          style="margin-top:30px; width:20%;"
+          clearable
+        >
+        </el-input>
+        <!-- 原価検索FROM -->
+        <span class="input-label">原価</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchPurchaseUnitPriceFrom"
+          style="margin-top:10px; width:20%;"
+          clearable
+        >
+        </el-input>
+        <!-- 原価検索TO -->
+        <span class="input-label">～</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchPurchaseUnitPriceTo"
           style="margin-top:10px; width:20%;"
           clearable
         >
@@ -88,6 +108,7 @@
         <el-table-column prop="purchaseUnitPrice" label="仕入れ価格">
         </el-table-column>
         <el-table-column prop="unitPrice" label="単価"> </el-table-column>
+        <el-table-column prop="taxType" label="税区分"> </el-table-column>
       </el-table>
       <div class="page">
         <el-pagination
@@ -141,8 +162,10 @@ export default class extends Vue {
   // 検索条件
   targetProductSeq = ''
   searchName = ''
-  serchUnitPriceFrom = ''
-  serchUnitPriceTo = ''
+  searchUnitPriceFrom = ''
+  searchUnitPriceTo = ''
+  searchPurchaseUnitPriceFrom = ''
+  searchPurchaseUnitPriceTo = ''
 
   created() {
     this.getList()
@@ -170,9 +193,10 @@ export default class extends Vue {
       pageNo: this.pageNo - 1,
       productSeq: this.targetProductSeq === '' ? null : this.targetProductSeq,
       productName: this.searchName === '' ? null : this.searchName,
-      unitPriceFrom:
-        this.serchUnitPriceFrom === '' ? null : this.serchUnitPriceFrom,
-      unitPriceTo: this.serchUnitPriceTo === '' ? null : this.serchUnitPriceTo
+      unitPriceFrom: this.searchUnitPriceFrom === '' ? null : this.searchUnitPriceFrom,
+      unitPriceTo: this.searchUnitPriceTo === '' ? null : this.searchUnitPriceTo,
+      PurchaseunitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
+      PurchaseunitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo
     }
 
     // APIの取得結果をもとにModelを更新する
@@ -194,8 +218,10 @@ export default class extends Vue {
   resetBtn() {
     this.targetProductSeq = ''
     this.searchName = ''
-    this.serchUnitPriceFrom = ''
-    this.serchUnitPriceTo = ''
+    this.searchUnitPriceFrom = ''
+    this.searchUnitPriceTo = ''
+    this.searchPurchaseUnitPriceFrom = ''
+    this.searchPurchaseUnitPriceTo = ''
     this.pageNo = 1
     this.getList()
   }
