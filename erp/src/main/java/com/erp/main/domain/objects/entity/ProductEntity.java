@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.ProductEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateProductVo;
+import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
 
 
 /**
@@ -36,5 +37,23 @@ public class ProductEntity extends ProductEntityFileds {
 		entity.setTaxType(vo.getTaxType());
 		
 		return entity;
+	}
+	
+	/**
+	 * 商品エンティティの更新
+	 * @param vo
+	 * @return
+	 */
+	public void update(UpdateProductVo vo) {
+		// モデルを取得
+		var model = vo.getProduct();
+		// 商品名
+		this.setName(model.getProductName());
+		// 金額
+		this.setUnitPrice(model.getUnitPrice());
+		// 仕入れ単価
+		this.setPurchaseUnitPrice(model.getPurchaseUnitPrice());
+		// 税区分
+		this.setTaxType(model.getTaxType());
 	}
 }

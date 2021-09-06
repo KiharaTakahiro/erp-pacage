@@ -1,4 +1,10 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import {
+  VuexModule,
+  Module,
+  Action,
+  Mutation,
+  getModule
+} from 'vuex-module-decorators'
 import { login, logout, register } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
@@ -34,7 +40,6 @@ class User extends VuexModule implements IUserState {
   public password = ''
   public password2 = ''
 
-
   @Mutation
   private SET_TOKEN(token: string) {
     this.token = token
@@ -69,13 +74,12 @@ class User extends VuexModule implements IUserState {
   private SET_FIRSTNAME(firstName: string) {
     this.firstName = firstName
   }
-  
+
   @Mutation
   private SET_LASTNAME(lastName: string) {
     this.lastName = lastName
   }
 
-  
   @Mutation
   private SET_EMAIL(email: string) {
     this.email = email
@@ -92,10 +96,9 @@ class User extends VuexModule implements IUserState {
   }
 
   @Action
-  public async Login(userInfo: { username: string, password: string}) {
+  public async Login(userInfo: { username: string, password: string }) {
     let { username, password } = userInfo
     username = username.trim()
-    // FIXME: 試してみる
     const { data } = await login({ userId: username, password: password })
     setToken(data.token)
     this.SET_TOKEN(data.token)
@@ -161,15 +164,25 @@ class User extends VuexModule implements IUserState {
   }
 
   @Action
-  public async CreateUser(userInfo:{userId: string, firstName: string, lastName:string, email: string, password: string}){
-    let {userId, firstName,lastName, email, password} = userInfo
+  public async CreateUser(userInfo: {
+    userId: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+  }) {
+    let { userId, firstName, lastName, email, password } = userInfo
     userId = userId.trim()
     firstName = firstName.trim()
     lastName = lastName.trim()
     email = email.trim()
     password = password.trim()
-    await register({email: email, firstName: firstName, password: password, userId: userId})
-    
+    await register({
+      email: email,
+      firstName: firstName,
+      password: password,
+      userId: userId
+    })
   }
 }
 

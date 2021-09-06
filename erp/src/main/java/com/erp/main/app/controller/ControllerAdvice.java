@@ -26,6 +26,7 @@ public class ControllerAdvice {
 	
 	@ExceptionHandler
 	public String handleException(Exception e) {
+		log.error(e.getMessage());
 		return "";
 	}
 }

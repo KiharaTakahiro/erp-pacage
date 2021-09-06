@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'Quotation'
 })
-export default class extends Vue {
-}
+export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>

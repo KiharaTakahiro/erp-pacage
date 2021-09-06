@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 
 import Layout from '@/layout/index.vue'
 import salesRouter from './modules/sales'
-import systemRoutes from './modules/system';
+import systemRoutes from './modules/system'
 
 Vue.use(VueRouter)
 

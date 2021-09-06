@@ -7,23 +7,22 @@
     {{ $t('route.back') }}
   </el-button>
 </template>
-<script lang='ts'>
-import { Component, Vue} from 'vue-property-decorator'
-
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
   name: 'backBtn'
 })
-
 export default class extends Vue {
   goTop() {
-    this.$router.push({
-    path:'/'
-    }).catch(err => {
-      console.warn(err)
-    })
+    this.$router
+      .push({
+        path: '/'
+      })
+      .catch(err => {
+        console.warn(err)
+      })
   }
 }
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

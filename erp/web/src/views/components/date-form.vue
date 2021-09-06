@@ -1,44 +1,32 @@
 <template>
-  <el-form-item
-    v-bind:label="label"
-    >
+  <el-form-item v-bind:label="label">
     <el-date-picker
-      v-model="dateVal"
+      :value="dateVal"
+      @input="changeDateValue"
       type="date"
-      v-bind:placeholder="label"
-      :clearable="false">
+      :placeholder="label"
+      :clearable="false"
+    >
     </el-date-picker>
   </el-form-item>
 </template>
 
-<script lang='ts'>
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+<script lang="ts">
+import { Component, Vue, Prop, PropSync } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'dateForm'
 })
+export default class extends Vue {
+  @PropSync('date', { type: String }) dateVal!: string
 
-export default class extends Vue{
-  @Prop({ default: '' })
-  date!: string;
+  @Prop({ default: '日付' })
+  label!: string
 
-  @Prop({ default: '日付'})
-  label!: string;
-
-  
-  get dateVal() {
-    return this.date
-  }
-
-  set dateVal(value) {
-    this.dateEmit(value)
-  }
-  @Emit('dateSubmit')
-  dateEmit(value: any){
-    return value
+  // 配送日変更時の処理
+  private changeDateValue(date: any) {
+    this.dateVal = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
   }
 }
-
-
 </script>

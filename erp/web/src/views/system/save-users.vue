@@ -1,75 +1,44 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.createUsre") }}</div>
-    <br>
-    <br>
-    <el-form
-      ref="user"
-      :model="user"
-      autocomplete="on"
-      label-position="left"
-    >
-      <user-id
-        :userId="user.userId"
-        @userIdSubmit="userIdRecive"
-      />
-      <first-name
-        :firstName="user.firstName"
-        @firstNameSubmit="firstNameRecive"
-      />
-      <last-name
-        :lastName="user.lastName"
-        @lastNameSubmit="lastNameRecive"
-        />
-      <email
-        :email="user.email"
-        @emailSubmit="emailRecive"
-      />
-
+    <div>{{ $t('route.createUsre') }}</div>
+    <br />
+    <br />
+    <el-form ref="user" :model="user" autocomplete="on" label-position="left">
+      <user-id :userId.sync="user.userId" />
+      <first-name :firstName.sync="user.firstName" />
+      <last-name :lastName.sync="user.lastName" />
+      <email :email.sync="user.email" />
       <password
-      :password="user.password"
-      :password2="user.password2"
-      @passSubmit='passRecive'
-      @checkPassSubmit='checkPassRecive'
+        :password.sync="user.password"
+        :password2.sync="user.password2"
       />
-      
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="createUser"
-          >
-            {{ $t('client.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="createUser"
+        >
+          {{ $t('client.complete') }}
         </el-button>
       </div>
-
-
     </el-form>
-
-    
-    
-    
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
 import '@/assets/custom-theme/index.css'
-import UserId  from "@/views/components/user-id.vue"
-import FirstName from "@/views/components/first-name.vue"
-import LastName from "@/views/components/last-name.vue"
-import Email from "@/views/components/email.vue"
-import Password from "@/views/components/password.vue"
-import { component } from 'node_modules/vue/types/umd'
-
-
+import UserId from '@/views/components/user-id.vue'
+import FirstName from '@/views/components/first-name.vue'
+import LastName from '@/views/components/last-name.vue'
+import Email from '@/views/components/email.vue'
+import Password from '@/views/components/password.vue'
 
 @Component({
   name: 'user-save',
-  components :{
+  components: {
     UserId,
     FirstName,
     LastName,
@@ -78,7 +47,6 @@ import { component } from 'node_modules/vue/types/umd'
   }
 })
 export default class extends Vue {
-
   private user = {
     userId: UserModule.userId,
     name: UserModule.name,
@@ -89,67 +57,31 @@ export default class extends Vue {
     password2: UserModule.password2
   }
 
-  private userIdRecive(userId: any): void {
-    this.$store.commit('SET_USER_ID' ,userId)
-    this.user.userId = UserModule.userId
-  }
-
-  private firstNameRecive(firstName: any): void {
-    this.$store.commit('SET_FIRSTNAME', firstName)
-    this.user.firstName = UserModule.firstName
-  }
-
-  private lastNameRecive(lastName: any): void {
-    this.$store.commit('SET_LASTNAME', lastName)
-    this.user.lastName = lastName
-  }
-
-  private emailRecive(email: any): void {
-    this.$store.commit('SET_EMAIL', email)
-    this.user.email = email
-  }
-
-  
-  private passRecive(password: any): void {
-    
-    this.$store.commit('SET_PASSWORD', password)
-    this.user.password = UserModule.password
-  }
-
-  
-  private checkPassRecive(password2: any): void {
-    
-    this.$store.commit('SET_PASSWORD2', password2)
-    this.user.password2 = UserModule.password2
-  }
-
-  private createUser(){
-    (this.$refs.user as ElForm).validate(async(valid: boolean) => {
-      if(valid){
+  private createUser() {
+    (this.$refs.user as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
         await UserModule.CreateUser(this.user)
-        this.$router.push({
-          path: 'users'
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
+        this.$router
+          .push({
+            path: 'users'
+          })
+          .catch(err => {
+            console.warn(err)
+          })
         this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
+          message: this.$t('components.createClients').toString(),
+          type: 'success'
+        })
+      } else {
+        this.$message({
+          message: this.$t('components.validation').toString(),
+          type: 'error'
         })
         return false
       }
     })
   }
-  
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -157,7 +89,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -175,8 +107,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

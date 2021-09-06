@@ -26,6 +26,7 @@ import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.GetProductsRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
+import com.erp.main.app.controller.system.request.UpdateProductsRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
 import com.erp.main.app.controller.system.response.ClientsResponse;
 import com.erp.main.app.controller.system.response.CompanysResponse;
@@ -101,15 +102,18 @@ public class SystemController {
 	@PostMapping("/product/edit")
 	public ProductResponse getClient(@RequestBody GetProductRequest request) {
 		Long id = request.getProductSeq(); 
-		var vo = this.masterService.getProductVo(id).getProduct();
-		var response = new ProductResponse();
-		response.setProductSeq(vo.getProductSeq());
-		response.setProductName(vo.getProductName());
-		response.setUnitPrice(vo.getUnitPrice());
-		response.setPurchaseUnitPrice(vo.getPurchaseUnitPrice());
-		response.setTaxType(vo.getTaxType());
-		return response;
+		var vo = this.masterService.getProductVo(id);
+		return ProductResponse.mapTo(vo);
 		
+	}
+	
+	/**
+	 * 商品更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/product/update")
+	public void updateProduct(@RequestBody UpdateProductsRequest request) {
+		this.masterService.updateProducts(request.mapTo());
 	}
 	
 	/*
@@ -125,7 +129,7 @@ public class SystemController {
 	}
 	
 	/*
-	 * 商品一覧処理
+	 * 商品一覧処理のエントリーポイント
 	 */
 	@PostMapping("/product/info")
 	public ProductsResponse infoProduct(@RequestBody GetProductsRequest request) {

@@ -24,6 +24,5 @@ public class ProductModel {
 	private Long purchaseUnitPrice;
 	
 	// 税区分
-	// HACK: ここでEnumで受けることもできる気がしますが、一旦これで進める
 	private TaxType taxType;
 }

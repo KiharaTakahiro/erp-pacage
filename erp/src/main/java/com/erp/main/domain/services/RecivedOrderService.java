@@ -14,7 +14,6 @@ import com.erp.main.domain.objects.entity.ClientsEntity;
 import com.erp.main.domain.objects.entity.CompanyEntity;
 import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
-import com.erp.main.domain.objects.entity.QuotationEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderEntity;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
@@ -23,14 +22,12 @@ import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
-import com.erp.main.domain.repository.QuotationRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 
 /*
  * 受注のサービス
  * @author nagato
  */
-
 @Service
 public class RecivedOrderService {
 	/*
@@ -42,8 +39,9 @@ public class RecivedOrderService {
 	/**
 	 * 見積リポジトリ
 	 */
-	@Autowired
-	private QuotationRepository quotationRepository;
+	// TODO: 使われないため一時的にコメントアウトする
+	//	@Autowired
+	//	private QuotationRepository quotationRepository;
 
 	/**
 	 * 商品リポジトリ
@@ -101,10 +99,11 @@ public class RecivedOrderService {
 		}	
 		
 		//見積の有無の確認
-		Optional<QuotationEntity> quotation = this.quotationRepository.findById(createRecivedOrderVo.getQuotationSeq());
-		if(quotation.isEmpty()) {
-			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
-		}	
+		// TODO: 現時点では受注から作るため見積の登録は必須ではないいづれ必須とするかを見直し、必要であればコメントアウトを外す
+		//		Optional<QuotationEntity> quotation = this.quotationRepository.findById(createRecivedOrderVo.getQuotationSeq());
+		//		if(quotation.isEmpty()) {
+		//			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
+		//		}
 		
 		// 受注詳細の作成
 		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
@@ -173,9 +172,8 @@ public class RecivedOrderService {
 		
 		// 受注詳細をセット
 		recivedOrder.setRecivedOrderDetailEntity(detailEntities);
-		
 		// 受注の保存
-		recivedOrder = this.recivedOrderRepository.save(recivedOrder);
+		this.recivedOrderRepository.save(recivedOrder);			
 	}
 	
 

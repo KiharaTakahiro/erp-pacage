@@ -1,27 +1,21 @@
-<!-- だみーでいれてます！！　-->
-
 <template>
   <div class="app-container">
-    <div>{{ $t("route.newClient") }}</div>
-    <br>
-    <br>
+    <div>{{ $t('route.supplierProduct') }}</div>
+    <br />
+    <br />
     <el-form
       ref="client"
       :model="client"
       autocomplete="on"
       label-position="left"
     >
-      <company-name
-        :companyName="client.name"
-        @conpanyNameValue='conpanyName'
-        />
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="createClient"
-          >
-            {{ $t('client.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="createSupplierProduct"
+        >
+          {{ $t('client.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -29,58 +23,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
-import { ClientModule } from '@/store/modules/client'
-import CompanyName from '@/views/components/company-name.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console'
-import { toNamespacedPath } from 'node:path'
 
 @Component({
-  name: 'Client-save',
-  components: {
-    CompanyName
-  }
+  name: 'SaveSupplierProduct',
+  components: {}
 })
 export default class extends Vue {
-
-  client = {
-  name: ''
+  supplierProduct = {
+    name: ''
   }
-
-  private conpanyName(name: any): void {
-    this.client.name = name
-  }
-
-
-  private createClient(){
-    (this.$refs.client as ElForm).validate(async(valid: boolean) => {
-      if(valid){
-        await ClientModule.CreateClient(this.client)
-        this.$router.push({
-          path: 'clinet' 
-        }).catch(err => {
-          console.warn(err)
-        })
-      this.$message({
-      message: this.$t('components.createClients').toString(),
-      type: 'success'
-    })
-      }else {
-        this.$message({
-        message: this.$t('components.validation').toString(),
-        type: 'error'
-        })
-        return false
-      }
-    })
+  createSupplierProduct() {
+    // TODO: 処理を記載する
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +46,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -106,8 +64,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

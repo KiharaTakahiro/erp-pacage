@@ -1,11 +1,23 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { getSidebarStatus, getSize, setSidebarStatus, setLanguage, setSize } from '@/utils/cookies'
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  getModule
+} from 'vuex-module-decorators'
+import {
+  getSidebarStatus,
+  getSize,
+  setSidebarStatus,
+  setLanguage,
+  setSize
+} from '@/utils/cookies'
 import { getLocale } from '@/lang'
 import store from '@/store'
 
 export enum DeviceType {
   Mobile,
-  Desktop,
+  Desktop
 }
 
 export interface IAppState {

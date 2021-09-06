@@ -28,7 +28,7 @@ const purchasingRoutes: RouteConfig = {
       component: () => import('@/views/sales/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
-    },
+    }
   ]
 }
 

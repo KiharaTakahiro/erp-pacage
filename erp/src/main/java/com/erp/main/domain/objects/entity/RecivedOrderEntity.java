@@ -67,10 +67,10 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 	/**
 	 * 見積
 	 */
-	@Getter
-	@OneToOne
-	@JoinColumn(name="QUOTATION_SEQ", insertable = false, updatable = false)
-	private QuotationEntity quotationEntity;
+//	@Getter
+//	@OneToOne
+//	@JoinColumn(name="QUOTATION_SEQ", insertable = false, updatable = false)
+//	private QuotationEntity quotationEntity;
 	
 	/**
 	 * 取引先

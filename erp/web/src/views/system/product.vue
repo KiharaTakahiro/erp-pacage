@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.product") }}</div>
+    <div>{{ $t('route.product') }}</div>
     <el-button
-        type="primary"
-        style="width:13%; margin-bottom:30px; margin-top:30px;"
-        @click.native.prevent="createProductBtn"
-      >
-        {{ $t('product.add') }}
+      type="primary"
+      style="width:13%; margin-bottom:30px; margin-top:30px;"
+      @click.native.prevent="createProductBtn"
+    >
+      {{ $t('product.add') }}
     </el-button>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
@@ -17,7 +17,7 @@
           v-model="targetProductSeq"
           style="margin-top:10px; width:5%; margin-right:20px;"
           clearable
-          >
+        >
         </el-input>
         <span class="input-label">Name:</span>
         <el-input
@@ -26,7 +26,7 @@
           v-model="searchName"
           style="margin-top:10px; width:30%;"
           clearable
-          >
+        >
         </el-input>
         <!-- 定価検索FROM -->
         <span class="input-label">単価</span>
@@ -36,7 +36,7 @@
           v-model="serchUnitPriceFrom"
           style="margin-top:10px; width:20%;"
           clearable
-          >
+        >
         </el-input>
         <!-- 定価検索TO -->
         <span class="input-label">～</span>
@@ -46,9 +46,8 @@
           v-model="serchUnitPriceTo"
           style="margin-top:10px; width:20%;"
           clearable
-          >
+        >
         </el-input>
-
       </div>
       <div class="right">
         <el-button
@@ -75,81 +74,64 @@
         ref="productTable"
         :data="productData"
         @selection-change="testLog"
-        style="width: 100%">
+        style="width: 100%"
+      >
         <!-- <el-table-column
           label=""
           type="selection"
           width="180">
         </el-table-column> -->
-        <el-table-column
-          type="selection"
-          width="55">
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column prop="productSeq" label="ID" width="180">
         </el-table-column>
-        <el-table-column
-          prop="productSeq"
-          label="ID"
-          width="180">
+        <el-table-column prop="productName" label="名前"> </el-table-column>
+        <el-table-column prop="purchaseUnitPrice" label="仕入れ価格">
         </el-table-column>
-        <el-table-column
-          prop="productName"
-          label="名前">
-        </el-table-column>
-        <el-table-column
-          prop="purchaseUnitPrice"
-          label="仕入れ価格">
-        </el-table-column>
-        <el-table-column
-          prop="unitPrice"
-          label="単価">
-        </el-table-column>
+        <el-table-column prop="unitPrice" label="単価"> </el-table-column>
       </el-table>
       <div class="page">
         <el-pagination
-            background
-            page-size=15
-            @current-change="handleCurrentChange"
-            layout="prev, pager, next"
-            :total="totalItemsNum"
-            :current-page.sync="pageNo">
+          background
+          :page-size="15"
+          @current-change="handleCurrentChange"
+          layout="prev, pager, next"
+          :total="totalItemsNum"
+          :current-page.sync="pageNo"
+        >
         </el-pagination>
       </div>
-        <div class="left">
-          <back-btn/>
-        </div>
-        <div class="right">
-          <el-button
-            type="primary"
-            style="width:100%; margin-bottom:30px; margin-top:30px; "
-            @click.native.prevent="editProductBtn"
-          >
-            {{ $t('route.edit') }}
-          </el-button>
-        </div>
+      <div class="left">
+        <back-btn />
+      </div>
+      <div class="right">
+        <el-button
+          type="primary"
+          style="width:100%; margin-bottom:30px; margin-top:30px; "
+          @click.native.prevent="editProductBtn"
+        >
+          {{ $t('route.edit') }}
+        </el-button>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
-import backBtn from "@/views/components/back-button.vue"
-import { infoProduct } from '@/api/product'
-
-
+import backBtn from '@/views/components/back-button.vue'
 
 @Component({
   name: 'Product',
-  components :{
+  components: {
     backBtn
   }
 })
 export default class extends Vue {
-
   product = {
     id: ''
-    }
+  }
   checkLength = 0
 
   // ページング条件
@@ -162,38 +144,37 @@ export default class extends Vue {
   serchUnitPriceFrom = ''
   serchUnitPriceTo = ''
 
-  
   created() {
     this.getList()
   }
 
-    /**
+  /**
    * ストアが更新されたら件数を算出
    */
   get totalItemsNum() {
     return ProductModule.totalItem
   }
 
-    /**
+  /**
    * ストアが更新されたらクライアントを算出
    */
-  get productData () {
+  get productData() {
     return ProductModule.list
   }
   /**
    * APIへリスト取得処理
    */
   private async getList() {
-    
     // 検索パラメタを生成する
-    let searchData = { 
-      pageNo: this.pageNo - 1, 
-      productSeq : this.targetProductSeq == '' ? null : this.targetProductSeq,
-      productName: this.searchName == '' ? null : this.searchName,
-      unitPriceFrom : this.serchUnitPriceFrom == '' ? null : this.serchUnitPriceFrom,
-      unitPriceTo : this.serchUnitPriceTo == '' ? null : this.serchUnitPriceTo
+    let searchData = {
+      pageNo: this.pageNo - 1,
+      productSeq: this.targetProductSeq === '' ? null : this.targetProductSeq,
+      productName: this.searchName === '' ? null : this.searchName,
+      unitPriceFrom:
+        this.serchUnitPriceFrom === '' ? null : this.serchUnitPriceFrom,
+      unitPriceTo: this.serchUnitPriceTo === '' ? null : this.serchUnitPriceTo
     }
-    console.log(searchData)
+
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
   }
@@ -202,18 +183,17 @@ export default class extends Vue {
    * 画面時のボタンセレクト条件
    */
   // TODO: 適切な名前に変更する
-  private testLog(val : any){
+  private testLog(val: any) {
     this.product.id = val[0]['productSeq']
     this.checkLength = val.length
   }
 
-  
   /**
    * リセットボタン押下時の処理
    */
   resetBtn() {
-    this.targetProductSeq = ""
-    this.searchName = ""
+    this.targetProductSeq = ''
+    this.searchName = ''
     this.serchUnitPriceFrom = ''
     this.serchUnitPriceTo = ''
     this.pageNo = 1
@@ -229,37 +209,41 @@ export default class extends Vue {
   }
 
   createProductBtn() {
-    // ボタンが押されたときの処理
-    this.$router.push({
-    path:'save-product'
-    }).catch(err => {
-      console.warn(err)
-    })
+    this.$router
+      .push({
+        path: 'save-product'
+      })
+      .catch(err => {
+        console.warn(err)
+      })
   }
+
   editProductBtn() {
     // ボタンが押されたときの処理
-    if(this.checkLength == 0){
+    if (this.checkLength === 0) {
       this.$message({
-      message: this.$t('product.check0').toString(),
-      type: 'error'
+        message: this.$t('product.check0').toString(),
+        type: 'error'
       })
       return false
-    } else if (this.checkLength >= 2){
+    } else if (this.checkLength >= 2) {
       this.$message({
-      message: this.$t('product.check2').toString(),
-      type: 'error'
+        message: this.$t('product.check2').toString(),
+        type: 'error'
       })
       return false
     }
     ProductModule.EditProduct(this.product)
-    this.$router.push({
-    path:'edit-product'
-    }).catch(err => {
-      console.warn(err)
-    })
+    this.$router
+      .push({
+        path: 'edit-product'
+      })
+      .catch(err => {
+        console.warn(err)
+      })
   }
 
-    /**
+  /**
    * ページが変更される時の処理
    */
   handleCurrentChange(val: any) {
@@ -306,10 +290,10 @@ export default class extends Vue {
 .input-label {
   display: inline-block;
   width: 5%;
-  }
+}
 
 .box-card {
   width: 100%;
   padding: 15px;
-  }
+}
 </style>

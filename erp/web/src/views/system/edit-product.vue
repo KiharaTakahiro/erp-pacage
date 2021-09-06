@@ -1,37 +1,37 @@
 <template>
   <div class="app-container">
-    <div>{{ $t("route.editProduct") }}</div>
-    <br>
-    <br>
+    <div>{{ $t('route.editProduct') }}</div>
+    <br />
+    <br />
     <el-form
       ref="product"
       :model="product"
       autocomplete="on"
       label-position="left"
     >
-    <product-name
-        :productName="product.productName"
-        @productNameSubmit="productNameRecieve"
-        />
-      <tax-type-pulldown
-        :taxTypePulldown="product.taxType"
-        @taxTypePulldownSubmit="taxTypePulldownRecieve"
-        />
-      <purchase-unit-price
-        :purchaseUnitPrice="product.purchaseUnitPrice"
-        @purchaseUnitPriceSubmit="purchaseUnitPriceRecieve"
-        />
-      <unit-price
-        :unitPrice="product.unitPrice"
-        @unitPriceSubmit="unitPriceRecieve"
-        />
+      <product-name :productName.sync="product.productName" />
+      <tax-type-pulldown :taxTypeValue.sync="product.taxType" />
+      <money
+        label="仕入料金"
+        prop="purchaseUnitPrice"
+        :required="true"
+        :placeholder="$t('product.purchaseUnitPrice')"
+        :priceValue.sync="product.purchaseUnitPrice"
+      />
+      <money
+        label="定価"
+        prop="unitPrice"
+        :required="true"
+        :placeholder="$t('product.unitPrice')"
+        :priceValue.sync="product.unitPrice"
+      />
       <div class="complete-btn">
         <el-button
-            type="primary"
-            style="width:100%;"
-            @click.native.prevent="updateProduct"
-          >
-            {{ $t('product.complete') }}
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="updateProduct"
+        >
+          {{ $t('product.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -39,29 +39,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
-import { log } from 'node:console'
-import { toNamespacedPath } from 'node:path'
-import productName  from '@/views/components/product-name.vue'
+import productName from '@/views/components/product-name.vue'
 import taxTypePulldown from '../components/tax-type-pulldown.vue'
-import purchaseUnitPrice from '@/views/components/purchase-unit-price.vue'
-import unitPrice from '@/views/components/unit-price.vue'
+import money from '@/views/components/money.vue'
+import { Form as ElForm } from 'element-ui'
 
 @Component({
   name: 'Product-save',
-  components :{
+  components: {
     productName,
     taxTypePulldown,
-    purchaseUnitPrice,
-    unitPrice
+    money
   }
 })
 export default class extends Vue {
-
   product = {
     id: ProductModule.id,
     productName: ProductModule.productName,
@@ -70,35 +64,31 @@ export default class extends Vue {
     unitPrice: ProductModule.unitPrice
   }
 
-
-  private updateProduct(){
-    
-    console.log(this.product)
-    // (this.$refs.product as ElForm).validate(async(valid: boolean) => {
-    //   if(valid){
-    //     await ProductModule.UpdateProduct(this.product)
-    //     this.$router.push({
-    //       path: 'product' 
-    //     }).catch(err => {
-    //       console.warn(err)
-    //     })
-    //   this.$message({
-    //   message: this.$t('components.createProduct').toString(),
-    //   type: 'success'
-    // })
-    //   }else {
-    //     this.$message({
-    //     message: this.$t('components.validation').toString(),
-    //     type: 'error'
-    //     })
-    //     return false
-    //   }
-    // })
+  private updateProduct() {
+    (this.$refs.product as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
+        await ProductModule.UpdateProduct(this.product)
+        this.$router
+          .push({
+            path: 'product'
+          })
+          .catch(err => {
+            console.warn(err)
+          })
+        this.$message({
+          message: this.$t('components.createProduct').toString(),
+          type: 'success'
+        })
+      } else {
+        this.$message({
+          message: this.$t('components.validation').toString(),
+          type: 'error'
+        })
+        return false
+      }
+    })
   }
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -106,7 +96,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -124,8 +114,7 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>

@@ -1,11 +1,8 @@
 <template>
-  <company-name
-    :companyName="companyName"
-    @conpanyNameValue='conpanyName'
-  />
+  <company-name :companyName="companyName" @conpanyNameValue="conpanyName" />
 </template>
 <script lang="ts">
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import CompanyName from '@/views/components/company-name.vue'
 @Component({
   name: "ClientForm",
@@ -13,16 +10,10 @@ import CompanyName from '@/views/components/company-name.vue'
     CompanyName
   }
 })
-export default class extends Vue{
-  @Prop({ default: '' })
-  companyName!: string;
-
-
-
-
+export default class extends Vue {
+  @Prop({ default: "" })
+  companyName!: string
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -30,7 +21,7 @@ export default class extends Vue{
   vertical-align: middle;
 }
 
-.app-container{
+.app-container {
   width: 50%;
 }
 
@@ -48,8 +39,7 @@ export default class extends Vue{
   margin-right: 15px;
 }
 
-.complete-btn{
+.complete-btn {
   float: right;
 }
-
 </style>
