@@ -38,10 +38,12 @@
       />
       <div class="add-btn">
         <el-button
-          type="info"
+          type="success"
           icon="el-icon-plus"
           @click.native.prevent="addBtnClick"
-        />
+        >
+        詳細追加
+        </el-button>
       </div>
       <div class="complete-btn">
         <el-button
