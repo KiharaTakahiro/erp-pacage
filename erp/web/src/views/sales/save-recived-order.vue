@@ -88,6 +88,10 @@ export default class extends Vue {
     total: RecievedOrderModule.total
   }
 
+  beforeCreate() {
+    RecievedOrderModule.reset()
+  }
+
   // 作成時（仮）
   created() {
     // 初期表示時にはモデルをリセットする
