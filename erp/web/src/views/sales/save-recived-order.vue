@@ -100,7 +100,7 @@ export default class extends Vue {
       discount: 0,
       deriveryDate: '',
       lotSeq: 2, //仮
-      status: ''    
+      status: ''
   })
   }
 
