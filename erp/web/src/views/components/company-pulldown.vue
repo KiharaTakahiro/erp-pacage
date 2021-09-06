@@ -13,7 +13,7 @@
             }
           ]"
         >
-          <el-select :value="comSeq" @input="changeCompany" filterable clearable placeholder="会社名">
+          <el-select :value="comSeq" @input="changeCompany" @change="resetDepart" filterable clearable placeholder="会社名">
             <el-option
               v-for="company in companys"
               :key="company.companySeq"
@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, PropSync } from 'vue-property-decorator'
+import { Component, Vue, PropSync, Emit } from 'vue-property-decorator'
 import { pullDownCompany, pullDownDepartment } from '@/api/company'
 @Component({
   name: 'companyPullDown',
@@ -76,6 +76,10 @@ export default class extends Vue {
   changeCompany(value: any){
     this.comSeq = value
     this.checkDepartment(value)
+  }
+  @Emit('resetDepart')
+  resetDepart(){
+    return this.comSeq
   }
 
   private async checkDepartment(companySeq: any) {

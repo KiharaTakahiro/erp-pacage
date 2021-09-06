@@ -16,6 +16,7 @@
     <company-pull-down
       :companySeq.sync="recivedOrder.companySeq"
       :departmentSeq.sync="recivedOrder.departmentSeq"
+      @resetDepart="resetDepart"
     />
     <date-form
       label="受注日"
@@ -35,6 +36,7 @@
         :status.sync="detail.status"
         :date.sync="detail.deriveryDate"
         @clickMinusBtn="minusBtnClick"
+        
       />
       <div class="add-btn">
         <el-button
@@ -89,14 +91,12 @@ export default class extends Vue {
   }
 
   beforeCreate() {
+    // 初期表示時にはモデルをリセットする
     RecievedOrderModule.reset()
   }
 
   // 作成時（仮）
   created() {
-    // 初期表示時にはモデルをリセットする
-    // TODO: 必要な処理だが初回起動時にうまく動かないのでコメントアウト
-    // RecievedOrderModule.reset()
     //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
     RecievedOrderModule.setQuotationId(2)
     // 初期表示時にpushする
@@ -135,6 +135,11 @@ export default class extends Vue {
         return false
       }
     })
+  }
+
+  resetDepart(){
+    RecievedOrderModule.setDepartmentId('')
+    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
 
   minusBtnClick(key: number) {

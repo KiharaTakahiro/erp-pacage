@@ -17,7 +17,7 @@
   </el-form-item>
 </template>
 <script lang='ts'>
-import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync } from 'vue-property-decorator'
 import { getCode } from '@/api/system'
 
 @Component({
