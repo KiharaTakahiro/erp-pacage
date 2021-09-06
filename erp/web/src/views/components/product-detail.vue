@@ -48,6 +48,15 @@
             {{ subTotalValue }}
           </el-form-item>
         </el-col>
+        <el-col :span="2">
+          <div class="complete-btn">
+            <el-button
+              type="info"
+              icon="el-icon-minus"
+              @click.native.prevent="minusBtnClick"
+            />
+          </div>
+        </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
@@ -57,15 +66,7 @@
           <delivery-status
             :status.sync="statusVal"/>
         </el-col>
-        <el-col :span="6">
-          <div class="complete-btn">
-            <el-button
-              type="info"
-              icon="el-icon-minus"
-              @click.native.prevent="minusBtnClick"
-            />
-          </div>
-        </el-col>
+        
       </el-row>
     </el-card>
   </div>

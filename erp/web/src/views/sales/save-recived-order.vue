@@ -26,13 +26,7 @@
       </div>
 
       <div>{{ $t('route.OrderDetail') }}</div>
-      <div class="complete-btn">
-        <el-button
-          type="info"
-          icon="el-icon-plus"
-          @click.native.prevent="addBtnClick"
-        />
-      </div>
+      
 
       <product-detail
         v-for="(detail, index) in recivedOrder.details"
@@ -45,6 +39,13 @@
         :date.sync="detail.deriveryDate"
         @clickMinusBtn="minusBtnClick"
       />
+      <div class="add-btn">
+        <el-button
+          type="info"
+          icon="el-icon-plus"
+          @click.native.prevent="addBtnClick"
+        />
+      </div>
       <div class="complete-btn">
         <el-button
           type="primary"
@@ -175,5 +176,8 @@ export default class extends Vue {
 
 .complete-btn {
   float: right;
+}
+.add-btn{
+  float: left;
 }
 </style>
