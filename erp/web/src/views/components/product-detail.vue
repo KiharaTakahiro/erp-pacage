@@ -50,11 +50,7 @@
         </el-col>
         <el-col :span="2">
           <div class="complete-btn">
-            <el-button
-              type="info"
-              icon="el-icon-minus"
-              @click.native.prevent="minusBtnClick"
-            />
+            <el-button type="danger" icon="el-icon-delete" @click.native.prevent="minusBtnClick" circle />
           </div>
         </el-col>
       </el-row>

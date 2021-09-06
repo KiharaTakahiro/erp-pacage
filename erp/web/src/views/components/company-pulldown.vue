@@ -1,51 +1,47 @@
 <template>
   <div>
-    <div class="app-container">
-      <el-form-item
-        label="会社"
-        prop="companySeq"
-        :rules="[
-          {
-            required: true,
-            message: '会社を選択してください',
-            trigger: 'change'
-          }
-        ]"
-      >
-        <el-select :value="comSeq" @input="changeCompany" filterable clearable placeholder="会社名">
-          <el-option
-            v-for="company in companys"
-            :key="company.companySeq"
-            :label="company.companyName"
-            :value="company.companySeq"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </div>
-    <div class="app-container">
-      <el-form-item
-        label="部署"
-        prop="departmentSeq"
-        :rules="[
-          {
-            required: true,
-            message: '部署を選択してください',
-            trigger: 'change'
-          }
-        ]"
-      >
-        <el-select v-model="depSeq" filterable clearable placeholder="部署">
-          <el-option
-            v-for="department in departments"
-            :key="department.departmentSeq"
-            :label="department.departmentName"
-            :value="department.departmentSeq"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </div>
+    <el-form-item
+      label="会社"
+      prop="companySeq"
+      :rules="[
+        {
+          required: true,
+          message: '会社を選択してください',
+          trigger: 'change'
+        }
+      ]"
+    >
+      <el-select :value="comSeq" @input="changeCompany" filterable clearable placeholder="会社名">
+        <el-option
+          v-for="company in companys"
+          :key="company.companySeq"
+          :label="company.companyName"
+          :value="company.companySeq"
+        >
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item
+      label="部署"
+      prop="departmentSeq"
+      :rules="[
+        {
+          required: true,
+          message: '部署を選択してください',
+          trigger: 'change'
+        }
+      ]"
+    >
+      <el-select v-model="depSeq" filterable clearable placeholder="部署">
+        <el-option
+          v-for="department in departments"
+          :key="department.departmentSeq"
+          :label="department.departmentName"
+          :value="department.departmentSeq"
+        >
+        </el-option>
+      </el-select>
+    </el-form-item>
   </div>
 </template>
 

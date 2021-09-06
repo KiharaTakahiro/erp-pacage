@@ -10,20 +10,17 @@
       autocomplete="on"
       label-position="left"
     >
-      <clients-pull-down
-        :clientsSeq.sync="recivedOrder.clientsSeq"
-      />
-      <company-pull-down
-        :companySeq.sync="recivedOrder.companySeq"
-        :departmentSeq.sync="recivedOrder.departmentSeq"
-      />
-
-      <div class="app-container">
-        <date-form
-          label="受注日"
-          :date.sync="recivedOrder.recivedOrderDate"
-        />
-      </div>
+    <clients-pull-down
+      :clientsSeq.sync="recivedOrder.clientsSeq"
+    />
+    <company-pull-down
+      :companySeq.sync="recivedOrder.companySeq"
+      :departmentSeq.sync="recivedOrder.departmentSeq"
+    />
+    <date-form
+      label="受注日"
+      :date.sync="recivedOrder.recivedOrderDate"
+    />
 
       <div>{{ $t('route.OrderDetail') }}</div>
       
@@ -107,7 +104,7 @@ export default class extends Vue {
   })
   }
 
-  //デバック用
+  // 登録処理
   private submit() {
     (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
       console.log(this.recivedOrder)
