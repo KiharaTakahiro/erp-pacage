@@ -50,34 +50,10 @@
 
       <el-col :span="4">
         <date-form :date.sync="dateValue" label="配送日" />
-        <!-- <el-form-item
-        label="配送日"
-        >
-      <el-date-picker
-      v-model="dateVal"
-      type="date"
-      placeholder="配送日"
-      style="width:60%;">
-    </el-date-picker>
-        </el-form-item> -->
       </el-col>
       <el-col :span="4">
-        <el-form-item label="配送状況">
-          <el-select
-            v-model="statusVal"
-            filterable
-            clearable
-            placeholder="配送状況"
-          >
-            <el-option
-              v-for="status in RecivedOrderSatsus"
-              :key="status.key"
-              :label="status.value"
-              :value="status.key"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
+        <delivery-status
+          :status.sync="statusVal"/>
       </el-col>
       <el-col>
         <div class="complete-btn">
@@ -96,12 +72,15 @@
 import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
+import DelivaryStatus from '@/views/components/delivery-status.vue'
 import { getCode } from '@/api/system'
+import DeliveryStatus from '@/views/components/delivery-status.vue'
 
 @Component({
   name: 'productsPullDown',
   components: {
-    DateForm
+    DateForm,
+    DeliveryStatus
   }
 })
 export default class extends Vue {
@@ -162,13 +141,6 @@ export default class extends Vue {
   // 作成時
   created() {
     this.getList()
-    // HACK: ここはプルダウンをコンポーネント化したほうが良いが現時点ではこのまま
-    this.getCode()
-  }
-
-  private async getCode() {
-    const { data } = await getCode({ codeType: 'RacivedOrderStatus' })
-    this.RecivedOrderSatsus = data.codes
   }
 
   // 商品プルダウン

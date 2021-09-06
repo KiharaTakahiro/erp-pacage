@@ -45,8 +45,6 @@
         :date.sync="detail.deriveryDate"
         @clickMinusBtn="minusBtnClick"
       />
-      <div class="detail"></div>
-
       <div class="complete-btn">
         <el-button
           type="primary"
