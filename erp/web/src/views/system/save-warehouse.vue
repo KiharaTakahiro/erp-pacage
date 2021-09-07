@@ -28,14 +28,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
-import WarehouseName from '@/views/components/warehouse-name.vue'
+import warehouseName from '@/views/components/warehouse-name.vue'
 import { WarehouseModule } from '@/store/modules/warehouse'
 
 
 @Component({
   name: 'Warehouse-save',
   components: {
-    WarehouseName
+    warehouseName
   }
 })
 export default class extends Vue {
