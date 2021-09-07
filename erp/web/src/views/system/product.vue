@@ -20,7 +20,7 @@
           clearable
         >
         </el-input>
-        <span class="input-label">Name:</span>
+        <span class="input-label">名前:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -32,7 +32,7 @@
       </div>  
       <div>
         <!-- 定価検索FROM -->
-        <span class="input-label">単価</span>
+        <span class="input-label">単価:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -42,7 +42,7 @@
         >
         </el-input>
         <!-- 定価検索TO -->
-        <span class="input-label">～</span>
+        <span class="from-to">～</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -54,7 +54,7 @@
         </div>
         <div>
         <!-- 原価検索FROM -->
-        <span class="input-label">原価</span>
+        <span class="input-label">原価:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -64,7 +64,7 @@
         >
         </el-input>
         <!-- 原価検索TO -->
-        <span class="input-label">～</span>
+        <span class="from-to">～</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -76,9 +76,9 @@
         </div>
         <!-- 税区分 -->
         <div>
-          <span class="input-label">税区分</span>
+          <span class="input-label">税区分:</span>
           <el-select 
-            v-model="value" 
+            v-model="searchTaxType" 
             :placeholder="$t('product.taxType')"
             style="margin-top:10px; width:20%;"
             >
@@ -190,6 +190,7 @@ export default class extends Vue {
   searchUnitPriceTo = ''
   searchPurchaseUnitPriceFrom = ''
   searchPurchaseUnitPriceTo = ''
+  searchTaxType = ''
 
   created() {
     this.getList()
@@ -220,8 +221,9 @@ export default class extends Vue {
       productName: this.searchName === '' ? null : this.searchName,
       unitPriceFrom: this.searchUnitPriceFrom === '' ? null : this.searchUnitPriceFrom,
       unitPriceTo: this.searchUnitPriceTo === '' ? null : this.searchUnitPriceTo,
-      PurchaseunitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
-      PurchaseunitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo
+      purchaseunitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
+      purchaseunitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo,
+      taxType: this.searchTaxType === '' ? null : this.searchTaxType
     }
 
     // APIの取得結果をもとにModelを更新する
@@ -254,6 +256,7 @@ export default class extends Vue {
     this.searchUnitPriceTo = ''
     this.searchPurchaseUnitPriceFrom = ''
     this.searchPurchaseUnitPriceTo = ''
+    this.searchTaxType = ''
     this.pageNo = 1
     this.getList()
   }
@@ -348,7 +351,11 @@ export default class extends Vue {
 
 .input-label {
   display: inline-block;
-  width: 5%;
+  width: 7%
+}
+
+.from-to {
+  display: inline-block;
 }
 
 .box-card {
