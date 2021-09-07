@@ -43,7 +43,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
 import productName from '@/views/components/product-name.vue'
-import taxTypePulldown from '../components/tax-type-pulldown.vue'
+import taxTypePulldown from '../../components/tax-type-pulldown.vue'
 import money from '@/views/components/money.vue'
 import { ProductModule } from '@/store/modules/product'
 

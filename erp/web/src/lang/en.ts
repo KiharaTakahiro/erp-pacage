@@ -11,6 +11,7 @@ export default {
     system: 'Setting',
     users: 'User Setting',
     createUsre:"New User",
+    userList:"User List",
     client: 'Client Setting',
     newClient: 'New Client',
     editClient: 'Edit Clietnt',

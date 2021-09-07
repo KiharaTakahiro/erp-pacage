@@ -11,6 +11,7 @@ export default {
     system: 'システム設定',
     users: 'ユーザ管理',
     createUsre:"ユーザー登録",
+    userList:"ユーザー一覧",
     client: '取引先管理',
     newClient: '取引先追加',
     editClient: '取引先編集',
