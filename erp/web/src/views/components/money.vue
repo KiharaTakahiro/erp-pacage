@@ -6,17 +6,21 @@
         {
           required: required,
           message: `${label}は必ず入力して下さい。`,
-          trigger: 'blur'
+          trigger: 'blur',
         },
         {
           pattern: /^(0|[1-9]|[1-9][0-9]+)$/,
           message: '半角数字で入力してください。',
-          trigger: 'blur'
-        }
+          trigger: 'blur',
+        },
       ]"
       :prop="prop"
     >
-      <el-input :placeholder="placeholder" v-model="price" type="text" />
+      <el-input
+        :placeholder="placeholder"
+        v-model="dispValue"
+        type="text"
+      />
     </el-form-item>
   </div>
 </template>
@@ -26,7 +30,7 @@ import { Component, Vue, PropSync, Prop } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'money'
+  name: 'money',
 })
 export default class extends Vue {
   @Prop({ default: '' })
@@ -41,8 +45,19 @@ export default class extends Vue {
   @Prop({ default: false })
   required!: boolean
 
+  get dispValue(){
+    return Number(this.price).toLocaleString()
+  }
+
+  set dispValue(value: any) {
+    if(isNaN(value.replaceAll(",",""))){
+      return
+    }
+    this.price = Number(value.replaceAll(",",""))
+  }
   // NOTE: テキストボックスであるためstringで入ってしまうのでエラーとなるのを
   // 防止するべくStringを許容しているより良い方法があればそちらに移行したい
   @PropSync('priceValue', { type: [Number, String] }) price!: number
+
 }
 </script>
