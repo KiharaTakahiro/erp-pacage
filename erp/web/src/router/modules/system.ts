@@ -21,7 +21,7 @@ const systemRoutes: RouteConfig = {
           path: 'user-list',
           component: () => import('@/views/system/user/user-list.vue'),
           name: 'userList',
-          meta: { title: 'createUsre' }
+          meta: { title: 'userList' }
         },
         {
           path: 'save-users',
@@ -63,19 +63,27 @@ const systemRoutes: RouteConfig = {
       path: 'supplier-product',
       component: () => import('@/views/system/supplier-product/supplier-product.vue'),
       name: 'supplier-product',
-      meta: { title: 'supplierProduct' }
-    },
-    {
-      path: 'save-supplier-product',
-      component: () => import('@/views/system/supplier-product/save-supplier-product.vue'),
-      name: 'save-supplier-product',
-      meta: { title: 'supplierProduct', hidden: true }
-    },
-    {
-      path: 'edit-supplier-product',
-      component: () => import('@/views/system/supplier-product/edit-supplier-product.vue'),
-      name: 'edit-supplier-product',
-      meta: { title: 'editSupplierProduct', hidden: true }
+      meta: { title: 'supplierProduct' },
+      children: [
+        {
+          path: 'supplier-product-list',
+          component: () => import('@/views/system/supplier-product/supplier-product-list.vue'),
+          name: 'save-supplier-product',
+          meta: { title: 'supplierProductList' }
+        },
+        {
+          path: 'save-supplier-product',
+          component: () => import('@/views/system/supplier-product/save-supplier-product.vue'),
+          name: 'save-supplier-product',
+          meta: { title: 'saveSupplierProduct' }
+        },
+        {
+          path: 'edit-supplier-product',
+          component: () => import('@/views/system/supplier-product/edit-supplier-product.vue'),
+          name: 'edit-supplier-product',
+          meta: { title: 'editSupplierProduct' ,hidden: true}
+        },
+      ]
     },
     {
       path: 'product',

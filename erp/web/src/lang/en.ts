@@ -17,6 +17,8 @@ export default {
     editClient: 'Edit Clietnt',
     clientList: 'Client List',
     supplierProduct: 'Supplier Product',
+    supplierProductList: 'Supplier Product List',
+    saveSupplierProduct: 'Create Supplier Product',
     documentation: 'Documentation',
     guide: 'Guide',
     permission: 'Permission',
