@@ -11,6 +11,7 @@
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
+      <div>
         <span class="input-label">ID:</span>
         <el-input
           placeholder=""
@@ -28,13 +29,15 @@
           clearable
         >
         </el-input>
+      </div>  
+      <div>
         <!-- 定価検索FROM -->
         <span class="input-label">単価</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
           v-model="searchUnitPriceFrom"
-          style="margin-top:30px; width:20%;"
+          style="margin-top:10px; width:20%;"
           clearable
         >
         </el-input>
@@ -44,10 +47,12 @@
           placeholder=""
           prefix-icon="el-icon-search"
           v-model="searchUnitPriceTo"
-          style="margin-top:30px; width:20%;"
+          style="margin-top:10px; width:20%;"
           clearable
         >
         </el-input>
+        </div>
+        <div>
         <!-- 原価検索FROM -->
         <span class="input-label">原価</span>
         <el-input
@@ -68,6 +73,24 @@
           clearable
         >
         </el-input>
+        </div>
+        <!-- 税区分 -->
+        <div>
+          <span class="input-label">税区分</span>
+          <el-select 
+            v-model="value" 
+            :placeholder="$t('product.taxType')"
+            style="margin-top:10px; width:20%;"
+            >
+          <el-option
+            v-for="item in options"
+            :key="item.key"
+            :label="item.value"
+            :value="item.key"
+          >
+          </el-option>
+        </el-select>
+        </div>
       </div>
       <div class="right">
         <el-button
@@ -142,6 +165,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
+import { getCode } from '@/api/system'
 
 @Component({
   name: 'Product',
@@ -169,6 +193,7 @@ export default class extends Vue {
 
   created() {
     this.getList()
+    this.getCode()
   }
 
   /**
@@ -201,6 +226,13 @@ export default class extends Vue {
 
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
+  }
+    options = []
+
+
+  private async getCode() {
+    const { data } = await getCode({ codeType: 'TaxType' })
+    this.options = data.codes
   }
 
   /**
@@ -283,6 +315,7 @@ export default class extends Vue {
 .field-label {
   vertical-align: middle;
 }
+
 
 .box-card {
   width: 400px;
