@@ -1,13 +1,6 @@
 <template>
   <div class="app-container">
     <div>{{ $t('route.recivedOrder') }}</div>
-    <el-button
-      type="primary"
-      style="width:25%; margin-bottom:30px; margin-top:30px;"
-      @click.native.prevent="createNewRecievedOrder"
-    >
-      {{ $t('recivedOrder.add') }}
-    </el-button>
   </div>
 </template>
 

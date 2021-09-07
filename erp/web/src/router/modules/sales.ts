@@ -19,20 +19,20 @@ const salesRoutes: RouteConfig = {
     },
     {
       path: 'recived-order',
-      component: () => import('@/views/sales/recived-order.vue'),
+      component: () => import('@/views/sales/recived-order/recived-order.vue'),
       name: 'recivedOrder',
       meta: { title: 'recivedOrder' },
       redirect: '/sales/recived-order/recived-order-list',
       children: [
         {
           path: 'recived-order-list',
-          component: () => import('@/views/sales/recived-order.vue'),
+          component: () => import('@/views/sales/recived-order/recived-order-list.vue'),
           name: 'recivedOrder-list',
           meta: { title: 'recivedOrderList' }
         },
         {
           path: 'save-recived-order',
-          component: () => import('@/views/sales/save-recived-order.vue'),
+          component: () => import('@/views/sales/recived-order/save-recived-order.vue'),
           name: 'save-recivedOrder',
           meta: { title: 'newRecievedOrder' }
         },
