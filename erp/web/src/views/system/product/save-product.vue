@@ -43,7 +43,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
 import productName from '@/views/components/product-name.vue'
-import taxTypePulldown from '../components/tax-type-pulldown.vue'
+import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
 import money from '@/views/components/money.vue'
 import { ProductModule } from '@/store/modules/product'
 
@@ -69,7 +69,7 @@ export default class extends Vue {
         await ProductModule.CreateProduct(this.product)
         this.$router
           .push({
-            path: 'product'
+            path: 'product-list'
           })
           .catch(err => {
             console.warn(err)
@@ -78,6 +78,7 @@ export default class extends Vue {
           message: this.$t('components.createProduct').toString(),
           type: 'success'
         })
+        console.log(this.product)
       } else {
         this.$message({
           message: this.$t('components.validation').toString(),

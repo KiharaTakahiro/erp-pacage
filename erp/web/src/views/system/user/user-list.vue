@@ -1,13 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.recivedOrder') }}</div>
-    <el-button
-      type="primary"
-      style="width:25%; margin-bottom:30px; margin-top:30px;"
-      @click.native.prevent="createNewRecievedOrder"
-    >
-      {{ $t('recivedOrder.add') }}
-    </el-button>
+    <div>{{ $t('route.userList') }}</div>
   </div>
 </template>
 
@@ -16,13 +9,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'RecievedOrder'
+  name: 'Users'
 })
 export default class extends Vue {
-  createNewRecievedOrder() {
+  onClickButton() {
+    // ボタンが押されたときの処理
     this.$router
       .push({
-        path: 'save-recived-order'
+        path: 'save-users'
       })
       .catch(err => {
         console.warn(err)

@@ -63,7 +63,7 @@ export default class extends Vue {
         await UserModule.CreateUser(this.user)
         this.$router
           .push({
-            path: 'users'
+            path: 'user-list'
           })
           .catch(err => {
             console.warn(err)

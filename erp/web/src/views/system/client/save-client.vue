@@ -47,7 +47,7 @@ export default class extends Vue {
         await ClientModule.CreateClient(this.client)
         this.$router
           .push({
-            path: 'clinet'
+            path: 'clinet-list'
           })
           .catch(err => {
             console.warn(err)
