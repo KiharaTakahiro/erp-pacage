@@ -19,16 +19,24 @@ const salesRoutes: RouteConfig = {
     },
     {
       path: 'recived-order',
-      component: () => import('@/views/sales/recived-order.vue'),
       name: 'recivedOrder',
-      meta: { title: 'recivedOrder' }
+      meta: { title: 'recivedOrder' },
+      children: [
+        {
+          path: 'recived-order',
+          component: () => import('@/views/sales/recived-order.vue'),
+          name: 'recivedOrder',
+          meta: { title: 'recivedOrderList' }
+        },
+        {
+          path: 'save-recived-order',
+          component: () => import('@/views/sales/save-recived-order.vue'),
+          name: 'save-recivedOrder',
+          meta: { title: 'newRecievedOrder', }
+        },
+      ]
     },
-    {
-      path: 'save-recived-order',
-      component: () => import('@/views/sales/save-recived-order.vue'),
-      name: 'save-recivedOrder',
-      meta: { title: 'newRecievedOrder', hidden: true }
-    },
+    
     {
       path: 'invoice',
       component: () => import('@/views/sales/invoice.vue'),
