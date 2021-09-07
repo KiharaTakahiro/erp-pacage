@@ -50,6 +50,9 @@ export default class extends Vue {
   }
 
   set dispValue(value: any) {
+    if(isNaN(value.replaceAll(",",""))){
+      return
+    }
     this.price = Number(value.replaceAll(",",""))
   }
   // NOTE: テキストボックスであるためstringで入ってしまうのでエラーとなるのを
