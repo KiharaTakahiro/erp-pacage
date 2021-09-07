@@ -11,6 +11,7 @@
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
+      <div>
         <span class="input-label">ID:</span>
         <el-input
           placeholder=""
@@ -19,7 +20,7 @@
           clearable
         >
         </el-input>
-        <span class="input-label">Name:</span>
+        <span class="input-label">名前:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
@@ -28,26 +29,68 @@
           clearable
         >
         </el-input>
+      </div>  
+      <div>
         <!-- 定価検索FROM -->
-        <span class="input-label">単価</span>
+        <span class="input-label">単価:</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="serchUnitPriceFrom"
+          v-model="searchUnitPriceFrom"
           style="margin-top:10px; width:20%;"
           clearable
         >
         </el-input>
         <!-- 定価検索TO -->
-        <span class="input-label">～</span>
+        <span class="from-to">～</span>
         <el-input
           placeholder=""
           prefix-icon="el-icon-search"
-          v-model="serchUnitPriceTo"
+          v-model="searchUnitPriceTo"
           style="margin-top:10px; width:20%;"
           clearable
         >
         </el-input>
+        </div>
+        <div>
+        <!-- 原価検索FROM -->
+        <span class="input-label">原価:</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchPurchaseUnitPriceFrom"
+          style="margin-top:10px; width:20%;"
+          clearable
+        >
+        </el-input>
+        <!-- 原価検索TO -->
+        <span class="from-to">～</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchPurchaseUnitPriceTo"
+          style="margin-top:10px; width:20%;"
+          clearable
+        >
+        </el-input>
+        </div>
+        <!-- 税区分 -->
+        <div>
+          <span class="input-label">税区分:</span>
+          <el-select 
+            v-model="searchTaxType" 
+            :placeholder="$t('product.taxType')"
+            style="margin-top:10px; width:20%;"
+            >
+          <el-option
+            v-for="item in options"
+            :key="item.key"
+            :label="item.value"
+            :value="item.key"
+          >
+          </el-option>
+        </el-select>
+        </div>
       </div>
       <div class="right">
         <el-button
@@ -88,6 +131,7 @@
         <el-table-column prop="purchaseUnitPrice" label="仕入れ価格">
         </el-table-column>
         <el-table-column prop="unitPrice" label="単価"> </el-table-column>
+        <el-table-column prop="taxType" label="税区分"> </el-table-column>
       </el-table>
       <div class="page">
         <el-pagination
@@ -121,6 +165,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
+import { getCode } from '@/api/system'
 
 @Component({
   name: 'Product',
@@ -141,11 +186,15 @@ export default class extends Vue {
   // 検索条件
   targetProductSeq = ''
   searchName = ''
-  serchUnitPriceFrom = ''
-  serchUnitPriceTo = ''
+  searchUnitPriceFrom = ''
+  searchUnitPriceTo = ''
+  searchPurchaseUnitPriceFrom = ''
+  searchPurchaseUnitPriceTo = ''
+  searchTaxType = ''
 
   created() {
     this.getList()
+    this.getCode()
   }
 
   /**
@@ -170,13 +219,22 @@ export default class extends Vue {
       pageNo: this.pageNo - 1,
       productSeq: this.targetProductSeq === '' ? null : this.targetProductSeq,
       productName: this.searchName === '' ? null : this.searchName,
-      unitPriceFrom:
-        this.serchUnitPriceFrom === '' ? null : this.serchUnitPriceFrom,
-      unitPriceTo: this.serchUnitPriceTo === '' ? null : this.serchUnitPriceTo
+      unitPriceFrom: this.searchUnitPriceFrom === '' ? null : this.searchUnitPriceFrom,
+      unitPriceTo: this.searchUnitPriceTo === '' ? null : this.searchUnitPriceTo,
+      purchaseunitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
+      purchaseunitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo,
+      taxType: this.searchTaxType === '' ? null : this.searchTaxType
     }
 
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
+  }
+    options = []
+
+
+  private async getCode() {
+    const { data } = await getCode({ codeType: 'TaxType' })
+    this.options = data.codes
   }
 
   /**
@@ -194,8 +252,11 @@ export default class extends Vue {
   resetBtn() {
     this.targetProductSeq = ''
     this.searchName = ''
-    this.serchUnitPriceFrom = ''
-    this.serchUnitPriceTo = ''
+    this.searchUnitPriceFrom = ''
+    this.searchUnitPriceTo = ''
+    this.searchPurchaseUnitPriceFrom = ''
+    this.searchPurchaseUnitPriceTo = ''
+    this.searchTaxType = ''
     this.pageNo = 1
     this.getList()
   }
@@ -258,6 +319,7 @@ export default class extends Vue {
   vertical-align: middle;
 }
 
+
 .box-card {
   width: 400px;
   max-width: 100%;
@@ -289,7 +351,11 @@ export default class extends Vue {
 
 .input-label {
   display: inline-block;
-  width: 5%;
+  width: 7%
+}
+
+.from-to {
+  display: inline-block;
 }
 
 .box-card {
