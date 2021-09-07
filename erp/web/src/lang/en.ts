@@ -15,6 +15,7 @@ export default {
     client: 'Client Setting',
     newClient: 'New Client',
     editClient: 'Edit Clietnt',
+    clientList: 'Client List',
     supplierProduct: 'Supplier Product',
     documentation: 'Documentation',
     guide: 'Guide',

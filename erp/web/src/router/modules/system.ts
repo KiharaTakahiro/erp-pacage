@@ -35,20 +35,30 @@ const systemRoutes: RouteConfig = {
       path: 'clinet',
       component: () => import('@/views/system/client/client.vue'),
       name: 'client',
-      meta: { title: 'client' }
+      meta: { title: 'client' },
+      children: [
+        {
+          path: 'client-list',
+          component: () => import('@/views/system/client/client-list.vue'),
+          name: 'client-list',
+          meta: { title: 'clientList' }
+        },
+        {
+          path: 'save-client',
+          component: () => import('@/views/system/client/save-client.vue'),
+          name: 'save-client',
+          meta: { title: 'newClient' }
+        },
+        {
+          path: 'edit-client',
+          component: () => import('@/views/system/client/edit-client.vue'),
+          name: 'edit-client',
+          meta: { title: 'editClient', hidden: true }
+        },
+      ]
     },
-    {
-      path: 'save-client',
-      component: () => import('@/views/system/client/save-client.vue'),
-      name: 'save-client',
-      meta: { title: 'newClient', hidden: true }
-    },
-    {
-      path: 'edit-client',
-      component: () => import('@/views/system/client/edit-client.vue'),
-      name: 'edit-client',
-      meta: { title: 'editClient', hidden: true }
-    },
+    
+    
     {
       path: 'supplier-product',
       component: () => import('@/views/system/supplier-product/supplier-product.vue'),

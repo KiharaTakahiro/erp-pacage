@@ -14,6 +14,7 @@ export default {
     userList:"ユーザー一覧",
     client: '取引先管理',
     newClient: '取引先追加',
+    clientList: '取引先一覧',
     editClient: '取引先編集',
     supplierProduct: '仕入商品管理',
     product: '商品管理',
