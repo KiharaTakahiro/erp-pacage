@@ -134,7 +134,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.RESET_DETAILS()
   }
 
-  @Action
+  @Action({ rawError: true })
   public async createReciverdOrder(orderInfo: {
     clientsSeq: string
     companySeq: string

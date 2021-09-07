@@ -10,29 +10,21 @@
       autocomplete="on"
       label-position="left"
     >
-      <clients-pull-down
-        :clientsSeq.sync="recivedOrder.clientsSeq"
-      />
-      <company-pull-down
-        :companySeq.sync="recivedOrder.companySeq"
-        :departmentSeq.sync="recivedOrder.departmentSeq"
-      />
-
-      <div class="app-container">
-        <date-form
-          label="受注日"
-          :date.sync="recivedOrder.recivedOrderDate"
-        />
-      </div>
+    <clients-pull-down
+      :clientsSeq.sync="recivedOrder.clientsSeq"
+    />
+    <company-pull-down
+      :companySeq.sync="recivedOrder.companySeq"
+      :departmentSeq.sync="recivedOrder.departmentSeq"
+      @resetDepart="resetDepart"
+    />
+    <date-form
+      label="受注日"
+      :date.sync="recivedOrder.recivedOrderDate"
+    />
 
       <div>{{ $t('route.OrderDetail') }}</div>
-      <div class="complete-btn">
-        <el-button
-          type="info"
-          icon="el-icon-plus"
-          @click.native.prevent="addBtnClick"
-        />
-      </div>
+      
 
       <product-detail
         v-for="(detail, index) in recivedOrder.details"
@@ -44,9 +36,17 @@
         :status.sync="detail.status"
         :date.sync="detail.deriveryDate"
         @clickMinusBtn="minusBtnClick"
+        
       />
-      <div class="detail"></div>
-
+      <div class="add-btn">
+        <el-button
+          type="success"
+          icon="el-icon-plus"
+          @click.native.prevent="addBtnClick"
+        >
+        詳細追加
+        </el-button>
+      </div>
       <div class="complete-btn">
         <el-button
           type="primary"
@@ -90,11 +90,13 @@ export default class extends Vue {
     total: RecievedOrderModule.total
   }
 
+  beforeCreate() {
+    // 初期表示時にはモデルをリセットする
+    RecievedOrderModule.reset()
+  }
+
   // 作成時（仮）
   created() {
-    // 初期表示時にはモデルをリセットする
-    // TODO: 必要な処理だが初回起動時にうまく動かないのでコメントアウト
-    // RecievedOrderModule.reset()
     //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
     RecievedOrderModule.setQuotationId(2)
     // 初期表示時にpushする
@@ -104,11 +106,11 @@ export default class extends Vue {
       discount: 0,
       deriveryDate: '',
       lotSeq: 2, //仮
-      status: ''    
+      status: ''
   })
   }
 
-  //デバック用
+  // 登録処理
   private submit() {
     (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
       console.log(this.recivedOrder)
@@ -133,6 +135,11 @@ export default class extends Vue {
         return false
       }
     })
+  }
+
+  resetDepart(){
+    RecievedOrderModule.setDepartmentId('')
+    this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
 
   minusBtnClick(key: number) {
@@ -177,5 +184,8 @@ export default class extends Vue {
 
 .complete-btn {
   float: right;
+}
+.add-btn{
+  float: left;
 }
 </style>
