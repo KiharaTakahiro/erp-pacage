@@ -89,19 +89,27 @@ const systemRoutes: RouteConfig = {
       path: 'product',
       component: () => import('@/views/system/product/product.vue'),
       name: 'product',
-      meta: { title: 'product' }
-    },
-    {
-      path: 'save-product',
-      component: () => import('@/views/system/product/save-product.vue'),
-      name: 'save-product',
-      meta: { title: 'newProduct', hidden: true }
-    },
-    {
-      path: 'edit-product',
-      component: () => import('@/views/system/product/edit-product.vue'),
-      name: 'edit-product',
-      meta: { title: 'editProduct', hidden: true }
+      meta: { title: 'product' },
+      children: [
+        {
+          path: 'product-list',
+          component: () => import('@/views/system/product/product-list.vue'),
+          name: 'product-list',
+          meta: { title: 'productList' }
+        },
+        {
+          path: 'save-product',
+          component: () => import('@/views/system/product/save-product.vue'),
+          name: 'save-product',
+          meta: { title: 'newProduct' }
+        },
+        {
+          path: 'edit-product',
+          component: () => import('@/views/system/product/edit-product.vue'),
+          name: 'edit-product',
+          meta: { title: 'editProduct', hidden: true }
+        }
+      ]
     }
   ]
 }

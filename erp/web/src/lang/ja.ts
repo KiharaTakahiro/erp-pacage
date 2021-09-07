@@ -20,6 +20,7 @@ export default {
     supplierProductList: '仕入商品一覧',
     saveSupplierProduct: '仕入商品追加',
     product: '商品管理',
+    productList: '商品一覧',
     newProduct: '商品追加',
     editProduct: '商品編集',
     documentation: 'ドキュメント',
