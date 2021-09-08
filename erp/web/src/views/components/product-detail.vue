@@ -22,7 +22,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item label="商品単価：￥">
+          <el-form-item label="単価：￥">
             {{ price }}
           </el-form-item>
         </el-col>
@@ -55,10 +55,10 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="5">
           <date-form :date.sync="dateValue" label="配送日" />
         </el-col>
-        <el-col :span="6">
+        <el-col :span="5">
           <delivery-status
             :status.sync="statusVal"/>
         </el-col>

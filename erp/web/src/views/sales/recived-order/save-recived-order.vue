@@ -9,6 +9,7 @@
       :model="recivedOrder"
       autocomplete="on"
       label-position="left"
+      label-width="80px"
     >
     <clients-pull-down
       :clientsSeq.sync="recivedOrder.clientsSeq"
