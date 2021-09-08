@@ -23,7 +23,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item label="単価：￥">
-            {{ price }}
+            {{ price.toLocaleString() }}
           </el-form-item>
         </el-col>
 
@@ -39,9 +39,6 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <!-- <el-form-item label="値引">
-            <el-input v-model="discountVal" style="width:50%;" />
-          </el-form-item> -->
           <money
             :label="label"
             :priceValue.sync="discountVal"
@@ -50,7 +47,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item label="小計：￥">
-            {{ subTotalValue }}
+            {{ subTotalValue.toLocaleString() }}
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -93,12 +90,13 @@ import DeliveryStatus from '@/views/components/delivery-status.vue'
 export default class extends Vue {
   //商品一覧
   products = [{}]
+  // 配送状況一覧
   private RecivedOrderSatsus = []
 
   // 単価
   price = 0
 
-  //
+  //値引のラベル
   label = '値引'
 
   // 詳細画面を判定するためのkey
