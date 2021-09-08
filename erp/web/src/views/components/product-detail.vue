@@ -39,9 +39,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item label="値引">
+          <!-- <el-form-item label="値引">
             <el-input v-model="discountVal" style="width:50%;" />
-          </el-form-item>
+          </el-form-item> -->
+          <money
+            :label="label"
+            :priceValue.sync="discountVal"
+            style="width:70%;"
+          />
         </el-col>
         <el-col :span="4">
           <el-form-item label="小計：￥">
@@ -73,6 +78,7 @@ import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
 import DelivaryStatus from '@/views/components/delivery-status.vue'
+import money from '@/views/components/money.vue'
 import { getCode } from '@/api/system'
 import DeliveryStatus from '@/views/components/delivery-status.vue'
 
@@ -80,7 +86,8 @@ import DeliveryStatus from '@/views/components/delivery-status.vue'
   name: 'productsPullDown',
   components: {
     DateForm,
-    DeliveryStatus
+    DeliveryStatus,
+    money
   }
 })
 export default class extends Vue {
@@ -90,6 +97,9 @@ export default class extends Vue {
 
   // 単価
   price = 0
+
+  //
+  label = '値引'
 
   // 詳細画面を判定するためのkey
   @Prop() detailKey!: number
