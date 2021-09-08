@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
+import com.erp.main.domain.specification.RecivedOederSpec;
 
 /*
  * 受注のサービス
@@ -182,13 +184,25 @@ public class RecivedOrderService {
 	/*
 	 * 受注一覧取得
 	 */
-	GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo vo) {
+	GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
 		
 		//
 		Specification<RecivedOrderEntity> spec = Specification.where(
-				RecivedOederSpec
-				);
-		
-	}
+				RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
+				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
+				.and(RecivedOederSpec.companySeqEquals(condition.getCompanySeq()))
+				.and(RecivedOederSpec.departmentSeqEquals(condition.getRecivedOrderSeq()))
+				.and(RecivedOederSpec.fromDate(condition.getFromDate()))
+				.and(RecivedOederSpec.toDate(condition.getToDate()))
+				.and(RecivedOederSpec.fromTax(condition.getFromTax()))
+				.and(RecivedOederSpec.toTax(condition.getToTax()))
+				.and(RecivedOederSpec.fromTotal(condition.getFromTotal()))
+				.and(RecivedOederSpec.toTotal(condition.getToTotal()));
+				
+
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
+				
+				}
 
 }
