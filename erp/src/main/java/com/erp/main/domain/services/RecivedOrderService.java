@@ -1,6 +1,8 @@
 package com.erp.main.domain.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderEntity;
+import com.erp.main.domain.objects.model.RecivedOrderModel;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
@@ -203,7 +206,11 @@ public class RecivedOrderService {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
 		
+		List<RecivedOrderModel> orders = new ArrayList<>();
+		
 		List<RecivedOrderEntity> entitys = this.recivedOrderRepository.findAll(spec, sort);
+		
+		
 				
 				}
 
