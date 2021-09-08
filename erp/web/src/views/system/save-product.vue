@@ -78,6 +78,7 @@ export default class extends Vue {
           message: this.$t('components.createProduct').toString(),
           type: 'success'
         })
+        console.log(this.product)
       } else {
         this.$message({
           message: this.$t('components.validation').toString(),

@@ -443,7 +443,8 @@ public class MasterService {
 				.and(ProductSpec.unitPriceFrom(condition.getUnitPriceFrom()))
 				.and(ProductSpec.unitPriceTo(condition.getUnitPriceTo()))
 				.and(ProductSpec.purchaseUnitPriceFrom(condition.getPurchaseUnitPriceFrom()))
-				.and(ProductSpec.purchaseUnitPriceTo(condition.getPurchaseUnitPriceTo()));
+				.and(ProductSpec.purchaseUnitPriceTo(condition.getPurchaseUnitPriceTo()))
+				.and(ProductSpec.taxTypeEquals(condition.getTaxType()));
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
 		

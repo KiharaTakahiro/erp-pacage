@@ -1,7 +1,5 @@
 package com.erp.main.domain.objects.valueobjects;
 
-import com.erp.main.domain.common.enums.TaxType;
-
 import lombok.Data;
 
 /**
@@ -27,7 +25,7 @@ public class GetProductConditionsVo {
 	private Long purchaseUnitPriceTo;
 	// 税区分
 	// HACK: ここでEnumで受けることもできる気がしますが、一旦これで進める
-	private TaxType taxType;
+	private Integer taxType;
 	
 
 }

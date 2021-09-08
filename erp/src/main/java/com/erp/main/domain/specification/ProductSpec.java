@@ -29,6 +29,15 @@ public class ProductSpec {
 		return productName == null ? null : (root, query, builder) ->builder.like(root.get("name"),"%" + productName + "%");
 	}
 	
+	/*
+	 * 税区分での検索
+	 * @param taxType
+	 * @return
+	 */
+	public static Specification<ProductEntity> taxTypeEquals(Integer taxType){
+		return taxType == null ? null : (root, query, builder) -> builder.equal(root.get("taxType"), taxType);
+	}
+	
 	/**
 	 * 定価Fromで検索
 	 * @param unitPrice
@@ -49,7 +58,7 @@ public class ProductSpec {
 	
 
 	/**
-	 * 定価Fromで検索
+	 * 仕入れ価格Fromで検索
 	 * @param purchaseUnitPrice
 	 * @return
 	 */
@@ -58,7 +67,7 @@ public class ProductSpec {
 	}
 	
 	/**
-	 * 定価Toで検索
+	 * 仕入れ価格Toで検索
 	 * @param purchaseUnitPrice
 	 * @return
 	 */
