@@ -1,13 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.createUsre') }}</div>
-    <el-button
-      type="primary"
-      style="width:25%; margin-bottom:30px; margin-top:30px;"
-      @click.native.prevent="onClickButton"
-    >
-      {{ $t('user.add') }}
-    </el-button>
+    <div>{{ $t('route.userList') }}</div>
   </div>
 </template>
 

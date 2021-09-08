@@ -1,20 +1,23 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.newWarehouse') }}</div>
+    <div>{{ $t('route.editClient') }}</div>
     <br />
     <br />
     <el-form
-      ref="warehouse"
-      :model="warehouse"
+      ref="client"
+      :model="client"
       autocomplete="on"
       label-position="left"
     >
-      <warehouse-name :warehouseName.sync="warehouse.warehouseName" />
+      <company-name
+        :companyName="client.name"
+        @conpanyNameValue="conpanyName"
+      />
       <div class="complete-btn">
         <el-button
           type="primary"
           style="width:100%;"
-          @click.native.prevent="createWarehouse"
+          @click.native.prevent="updateClient"
         >
           {{ $t('client.complete') }}
         </el-button>
@@ -23,41 +26,44 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm } from 'element-ui'
+import { ClientModule } from '@/store/modules/client'
+import CompanyName from '@/views/components/company-name.vue'
 import '@/assets/custom-theme/index.css'
-import warehouseName from '@/views/components/warehouse-name.vue'
-import { WarehouseModule } from '@/store/modules/warehouse'
-
 
 @Component({
-  name: 'Warehouse-save',
+  name: 'Client-save',
   components: {
-    warehouseName
+    CompanyName
   }
 })
 export default class extends Vue {
-  warehouse = {
-    warehouseName: '',
+  client = {
+    id: ClientModule.id,
+    name: ClientModule.name
   }
-  private createWarehouse() {
-    (this.$refs.warehouse as ElForm).validate(async (valid: boolean) => {
+
+  private conpanyName(name: any): void {
+    this.client.name = name
+  }
+
+  private updateClient() {
+    (this.$refs.client as ElForm).validate(async (valid: boolean) => {
       if (valid) {
-        await WarehouseModule.CreateWarehouse(this.warehouse)
+        await ClientModule.UpdateClient(this.client)
         this.$router
           .push({
-            path: 'warehouse'
+            path: 'clinet'
           })
           .catch(err => {
             console.warn(err)
           })
         this.$message({
-          message: this.$t('components.createWarehouse').toString(),
+          message: this.$t('components.createClients').toString(),
           type: 'success'
         })
-        console.log(this.warehouse)
       } else {
         this.$message({
           message: this.$t('components.validation').toString(),
@@ -97,4 +103,3 @@ export default class extends Vue {
   float: right;
 }
 </style>
-
