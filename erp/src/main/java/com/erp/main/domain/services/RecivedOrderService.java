@@ -188,7 +188,7 @@ public class RecivedOrderService {
 		
 		//
 		Specification<RecivedOrderEntity> spec = Specification.where(
-				RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
+			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
 				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
 				.and(RecivedOederSpec.companySeqEquals(condition.getCompanySeq()))
 				.and(RecivedOederSpec.departmentSeqEquals(condition.getRecivedOrderSeq()))
@@ -202,6 +202,8 @@ public class RecivedOrderService {
 
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
+		
+		List<RecivedOrderEntity> entitys = this.recivedOrderRepository.findAll(spec, sort);
 				
 				}
 
