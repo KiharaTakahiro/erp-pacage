@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderEntity;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -176,5 +179,16 @@ public class RecivedOrderService {
 		this.recivedOrderRepository.save(recivedOrder);			
 	}
 	
+	/*
+	 * 受注一覧取得
+	 */
+	GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo vo) {
+		
+		//
+		Specification<RecivedOrderEntity> spec = Specification.where(
+				RecivedOederSpec
+				);
+		
+	}
 
 }

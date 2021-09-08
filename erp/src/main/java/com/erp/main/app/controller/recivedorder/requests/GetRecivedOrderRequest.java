@@ -11,7 +11,7 @@ import lombok.Data;
 public class GetRecivedOrderRequest {
 	
 	//総ページ数
-	private Integer totalPageNum;
+	private Integer totalItmesNum;
 	//受注Seq
 	private Long recivedOrderSeq;
 	//取引先Seq
@@ -43,7 +43,7 @@ public class GetRecivedOrderRequest {
 		var vo = new GetRecivedOrderConditionsVo();
 		
 		//総ページ数
-		vo.setTotalPageNum(this.getTotalPageNum());
+		vo.setTotalItemsNum(this.getTotalItmesNum());
 		//受注Seq
 		vo.setRecivedOrderSeq(this.getRecivedOrderSeq());
 		//取引先Seq
