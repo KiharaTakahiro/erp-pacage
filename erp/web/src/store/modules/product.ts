@@ -122,6 +122,7 @@ class Product extends VuexModule implements IProductState {
   @Action({ rawError: true })
   public async ProductList(productInfo: any) {
     const { data } = await infoProduct(productInfo)
+    console.log(data)
     this.SET_LIST(data.product)
     this.SET_TOTAL_ITEM(data.totalItemsNum)
   }
