@@ -14,8 +14,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class RecivedOrderResponse extends BaseResponse {
-	// 合計数
-	private Long maxPage;
+	// 全データの総数
+	private Long totalItemsNum;
 	
 	//受注モデル
 	List<RecivedOrderModel> recivedOrder;

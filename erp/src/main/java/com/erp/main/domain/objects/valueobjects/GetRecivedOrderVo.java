@@ -16,6 +16,6 @@ public class GetRecivedOrderVo {
 	//受注リスト
 	List<RecivedOrderModel> recivedOder;
 	
-	//総数
-	Integer totalItemsNum;
+	// 全体のページ数
+	Long totalItemsNum;;
 }

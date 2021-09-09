@@ -1,12 +1,13 @@
 package com.erp.main.domain.services;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -188,7 +189,8 @@ public class RecivedOrderService {
 	/*
 	 * 受注一覧取得
 	 */
-	GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
+	@Transactional
+	public GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
 		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
@@ -212,7 +214,37 @@ public class RecivedOrderService {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
 		
-		Page<RecivedOrderEntity> entitys = this.recivedOrderRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort);
+		Page<RecivedOrderEntity> pages = this.recivedOrderRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		
+		List<RecivedOrderModel> orders = pages.get().map(e -> {
+			var recivedOrder = new RecivedOrderModel();
+			//
+			recivedOrder.setRecivedOrderSeq(e.getRecivedOrderSeq());
+			//
+			recivedOrder.setClientsSeq(e.getClientsSeq());
+			//
+			recivedOrder.setCompanySeq(e.getCompanySeq());
+			//
+			recivedOrder.setDepartmentSeq(e.getDepartmentSeq());
+			//
+			recivedOrder.setQuotationSeq(e.getQuotationSeq());
+			//
+			recivedOrder.setTax(e.getTax());
+			//
+			recivedOrder.setTotal(e.getTotal());
+			//
+			return recivedOrder;
+		}).collect(Collectors.toList());
+		
+		//
+		var vo = new GetRecivedOrderVo();
+		//
+		vo.setTotalItemsNum(pages.getTotalElements());
+		//
+		vo.setRecivedOder(orders);
+		
+		return vo;
+		
 		
 		
 				

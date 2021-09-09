@@ -21,7 +21,7 @@ public class RecivedOrderModel {
 	//受注日
 	private String recivedOrderDate;
 	//税金
-	private Integer tax;
+	private Long tax;
 	//合計金額
-	private Integer total;
+	private Long total;
 }
