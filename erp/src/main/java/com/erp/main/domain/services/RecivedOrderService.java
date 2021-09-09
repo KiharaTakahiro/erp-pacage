@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -189,6 +190,11 @@ public class RecivedOrderService {
 	 */
 	GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
 		
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
 		//
 		Specification<RecivedOrderEntity> spec = Specification.where(
 			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
@@ -206,9 +212,7 @@ public class RecivedOrderService {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
 		
-		List<RecivedOrderModel> orders = new ArrayList<>();
-		
-		List<RecivedOrderEntity> entitys = this.recivedOrderRepository.findAll(spec, sort);
+		Page<RecivedOrderEntity> entitys = this.recivedOrderRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort);
 		
 		
 				

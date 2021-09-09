@@ -7,9 +7,8 @@ import lombok.Data;
  */
 @Data
 public class GetRecivedOrderConditionsVo {
-	
-	//総ページ数
-	private Integer totalItemsNum;
+	// ページ番号
+	private Integer pageNo;
 	//受注Seq
 	private Long recivedOrderSeq;
 	//取引先Seq
