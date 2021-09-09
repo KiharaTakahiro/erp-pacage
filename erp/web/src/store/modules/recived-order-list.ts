@@ -5,15 +5,15 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-import { updateClient, infoClient } from '@/api/client'
+import { infoRecivedOrder } from '@/api/recived-order'
 import store from '@/store'
-export interface IClientListState {
+export interface IRecivedOrderListState {
   list: JSON[]
   totalItem: number
 }
 
-@Module({ dynamic: true, store, name: 'client' })
-class ClientList extends VuexModule implements IClientListState {
+@Module({ dynamic: true, store, name: 'client'})
+class RecivedOrderList extends VuexModule implements IRecivedOrderListState {
   public list: JSON[] = []
   public totalItem = 0
 
@@ -28,11 +28,11 @@ class ClientList extends VuexModule implements IClientListState {
   }
 
   @Action({ rawError: true })
-  public async ClientList(clientInfo: any) {
-    const { data } = await infoClient(clientInfo)
-    this.SET_LIST(data.clients)
+  public async RecivedOrderList(recivedOrderInfo: any) {
+    const { data } = await infoRecivedOrder(recivedOrderInfo)
+    this.SET_LIST(data.recivedOrder)
     this.SET_TOTAL_ITEM(data.totalItemsNum)
   }
 }
 
-export const ClientListModule = getModule(ClientList)
+export const RecivedOrderListModule = getModule(RecivedOrderList)
