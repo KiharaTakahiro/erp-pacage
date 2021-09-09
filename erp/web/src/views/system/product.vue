@@ -235,6 +235,7 @@ export default class extends Vue {
   private async getCode() {
     const { data } = await getCode({ codeType: 'TaxType' })
     this.options = data.codes
+    console.log(data)
   }
 
   /**
@@ -318,7 +319,6 @@ export default class extends Vue {
 .field-label {
   vertical-align: middle;
 }
-
 
 .box-card {
   width: 400px;
