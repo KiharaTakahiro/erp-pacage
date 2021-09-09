@@ -119,7 +119,7 @@ export default class extends Vue {
         await RecievedOrderModule.createReciverdOrder(this.recivedOrder)
         this.$router
           .push({
-            path: 'recived-order'
+            path: 'recived-order-list'
           })
           .catch(err => {
             console.warn(err)
