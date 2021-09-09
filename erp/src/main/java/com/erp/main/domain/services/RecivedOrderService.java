@@ -202,7 +202,7 @@ public class RecivedOrderService {
 			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
 				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
 				.and(RecivedOederSpec.companySeqEquals(condition.getCompanySeq()))
-				.and(RecivedOederSpec.departmentSeqEquals(condition.getRecivedOrderSeq()))
+				.and(RecivedOederSpec.departmentSeqEquals(condition.getDepartmentSeq()))
 				.and(RecivedOederSpec.fromDate(condition.getFromDate()))
 				.and(RecivedOederSpec.toDate(condition.getToDate()))
 				.and(RecivedOederSpec.fromTax(condition.getFromTax()))
@@ -228,6 +228,8 @@ public class RecivedOrderService {
 			recivedOrder.setDepartmentSeq(e.getDepartmentSeq());
 			//
 			recivedOrder.setQuotationSeq(e.getQuotationSeq());
+			//
+			recivedOrder.setRecivedOrderDate(e.getRecivedOrderDate());
 			//
 			recivedOrder.setTax(e.getTax());
 			//

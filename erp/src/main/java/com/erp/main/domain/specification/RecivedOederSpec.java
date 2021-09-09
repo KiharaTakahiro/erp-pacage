@@ -29,8 +29,8 @@ public class RecivedOederSpec {
 	}
 	
 	//部署Seqによる検索
-	public static Specification<RecivedOrderEntity> departmentSeqEquals(Long department){
-		return department == null ? null : (root, query, builder) -> builder.equal(root.get("department"), department);
+	public static Specification<RecivedOrderEntity> departmentSeqEquals(Long departmentSeq){
+		return departmentSeq == null ? null : (root, query, builder) -> builder.equal(root.get("departmentSeq"), departmentSeq);
 	}
 	
 	//受注日From検索
