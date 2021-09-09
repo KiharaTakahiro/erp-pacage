@@ -13,19 +13,19 @@ const purchasingRoutes: RouteConfig = {
   children: [
     {
       path: 'quotation',
-      component: () => import('@/views/sales/quotation.vue'),
+      component: () => import('@/views/sales/quotation/quotation.vue'),
       name: 'quotation',
       meta: { title: 'quotation' }
     },
     {
       path: 'recived-order',
-      component: () => import('@/views/sales/recived-order.vue'),
+      component: () => import('@/views/sales/recived-order/recived-order.vue'),
       name: 'recivedOrder',
       meta: { title: 'recivedOrder' }
     },
     {
       path: 'invoice',
-      component: () => import('@/views/sales/invoice.vue'),
+      component: () => import('@/views/sales/incoice/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
     }

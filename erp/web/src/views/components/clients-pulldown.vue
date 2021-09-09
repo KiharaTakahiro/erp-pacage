@@ -1,28 +1,26 @@
 <template>
   <div>
-    <div class="app-container">
-      <el-form-item
-        label="取引先"
-        prop="clientsSeq"
-        :rules="[
-          {
-            required: true,
-            message: '取引先を選択してください',
-            trigger: 'change'
-          }
-        ]"
-      >
-        <el-select v-model="seq" filterable clearable placeholder="取引先">
-          <el-option
-            v-for="client in clients"
-            :key="client.clientsSeq"
-            :label="client.clientsName"
-            :value="client.clientsSeq"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </div>
+    <el-form-item
+      label="取引先"
+      prop="clientsSeq"
+      :rules="[
+        {
+          required: true,
+          message: '取引先を選択してください',
+          trigger: 'change'
+        }
+      ]"
+    >
+      <el-select v-model="seq" filterable clearable placeholder="取引先">
+        <el-option
+          v-for="client in clients"
+          :key="client.clientsSeq"
+          :label="client.clientsName"
+          :value="client.clientsSeq"
+        >
+        </el-option>
+      </el-select>
+    </el-form-item>
   </div>
 </template>
 

@@ -1,13 +1,6 @@
 <template>
   <div class="app-container">
     <div>{{ $t('route.supplierProduct') }}</div>
-    <el-button
-      type="primary"
-      style="width:13%; margin-bottom:30px; margin-top:30px;"
-      @click.native.prevent="createSupplierProductBtn"
-    >
-      {{ $t('supplierProduct.add') }}
-    </el-button>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">

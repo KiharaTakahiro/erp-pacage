@@ -1,13 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.product') }}</div>
-    <el-button
-      type="primary"
-      style="width:13%; margin-bottom:30px; margin-top:30px;"
-      @click.native.prevent="createProductBtn"
-    >
-      {{ $t('product.add') }}
-    </el-button>
+    <div>{{ $t('route.productList') }}</div>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
@@ -235,7 +228,6 @@ export default class extends Vue {
   private async getCode() {
     const { data } = await getCode({ codeType: 'TaxType' })
     this.options = data.codes
-    console.log(data)
   }
 
   /**
@@ -319,6 +311,7 @@ export default class extends Vue {
 .field-label {
   vertical-align: middle;
 }
+
 
 .box-card {
   width: 400px;

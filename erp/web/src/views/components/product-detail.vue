@@ -1,94 +1,70 @@
 <template>
   <div class="app-container">
-    <el-row>
-      <el-col :span="4">
-        <el-form-item label="商品名">
-          <el-select
-            :value="productSeqVal"
-            @input="changeProduct"
-            filterable
-            clearable
-            placeholder="商品"
-          >
-            <el-option
-              v-for="product in products"
-              :key="product.productSeq"
-              :label="product.productName"
-              :value="product.productSeq"
+    <el-card class="box-card">
+      <el-row>
+        <el-col :span="5">
+          <el-form-item label="商品名">
+            <el-select
+              :value="productSeqVal"
+              @input="changeProduct"
+              filterable
+              clearable
+              placeholder="商品"
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="3">
-        <el-form-item label="商品単価：￥">
-          {{ price }}
-        </el-form-item>
-      </el-col>
+              <el-option
+                v-for="product in products"
+                :key="product.productSeq"
+                :label="product.productName"
+                :value="product.productSeq"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item label="商品単価：￥">
+            {{ price }}
+          </el-form-item>
+        </el-col>
 
-      <el-col :span="4">
-        <el-form-item label="個数">
-          <el-input-number
-            v-model="countVal"
-            :step="1"
-            :min="0"
-            :max="100"
-            style="width:60%;"
-          />
-        </el-form-item>
-      </el-col>
-      <el-col :span="2">
-        <el-form-item label="値引">
-          <el-input v-model="discountVal" style="width:50%;" />
-        </el-form-item>
-      </el-col>
-      <el-col :span="3">
-        <el-form-item label="小計：￥">
-          {{ subTotalValue }}
-        </el-form-item>
-      </el-col>
-
-      <el-col :span="4">
-        <date-form :date.sync="dateValue" label="配送日" />
-        <!-- <el-form-item
-        label="配送日"
-        >
-      <el-date-picker
-      v-model="dateVal"
-      type="date"
-      placeholder="配送日"
-      style="width:60%;">
-    </el-date-picker>
-        </el-form-item> -->
-      </el-col>
-      <el-col :span="4">
-        <el-form-item label="配送状況">
-          <el-select
-            v-model="statusVal"
-            filterable
-            clearable
-            placeholder="配送状況"
-          >
-            <el-option
-              v-for="status in RecivedOrderSatsus"
-              :key="status.key"
-              :label="status.value"
-              :value="status.key"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col>
-        <div class="complete-btn">
-          <el-button
-            type="info"
-            icon="el-icon-minus"
-            @click.native.prevent="minusBtnClick"
-          />
-        </div>
-      </el-col>
-    </el-row>
+        <el-col :span="4">
+          <el-form-item label="個数">
+            <el-input-number
+              v-model="countVal"
+              :step="1"
+              :min="0"
+              :max="100"
+              style="width:60%;"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item label="値引">
+            <el-input v-model="discountVal" style="width:50%;" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item label="小計：￥">
+            {{ subTotalValue }}
+          </el-form-item>
+        </el-col>
+        <el-col :span="2">
+          <div class="complete-btn">
+            <el-button type="danger" icon="el-icon-delete" @click.native.prevent="minusBtnClick" circle />
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          <date-form :date.sync="dateValue" label="配送日" />
+        </el-col>
+        <el-col :span="6">
+          <delivery-status
+            :status.sync="statusVal"/>
+        </el-col>
+        
+      </el-row>
+    </el-card>
   </div>
 </template>
 
@@ -96,12 +72,15 @@
 import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
+import DelivaryStatus from '@/views/components/delivery-status.vue'
 import { getCode } from '@/api/system'
+import DeliveryStatus from '@/views/components/delivery-status.vue'
 
 @Component({
   name: 'productsPullDown',
   components: {
-    DateForm
+    DateForm,
+    DeliveryStatus
   }
 })
 export default class extends Vue {
@@ -162,13 +141,6 @@ export default class extends Vue {
   // 作成時
   created() {
     this.getList()
-    // HACK: ここはプルダウンをコンポーネント化したほうが良いが現時点ではこのまま
-    this.getCode()
-  }
-
-  private async getCode() {
-    const { data } = await getCode({ codeType: 'RacivedOrderStatus' })
-    this.RecivedOrderSatsus = data.codes
   }
 
   // 商品プルダウン

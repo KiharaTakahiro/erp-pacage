@@ -13,25 +13,35 @@ const salesRoutes: RouteConfig = {
   children: [
     {
       path: 'quotation',
-      component: () => import('@/views/sales/quotation.vue'),
+      component: () => import('@/views/sales/quotation/quotation.vue'),
       name: 'quotation',
       meta: { title: 'quotation' }
     },
     {
       path: 'recived-order',
-      component: () => import('@/views/sales/recived-order.vue'),
+      component: () => import('@/views/sales/recived-order/recived-order.vue'),
       name: 'recivedOrder',
-      meta: { title: 'recivedOrder' }
+      meta: { title: 'recivedOrder' },
+      redirect: '/sales/recived-order/recived-order-list',
+      children: [
+        {
+          path: 'recived-order-list',
+          component: () => import('@/views/sales/recived-order/recived-order-list.vue'),
+          name: 'recivedOrder-list',
+          meta: { title: 'recivedOrderList' }
+        },
+        {
+          path: 'save-recived-order',
+          component: () => import('@/views/sales/recived-order/save-recived-order.vue'),
+          name: 'save-recivedOrder',
+          meta: { title: 'newRecievedOrder' }
+        },
+      ]
     },
-    {
-      path: 'save-recived-order',
-      component: () => import('@/views/sales/save-recived-order.vue'),
-      name: 'save-recivedOrder',
-      meta: { title: 'newRecievedOrder', hidden: true }
-    },
+    
     {
       path: 'invoice',
-      component: () => import('@/views/sales/invoice.vue'),
+      component: () => import('@/views/sales/incoice/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
     }
