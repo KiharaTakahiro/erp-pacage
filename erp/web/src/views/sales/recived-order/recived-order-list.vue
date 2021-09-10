@@ -10,7 +10,7 @@
       >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="recivedOrderSeq" label="ID" width="180"></el-table-column>
-      <el-table-column prop="clientsSeq" label="取引先" width="180"></el-table-column>
+      <el-table-column prop="clientsName" label="取引先" width="180"></el-table-column>
       <el-table-column prop="recivedOrderDate" label="受注日" width="180"></el-table-column>
       <el-table-column prop="total" label="合計金額" width="180"></el-table-column>
       <el-table-column prop="tax" label="消費税" width="180"></el-table-column>

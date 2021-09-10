@@ -218,31 +218,52 @@ public class RecivedOrderService {
 		
 		List<RecivedOrderModel> orders = pages.get().map(e -> {
 			var recivedOrder = new RecivedOrderModel();
-			//
+			//受注Seq
 			recivedOrder.setRecivedOrderSeq(e.getRecivedOrderSeq());
-			//
+			//取引先Seq
 			recivedOrder.setClientsSeq(e.getClientsSeq());
-			//
+			//取引先のエンティティ生成
+			Optional<ClientsEntity> client = this.clientsRepository.findById(e.getClientsSeq());
+			if(client.isEmpty()) {
+				throw new AppException(String.format("対象の取引先が取得できません。clientsSeq: %s",e.getClientsSeq()));
+			}
+			//取引先名
+			recivedOrder.setClientsName(client.get().getName());
+			//会社Seq
 			recivedOrder.setCompanySeq(e.getCompanySeq());
-			//
+			//会社のエンティティ生成
+			Optional<CompanyEntity> company = this.companyRepository.findById(e.getCompanySeq());
+			if(client.isEmpty()) {
+				throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",e.getCompanySeq()));
+			}
+			//会社名
+			recivedOrder.setCompanyName(company.get().getName());
+			//部署Seq
 			recivedOrder.setDepartmentSeq(e.getDepartmentSeq());
-			//
+			//部署のエンティティ生成
+			Optional<DepartmentEntity> department = this.departmentRepository.findById(e.getDepartmentSeq());
+			if(department.isEmpty()) {
+				throw new AppException(String.format("対象の取引先が取得できません。departmentSeq: %s",e.getDepartmentSeq()));
+			}
+			//部署名
+			recivedOrder.setDepartmentName(department.get().getName());
+			//見積Seq
 			recivedOrder.setQuotationSeq(e.getQuotationSeq());
-			//
+			//受注日
 			recivedOrder.setRecivedOrderDate(e.getRecivedOrderDate());
-			//
+			//税金計
 			recivedOrder.setTax(e.getTax());
-			//
+			//合計金額
 			recivedOrder.setTotal(e.getTotal());
-			//
+			
 			return recivedOrder;
 		}).collect(Collectors.toList());
 		
-		//
+		//詰めるVo生成
 		var vo = new GetRecivedOrderVo();
-		//
+		//総アイテム数
 		vo.setTotalItemsNum(pages.getTotalElements());
-		//
+		//受注一覧
 		vo.setRecivedOder(orders);
 		
 		return vo;
