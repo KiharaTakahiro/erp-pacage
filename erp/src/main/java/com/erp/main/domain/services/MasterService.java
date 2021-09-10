@@ -27,6 +27,7 @@ import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.model.CompanyModel;
 import com.erp.main.domain.objects.model.DepartmentModel;
 import com.erp.main.domain.objects.model.ProductModel;
+import com.erp.main.domain.objects.model.ProductTableModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -43,6 +44,7 @@ import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductVo;
+import com.erp.main.domain.objects.valueobjects.GetProductsTableVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
@@ -430,7 +432,7 @@ public class MasterService {
 	 * @param vo
 	 */
 	@Transactional
-	public GetProductsVo getProductsVo(GetProductConditionsVo condition) {
+	public GetProductsTableVo getProductsVo(GetProductConditionsVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
@@ -449,8 +451,8 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
 		
 		Page<ProductEntity> pages = this.productRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
-		List<ProductModel> products = pages.get().map(e -> {
-			var product = new ProductModel();
+		List<ProductTableModel> products = pages.get().map(e -> {
+			var product = new ProductTableModel();
 			// 商品seq
 			product.setProductSeq(e.getProductSeq());
 			// 商品名
@@ -458,14 +460,14 @@ public class MasterService {
 			// 仕入れ料金
 			product.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
 			// 税区分
-			product.setTaxType(e.getTaxType());
+			product.setTaxType(e.getTaxType().getDisplayName());
 			// 定価
 			product.setUnitPrice(e.getUnitPrice());
 			return product;
 		}).collect(Collectors.toList());
 		
 		// 返却用のVo生成
-		var vo = new GetProductsVo();
+		var vo = new GetProductsTableVo();
 		// トータルぺ―ジ
 		vo.setTotalItemsNum(pages.getTotalElements());
 		// 取引先リストの設定

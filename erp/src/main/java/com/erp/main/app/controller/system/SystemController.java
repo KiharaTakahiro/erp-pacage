@@ -34,6 +34,7 @@ import com.erp.main.app.controller.system.response.DepatmentsResponse;
 import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
+import com.erp.main.app.controller.system.response.ProductsTableResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
@@ -132,9 +133,9 @@ public class SystemController {
 	 * 商品一覧処理のエントリーポイント
 	 */
 	@PostMapping("/product/info")
-	public ProductsResponse infoProduct(@RequestBody GetProductsRequest request) {
+	public ProductsTableResponse infoProduct(@RequestBody GetProductsRequest request) {
 		var vo = this.masterService.getProductsVo(request.mapTo());
-		var response = new ProductsResponse();
+		var response = new ProductsTableResponse();
 		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setProduct(vo.getProduct());
 		return response;
