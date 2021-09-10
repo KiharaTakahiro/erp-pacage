@@ -14,6 +14,8 @@
       <el-table-column prop="recivedOrderDate" label="受注日" width="180"></el-table-column>
       <el-table-column prop="total" label="合計金額" width="180"></el-table-column>
       <el-table-column prop="tax" label="消費税" width="180"></el-table-column>
+      <el-table-column prop="companyName" label="受注会社" width="180"></el-table-column>
+      <el-table-column prop="departmentName" label="受注部署" width="180"></el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -45,12 +47,7 @@ export default class extends Vue {
 
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
-    // 変換
-    for(var i in RecivedOrderListModule.list){
-      var order = RecivedOrderListModule.list[i]
-      order.total = order.total.toLocaleString()
-      order.tax = order.tax.toLocaleString()
-    }
+    
   }
   /**
    * テーブルデータ
