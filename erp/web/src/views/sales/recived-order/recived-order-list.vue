@@ -9,9 +9,8 @@
           label-width="80px"
         >
           <clients-pull-down
-              />
+          />
           <company-pull-down
-            
           />
           <date-form
           />
