@@ -1,5 +1,49 @@
 <template>
   <div class="app-container">
+    <el-card class="box-card">
+      <h5>検索フォーム</h5>
+      <div class="border">
+        <el-form
+          autocomplete="on"
+          label-position="left"
+          label-width="80px"
+        >
+          <clients-pull-down
+              />
+          <company-pull-down
+            
+          />
+          <date-form
+          />
+          <date-form
+          />
+          <money
+          style="width:70%;"
+          />
+          <money
+          style="width:70%;"
+          />
+        </el-form>
+      </div>
+      <div class="right">
+        <el-button
+          size="small"
+          type="info"
+          style="width:45%; margin-top:10px;"
+          @click.native.prevent="resetBtn"
+        >
+          {{ $t('route.reset') }}
+        </el-button>
+        <el-button
+          size="small"
+          type="primary"
+          style="width:45%; margin-top:10px;"
+          @click.native.prevent="searchBtn"
+        >
+          {{ $t('route.search') }}
+        </el-button>
+      </div>
+    </el-card>
     <div>{{ $t('route.recivedOrder') }}</div>
     <el-card class="box-card">
       <el-table
@@ -8,14 +52,14 @@
         @selection-change="checkNo"
         style="width: 100%"
       >
-      <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="recivedOrderSeq" label="ID" width="180"></el-table-column>
-      <el-table-column prop="clientsName" label="取引先" width="180"></el-table-column>
-      <el-table-column prop="recivedOrderDate" label="受注日" width="180"></el-table-column>
-      <el-table-column prop="total" label="合計金額" width="180"></el-table-column>
-      <el-table-column prop="tax" label="消費税" width="180"></el-table-column>
-      <el-table-column prop="companyName" label="受注会社" width="180"></el-table-column>
-      <el-table-column prop="departmentName" label="受注部署" width="180"></el-table-column>
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column prop="recivedOrderSeq" label="ID" width="180"></el-table-column>
+        <el-table-column prop="clientsName" label="取引先" width="180"></el-table-column>
+        <el-table-column prop="recivedOrderDate" label="受注日" width="180"></el-table-column>
+        <el-table-column prop="total" label="合計金額" width="180"></el-table-column>
+        <el-table-column prop="tax" label="消費税" width="180"></el-table-column>
+        <el-table-column prop="companyName" label="受注会社" width="180"></el-table-column>
+        <el-table-column prop="departmentName" label="受注部署" width="180"></el-table-column>
       </el-table>
       <div class="page">
         <el-pagination
@@ -37,11 +81,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { RecivedOrderListModule } from '@/store/modules/recived-order-list'
-import { getClient } from '@/api/client'
+import clientsPullDown from '@/views/components/clients-pulldown.vue'
+import companyPullDown from '@/views/components/company-pulldown.vue'
+import DateForm from '@/views/components/date-form.vue'
+import money from '@/views/components/money.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'RecievedOrder'
+  name: 'RecievedOrder',
+  components: {
+    clientsPullDown,
+    companyPullDown,
+    DateForm,
+    money
+  }
 })
 export default class extends Vue {
   /**

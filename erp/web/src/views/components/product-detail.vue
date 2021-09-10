@@ -74,9 +74,7 @@
 import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
-import DelivaryStatus from '@/views/components/delivery-status.vue'
 import money from '@/views/components/money.vue'
-import { getCode } from '@/api/system'
 import DeliveryStatus from '@/views/components/delivery-status.vue'
 
 @Component({
