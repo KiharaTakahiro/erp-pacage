@@ -23,6 +23,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { RecivedOrderListModule } from '@/store/modules/recived-order-list'
+import { getClient } from '@/api/client'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -44,17 +45,27 @@ export default class extends Vue {
 
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
+    // 変換
+    for(var i in RecivedOrderListModule.list){
+      var order = RecivedOrderListModule.list[i]
+      var clientsSeq = order.clientsSeq
+      order.clientsSeq = await this.getClientsName(clientsSeq)
+      console.log(order.clientsSeq)
+      order.total = order.total.toLocaleString()
+      order.tax = order.tax.toLocaleString()
+    }
   }
   /**
    * テーブルデータ
    */
   get ordersData(){
-    // 変換
-    for(var i in RecivedOrderListModule.list){
-      RecivedOrderListModule.list[i].total = RecivedOrderListModule.list[i].total.toLocaleString()
-      RecivedOrderListModule.list[i].tax = RecivedOrderListModule.list[i].tax.toLocaleString()
-    }
+    
     return RecivedOrderListModule.list
+  }
+
+  private async getClientsName(clientsSeq: any){
+    const {data} = await getClient({clientsSeq: clientsSeq})
+    return data.clientsName
   }
 
   /**
