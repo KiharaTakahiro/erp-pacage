@@ -59,13 +59,36 @@ export default class extends Vue {
   get totalItemsNum() {
     return RecivedOrderListModule.totalItem
   }
-
+  /**
+   * 検索フォーム用
+   */
+  targetRecivedOrderSeq = ''
+  targetClientSeq = ''
+  targetCompanySeq = ''
+  targetDepartmentSeq = ''
+  targetQuotationSeq = ''
+  fromDate = ''
+  toDate = ''
+  fromTotal = 0
+  toTotal = 0
+  fromTax = 0
+  toTax = 0
   /**
    * 一覧のリスト作成
    */
   private async getList(){
     const serchData = {
-
+      pageNo: this.pageNo - 1,
+      recivedOrderSeq: this.targetRecivedOrderSeq === "" ? null : this.targetRecivedOrderSeq,
+      clientsSeq: this.targetClientSeq === '' ? null : this.targetClientSeq,
+      companySeq: this.targetCompanySeq === '' ? null : this.targetCompanySeq,
+      departmentSeq: this.targetDepartmentSeq === '' ? null : this.targetDepartmentSeq,
+      fromDate: this.fromDate === '' ? null : this.fromDate,
+      toDate: this.toDate === '' ? null : this.toDate,
+      fromTotal: this.fromTotal === 0 ? null : this.fromTotal,
+      toTotal: this.toTotal === 0 ? null : this.toTotal,
+      fromTax: this.fromTotal === 0 ? null : this.fromTotal,
+      toTax: this.toTax === 0 ? null : this.toTax
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
     
