@@ -32,17 +32,25 @@ export default class extends Vue {
     this.getList()
   }
 
+  /**
+   * 一覧のリスト作成
+   */
   private async getList(){
     const serchData = {
 
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
   }
-
+  /**
+   * テーブルデータ
+   */
   get ordersData(){
     return RecivedOrderListModule.list
   }
 
+  /**
+   * チェックボックスのカラムの値
+   */
   checkNo(value: any){
     console.log(value)
   }
