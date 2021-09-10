@@ -48,9 +48,6 @@ export default class extends Vue {
     // 変換
     for(var i in RecivedOrderListModule.list){
       var order = RecivedOrderListModule.list[i]
-      var clientsSeq = order.clientsSeq
-      order.clientsSeq = await this.getClientsName(clientsSeq)
-      console.log(order.clientsSeq)
       order.total = order.total.toLocaleString()
       order.tax = order.tax.toLocaleString()
     }
@@ -63,10 +60,6 @@ export default class extends Vue {
     return RecivedOrderListModule.list
   }
 
-  private async getClientsName(clientsSeq: any){
-    const {data} = await getClient({clientsSeq: clientsSeq})
-    return data.clientsName
-  }
 
   /**
    * チェックボックスのカラムの値
