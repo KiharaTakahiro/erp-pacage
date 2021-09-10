@@ -17,8 +17,20 @@
       <el-table-column prop="companyName" label="受注会社" width="180"></el-table-column>
       <el-table-column prop="departmentName" label="受注部署" width="180"></el-table-column>
       </el-table>
+      <div class="page">
+        <el-pagination
+          background
+          :page-size="15"
+          @current-change="handleCurrentChange"
+          layout="prev, pager, next"
+          :total="totalItemsNum"
+          :current-page.sync="pageNo"
+        >
+        </el-pagination>
+      </div>
     </el-card>
   </div>
+
   
 </template>
 
@@ -38,6 +50,15 @@ export default class extends Vue {
   created() {
     this.getList()
   }
+  // ページング条件
+  pageNo = 1
+  
+  /**
+   * ストアが更新されたら件数を算出
+   */
+  get totalItemsNum() {
+    return RecivedOrderListModule.totalItem
+  }
 
   /**
    * 一覧のリスト作成
@@ -56,7 +77,14 @@ export default class extends Vue {
     
     return RecivedOrderListModule.list
   }
-
+  
+  /**
+   * ページが変更される時の処理
+   */
+  handleCurrentChange(val: any) {
+    this.pageNo = val
+    this.getList()
+  }
 
   /**
    * チェックボックスのカラムの値
@@ -84,5 +112,12 @@ export default class extends Vue {
 
 .tag-item {
   margin-right: 15px;
+}
+
+.page {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
