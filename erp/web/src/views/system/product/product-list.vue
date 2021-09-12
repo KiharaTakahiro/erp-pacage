@@ -4,86 +4,91 @@
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
-      <div>
-        <span class="input-label">ID:</span>
-        <el-input
-          placeholder=""
-          v-model="targetProductSeq"
-          style="margin-top:10px; width:5%; margin-right:20px;"
-          clearable
+        <el-form
+          autocomplete="on"
+          label-position="left"
+          label-width="80px"
         >
-        </el-input>
-        <span class="input-label">名前:</span>
-        <el-input
-          placeholder=""
-          prefix-icon="el-icon-search"
-          v-model="searchName"
-          style="margin-top:10px; width:30%;"
-          clearable
-        >
-        </el-input>
-      </div>  
-      <div>
-        <!-- 定価検索FROM -->
-        <span class="input-label">単価:</span>
-        <el-input
-          placeholder=""
-          prefix-icon="el-icon-search"
-          v-model="searchUnitPriceFrom"
-          style="margin-top:10px; width:20%;"
-          clearable
-        >
-        </el-input>
-        <!-- 定価検索TO -->
-        <span class="from-to">～</span>
-        <el-input
-          placeholder=""
-          prefix-icon="el-icon-search"
-          v-model="searchUnitPriceTo"
-          style="margin-top:10px; width:20%;"
-          clearable
-        >
-        </el-input>
-        </div>
         <div>
-        <!-- 原価検索FROM -->
-        <span class="input-label">原価:</span>
-        <el-input
-          placeholder=""
-          prefix-icon="el-icon-search"
-          v-model="searchPurchaseUnitPriceFrom"
-          style="margin-top:10px; width:20%;"
-          clearable
-        >
-        </el-input>
-        <!-- 原価検索TO -->
-        <span class="from-to">～</span>
-        <el-input
-          placeholder=""
-          prefix-icon="el-icon-search"
-          v-model="searchPurchaseUnitPriceTo"
-          style="margin-top:10px; width:20%;"
-          clearable
-        >
-        </el-input>
-        </div>
-        <!-- 税区分 -->
-        <div>
-          <span class="input-label">税区分:</span>
-          <el-select 
-            v-model="searchTaxType" 
-            :placeholder="$t('product.taxType')"
-            style="margin-top:10px; width:20%;"
-            >
-          <el-option
-            v-for="item in options"
-            :key="item.key"
-            :label="item.value"
-            :value="item.key"
+          <span class="input-label">ID:</span>
+          <el-input
+            placeholder=""
+            v-model="targetProductSeq"
+            style="margin-top:10px; width:5%; margin-right:20px;"
+            clearable
           >
-          </el-option>
-        </el-select>
-        </div>
+          </el-input>
+          <span class="input-label">名前:</span>
+          <el-input
+            placeholder=""
+            prefix-icon="el-icon-search"
+            v-model="searchName"
+            style="margin-top:10px; width:30%;"
+            clearable
+          >
+          </el-input>
+        </div>  
+        <div>
+          <!-- 定価検索FROM -->
+          <span class="input-label">単価:</span>
+          <el-input
+            placeholder=""
+            prefix-icon="el-icon-search"
+            v-model="searchUnitPriceFrom"
+            style="margin-top:10px; width:20%;"
+            clearable
+          >
+          </el-input>
+          <!-- 定価検索TO -->
+          <span class="from-to">～</span>
+          <el-input
+            placeholder=""
+            prefix-icon="el-icon-search"
+            v-model="searchUnitPriceTo"
+            style="margin-top:10px; width:20%;"
+            clearable
+          >
+          </el-input>
+          </div>
+          <div>
+          <!-- 原価検索FROM -->
+          <span class="input-label">原価:</span>
+          <el-input
+            placeholder=""
+            prefix-icon="el-icon-search"
+            v-model="searchPurchaseUnitPriceFrom"
+            style="margin-top:10px; width:20%;"
+            clearable
+          >
+          </el-input>
+          <!-- 原価検索TO -->
+          <span class="from-to">～</span>
+          <el-input
+            placeholder=""
+            prefix-icon="el-icon-search"
+            v-model="searchPurchaseUnitPriceTo"
+            style="margin-top:10px; width:20%;"
+            clearable
+          >
+          </el-input>
+          </div>
+          <!-- 税区分 -->
+          <div>
+            <span class="input-label">税区分:</span>
+            <el-select 
+              v-model="searchTaxType" 
+              :placeholder="$t('product.taxType')"
+              style="margin-top:10px; width:20%;"
+              >
+            <el-option
+              v-for="item in options"
+              :key="item.key"
+              :label="item.value"
+              :value="item.key"
+            >
+            </el-option>
+          </el-select>
+          </div>
       </div>
       <div class="right">
         <el-button
