@@ -6,3 +6,10 @@ export const createRecivedOrder = (data: any) =>
     method: 'POST',
     data
   })
+
+  export const infoRecivedOrder = (data: any) =>
+  request({
+    url: '/recivedOrder/info',
+    method: 'post',
+    data
+  })

@@ -19,13 +19,13 @@ const purchasingRoutes: RouteConfig = {
     },
     {
       path: 'recived-order',
-      component: () => import('@/views/sales/recived-order/recived-order.vue'),
+      component: () => import('@/views/sales/recived-order.vue'),
       name: 'recivedOrder',
       meta: { title: 'recivedOrder' }
     },
     {
       path: 'invoice',
-      component: () => import('@/views/sales/incoice/invoice.vue'),
+      component: () => import('@/views/sales/invouce/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
     }

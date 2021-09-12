@@ -49,11 +49,6 @@
         @selection-change="checkNo"
         style="width: 100%"
       >
-        <!-- <el-table-column
-          label=""
-          type="selection"
-          width="180">
-        </el-table-column> -->
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column prop="clientsSeq" label="ID" width="180">
         </el-table-column>
