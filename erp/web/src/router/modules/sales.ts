@@ -41,7 +41,7 @@ const salesRoutes: RouteConfig = {
     
     {
       path: 'invoice',
-      component: () => import('@/views/sales/incoice/invoice.vue'),
+      component: () => import('@/views/sales/invoice/invoice.vue'),
       name: 'invoice',
       meta: { title: 'invoice' }
     }

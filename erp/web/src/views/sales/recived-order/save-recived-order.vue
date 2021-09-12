@@ -9,6 +9,7 @@
       :model="recivedOrder"
       autocomplete="on"
       label-position="left"
+      label-width="80px"
     >
     <clients-pull-down
       :clientsSeq.sync="recivedOrder.clientsSeq"
@@ -118,7 +119,7 @@ export default class extends Vue {
         await RecievedOrderModule.createReciverdOrder(this.recivedOrder)
         this.$router
           .push({
-            path: 'recived-order'
+            path: 'recived-order-list'
           })
           .catch(err => {
             console.warn(err)

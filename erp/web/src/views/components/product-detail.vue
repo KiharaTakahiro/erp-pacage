@@ -22,8 +22,8 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item label="商品単価：￥">
-            {{ price }}
+          <el-form-item label="単価：￥">
+            {{ price.toLocaleString() }}
           </el-form-item>
         </el-col>
 
@@ -39,13 +39,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item label="値引">
-            <el-input v-model="discountVal" style="width:50%;" />
-          </el-form-item>
+          <money
+            :label="label"
+            :priceValue.sync="discountVal"
+            style="width:70%;"
+          />
         </el-col>
         <el-col :span="4">
           <el-form-item label="小計：￥">
-            {{ subTotalValue }}
+            {{ subTotalValue.toLocaleString() }}
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -55,10 +57,10 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="5">
           <date-form :date.sync="dateValue" label="配送日" />
         </el-col>
-        <el-col :span="6">
+        <el-col :span="5">
           <delivery-status
             :status.sync="statusVal"/>
         </el-col>
@@ -72,24 +74,28 @@
 import { Component, Vue, PropSync, Prop, Emit } from 'vue-property-decorator'
 import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
-import DelivaryStatus from '@/views/components/delivery-status.vue'
-import { getCode } from '@/api/system'
+import money from '@/views/components/money.vue'
 import DeliveryStatus from '@/views/components/delivery-status.vue'
 
 @Component({
   name: 'productsPullDown',
   components: {
     DateForm,
-    DeliveryStatus
+    DeliveryStatus,
+    money
   }
 })
 export default class extends Vue {
   //商品一覧
   products = [{}]
+  // 配送状況一覧
   private RecivedOrderSatsus = []
 
   // 単価
   price = 0
+
+  //値引のラベル
+  label = '値引'
 
   // 詳細画面を判定するためのkey
   @Prop() detailKey!: number

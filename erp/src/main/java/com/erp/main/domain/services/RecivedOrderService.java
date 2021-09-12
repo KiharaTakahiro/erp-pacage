@@ -1,10 +1,16 @@
 package com.erp.main.domain.services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +22,17 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderEntity;
+import com.erp.main.domain.objects.model.RecivedOrderModel;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
+import com.erp.main.domain.specification.RecivedOederSpec;
 
 /*
  * 受注のサービス
@@ -176,5 +186,91 @@ public class RecivedOrderService {
 		this.recivedOrderRepository.save(recivedOrder);			
 	}
 	
+	/*
+	 * 受注一覧取得
+	 */
+	@Transactional
+	public GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
+		
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		//
+		Specification<RecivedOrderEntity> spec = Specification.where(
+			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
+				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
+				.and(RecivedOederSpec.companySeqEquals(condition.getCompanySeq()))
+				.and(RecivedOederSpec.departmentSeqEquals(condition.getDepartmentSeq()))
+				.and(RecivedOederSpec.fromDate(condition.getFromDate()))
+				.and(RecivedOederSpec.toDate(condition.getToDate()))
+				.and(RecivedOederSpec.fromTax(condition.getFromTax()))
+				.and(RecivedOederSpec.toTax(condition.getToTax()))
+				.and(RecivedOederSpec.fromTotal(condition.getFromTotal()))
+				.and(RecivedOederSpec.toTotal(condition.getToTotal()));
+				
+
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
+		
+		Page<RecivedOrderEntity> pages = this.recivedOrderRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		
+		List<RecivedOrderModel> orders = pages.get().map(e -> {
+			var recivedOrder = new RecivedOrderModel();
+			//受注Seq
+			recivedOrder.setRecivedOrderSeq(e.getRecivedOrderSeq());
+			//取引先Seq
+			recivedOrder.setClientsSeq(e.getClientsSeq());
+			//取引先のエンティティ生成
+			Optional<ClientsEntity> client = this.clientsRepository.findById(e.getClientsSeq());
+			if(client.isEmpty()) {
+				throw new AppException(String.format("対象の取引先が取得できません。clientsSeq: %s",e.getClientsSeq()));
+			}
+			//取引先名
+			recivedOrder.setClientsName(client.get().getName());
+			//会社Seq
+			recivedOrder.setCompanySeq(e.getCompanySeq());
+			//会社のエンティティ生成
+			Optional<CompanyEntity> company = this.companyRepository.findById(e.getCompanySeq());
+			if(client.isEmpty()) {
+				throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",e.getCompanySeq()));
+			}
+			//会社名
+			recivedOrder.setCompanyName(company.get().getName());
+			//部署Seq
+			recivedOrder.setDepartmentSeq(e.getDepartmentSeq());
+			//部署のエンティティ生成
+			Optional<DepartmentEntity> department = this.departmentRepository.findById(e.getDepartmentSeq());
+			if(department.isEmpty()) {
+				throw new AppException(String.format("対象の取引先が取得できません。departmentSeq: %s",e.getDepartmentSeq()));
+			}
+			//部署名
+			recivedOrder.setDepartmentName(department.get().getName());
+			//見積Seq
+			recivedOrder.setQuotationSeq(e.getQuotationSeq());
+			//受注日
+			recivedOrder.setRecivedOrderDate(e.getRecivedOrderDate());
+			//税金計
+			recivedOrder.setTax(e.getTax());
+			//合計金額
+			recivedOrder.setTotal(e.getTotal());
+			
+			return recivedOrder;
+		}).collect(Collectors.toList());
+		
+		//詰めるVo生成
+		var vo = new GetRecivedOrderVo();
+		//総アイテム数
+		vo.setTotalItemsNum(pages.getTotalElements());
+		//受注一覧
+		vo.setRecivedOder(orders);
+		
+		return vo;
+		
+		
+		
+				
+				}
 
 }

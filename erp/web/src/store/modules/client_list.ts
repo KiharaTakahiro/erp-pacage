@@ -28,13 +28,6 @@ class ClientList extends VuexModule implements IClientListState {
   }
 
   @Action({ rawError: true })
-  public async UpdateClient(clientInfo: { id: string, name: string }) {
-    let { id, name } = clientInfo
-    name = name.trim()
-    await updateClient({ clientsName: name, clientsSeq: id })
-  }
-
-  @Action({ rawError: true })
   public async ClientList(clientInfo: any) {
     const { data } = await infoClient(clientInfo)
     this.SET_LIST(data.clients)
