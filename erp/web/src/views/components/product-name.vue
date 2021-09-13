@@ -4,7 +4,7 @@
       label="商品名"
       :rules="[
         {
-          required: true,
+          required: required,
           message: '商品名は必ず入力して下さい。',
           trigger: 'blur'
         },
