@@ -7,8 +7,10 @@
           autocomplete="on"
           label-position="left"
           label-width="80px"
+          :model="target"
         >
           <clients-pull-down
+          :clientsSeq.sync="target.clientSeq"
           />
           <company-pull-down
           />
@@ -114,33 +116,36 @@ export default class extends Vue {
   /**
    * 検索フォーム用
    */
-  targetRecivedOrderSeq = ''
-  targetClientSeq = ''
-  targetCompanySeq = ''
-  targetDepartmentSeq = ''
-  targetQuotationSeq = ''
-  fromDate = ''
-  toDate = ''
-  fromTotal = 0
-  toTotal = 0
-  fromTax = 0
-  toTax = 0
+  private target = {
+    recivedOrderSeq: '',
+    clientSeq: '',
+    companySeq: '',
+    departmentSeq: '',
+    quotationSeq: '',
+    fromDate: '',
+    toDate: '',
+    fromTotal: 0,
+    toTotal: 0,
+    fromTax: 0,
+    toTax: 0
+  }
+
   /**
    * 一覧のリスト作成
    */
   private async getList(){
     const serchData = {
       pageNo: this.pageNo - 1,
-      recivedOrderSeq: this.targetRecivedOrderSeq === "" ? null : this.targetRecivedOrderSeq,
-      clientsSeq: this.targetClientSeq === '' ? null : this.targetClientSeq,
-      companySeq: this.targetCompanySeq === '' ? null : this.targetCompanySeq,
-      departmentSeq: this.targetDepartmentSeq === '' ? null : this.targetDepartmentSeq,
-      fromDate: this.fromDate === '' ? null : this.fromDate,
-      toDate: this.toDate === '' ? null : this.toDate,
-      fromTotal: this.fromTotal === 0 ? null : this.fromTotal,
-      toTotal: this.toTotal === 0 ? null : this.toTotal,
-      fromTax: this.fromTotal === 0 ? null : this.fromTotal,
-      toTax: this.toTax === 0 ? null : this.toTax
+      recivedOrderSeq: this.target.recivedOrderSeq === "" ? null : this.target.recivedOrderSeq,
+      clientsSeq: this.target.clientSeq === '' ? null : this.target.clientSeq,
+      companySeq: this.target.companySeq === '' ? null : this.target.companySeq,
+      departmentSeq: this.target.departmentSeq === '' ? null : this.target.departmentSeq,
+      fromDate: this.target.fromDate === '' ? null : this.target.fromDate,
+      toDate: this.target.toDate === '' ? null : this.target.toDate,
+      fromTotal: this.target.fromTotal === 0 ? null : this.target.fromTotal,
+      toTotal: this.target.toTotal === 0 ? null : this.target.toTotal,
+      fromTax: this.target.fromTotal === 0 ? null : this.target.fromTotal,
+      toTax: this.target.toTax === 0 ? null : this.target.toTax
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
     
@@ -159,6 +164,10 @@ export default class extends Vue {
   handleCurrentChange(val: any) {
     this.pageNo = val
     this.getList()
+  }
+
+  private searchBtn(){
+    console.log(this.target)
   }
 
   /**

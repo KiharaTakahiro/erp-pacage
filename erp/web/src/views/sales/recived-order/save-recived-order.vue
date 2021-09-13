@@ -13,6 +13,7 @@
     >
     <clients-pull-down
       :clientsSeq.sync="recivedOrder.clientsSeq"
+      :required="true"
     />
     <company-pull-down
       :companySeq.sync="recivedOrder.companySeq"
@@ -154,7 +155,7 @@ export default class extends Vue {
         discount: 0,
         deriveryDate: '',
         lotSeq: 2, //仮
-        status: ''    
+        status: ''
     })
   }
 }
