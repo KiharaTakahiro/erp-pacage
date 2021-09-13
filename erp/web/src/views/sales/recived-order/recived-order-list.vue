@@ -9,6 +9,16 @@
           label-width="100px"
           :model="target"
         >
+        <el-form-item
+          label="受注No"
+        >
+        <el-input
+          v-model="target.recivedOrderSeq"
+          name="recivedOrderId"
+          type="text"
+          style="width:5%;"
+        />
+    </el-form-item>
           <clients-pull-down
           :clientsSeq.sync="target.clientSeq"
           />
