@@ -222,8 +222,26 @@ export default class extends Vue {
     this.getList()
   }
 
+  // 検索ボタン
   private searchBtn(){
-    console.log(this.target)
+    this.getList()
+  }
+
+  // リセットボタン
+  private resetBtn(){
+    this.pageNo = 1
+    this.target.recivedOrderSeq = ''
+    this.target.clientSeq = ''
+    this.target.companySeq = ''
+    this.target.departmentSeq = ''
+    this.target.fromDate = ''
+    this.target.toDate = ''
+    this.target.fromTotal = 0
+    this.target.toTotal = 0
+    this.target.fromTax = 0
+    this.target.toTax = 0
+
+    this.getList()
   }
 
   /**
@@ -241,7 +259,7 @@ export default class extends Vue {
 }
 
 .box-card {
-  width: 100%x;
+  width: 100%;
   max-width: 100%;
   margin: 20px auto;
 }
@@ -254,10 +272,19 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
+.right {
+  float: right;
+}
+
 .page {
   margin-top: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.box-card {
+  width: 100%;
+  padding: 15px;
 }
 </style>
