@@ -9,16 +9,10 @@
           label-width="100px"
           :model="target"
         >
-        <el-form-item
-          label="受注No"
-        >
-        <el-input
-          v-model="target.recivedOrderSeq"
-          name="recivedOrderId"
-          type="text"
-          style="width:5%;"
-        />
-    </el-form-item>
+          <id-search
+            :targetId.sync="target.recivedOrderSeq"
+            :label="idLabel"
+          />
           <clients-pull-down
           :clientsSeq.sync="target.clientSeq"
           />
@@ -135,6 +129,7 @@ import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import DateForm from '@/views/components/date-form.vue'
 import money from '@/views/components/money.vue'
+import idSearch from '@/views/components/id-search.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -143,7 +138,8 @@ import '@/assets/custom-theme/index.css'
     clientsPullDown,
     companyPullDown,
     DateForm,
-    money
+    money,
+    idSearch
   }
 })
 export default class extends Vue {
@@ -155,6 +151,9 @@ export default class extends Vue {
   }
   // ページング条件
   pageNo = 1
+
+  //
+  idLabel = '受注ID'
 
   // 日付のラベル
   deriFrom = '配送日から'
@@ -220,7 +219,6 @@ export default class extends Vue {
    * テーブルデータ
    */
   get ordersData(){
-    
     return RecivedOrderListModule.list
   }
   
