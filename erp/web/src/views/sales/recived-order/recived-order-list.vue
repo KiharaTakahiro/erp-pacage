@@ -59,7 +59,7 @@
               <money
               style="width:80%;"
               :label="toTax"
-              :placeholder.sync="target.toTax"
+              :priceValue="target.toTax"
               />
             </el-col>
           </el-row>
