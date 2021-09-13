@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="4">
+      <el-col :span="5">
         <el-form-item
           label="会社"
           prop="companySeq"
@@ -24,7 +24,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <el-form-item
           label="部署"
           prop="departmentSeq"

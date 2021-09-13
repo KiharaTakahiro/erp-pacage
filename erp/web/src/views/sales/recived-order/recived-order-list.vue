@@ -6,7 +6,7 @@
         <el-form
           autocomplete="on"
           label-position="left"
-          label-width="80px"
+          label-width="100px"
           :model="target"
         >
           <clients-pull-down
@@ -17,16 +17,52 @@
           :departmentSeq.sync="target.departmentSeq"
           @resetDepart="resetDepart"
           />
-          <date-form
-          />
-          <date-form
-          />
-          <money
-          style="width:70%;"
-          />
-          <money
-          style="width:70%;"
-          />
+          <el-row>
+            <el-col :span="5">
+              <date-form
+              :label="deriFrom"
+              :date="target.fromDate"
+              />
+            </el-col>
+            <el-col :span="5">
+              <date-form
+              :label="deriTo"
+              :date="target.toDate"
+              />
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="fromTotal"
+              :priceValue.sync="target.fromTotal"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="toTotal"
+              :priceValue.sync="target.toTotal"
+              />
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="fromTax"
+              :priceValue.sync="target.fromTax"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="toTax"
+              :placeholder.sync="target.toTax"
+              />
+            </el-col>
+          </el-row>
         </el-form>
       </div>
       <div class="right">
@@ -109,6 +145,18 @@ export default class extends Vue {
   }
   // ページング条件
   pageNo = 1
+
+  // 日付のラベル
+  deriFrom = '配送日から'
+  deriTo = '配送日まで'
+
+  // 合計金額ラベル
+  fromTotal = '合計金額から'
+  toTotal = '合計金額まで'
+
+  // 税金ラベル
+  fromTax = '税金計から'
+  toTax = '税金計まで'
   
   /**
    * ストアが更新されたら件数を算出
