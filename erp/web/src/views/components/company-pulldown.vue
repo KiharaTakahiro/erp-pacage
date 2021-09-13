@@ -7,7 +7,7 @@
           prop="companySeq"
           :rules="[
             {
-              required: true,
+              required: required,
               message: '会社を選択してください',
               trigger: 'change'
             }
@@ -30,7 +30,7 @@
           prop="departmentSeq"
           :rules="[
             {
-              required: true,
+              required: required,
               message: '部署を選択してください',
               trigger: 'change'
             }
@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, PropSync, Emit } from 'vue-property-decorator'
+import { Component, Vue, PropSync, Emit, Prop } from 'vue-property-decorator'
 import { pullDownCompany, pullDownDepartment } from '@/api/company'
 @Component({
   name: 'companyPullDown',
@@ -61,6 +61,7 @@ import { pullDownCompany, pullDownDepartment } from '@/api/company'
 export default class extends Vue {
   @PropSync('companySeq', { type: [String, Number] }) comSeq!: string
   @PropSync('departmentSeq', { type: [String, Number] }) depSeq!: string
+  @Prop({ default: false }) required!: boolean
 
   companys = [{}]
   departments = [{}]

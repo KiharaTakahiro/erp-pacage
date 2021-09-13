@@ -13,6 +13,9 @@
           :clientsSeq.sync="target.clientSeq"
           />
           <company-pull-down
+          :companySeq.sync="target.companySeq"
+          :departmentSeq.sync="target.departmentSeq"
+          @resetDepart="resetDepart"
           />
           <date-form
           />
@@ -128,6 +131,11 @@ export default class extends Vue {
     toTotal: 0,
     fromTax: 0,
     toTax: 0
+  }
+
+  //部署リセット
+  resetDepart(){
+    this.target.departmentSeq = ''
   }
 
   /**
