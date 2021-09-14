@@ -297,7 +297,7 @@ public class RecivedOrderService {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
 		// 検索
-		Page<RecivedOrderDetailEntity> pages = this.recivedOrderDetailRepository.findAll(spec, PageRequest.of(1, 15, sort));
+		Page<RecivedOrderDetailEntity> pages = this.recivedOrderDetailRepository.findAll(spec, PageRequest.of(0, 15, sort));
 		
 		List<RecivedOrderDetailModel> details = pages.get().map(e -> {
 			var detail = new RecivedOrderDetailModel();
