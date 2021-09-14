@@ -1,5 +1,7 @@
 package com.erp.main.domain.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +20,5 @@ public interface RecivedOrderDetailRepository extends JpaRepository<RecivedOrder
 	 * 受注SeqをもとにRecivedOrderDetialEntityを取得
 	 * @return
 	 */
-	public RecivedOrderDetailEntity findByRecivedOrderId(Long recivedOrderSeq);
+	public Optional<RecivedOrderDetailEntity> findByRecivedOrderId(Long recivedOrderSeq);
 }

@@ -285,8 +285,8 @@ public class RecivedOrderService {
 		if(order.isEmpty()) {
 			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
 		}
-		Optional<RecivedOrderDetailEntity> details = recivedOrderDetailRepository.findById(recivedOrderSeq);
-		if(order.isEmpty()) {
+		Optional<RecivedOrderDetailEntity> details = recivedOrderDetailRepository.findByRecivedOrderId(recivedOrderSeq);
+		if(details.isEmpty()) {
 			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
 		}
 		
