@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public enum TaxType implements BaseEnum<TaxType> {
 	
-	NO_TAX(0,"税金なし"),
-	REDUCED_RATE(1,"軽減税率"),
-	NOMAL(2,"通常");
+	NO_TAX(1,"税金なし"),
+	REDUCED_RATE(2,"軽減税率"),
+	NOMAL(3,"通常");
 	
 	// コード
 	private Integer code;
