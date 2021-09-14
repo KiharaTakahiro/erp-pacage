@@ -6,22 +6,67 @@
         <el-form
           autocomplete="on"
           label-position="left"
-          label-width="80px"
+          label-width="100px"
+          :model="target"
         >
+          <id-search
+            :targetId.sync="target.recivedOrderSeq"
+            :label="idLabel"
+          />
           <clients-pull-down
+          :clientsSeq.sync="target.clientSeq"
           />
           <company-pull-down
+          :companySeq.sync="target.companySeq"
+          :departmentSeq.sync="target.departmentSeq"
+          @resetDepart="resetDepart"
           />
-          <date-form
-          />
-          <date-form
-          />
-          <money
-          style="width:70%;"
-          />
-          <money
-          style="width:70%;"
-          />
+          <el-row>
+            <el-col :span="5">
+              <date-form
+              :label="deriFrom"
+              :date="target.fromDate"
+              />
+            </el-col>
+            <el-col :span="5">
+              <date-form
+              :label="deriTo"
+              :date="target.toDate"
+              />
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="fromTotal"
+              :priceValue.sync="target.fromTotal"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="toTotal"
+              :priceValue.sync="target.toTotal"
+              />
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="fromTax"
+              :priceValue.sync="target.fromTax"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              style="width:80%;"
+              :label="toTax"
+              :priceValue="target.toTax"
+              />
+            </el-col>
+          </el-row>
         </el-form>
       </div>
       <div class="right">
@@ -84,6 +129,7 @@ import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import DateForm from '@/views/components/date-form.vue'
 import money from '@/views/components/money.vue'
+import idSearch from '@/views/components/id-search.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
@@ -92,7 +138,8 @@ import '@/assets/custom-theme/index.css'
     clientsPullDown,
     companyPullDown,
     DateForm,
-    money
+    money,
+    idSearch
   }
 })
 export default class extends Vue {
@@ -104,6 +151,21 @@ export default class extends Vue {
   }
   // ページング条件
   pageNo = 1
+
+  //
+  idLabel = '受注ID'
+
+  // 日付のラベル
+  deriFrom = '配送日から'
+  deriTo = '配送日まで'
+
+  // 合計金額ラベル
+  fromTotal = '合計金額から'
+  toTotal = '合計金額まで'
+
+  // 税金ラベル
+  fromTax = '税金計から'
+  toTax = '税金計まで'
   
   /**
    * ストアが更新されたら件数を算出
@@ -114,33 +176,41 @@ export default class extends Vue {
   /**
    * 検索フォーム用
    */
-  targetRecivedOrderSeq = ''
-  targetClientSeq = ''
-  targetCompanySeq = ''
-  targetDepartmentSeq = ''
-  targetQuotationSeq = ''
-  fromDate = ''
-  toDate = ''
-  fromTotal = 0
-  toTotal = 0
-  fromTax = 0
-  toTax = 0
+  private target = {
+    recivedOrderSeq: '',
+    clientSeq: '',
+    companySeq: '',
+    departmentSeq: '',
+    quotationSeq: '',
+    fromDate: '',
+    toDate: '',
+    fromTotal: 0,
+    toTotal: 0,
+    fromTax: 0,
+    toTax: 0
+  }
+
+  //部署リセット
+  resetDepart(){
+    this.target.departmentSeq = ''
+  }
+
   /**
    * 一覧のリスト作成
    */
   private async getList(){
     const serchData = {
       pageNo: this.pageNo - 1,
-      recivedOrderSeq: this.targetRecivedOrderSeq === "" ? null : this.targetRecivedOrderSeq,
-      clientsSeq: this.targetClientSeq === '' ? null : this.targetClientSeq,
-      companySeq: this.targetCompanySeq === '' ? null : this.targetCompanySeq,
-      departmentSeq: this.targetDepartmentSeq === '' ? null : this.targetDepartmentSeq,
-      fromDate: this.fromDate === '' ? null : this.fromDate,
-      toDate: this.toDate === '' ? null : this.toDate,
-      fromTotal: this.fromTotal === 0 ? null : this.fromTotal,
-      toTotal: this.toTotal === 0 ? null : this.toTotal,
-      fromTax: this.fromTotal === 0 ? null : this.fromTotal,
-      toTax: this.toTax === 0 ? null : this.toTax
+      recivedOrderSeq: this.target.recivedOrderSeq === "" ? null : this.target.recivedOrderSeq,
+      clientsSeq: this.target.clientSeq === '' ? null : this.target.clientSeq,
+      companySeq: this.target.companySeq === '' ? null : this.target.companySeq,
+      departmentSeq: this.target.departmentSeq === '' ? null : this.target.departmentSeq,
+      fromDate: this.target.fromDate === '' ? null : this.target.fromDate,
+      toDate: this.target.toDate === '' ? null : this.target.toDate,
+      fromTotal: this.target.fromTotal === 0 ? null : this.target.fromTotal,
+      toTotal: this.target.toTotal === 0 ? null : this.target.toTotal,
+      fromTax: this.target.fromTotal === 0 ? null : this.target.fromTotal,
+      toTax: this.target.toTax === 0 ? null : this.target.toTax
       }
     await RecivedOrderListModule.RecivedOrderList(serchData)
     
@@ -149,7 +219,6 @@ export default class extends Vue {
    * テーブルデータ
    */
   get ordersData(){
-    
     return RecivedOrderListModule.list
   }
   
@@ -158,6 +227,28 @@ export default class extends Vue {
    */
   handleCurrentChange(val: any) {
     this.pageNo = val
+    this.getList()
+  }
+
+  // 検索ボタン
+  private searchBtn(){
+    this.getList()
+  }
+
+  // リセットボタン
+  private resetBtn(){
+    this.pageNo = 1
+    this.target.recivedOrderSeq = ''
+    this.target.clientSeq = ''
+    this.target.companySeq = ''
+    this.target.departmentSeq = ''
+    this.target.fromDate = ''
+    this.target.toDate = ''
+    this.target.fromTotal = 0
+    this.target.toTotal = 0
+    this.target.fromTax = 0
+    this.target.toTax = 0
+
     this.getList()
   }
 
@@ -176,7 +267,7 @@ export default class extends Vue {
 }
 
 .box-card {
-  width: 100%x;
+  width: 100%;
   max-width: 100%;
   margin: 20px auto;
 }
@@ -189,10 +280,19 @@ export default class extends Vue {
   margin-right: 15px;
 }
 
+.right {
+  float: right;
+}
+
 .page {
   margin-top: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.box-card {
+  width: 100%;
+  padding: 15px;
 }
 </style>
