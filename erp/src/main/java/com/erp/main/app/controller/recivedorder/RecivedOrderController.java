@@ -9,6 +9,7 @@ import com.erp.main.app.controller.recivedorder.requests.CreateRecivedOrderReque
 import com.erp.main.app.controller.recivedorder.requests.GetRecivedOrderRequest;
 import com.erp.main.app.controller.recivedorder.requests.GetRecvedOrderRequest;
 import com.erp.main.app.controller.recivedorder.response.RecivedOrderResponse;
+import com.erp.main.app.controller.recivedorder.response.RecivedOrdersResponse;
 import com.erp.main.domain.services.RecivedOrderService;
 
 /*
@@ -38,9 +39,9 @@ public class RecivedOrderController {
 	 * 受注票取得処理
 	 */
 	@PostMapping("/recivedOrder/info")
-	public RecivedOrderResponse  getRecivedOrder(@RequestBody GetRecivedOrderRequest request) {
+	public RecivedOrdersResponse  getRecivedOrder(@RequestBody GetRecivedOrderRequest request) {
 		var vo = this.recivedOrderService.getRecivedOrderVo(request.mapTo());
-		var response = new RecivedOrderResponse();
+		var response = new RecivedOrdersResponse();
 		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setRecivedOrder(vo.getRecivedOder());
 		return response;

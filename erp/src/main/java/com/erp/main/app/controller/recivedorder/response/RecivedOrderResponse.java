@@ -3,26 +3,30 @@ package com.erp.main.app.controller.recivedorder.response;
 import java.util.List;
 
 import com.erp.main.app.controller.system.response.BaseResponse;
+import com.erp.main.domain.objects.model.RecivedOrderDetailModel;
 import com.erp.main.domain.objects.model.RecivedOrderModel;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/*
- * 受注票一覧のレスポンス
- */
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class RecivedOrderResponse extends BaseResponse {
-	// 全データの総数
-	private Long totalItemsNum;
+public class RecivedOrderResponse extends BaseResponse{
+	//受注詳細
+	private RecivedOrderModel recivedOrder;
+	//受注詳細モデル
+	private List<RecivedOrderDetailModel> details;
 	
-	//受注モデル
-	List<RecivedOrderModel> recivedOrder;
-
 	public static RecivedOrderResponse mapTo(GetRecivedOrderVo vo) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		var recivedOrder = vo.getRecivedOrder();
+		var details = vo.getDetails();
+		var response = new RecivedOrderResponse();
+		//受注
+		response.setRecivedOrder(recivedOrder);
+		//詳細
+		response.setDetails(details);
+
+		return response;
 	}
 }

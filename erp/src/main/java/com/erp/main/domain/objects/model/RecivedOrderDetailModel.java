@@ -1,5 +1,7 @@
 package com.erp.main.domain.objects.model;
 
+import com.erp.main.domain.common.enums.RacivedOrderStatus;
+
 import lombok.Data;
 
 /*
@@ -30,5 +32,5 @@ public class RecivedOrderDetailModel {
 	private Integer quantity;
 	
 	// 状態
-	private Integer status;
+	private RacivedOrderStatus status;
 }	
