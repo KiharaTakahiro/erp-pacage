@@ -22,6 +22,7 @@ import com.erp.main.domain.objects.entity.DepartmentEntity;
 import com.erp.main.domain.objects.entity.ProductEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 import com.erp.main.domain.objects.entity.RecivedOrderEntity;
+import com.erp.main.domain.objects.model.RecivedOrderDetailModel;
 import com.erp.main.domain.objects.model.RecivedOrderModel;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
@@ -35,6 +36,7 @@ import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.RecivedOrderDetailRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 import com.erp.main.domain.specification.RecivedOederSpec;
+import com.erp.main.domain.specification.RecivedOrderDetailSpec;
 
 /*
  * 受注のサービス
@@ -204,7 +206,7 @@ public class RecivedOrderService {
 			condition.setPageNo(0);
 		}
 		
-		//
+		//検索条件
 		Specification<RecivedOrderEntity> spec = Specification.where(
 			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
 				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
@@ -279,20 +281,48 @@ public class RecivedOrderService {
 		
 				
 				}
-
+	@Transactional
 	public GetRecivedOrderVo getRecivedOrderVo(Long recivedOrderSeq) {
+		//
 		Optional<RecivedOrderEntity> order = recivedOrderRepository.findById(recivedOrderSeq);
 		if(order.isEmpty()) {
 			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
 		}
-		Optional<RecivedOrderDetailEntity> details = recivedOrderDetailRepository.findByRecivedOrderId(recivedOrderSeq);
-		if(details.isEmpty()) {
-			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
-		}
+		//
+		var vo = GetRecivedOrderVo.mapTo(order.get());
+		//検索条件
+		Specification<RecivedOrderDetailEntity> spec = Specification.where(
+			RecivedOrderDetailSpec.recivedOrderSeqEquals(vo.getRecivedOrder().getRecivedOrderSeq()));
+	
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "recivedOrderSeq");
+		// 検索
+		Page<RecivedOrderDetailEntity> pages = this.recivedOrderDetailRepository.findAll(spec, PageRequest.of(1, 15, sort));
 		
+		List<RecivedOrderDetailModel> details = pages.get().map(e -> {
+			var detail = new RecivedOrderDetailModel();
+			//
+			detail.setRecicedOrderDetailSeq(e.getRecivedOrderDetailSeq());
+			//
+			detail.setRecivedOrderSeq(e.getRecivedOrderSeq());
+			//
+			detail.setDeriveryDate(e.getDeriveryDate());
+			//
+			detail.setDiscount(e.getDiscount());
+			//
+			detail.setLotSeq(e.getLotSeq());
+			//
+			detail.setProductSeq(e.getProductSeq());
+			//
+			detail.setQuantity(e.getQuantity());
+			//
+			detail.setStatus(e.getStatus());
+			return detail;
+			
+		}).collect(Collectors.toList());
 		
-		
-		return null;
+		vo.setDetails(details);
+		return vo;
 	}
 
 }

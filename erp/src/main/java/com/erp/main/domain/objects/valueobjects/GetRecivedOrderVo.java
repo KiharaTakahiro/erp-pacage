@@ -2,6 +2,8 @@ package com.erp.main.domain.objects.valueobjects;
 
 import java.util.List;
 
+import com.erp.main.domain.objects.entity.RecivedOrderEntity;
+import com.erp.main.domain.objects.model.RecivedOrderDetailModel;
 import com.erp.main.domain.objects.model.RecivedOrderModel;
 
 import lombok.Data;
@@ -12,31 +14,37 @@ import lombok.Data;
  */
 @Data
 public class GetRecivedOrderVo {
+	
 	//受注票モデル
 	private RecivedOrderModel recivedOrder;
+	//受注詳細モデル
+	private List<RecivedOrderDetailModel> details;
 	
-	private List<GetRecivedOrderDetailVo> details;
-	
-	@Data
-	public static class GetRecivedOrderDetailVo {
+	/*
+	 * エンティティから受注Voへのマッピング
+	 */
+	public static GetRecivedOrderVo mapTo(RecivedOrderEntity entity) {
+		var model = new RecivedOrderModel();
 		//
-		private Long recicedOrderDetailSeq;
-		// 配送日
-		private String deriveryDate;
+		model.setRecivedOrderSeq(entity.getRecivedOrderSeq());
+		//
+		model.setClientsSeq(entity.getClientsSeq());
+		//
+		model.setCompanySeq(entity.getCompanySeq());
+		//
+		model.setDepartmentSeq(entity.getDepartmentSeq());
+		//
+		model.setRecivedOrderDate(entity.getRecivedOrderDate());
+		//
+		model.setTotal(entity.getTotal());
+		//
+		model.setTax(entity.getTax());
 		
-		// 値引
-		private Long discount;
+		// 
+		var vo = new GetRecivedOrderVo();
+		vo.setRecivedOrder(model);
 		
-		// ロットSEQ
-		private Long lotSeq;
+		return vo;
 		
-		// 商品SEQ
-		private Long productSeq;
-		
-		// 数量
-		private Integer quantity;
-		
-		// 状態
-		private Integer status;
 	}
 }
