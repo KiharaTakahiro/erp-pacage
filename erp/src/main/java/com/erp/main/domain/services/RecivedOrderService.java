@@ -27,10 +27,12 @@ import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrdersVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.RecivedOrderDetailRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 import com.erp.main.domain.specification.RecivedOederSpec;
 
@@ -45,6 +47,11 @@ public class RecivedOrderService {
 	 */
 	@Autowired
 	private RecivedOrderRepository recivedOrderRepository; 
+	/*
+	 * 受注詳細レポジトリ
+	 */
+	@Autowired
+	private RecivedOrderDetailRepository recivedOrderDetailRepository;
 	
 	/**
 	 * 見積リポジトリ
@@ -190,7 +197,7 @@ public class RecivedOrderService {
 	 * 受注一覧取得
 	 */
 	@Transactional
-	public GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
+	public GetRecivedOrdersVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
 		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
@@ -260,7 +267,7 @@ public class RecivedOrderService {
 		}).collect(Collectors.toList());
 		
 		//詰めるVo生成
-		var vo = new GetRecivedOrderVo();
+		var vo = new GetRecivedOrdersVo();
 		//総アイテム数
 		vo.setTotalItemsNum(pages.getTotalElements());
 		//受注一覧
@@ -272,5 +279,20 @@ public class RecivedOrderService {
 		
 				
 				}
+
+	public GetRecivedOrderVo getRecivedOrderVo(Long recivedOrderSeq) {
+		Optional<RecivedOrderEntity> order = recivedOrderRepository.findById(recivedOrderSeq);
+		if(order.isEmpty()) {
+			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
+		}
+		Optional<RecivedOrderDetailEntity> details = recivedOrderDetailRepository.findById(recivedOrderSeq);
+		if(order.isEmpty()) {
+			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
+		}
+		
+		
+		
+		return null;
+	}
 
 }

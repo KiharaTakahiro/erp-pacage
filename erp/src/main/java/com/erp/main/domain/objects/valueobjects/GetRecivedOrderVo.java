@@ -7,15 +7,36 @@ import com.erp.main.domain.objects.model.RecivedOrderModel;
 import lombok.Data;
 
 /*
- * 受注用のVO
+ * 受注詳細取得用VO
  * @author ngt
  */
-
 @Data
 public class GetRecivedOrderVo {
-	//受注リスト
-	List<RecivedOrderModel> recivedOder;
+	//受注票モデル
+	private RecivedOrderModel recivedOrder;
 	
-	// 全体のページ数
-	Long totalItemsNum;;
+	private List<GetRecivedOrderDetailVo> details;
+	
+	@Data
+	public static class GetRecivedOrderDetailVo {
+		//
+		private Long recicedOrderDetailSeq;
+		// 配送日
+		private String deriveryDate;
+		
+		// 値引
+		private Long discount;
+		
+		// ロットSEQ
+		private Long lotSeq;
+		
+		// 商品SEQ
+		private Long productSeq;
+		
+		// 数量
+		private Integer quantity;
+		
+		// 状態
+		private Integer status;
+	}
 }

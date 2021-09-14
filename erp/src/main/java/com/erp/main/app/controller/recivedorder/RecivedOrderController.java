@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.main.app.controller.recivedorder.requests.CreateRecivedOrderRequest;
 import com.erp.main.app.controller.recivedorder.requests.GetRecivedOrderRequest;
+import com.erp.main.app.controller.recivedorder.requests.GetRecvedOrderRequest;
 import com.erp.main.app.controller.recivedorder.response.RecivedOrderResponse;
 import com.erp.main.domain.services.RecivedOrderService;
 
@@ -43,6 +44,17 @@ public class RecivedOrderController {
 		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setRecivedOrder(vo.getRecivedOder());
 		return response;
+	}
+	
+	/**
+	 * 受注票詳細取得用の処理
+	 */
+	@PostMapping("/recivedOrder/edit")
+	public RecivedOrderResponse getOrder(@RequestBody GetRecvedOrderRequest request) {
+		Long id = request.getRecivedOrderSeq(); 
+		var vo = this.recivedOrderService.getRecivedOrderVo(id);
+		return RecivedOrderResponse.mapTo(vo);
+		
 	}
 
 

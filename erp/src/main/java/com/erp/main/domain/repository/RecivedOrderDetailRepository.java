@@ -14,4 +14,9 @@ import com.erp.main.domain.objects.entity.RecivedOrderDetailEntity;
 @Repository
 public interface RecivedOrderDetailRepository extends JpaRepository<RecivedOrderDetailEntity, Long> {
 	
+	/*
+	 * 受注SeqをもとにRecivedOrderDetialEntityを取得
+	 * @return
+	 */
+	public RecivedOrderDetailEntity findByRecivedOrderId(Long recivedOrderSeq);
 }
