@@ -13,10 +13,12 @@
     >
     <clients-pull-down
       :clientsSeq.sync="recivedOrder.clientsSeq"
+      :required="true"
     />
     <company-pull-down
       :companySeq.sync="recivedOrder.companySeq"
       :departmentSeq.sync="recivedOrder.departmentSeq"
+      :required="true"
       @resetDepart="resetDepart"
     />
     <date-form
@@ -137,16 +139,17 @@ export default class extends Vue {
       }
     })
   }
-
+  //部署リセット
   resetDepart(){
     RecievedOrderModule.setDepartmentId('')
     this.recivedOrder.departmentSeq = RecievedOrderModule.departmentSeq
   }
-
+  //詳細の消去
   minusBtnClick(key: number) {
     RecievedOrderModule.removeDetails(key)
   }
 
+  // 詳細の追加
   addBtnClick() {
     RecievedOrderModule.pushDetail({
         productSeq: '',
@@ -154,7 +157,7 @@ export default class extends Vue {
         discount: 0,
         deriveryDate: '',
         lotSeq: 2, //仮
-        status: ''    
+        status: ''
     })
   }
 }

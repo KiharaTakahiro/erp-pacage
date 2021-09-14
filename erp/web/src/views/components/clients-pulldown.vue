@@ -5,7 +5,7 @@
       prop="clientsSeq"
       :rules="[
         {
-          required: true,
+          required: required,
           message: '取引先を選択してください',
           trigger: 'change'
         }
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, PropSync } from 'vue-property-decorator'
+import { Component, Vue, PropSync, Prop } from 'vue-property-decorator'
 import { pullDownClient } from '@/api/client'
 @Component({
   name: 'clientsPullDown',
@@ -34,6 +34,12 @@ import { pullDownClient } from '@/api/client'
 export default class extends Vue {
   clients = [{}]
   @PropSync('clientsSeq', { type: String }) seq!: string
+
+  @Prop({ default: false })
+  required!: boolean
+
+  @Prop({ default: '' })
+  prop!: string
 
   created() {
     this.getList()
