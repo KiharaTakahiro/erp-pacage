@@ -25,13 +25,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, PropSync } from 'vue-property-decorator'
+import { Component, Vue, PropSync, Prop } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 
 @Component({
   name: 'productName'
 })
 export default class extends Vue {
+  @Prop({ default: false })
+  required!: boolean
+
   @PropSync('productName', { type: String }) name!: string
 }
 </script>

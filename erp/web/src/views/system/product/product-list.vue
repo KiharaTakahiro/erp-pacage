@@ -12,7 +12,7 @@
           label-width="90px"
         >
           <product-seq 
-          style="margin-top:10px; width:10%; margin-right:20px;"
+          style=" width:50%;"
           :productName.sync="targetProductSeq" />
 
           <product-name 
@@ -184,15 +184,15 @@ export default class extends Vue {
       productName: this.searchName === '' ? null : this.searchName,
       unitPriceFrom: this.searchUnitPriceFrom === '' ? null : this.searchUnitPriceFrom,
       unitPriceTo: this.searchUnitPriceTo === '' ? null : this.searchUnitPriceTo,
-      purchaseunitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
-      purchaseunitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo,
+      purchaseUnitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
+      purchaseUnitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo,
       taxType: this.searchTaxType === '' ? null : this.searchTaxType
     }
 
     // APIの取得結果をもとにModelを更新する
     await ProductModule.ProductList(searchData)
 
-    console.log(this.searchTaxType)
+    console.log(searchData)
   }
 
   /**

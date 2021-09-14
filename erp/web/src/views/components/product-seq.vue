@@ -8,10 +8,6 @@
         v-model="id"
         :placeholder="$t('product.id')"
         type="text"
-        maxlength="50"
-        tabindex="1"
-        autocomplete="on"
-        clearable
       />
     </el-form-item>
   </div>
@@ -25,6 +21,6 @@ import '@/assets/custom-theme/index.css'
   name: 'productSeq'
 })
 export default class extends Vue {
-  @PropSync('productSeq', { type: Number }) id!: Number
+  @PropSync('productSeq', { type: String }) id!: String
 }
 </script>
