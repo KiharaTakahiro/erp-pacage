@@ -301,21 +301,21 @@ public class RecivedOrderService {
 		
 		List<RecivedOrderDetailModel> details = pages.get().map(e -> {
 			var detail = new RecivedOrderDetailModel();
-			//
+			//受注詳細Seq
 			detail.setRecicedOrderDetailSeq(e.getRecivedOrderDetailSeq());
-			//
+			//受注Seq
 			detail.setRecivedOrderSeq(e.getRecivedOrderSeq());
-			//
+			//受注日
 			detail.setDeriveryDate(e.getDeriveryDate());
-			//
+			//値引
 			detail.setDiscount(e.getDiscount());
-			//
+			//ロットSeq
 			detail.setLotSeq(e.getLotSeq());
-			//
+			//商品Seq
 			detail.setProductSeq(e.getProductSeq());
-			//
+			//個数
 			detail.setQuantity(e.getQuantity());
-			//
+			//配送状態
 			detail.setStatus(e.getStatus());
 			return detail;
 			
