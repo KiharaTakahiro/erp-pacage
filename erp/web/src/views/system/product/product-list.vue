@@ -11,7 +11,7 @@
           label-position="left"
           label-width="90px"
         >
-          <product-seq 
+          <product-seq
           style=" width:50%;"
           :productName.sync="targetProductSeq" />
 

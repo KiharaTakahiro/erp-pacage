@@ -2,6 +2,13 @@
   <div>
     <el-form-item
       label="商品ID"
+      :rules="[
+        {
+          pattern: /^(0|[1-9]|[1-9][0-9]+)$/,
+          message: '半角数字で入力してください。',
+          trigger: 'blur',
+        }
+      ]"
       prop="productSeq"
     >
       <el-input
