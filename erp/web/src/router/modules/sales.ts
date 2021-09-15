@@ -40,7 +40,7 @@ const salesRoutes: RouteConfig = {
           path: 'edit-recived-order',
           component: () => import('@/views/sales/recived-order/edit-recived-order.vue'),
           name: 'edit-recived-order',
-          meta: {title: 'editRecivedOrder'}
+          meta: {title: 'editRecivedOrder' , hidden: true}
         }
       ]
     },

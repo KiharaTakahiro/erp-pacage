@@ -88,6 +88,11 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
     this.recivedOrderDate = date
   }
 
+  @Mutation
+  private SET_EDIT_DRTAILS(details: any){
+    this.details = details
+  }
+
   @Action
   public setClientsID(id: any) {
     this.SET_CLIENT_ID(id)
@@ -122,6 +127,11 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public removeDetails(key: number) {
     this.REMOVE_DETAILS(key)
   }
+
+  @Action
+  public setEditDetail(details: any) {{
+    this.SET_EDIT_DRTAILS(details)
+  }}
 
   @Action
   public reset() {
@@ -171,7 +181,15 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public async GetRecivedOrder(orderInfo: { recivedOrderSeq: string }) {
     let { recivedOrderSeq } = orderInfo
     const { data } = await getRecivedOrder({ recivedOrderSeq: recivedOrderSeq })
-    console.log(data)
+    const recivedOrder = data.recivedOrder
+    this.SET_RECIEVED_ORDER_ID(recivedOrder.recivedOrderSeq)
+    this.SET_CLIENT_ID(recivedOrder.clientsSeq)
+    this.SET_COMPANY_ID(recivedOrder.companySeq)
+    this.SET_DEPARTMENT_ID(recivedOrder.departmentSeq)
+    this.SET_TAX(recivedOrder.tax)
+    this.SET_TOTAL(recivedOrder.total)
+    const details = data.details
+    this.SET_EDIT_DRTAILS(details)
   }
 }
 
