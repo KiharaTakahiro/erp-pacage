@@ -125,13 +125,13 @@ export default class extends Vue {
   @PropSync('date', { type: String }) dateValue!: string
 
   // 商品の情報問合せ
-  private async getProductDetail(productSeq: any) {
+  public async getProductDetail(productSeq: any) {
     let { data } = await getProduct({ productSeq: productSeq })
     this.price = data.unitPrice
   }
 
   // 商品情報変更時の処理
-  private changeProduct(value: any) {
+  changeProduct(value: any) {
     this.getProductDetail(value)
     this.productSeqVal = value
   }

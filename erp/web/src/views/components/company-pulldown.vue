@@ -54,6 +54,7 @@
 <script lang="ts">
 import { Component, Vue, PropSync, Emit, Prop } from 'vue-property-decorator'
 import { pullDownCompany, pullDownDepartment } from '@/api/company'
+import { RecivedOrderModule } from '@/store/modules/recived-order'
 @Component({
   name: 'companyPullDown',
   components: {}
@@ -66,13 +67,17 @@ export default class extends Vue {
   companys = [{}]
   departments = [{}]
 
-  created() {
+  async created() {
     this.getList()
+    if(RecivedOrderModule.companySeq != ''){
+      const { data } = await pullDownDepartment({ companySeq: RecivedOrderModule.companySeq })
+      this.departments = data.departments
+    }
   }
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
-  }
+    }
 
   changeCompany(value: any){
     this.comSeq = value
@@ -85,7 +90,6 @@ export default class extends Vue {
 
   private async checkDepartment(companySeq: any) {
     // @ts-ignore
-    this.departmentSeq = ''
     if (companySeq === '') {
       this.departments = [{}]
     } else {

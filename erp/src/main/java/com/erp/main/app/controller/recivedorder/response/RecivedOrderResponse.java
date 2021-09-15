@@ -26,6 +26,7 @@ public class RecivedOrderResponse extends BaseResponse{
 		response.setRecivedOrder(recivedOrder);
 		//詳細
 		response.setDetails(details);
+		
 
 		return response;
 	}

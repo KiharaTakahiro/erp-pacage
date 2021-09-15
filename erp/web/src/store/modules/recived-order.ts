@@ -186,6 +186,7 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
     this.SET_CLIENT_ID(recivedOrder.clientsSeq)
     this.SET_COMPANY_ID(recivedOrder.companySeq)
     this.SET_DEPARTMENT_ID(recivedOrder.departmentSeq)
+    this.SET_RECIEVED_ORDER_DATE(recivedOrder.recivedOrderDate)
     this.SET_TAX(recivedOrder.tax)
     this.SET_TOTAL(recivedOrder.total)
     const details = data.details

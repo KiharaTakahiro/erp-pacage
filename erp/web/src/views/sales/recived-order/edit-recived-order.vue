@@ -71,6 +71,7 @@ import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
 import { RecivedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
+
 @Component({
   name: 'save-recived-order',
   components: {
@@ -99,7 +100,10 @@ export default class extends Vue {
   // }
 
   // // 作成時（仮）
-  // created() {
+  created() {
+    
+  }
+
   //   //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
   //   RecivedOrderModule.setQuotationId(2)
   //   // 初期表示時にpushする
@@ -140,10 +144,11 @@ export default class extends Vue {
     })
   }
   //部署リセット
-  // resetDepart(){
-  //   RecivedOrderModule.setDepartmentId('')
-  //   this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
-  // }
+  resetDepart(){
+    RecivedOrderModule.setDepartmentId('')
+    this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
+  }
+
   //詳細の消去
   minusBtnClick(key: number) {
     RecivedOrderModule.removeDetails(key)
