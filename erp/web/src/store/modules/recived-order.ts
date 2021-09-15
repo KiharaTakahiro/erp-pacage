@@ -5,9 +5,9 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-import { createRecivedOrder } from '@/api/recived-order'
+import { createRecivedOrder, getRecivedOrder } from '@/api/recived-order'
 import store from '@/store'
-export interface IRecievedOrderState {
+export interface IRecivedOrderState {
   recivedOrderSeq: string
   clientsSeq: string
   companySeq: string
@@ -28,7 +28,7 @@ interface RecivedOrderDetail {
   status: string
 }
 @Module({ dynamic: true, store, name: 'recivedOrder' })
-class RecievedOrder extends VuexModule implements IRecievedOrderState {
+class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public recivedOrderSeq = ''
   public clientsSeq = ''
   public companySeq = ''
@@ -109,7 +109,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   }
 
   @Action
-  public setRecievedOrderDate(date: any) {
+  public setRecivedOrderDate(date: any) {
     this.SET_RECIEVED_ORDER_DATE(date)
   }
 
@@ -166,6 +166,13 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
       total: total
     })
   }
+
+  @Action({ rawError: true})
+  public async GetRecivedOrder(orderInfo: { recivedOrderSeq: string }) {
+    let { recivedOrderSeq } = orderInfo
+    const { data } = await getRecivedOrder({ recivedOrderSeq: recivedOrderSeq })
+    console.log(data)
+  }
 }
 
-export const RecievedOrderModule = getModule(RecievedOrder)
+export const RecivedOrderModule = getModule(RecivedOrder)

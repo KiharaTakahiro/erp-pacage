@@ -150,7 +150,6 @@ export default class extends Vue {
   /**
    * 画面時のボタンセレクト条件
    */
-  // TODO: 適切な名前に変更する
   private checkNo(val: any) {
     this.client.id = val[0]['clientsSeq']
     this.checkLength = val.length

@@ -2,9 +2,10 @@ export default {
   route: {
     dashboard: 'Dashboard',
     sales: 'Sales',
-    recivedOrder: 'Recieved Order',
-    newRecievedOrder: 'Create New Recived Order',
-    recivedOrderList: 'Recieved Order List',
+    recivedOrder: 'Recived Order',
+    newRecivedOrder: 'Create New Recived Order',
+    editRecivedOrder: 'Edit Recive Order',
+    recivedOrderList: 'Recived Order List',
     OrderDetail: 'Order Detail',
     quotation: 'Quotation',
     invoice: 'Invoice',
@@ -127,8 +128,10 @@ export default {
     check2: 'Two or more companies have been selected'
   },
   recivedOrder: {
-    add: 'Create New Recieved Order',
+    add: 'Create New Recived Order',
     complete: 'complete',
+    check0: 'No RecivedOrder selected',
+    check2: 'Two or more RecivedOrders have been selected'
   },
   documentation: {
     documentation: 'Documentation',

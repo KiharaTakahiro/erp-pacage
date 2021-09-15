@@ -13,3 +13,10 @@ export const createRecivedOrder = (data: any) =>
     method: 'post',
     data
   })
+
+  export const getRecivedOrder = (data: any) =>
+  request({
+    url: '/recivedOrder/edit',
+    method: 'post',
+    data
+  })
