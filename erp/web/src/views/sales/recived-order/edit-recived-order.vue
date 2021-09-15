@@ -140,10 +140,10 @@ export default class extends Vue {
     })
   }
   //部署リセット
-  resetDepart(){
-    RecivedOrderModule.setDepartmentId('')
-    this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
-  }
+  // resetDepart(){
+  //   RecivedOrderModule.setDepartmentId('')
+  //   this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
+  // }
   //詳細の消去
   minusBtnClick(key: number) {
     RecivedOrderModule.removeDetails(key)
