@@ -182,7 +182,8 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public async GetRecivedOrder(orderInfo: { recivedOrderSeq: string }) {
     let { recivedOrderSeq } = orderInfo
     const { data } = await getRecivedOrder({ recivedOrderSeq: recivedOrderSeq })
-    const recivedOrder = data.recivedOrder
+    const recivedOrder = data
+
     this.SET_RECIEVED_ORDER_ID(recivedOrder.recivedOrderSeq)
     this.SET_CLIENT_ID(recivedOrder.clientsSeq)
     this.SET_COMPANY_ID(recivedOrder.companySeq)
