@@ -39,6 +39,7 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public tax = 0
   public total = 0
 
+
   @Mutation
   private SET_RECIEVED_ORDER_ID(id: any) {
     this.recivedOrderSeq = id

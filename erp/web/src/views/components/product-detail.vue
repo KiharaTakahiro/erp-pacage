@@ -76,6 +76,7 @@ import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
 import money from '@/views/components/money.vue'
 import DeliveryStatus from '@/views/components/delivery-status.vue'
+import { RecivedOrderModule } from '@/store/modules/recived-order'
 
 @Component({
   name: 'productsPullDown',
@@ -147,6 +148,10 @@ export default class extends Vue {
   // 作成時
   created() {
     this.getList()
+    const productSeq = RecivedOrderModule.details[this.detailKey].productSeq
+    if(productSeq != '') {
+      this.getProductDetail(productSeq)
+    }
   }
 
   // 商品プルダウン

@@ -69,27 +69,41 @@ export default class extends Vue {
 
   async created() {
     this.getList()
+    /**
+     * 編集画面の場合初期表示で部署プルダウンが作成されない為
+     * ストアに会社Seqがある場合プルダウンのAPIを投げる。
+     */
     if(RecivedOrderModule.companySeq != ''){
       const { data } = await pullDownDepartment({ companySeq: RecivedOrderModule.companySeq })
       this.departments = data.departments
     }
   }
+
+  // 会社プルダウン作成
   private async getList() {
     const { data } = await pullDownCompany()
     this.companys = data.companys
     }
 
+  // 会社が変更された際部署をリセット
   changeCompany(value: any){
     this.comSeq = value
     this.checkDepartment(value)
   }
+
+  // 親コンポーネントで部署リセットする為のエミット。返値は使用しない。
   @Emit('resetDepart')
   resetDepart(){
     return this.comSeq
   }
 
+  /**
+   * 部署のプルダウンの処理
+   * 会社Seqが空で部署リセット
+   * そうでなければ該当の会社の部署を問合せ
+   * 会社と部署の不一致をなくすための処理
+   */
   private async checkDepartment(companySeq: any) {
-    // @ts-ignore
     if (companySeq === '') {
       this.departments = [{}]
     } else {
