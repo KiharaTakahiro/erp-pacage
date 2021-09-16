@@ -1,7 +1,9 @@
 package com.erp.main.domain.services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +118,15 @@ public class RecivedOrderService {
 		//			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
 		//		}
 		
+		// 受注詳細の作成
+		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
+		// 合計金額
+		var totalPrice = 0L;
+		// 値引合計
+		var discountTotal = 0L;
+		
+		// 消費税合計
+		var taxTotal = 0L;
 		
 		// 詳細の入力確認
 		if(createRecivedOrderVo.getDetails().isEmpty()) {
@@ -259,11 +270,8 @@ public class RecivedOrderService {
 		vo.setRecivedOder(orders);
 		
 		return vo;
-		
-		
-		
-				
-				}
+		}
+	
 	@Transactional
 	public GetRecivedOrderVo getRecivedOrderVo(Long recivedOrderSeq) {
 		//該当受注を検索
@@ -296,11 +304,16 @@ public class RecivedOrderService {
 		Optional<DepartmentEntity> department = this.departmentRepository.findById(vo.getRecivedOrder().getDepartmentSeq());
 		if(department.isEmpty()) {
 			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",vo.getRecivedOrder().getDepartmentSeq()));
-		}	
+		}
 		
+
+		// 詳細の入力確認
+		if(vo.getDetails().isEmpty()) {
+			throw new AppException("受注詳細が入力されていません");
+		}
 		
-		
-		
+		//エンティティの更新
+		recivedOrder.get().update(vo);
 	}
 
 }

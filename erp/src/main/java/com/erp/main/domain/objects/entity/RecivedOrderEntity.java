@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.RecivedOrderEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
+import com.erp.main.domain.objects.valueobjects.UpdateRecivedOrderVo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -53,6 +54,14 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 		
 		return entity;
 
+	}
+	
+	/*
+	 * 更新用のエンティティ処理
+	 * @author ngt
+	 */
+	public void update(UpdateRecivedOrderVo vo) {
+		
 	}
 
 	/**
