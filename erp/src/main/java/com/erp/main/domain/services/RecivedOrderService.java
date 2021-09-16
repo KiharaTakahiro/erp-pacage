@@ -116,6 +116,7 @@ public class RecivedOrderService {
 		//			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
 		//		}
 		
+		
 		// 詳細の入力確認
 		if(createRecivedOrderVo.getDetails().isEmpty()) {
 			throw new AppException("受注詳細が入力されていません");
@@ -276,6 +277,7 @@ public class RecivedOrderService {
 	}
 
 	public void updateRecivedOrder(UpdateRecivedOrderVo vo) {
+		Optional<RecivedOrderEntity> recivedOrder = recivedOrderRepository.findById(vo.getRecivedOrder().getRecivedOrderSeq());
 		if(recivedOrder.isEmpty()) {
 			throw new AppException(String.format("該当の受注票を取得できませんでした。 recivedOrder: %s", recivedOrder));
 		}
