@@ -11,39 +11,53 @@
           label-position="left"
           label-width="90px"
         >
-          <product-seq
+          <id-search
           style=" width:50%;"
-          :productName.sync="targetProductSeq" />
+          label="商品Seq"
+          :targetId.sync="targetProductSeq" />
 
           <product-name 
           style="width:50%;"
           :productName.sync="searchName" />
 
+          <el-row>
+          <el-col :span="5">
           <money
           label="定価FROM"
-          style="width:30%;"
+          style="width:90%;"
           :placeholder="$t('product.unitPriceFrom')"
           :priceValue.sync="searchUnitPriceFrom"
           />
+          </el-col>
+          <el-col :span="5">
           <money
           label="定価TO"
-          style="width:30%;"
+          style="width:90%;"
           :placeholder="$t('product.unitPriceTo')"
           :priceValue.sync="searchUnitPriceTo"
           />
+          </el-col>
+          </el-row>
 
+          <el-row>
+          <el-col :span="5">
           <money
           label="原価FROM"
-          style="width:30%;"
+          style="width:90%;"
           :placeholder="$t('product.unitPurchasePriceFrom')"
           :priceValue.sync="searchPurchaseUnitPriceFrom"
           />
+          </el-col>
+          <el-col :span="5">
           <money
           label="原価TO"
-          style="width:30%;"
+          style="width:90%;"
           :placeholder="$t('product.PurchaseunitPriceTo')"
           :priceValue.sync="searchPurchaseUnitPriceTo"
           />
+          </el-col>
+          </el-row>
+
           <tax-type-pulldown :taxTypeValue.sync="searchTaxType" />
         </el-form>
       </div>
@@ -122,19 +136,19 @@ import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
 import { getCode } from '@/api/system'
 import money from '@/views/components/money.vue'
-import productSeq from '@/views/components/product-seq.vue'
 import productName from '@/views/components/product-name.vue'
 import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
+import IdSearch from '@/views/components/id-search.vue'
 
 
 @Component({
   name: 'Product',
   components: {
     backBtn,
-    productSeq,
     productName,
     taxTypePulldown,
-    money
+    money,
+    IdSearch
   }
 })
 export default class extends Vue {
@@ -223,16 +237,6 @@ export default class extends Vue {
   searchBtn() {
     this.pageNo = 1
     this.getList()
-  }
-
-  createProductBtn() {
-    this.$router
-      .push({
-        path: 'save-product'
-      })
-      .catch(err => {
-        console.warn(err)
-      })
   }
 
   editProductBtn() {

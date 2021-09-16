@@ -7,7 +7,7 @@
       name="recivedOrderId"
       type="text"
       :placeholder="label"
-      style="width:5%;"
+      style="width:15%;"
     />
   </el-form-item>
 </template>
