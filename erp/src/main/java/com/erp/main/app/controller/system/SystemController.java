@@ -25,6 +25,7 @@ import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.GetProductsRequest;
+import com.erp.main.app.controller.system.request.GetWarehouseRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.request.UpdateProductsRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
@@ -35,6 +36,7 @@ import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.app.controller.system.response.ProductsTableResponse;
+import com.erp.main.app.controller.system.response.WarehouseResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
@@ -265,6 +267,31 @@ public class SystemController {
 	@PostMapping("/warehouse/register")
 	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
 		this.masterService.createWarehouse(request.mapTo());
+	}
+	
+	/*
+	 * 倉庫プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/warehouse/pulldown")
+	public WarehouseResponse pullDownpWarehouse( ) {
+		var vo = this.masterService.pullDownWarehouse();
+		var response = new WarehouseResponse();
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+	}
+	
+	/*
+	 * 倉庫一覧処理のエントリーポイント
+	 */
+	@PostMapping("/warehouse/info")
+	public WarehouseResponse infoWarehouse(@RequestBody GetWarehouseRequest request) {
+		var vo = this.masterService.getWarehouseVo(request.mapTo());
+		var response = new WarehouseResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+
 	}
 	
 	/**

@@ -15,9 +15,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class WarehouseResponse extends BaseResponse{
-	//最大ページ数
-	private Integer maxpage;
-	
+	// 全データの総数
+	private Long totalItemsNum;
 	// 倉庫一覧
 	List <WarehouseModel> warehouse;
 }

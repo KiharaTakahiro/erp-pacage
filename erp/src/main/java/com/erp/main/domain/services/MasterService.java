@@ -28,6 +28,7 @@ import com.erp.main.domain.objects.model.CompanyModel;
 import com.erp.main.domain.objects.model.DepartmentModel;
 import com.erp.main.domain.objects.model.ProductModel;
 import com.erp.main.domain.objects.model.ProductTableModel;
+import com.erp.main.domain.objects.model.WarehouseModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -46,6 +47,8 @@ import com.erp.main.domain.objects.valueobjects.GetProductConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsTableVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
+import com.erp.main.domain.objects.valueobjects.GetWarehouseConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
@@ -61,6 +64,7 @@ import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
 import com.erp.main.domain.specification.DepartmentSpec;
 import com.erp.main.domain.specification.ProductSpec;
+import com.erp.main.domain.specification.WarehouseSpec;
 
 /**
  * マスターの管理用のサービス
@@ -533,6 +537,78 @@ public class MasterService {
 		var productEntity = product.get();
 		productEntity.update(vo);
 		this.productRepository.save(productEntity);
+	}
+	
+	/**
+	 * 倉庫一覧取得
+	 * @param vo
+	 */
+	@Transactional
+	public GetWarehouseVo getWarehouseVo(GetWarehouseConditionsVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<WarehouseEntity> spec = Specification.where(
+				WarehouseSpec.warehouseSeqEquals(condition.getWarehouseSeq()))
+				.and(WarehouseSpec.warehouseNameEquals(condition.getWarehouseName()));
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		
+		Page<WarehouseEntity> pages = this.warehouseRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		List<WarehouseModel> warehouses = pages.get().map(e -> {
+			var warehouse = new WarehouseModel();
+			// 倉庫seq
+			warehouse.setWarehouseSeq(e.getWarehouseSeq());
+			// 倉庫名
+			warehouse.setWarehouseName(e.getName());
+			return warehouse;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetWarehouseVo();
+		// トータルぺ―ジ
+		vo.setTotalItemsNum(pages.getTotalElements());
+		// 取引先リストの設定
+		vo.setWarehouse(warehouses);
+		
+		return vo;
+	}
+	
+	/*
+	 * 倉庫一覧のプルダウン
+	 * @params vo
+	 */
+	@Transactional
+	public GetWarehouseVo pullDownWarehouse() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
+		
+		// 取引先一覧取得
+		List<WarehouseEntity> entitys = this.warehouseRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<WarehouseModel> warehouses =  new ArrayList<>();
+		
+		for(WarehouseEntity entity: entitys) {		
+			var warehouse = new WarehouseModel();
+			// 倉庫seq
+			warehouse.setWarehouseSeq(entity.getWarehouseSeq());
+			// 倉庫名
+			warehouse.setWarehouseName(entity.getName());
+			
+			warehouses.add(warehouse);
+			
+		}
+	
+		var vo = new GetWarehouseVo();
+		// 取引先リストの設定
+		vo.setWarehouse(warehouses);
+		
+		return vo;
 	}
 			
 }
