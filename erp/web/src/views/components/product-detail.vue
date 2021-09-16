@@ -148,6 +148,11 @@ export default class extends Vue {
   // 作成時
   created() {
     this.getList()
+    /**
+     * 編集画面の際金額が表示されないので
+     * 該当のdetailKeyの商品Seqを確認
+     * 値が入っていたら金額の取得のAPIをたたく。
+     */
     const productSeq = RecivedOrderModule.details[this.detailKey].productSeq
     if(productSeq != '') {
       this.getProductDetail(productSeq)
