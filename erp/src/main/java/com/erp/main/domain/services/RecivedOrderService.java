@@ -1,9 +1,7 @@
 package com.erp.main.domain.services;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,7 @@ import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateReciv
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrdersVo;
+import com.erp.main.domain.objects.valueobjects.UpdateRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -116,16 +115,6 @@ public class RecivedOrderService {
 		//		if(quotation.isEmpty()) {
 		//			throw new AppException(String.format("対象の見積が取得できません。companySeq: %s",createRecivedOrderVo.getQuotationSeq()));
 		//		}
-		
-		// 受注詳細の作成
-		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
-		// 合計金額
-		var totalPrice = 0L;
-		// 値引合計
-		var discountTotal = 0L;
-		
-		// 消費税合計
-		var taxTotal = 0L;
 		
 		// 詳細の入力確認
 		if(createRecivedOrderVo.getDetails().isEmpty()) {
@@ -284,6 +273,32 @@ public class RecivedOrderService {
 		//マッピング
 		var vo = GetRecivedOrderVo.mapTo(order.get());
 		return vo;
+	}
+
+	public void updateRecivedOrder(UpdateRecivedOrderVo vo) {
+		if(recivedOrder.isEmpty()) {
+			throw new AppException(String.format("該当の受注票を取得できませんでした。 recivedOrder: %s", recivedOrder));
+		}
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(vo.getRecivedOrder().getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",vo.getRecivedOrder().getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(vo.getRecivedOrder().getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getRecivedOrder().getCompanySeq()));
+		}
+		
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(vo.getRecivedOrder().getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",vo.getRecivedOrder().getDepartmentSeq()));
+		}	
+		
+		
+		
+		
 	}
 
 }
