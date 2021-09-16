@@ -32,7 +32,6 @@ import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
-import com.erp.main.domain.repository.RecivedOrderDetailRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 import com.erp.main.domain.specification.RecivedOederSpec;
 
@@ -47,11 +46,7 @@ public class RecivedOrderService {
 	 */
 	@Autowired
 	private RecivedOrderRepository recivedOrderRepository; 
-	/*
-	 * 受注詳細レポジトリ
-	 */
-	@Autowired
-	private RecivedOrderDetailRepository recivedOrderDetailRepository;
+	
 	
 	/**
 	 * 見積リポジトリ
