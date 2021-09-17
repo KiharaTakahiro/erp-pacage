@@ -300,7 +300,7 @@ public class SystemController {
 	 * 倉庫詳細取得のエントリーポイント
 	 * @param responce
 	 */
-	@PostMapping("/product/edit")
+	@PostMapping("/warehouse/edit")
 	public WarehouseResponse getClient(@RequestBody GetWarehouseRequest request) {
 		Long id = request.getWarehouseSeq(); 
 		var vo = this.masterService.getWarehouseVo(id);
@@ -312,7 +312,7 @@ public class SystemController {
 	 * 倉庫更新処理のエントリーポイント
 	 * @param request
 	 */
-	@PostMapping("/product/update")
+	@PostMapping("/warehouse/update")
 	public void updateWarehouse(@RequestBody UpdateWarehouseRequest request) {
 		this.masterService.updateWarehouse(request.mapTo());
 	}
