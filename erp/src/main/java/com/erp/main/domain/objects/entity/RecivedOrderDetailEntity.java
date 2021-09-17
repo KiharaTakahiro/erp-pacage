@@ -66,6 +66,26 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		// 状態
 		this.setStatus(detailVo.getStatus());	
 	}
+	
+	public static RecivedOrderDetailEntity add(UpdateRecivedOrderDetailVo vo) {
+
+		var entity = new RecivedOrderDetailEntity();
+		var detail = vo.getDetail();
+		// 商品SEQ
+		entity.setDeriveryDate(detail.getDeriveryDate());
+		// 値引
+		entity.setDiscount(detail.getDiscount());
+		// ロットSEQ
+		entity.setLotSeq(detail.getLotSeq());
+		// 商品SEQ
+		entity.setProductSeq(detail.getProductSeq());
+		// 数量
+		entity.setQuantity(detail.getQuantity());
+		// 状態
+		entity.setStatus(detail.getStatus());	
+		return entity;
+		
+	}
 
 	/**
 	 * 受注テーブルの取得

@@ -333,6 +333,42 @@ public class RecivedOrderService {
 			Optional<RecivedOrderDetailEntity> detailEntity = this.recivedOrderDetailRepository.findById(detailVo.getRecicedOrderDetailSeq());
 			if(detailEntity.isEmpty()) {
 				throw new AppException(String.format("対象の受注詳細が取得できません。recviedOrderDetailSeq: %s",detailVo.getRecicedOrderDetailSeq()));
+//				Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+//				if(product.isEmpty()) {
+//					throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+//				}
+//				
+//				// 値引がマイナスの場合はエラー
+//				if(detailVo.getDiscount() < 0) {
+//					throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+//				}
+//				
+//				// 数量がマイナスの場合はエラー
+//				if(detailVo.getQuantity() < 0) {
+//					throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+//				}
+//				
+//				
+//				// 合計金額を加算する
+//				totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
+//				// 値引を加算する
+//				discountTotal += detailVo.getDiscount();
+//				
+//				// 金額 (単金 × 数量 - 値引)
+//				long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
+//				
+//				//商品ごとの税金タイプ
+//				var taxTaype = product.get().getTaxType();
+//				
+//				//税金の合計を加算
+//				taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+//				
+//				
+//				// 受注詳細用のエンティティ生成
+//				var entity = RecivedOrderDetailEntity.add(detail);
+//
+//				// 見積詳細の追加
+//				detailEntities.add(entity);
 			}
 			
 			
