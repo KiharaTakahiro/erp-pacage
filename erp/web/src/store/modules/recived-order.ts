@@ -5,7 +5,7 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-import { createRecivedOrder, getRecivedOrder } from '@/api/recived-order'
+import { createRecivedOrder, getRecivedOrder, updateRecivedOrder } from '@/api/recived-order'
 import store from '@/store'
 export interface IRecivedOrderState {
   recivedOrderSeq: string
@@ -195,18 +195,41 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
     this.SET_EDIT_DRTAILS(details)
   }
 
-  // @Action
-  // public async UpdateRecivedOrder(orderInfo: {
-  //   recivedOrderSeq: string
-  //   clientsSeq: string
-  //   companySeq: string
-  //   departmentSeq: string
-  //   details: any[]
-  //   quotationSeq: string
-  //   recivedOrderDate: string
-  //   tax: number
-  //   total: number
-  // })
+  @Action
+  public async UpdateRecivedOrder(orderInfo: {
+    recivedOrderSeq: string
+    clientsSeq: string
+    companySeq: string
+    departmentSeq: string
+    details: any[]
+    quotationSeq: string
+    recivedOrderDate: string
+    tax: number
+    total: number
+  }){
+    let {
+      recivedOrderSeq,
+      clientsSeq,
+      companySeq,
+      departmentSeq,
+      details,
+      quotationSeq,
+      recivedOrderDate,
+      tax,
+      total
+    } = orderInfo
+    await updateRecivedOrder({
+      recivedOrderSeq: recivedOrderSeq,
+      clientsSeq: clientsSeq,
+      companySeq: companySeq,
+      departmentSeq: departmentSeq,
+      details: details,
+      quotationSeq: quotationSeq,
+      recivedOrderDate: recivedOrderDate,
+      tax: tax,
+      total: total
+    })
+  }
 }
 
 export const RecivedOrderModule = getModule(RecivedOrder)
