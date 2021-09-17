@@ -194,6 +194,19 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
     const details = data.details
     this.SET_EDIT_DRTAILS(details)
   }
+
+  // @Action
+  // public async UpdateRecivedOrder(orderInfo: {
+  //   recivedOrderSeq: string
+  //   clientsSeq: string
+  //   companySeq: string
+  //   departmentSeq: string
+  //   details: any[]
+  //   quotationSeq: string
+  //   recivedOrderDate: string
+  //   tax: number
+  //   total: number
+  // })
 }
 
 export const RecivedOrderModule = getModule(RecivedOrder)

@@ -119,29 +119,29 @@ export default class extends Vue {
 
   // 登録処理
   private submit() {
-    (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
-      console.log(this.recivedOrder)
-      // if (valid) {
-      //   await RecivedOrderModule.createReciverdOrder(this.recivedOrder)
-      //   this.$router
-      //     .push({
-      //       path: 'recived-order-list'
-      //     })
-      //     .catch(err => {
-      //       console.warn(err)
-      //     })
-      //   this.$message({
-      //     message: this.$t('components.createClients').toString(),
-      //     type: 'success'
-      //   })
-      // } else {
-      //   this.$message({
-      //     message: this.$t('components.validation').toString(),
-      //     type: 'error'
-      //   })
-      //   return false
-      // }
-    })
+    console.log(this.recivedOrder)
+    // (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
+    //   if (valid) {
+    //     await RecivedOrderModule.UpdateReciverdOrder(this.recivedOrder)
+    //     this.$router
+    //       .push({
+    //         path: 'recived-order-list'
+    //       })
+    //       .catch(err => {
+    //         console.warn(err)
+    //       })
+    //     this.$message({
+    //       message: this.$t('components.createClients').toString(),
+    //       type: 'success'
+    //     })
+    //   } else {
+    //     this.$message({
+    //       message: this.$t('components.validation').toString(),
+    //       type: 'error'
+    //     })
+    //     return false
+    //   }
+    // })
   }
   //部署リセット
   resetDepart(){
