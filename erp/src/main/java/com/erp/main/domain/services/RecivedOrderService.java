@@ -33,6 +33,7 @@ import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.RecivedOrderDetailRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 import com.erp.main.domain.specification.RecivedOederSpec;
 
@@ -48,6 +49,11 @@ public class RecivedOrderService {
 	@Autowired
 	private RecivedOrderRepository recivedOrderRepository; 
 	
+	/*
+	 * 受注詳細レポジトリ
+	 */
+	@Autowired
+	private RecivedOrderDetailRepository recivedOrderDetailRepository;
 	
 	/**
 	 * 見積リポジトリ
@@ -306,6 +312,8 @@ public class RecivedOrderService {
 			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",vo.getRecivedOrder().getDepartmentSeq()));
 		}
 		
+		// 受注詳細の作成
+		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
 
 		// 詳細の入力確認
 		if(vo.getDetails().isEmpty()) {
@@ -319,7 +327,15 @@ public class RecivedOrderService {
 		// 消費税合計
 		var taxTotal = 0L;
 		for(var detail: vo.getDetails()) {
+			// モデル取得
 			var detailVo = detail.getDetail();
+			// 見積の取得
+			Optional<RecivedOrderDetailEntity> detailEntity = this.recivedOrderDetailRepository.findById(detailVo.getRecicedOrderDetailSeq());
+			if(detailEntity.isEmpty()) {
+				throw new AppException(String.format("対象の受注詳細が取得できません。recviedOrderDetailSeq: %s",detailVo.getRecicedOrderDetailSeq()));
+			}
+			
+			
 			// 商品の取得
 			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
 			if(product.isEmpty()) {
@@ -350,6 +366,10 @@ public class RecivedOrderService {
 			//税金の合計を加算
 			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
 			
+			//
+			detailEntity.get().update(detail);
+			//
+			detailEntities.add(detailEntity.get());		
 		}
 
 		// 値引適応
@@ -362,6 +382,7 @@ public class RecivedOrderService {
 		
 		//エンティティ更新
 		recivedOrder.get().update(vo);
+		recivedOrder.get().setRecivedOrderDetailEntity(detailEntities);
 		this.recivedOrderRepository.save(recivedOrder.get());
 	}
 

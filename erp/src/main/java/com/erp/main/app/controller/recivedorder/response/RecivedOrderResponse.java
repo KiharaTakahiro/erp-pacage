@@ -35,7 +35,7 @@ public class RecivedOrderResponse extends BaseResponse{
 	@Data
 	public static class RecivedOrderDetailResponse {
 		//受注詳細Seq
-		private Long recicedOrderDetailSeq;
+		private Long recivedOrderDetailSeq;
 		//受注Seq
 		private Long recivedOrderSeq;
 		// 配送日
@@ -81,7 +81,7 @@ public class RecivedOrderResponse extends BaseResponse{
 		for(RecivedOrderDetailModel detail: details) {
 			var detailResponse = new RecivedOrderDetailResponse();
 			//受注詳細Seq
-			detailResponse.setRecicedOrderDetailSeq(detail.getRecicedOrderDetailSeq());
+			detailResponse.setRecivedOrderDetailSeq(detail.getRecicedOrderDetailSeq());
 			//受注Seq
 			detailResponse.setRecivedOrderSeq(detail.getRecivedOrderSeq());
 			//配送日
