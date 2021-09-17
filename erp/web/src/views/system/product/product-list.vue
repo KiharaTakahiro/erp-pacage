@@ -21,41 +21,41 @@
           :productName.sync="searchName" />
 
           <el-row>
-          <el-col :span="5">
-          <money
-          label="定価FROM"
-          style="width:90%;"
-          :placeholder="$t('product.unitPriceFrom')"
-          :priceValue.sync="searchUnitPriceFrom"
-          />
-          </el-col>
-          <el-col :span="5">
-          <money
-          label="定価TO"
-          style="width:90%;"
-          :placeholder="$t('product.unitPriceTo')"
-          :priceValue.sync="searchUnitPriceTo"
-          />
-          </el-col>
+            <el-col :span="5">
+              <money
+              label="定価FROM"
+              style="width:90%;"
+              :placeholder="$t('product.unitPriceFrom')"
+              :priceValue.sync="searchUnitPriceFrom"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              label="定価TO"
+              style="width:90%;"
+              :placeholder="$t('product.unitPriceTo')"
+              :priceValue.sync="searchUnitPriceTo"
+              />
+            </el-col>
           </el-row>
 
           <el-row>
-          <el-col :span="5">
-          <money
-          label="原価FROM"
-          style="width:90%;"
-          :placeholder="$t('product.unitPurchasePriceFrom')"
-          :priceValue.sync="searchPurchaseUnitPriceFrom"
-          />
-          </el-col>
-          <el-col :span="5">
-          <money
-          label="原価TO"
-          style="width:90%;"
-          :placeholder="$t('product.PurchaseunitPriceTo')"
-          :priceValue.sync="searchPurchaseUnitPriceTo"
-          />
-          </el-col>
+            <el-col :span="5">
+              <money
+              label="原価FROM"
+              style="width:90%;"
+              :placeholder="$t('product.unitPurchasePriceFrom')"
+              :priceValue.sync="searchPurchaseUnitPriceFrom"
+              />
+            </el-col>
+            <el-col :span="5">
+              <money
+              label="原価TO"
+              style="width:90%;"
+              :placeholder="$t('product.PurchaseunitPriceTo')"
+              :priceValue.sync="searchPurchaseUnitPriceTo"
+              />
+            </el-col>
           </el-row>
 
           <tax-type-pulldown :taxTypeValue.sync="searchTaxType" />
