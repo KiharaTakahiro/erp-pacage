@@ -49,9 +49,11 @@ import com.erp.main.domain.objects.valueobjects.GetProductsTableVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseVo;
+import com.erp.main.domain.objects.valueobjects.GetWarehousesVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
+import com.erp.main.domain.objects.valueobjects.UpdateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -540,11 +542,27 @@ public class MasterService {
 	}
 	
 	/**
+	 * 倉庫詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetWarehouseVo getWarehouseVo(Long warehouseSeq){
+		Optional<WarehouseEntity> warehouse = warehouseRepository.findById(warehouseSeq);
+		if(warehouse.isEmpty()) {
+			throw new AppException(String.format("該当の倉庫を取得できませんでした。 warehouseSeq: %s", warehouseSeq));
+		}
+		
+		return GetWarehouseVo.mapTo(warehouse.get());
+	
+	}
+	
+	
+	/**
 	 * 倉庫一覧取得
 	 * @param vo
 	 */
 	@Transactional
-	public GetWarehouseVo getWarehouseVo(GetWarehouseConditionsVo condition) {
+	public GetWarehousesVo getWarehouseVo(GetWarehouseConditionsVo condition) {
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
@@ -568,7 +586,7 @@ public class MasterService {
 		}).collect(Collectors.toList());
 		
 		// 返却用のVo生成
-		var vo = new GetWarehouseVo();
+		var vo = new GetWarehousesVo();
 		// トータルぺ―ジ
 		vo.setTotalItemsNum(pages.getTotalElements());
 		// 取引先リストの設定
@@ -582,7 +600,7 @@ public class MasterService {
 	 * @params vo
 	 */
 	@Transactional
-	public GetWarehouseVo pullDownWarehouse() {
+	public GetWarehousesVo pullDownWarehouse() {
 		
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
@@ -604,12 +622,32 @@ public class MasterService {
 			
 		}
 	
-		var vo = new GetWarehouseVo();
+		var vo = new GetWarehousesVo();
 		// 取引先リストの設定
 		vo.setWarehouse(warehouses);
 		
 		return vo;
 	}
+	
+	/**
+	 * 倉庫更新処理
+	 * @param vo
+	 */
+	@Transactional
+	public void updateWarehouse(UpdateWarehouseVo vo) {
+		// 倉庫を取得
+		var warehouse= this.warehouseRepository.findById(vo.getWarehouse().getWarehouseSeq());
+		
+		// 対象の倉庫が取得できない場合はエラー
+		if(warehouse.isEmpty()) {
+			throw new AppException(String.format("該当の倉庫を取得できませんでした。 warehouseSeq: %s", vo.getWarehouse().getWarehouseSeq()));			
+		}
+		
+		var warehouseEntity = warehouse.get();
+		warehouseEntity.update(vo);
+		this.warehouseRepository.save(warehouseEntity);
+	}
+	
 			
 }
 

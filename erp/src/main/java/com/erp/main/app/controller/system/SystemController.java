@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.sales.requests.UpdateWarehouseRequest;
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
@@ -37,6 +38,7 @@ import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.app.controller.system.response.ProductsTableResponse;
 import com.erp.main.app.controller.system.response.WarehouseResponse;
+import com.erp.main.app.controller.system.response.WarehousesResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
@@ -274,9 +276,9 @@ public class SystemController {
 	 * 
 	 */
 	@GetMapping("/warehouse/pulldown")
-	public WarehouseResponse pullDownpWarehouse( ) {
+	public WarehousesResponse pullDownpWarehouse( ) {
 		var vo = this.masterService.pullDownWarehouse();
-		var response = new WarehouseResponse();
+		var response = new WarehousesResponse();
 		response.setWarehouse(vo.getWarehouse());
 		return response;
 	}
@@ -285,14 +287,36 @@ public class SystemController {
 	 * 倉庫一覧処理のエントリーポイント
 	 */
 	@PostMapping("/warehouse/info")
-	public WarehouseResponse infoWarehouse(@RequestBody GetWarehouseRequest request) {
+	public WarehousesResponse infoWarehouse(@RequestBody GetWarehouseRequest request) {
 		var vo = this.masterService.getWarehouseVo(request.mapTo());
-		var response = new WarehouseResponse();
+		var response = new WarehousesResponse();
 		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setWarehouse(vo.getWarehouse());
 		return response;
 
 	}
+	
+	/*
+	 * 倉庫詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/product/edit")
+	public WarehouseResponse getClient(@RequestBody GetWarehouseRequest request) {
+		Long id = request.getWarehouseSeq(); 
+		var vo = this.masterService.getWarehouseVo(id);
+		return WarehouseResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 倉庫更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/product/update")
+	public void updateWarehouse(@RequestBody UpdateWarehouseRequest request) {
+		this.masterService.updateWarehouse(request.mapTo());
+	}
+	
 	
 	/**
 	 * ロット作成用のエントリーポイント

@@ -6,8 +6,8 @@ import com.erp.main.domain.objects.model.ProductModel;
 import lombok.Data;
 
 /*
- * 取引先取得用のVO
- * @author ngt
+ * 商品取得用のVO
+ * @author 高山
  */
 @Data
 public class GetProductVo {

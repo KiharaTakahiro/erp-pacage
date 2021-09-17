@@ -25,6 +25,8 @@ export default {
     editProduct: '商品編集',
     warehouse: '倉庫管理',
     newWarehouse: '倉庫追加',
+    warehouseList: '倉庫一覧',
+    editWarehouse: '倉庫編集',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',

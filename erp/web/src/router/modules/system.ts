@@ -117,18 +117,18 @@ const systemRoutes: RouteConfig = {
       name: 'warehouse',
       meta: { title: 'warehouse' },
       children: [
-        // {
-        //   path: 'warehouse-list',
-        //   component: () => import('@/views/system/warehouse/warehouse-list.vue'),
-        //   name: 'warehouse-list',
-        //   meta: { title: 'warehouseList' }
-        // },
+        {
+          path: 'warehouse-list',
+          component: () => import('@/views/system/warehouse/warehouse-list.vue'),
+          name: 'warehouse-list',
+          meta: { title: 'warehouseList' }
+        },
         {
           path: 'save-warehouse',
           component: () => import('@/views/system/warehouse/save-warehouse.vue'),
           name: 'save-warehouse',
           meta: { title: 'newWarehouse' }
-        },
+        }
         // {
         //   path: 'edit-warehouse',
         //   component: () => import('@/views/system/warehouse/edit-warehouse.vue'),
