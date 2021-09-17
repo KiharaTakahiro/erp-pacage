@@ -1,5 +1,6 @@
 package com.erp.main.domain.objects.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -61,7 +62,52 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 	 * @author ngt
 	 */
 	public void update(UpdateRecivedOrderVo vo) {
+		var recivedOrder = vo.getRecivedOrder();
+		//
+		this.setRecivedOrderSeq(recivedOrder.getRecivedOrderSeq());
+		//
+		this.setClientsSeq(recivedOrder.getClientsSeq());
+		//
+		this.setCompanySeq(recivedOrder.getCompanySeq());
+		//
+		this.setDepartmentSeq(recivedOrder.getDepartmentSeq());
+		//
+		this.setRecivedOrderDate(recivedOrder.getRecivedOrderDate());
+		//
+		this.setQuotationSeq(recivedOrder.getQuotationSeq());
+		//
+		this.setTax(recivedOrder.getTax());
+		//
+		this.setTotal(recivedOrder.getTotal());
 		
+		//
+		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
+		var details = vo.getDetails();
+		for(var detail: details) {
+			var detailEntity = new RecivedOrderDetailEntity();
+			//
+			var detailVo = detail.getDetail();
+			//
+			detailEntity.setRecivedOrderDetailSeq(detailVo.getRecicedOrderDetailSeq());
+			//
+			detailEntity.setRecivedOrderSeq(detailVo.getRecivedOrderSeq());
+			//
+			detailEntity.setDeriveryDate(detailVo.getDeriveryDate());
+			//
+			detailEntity.setDiscount(detailVo.getDiscount());
+			//
+			detailEntity.setLotSeq(detailVo.getLotSeq());
+			//
+			detailEntity.setProductSeq(detailVo.getProductSeq());
+			//
+			detailEntity.setQuantity(detailVo.getQuantity());
+			//
+			detailEntity.setStatus(detailVo.getStatus());
+			//
+			detailEntities.add(detailEntity);
+		}
+		//
+		this.setRecivedOrderDetailEntity(detailEntities);
 	}
 
 	/**
