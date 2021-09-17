@@ -62,21 +62,21 @@ public class RecivedOrderEntity extends RecivedOrderEntityFileds {
 	 */
 	public void update(UpdateRecivedOrderVo vo) {
 		var recivedOrder = vo.getRecivedOrder();
-		//
+		//受注Seq
 		this.setRecivedOrderSeq(recivedOrder.getRecivedOrderSeq());
-		//
+		//取引先Seq
 		this.setClientsSeq(recivedOrder.getClientsSeq());
-		//
+		//会社Seq
 		this.setCompanySeq(recivedOrder.getCompanySeq());
-		//
+		//部署Seq
 		this.setDepartmentSeq(recivedOrder.getDepartmentSeq());
-		//
+		//受注日
 		this.setRecivedOrderDate(recivedOrder.getRecivedOrderDate());
-		//
+		//見積Seq
 		this.setQuotationSeq(recivedOrder.getQuotationSeq());
-		//
+		//税計
 		this.setTax(recivedOrder.getTax());
-		//
+		//合計金額
 		this.setTotal(recivedOrder.getTotal());
 	}
 
