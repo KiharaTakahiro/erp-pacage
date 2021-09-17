@@ -50,8 +50,8 @@
             {{ subTotalValue.toLocaleString() }}
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <div class="complete-btn">
+        <el-col :span="3">
+          <div class="complete-btn right">
             <el-button type="danger" icon="el-icon-delete" @click.native.prevent="minusBtnClick" circle />
           </div>
         </el-col>
@@ -175,5 +175,9 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .container {
   display: inline-flex;
+}
+
+.right {
+  float: right;
 }
 </style>

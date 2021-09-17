@@ -27,6 +27,17 @@ interface RecivedOrderDetail {
   lotSeq: number
   status: string
 }
+
+interface RecivedOrderDetailEdit {
+  recivedOrderDetailSeq: string
+  recivedOrderSeq: string
+  productSeq: string
+  quantity: string
+  discount: number
+  deriveryDate: string
+  lotSeq: number
+  status: string
+}
 @Module({ dynamic: true, store, name: 'recivedOrder' })
 class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public recivedOrderSeq = ''
@@ -60,7 +71,7 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
     this.departmentSeq = departmentSeq
   }
   @Mutation
-  private SET_DETAILS(detail: RecivedOrderDetail) {
+  private SET_DETAILS(detail: RecivedOrderDetail | RecivedOrderDetailEdit) {
     this.details.push(detail)
   }
   @Mutation
@@ -110,7 +121,7 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
   }
 
   @Action
-  public pushDetail(detail: RecivedOrderDetail) {
+  public pushDetail(detail: RecivedOrderDetail | RecivedOrderDetailEdit) {
     this.SET_DETAILS(detail)
   }
 

@@ -84,6 +84,7 @@ import DateForm from '@/views/components/date-form.vue'
 export default class extends Vue {
   // フォームのモデル
   private recivedOrder = {
+    recivedOrderSeq: RecivedOrderModule.recivedOrderSeq,
     clientsSeq: RecivedOrderModule.clientsSeq,
     companySeq: RecivedOrderModule.companySeq,
     departmentSeq: RecivedOrderModule.departmentSeq,
@@ -119,29 +120,28 @@ export default class extends Vue {
 
   // 登録処理
   private submit() {
-    console.log(this.recivedOrder)
-    // (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
-    //   if (valid) {
-    //     await RecivedOrderModule.UpdateReciverdOrder(this.recivedOrder)
-    //     this.$router
-    //       .push({
-    //         path: 'recived-order-list'
-    //       })
-    //       .catch(err => {
-    //         console.warn(err)
-    //       })
-    //     this.$message({
-    //       message: this.$t('components.createClients').toString(),
-    //       type: 'success'
-    //     })
-    //   } else {
-    //     this.$message({
-    //       message: this.$t('components.validation').toString(),
-    //       type: 'error'
-    //     })
-    //     return false
-    //   }
-    // })
+    (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
+        await RecivedOrderModule.UpdateRecivedOrder(this.recivedOrder)
+        this.$router
+          .push({
+            path: 'recived-order-list'
+          })
+          .catch(err => {
+            console.warn(err)
+          })
+        this.$message({
+          message: this.$t('components.createClients').toString(),
+          type: 'success'
+        })
+      } else {
+        this.$message({
+          message: this.$t('components.validation').toString(),
+          type: 'error'
+        })
+        return false
+      }
+    })
   }
   //部署リセット
   resetDepart(){
@@ -157,6 +157,8 @@ export default class extends Vue {
   // 詳細の追加
   addBtnClick() {
     RecivedOrderModule.pushDetail({
+        recivedOrderDetailSeq: "",
+        recivedOrderSeq: "",
         productSeq: '',
         quantity: '',
         discount: 0,
