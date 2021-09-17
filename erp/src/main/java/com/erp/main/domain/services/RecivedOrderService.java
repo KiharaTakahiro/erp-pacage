@@ -362,6 +362,7 @@ public class RecivedOrderService {
 		
 		//エンティティ更新
 		recivedOrder.get().update(vo);
+		this.recivedOrderRepository.save(recivedOrder.get());
 	}
 
 }

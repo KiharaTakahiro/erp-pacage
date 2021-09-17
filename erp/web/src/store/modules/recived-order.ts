@@ -240,6 +240,7 @@ class RecivedOrder extends VuexModule implements IRecivedOrderState {
       tax: tax,
       total: total
     })
+    console.log("test")
   }
 }
 
