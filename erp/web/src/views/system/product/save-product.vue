@@ -9,7 +9,9 @@
       autocomplete="on"
       label-position="left"
     >
-      <product-name :productName.sync="product.productName" />
+      <product-name 
+      :required="true"
+      :productName.sync="product.productName" />
       <tax-type-pulldown :taxTypeValue.sync="product.taxType" />
       <money
         label="仕入料金"
