@@ -555,7 +555,7 @@ public class MasterService {
 				WarehouseSpec.warehouseSeqEquals(condition.getWarehouseSeq()))
 				.and(WarehouseSpec.warehouseNameEquals(condition.getWarehouseName()));
 		// ソートの設定
-		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
 		
 		Page<WarehouseEntity> pages = this.warehouseRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
 		List<WarehouseModel> warehouses = pages.get().map(e -> {
