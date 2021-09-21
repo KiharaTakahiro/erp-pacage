@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.sales.requests.UpdateWarehouseRequest;
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
@@ -25,6 +26,7 @@ import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.GetProductsRequest;
+import com.erp.main.app.controller.system.request.GetWarehouseRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.request.UpdateProductsRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
@@ -35,6 +37,8 @@ import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.app.controller.system.response.ProductsTableResponse;
+import com.erp.main.app.controller.system.response.WarehouseResponse;
+import com.erp.main.app.controller.system.response.WarehousesResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
@@ -266,6 +270,53 @@ public class SystemController {
 	public void createWarehouse(@RequestBody CreateWarehouseRequest request) {
 		this.masterService.createWarehouse(request.mapTo());
 	}
+	
+	/*
+	 * 倉庫プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/warehouse/pulldown")
+	public WarehousesResponse pullDownpWarehouse( ) {
+		var vo = this.masterService.pullDownWarehouse();
+		var response = new WarehousesResponse();
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+	}
+	
+	/*
+	 * 倉庫一覧処理のエントリーポイント
+	 */
+	@PostMapping("/warehouse/info")
+	public WarehousesResponse infoWarehouse(@RequestBody GetWarehouseRequest request) {
+		var vo = this.masterService.getWarehouseVo(request.mapTo());
+		var response = new WarehousesResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+
+	}
+	
+	/*
+	 * 倉庫詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/warehouse/edit")
+	public WarehouseResponse getClient(@RequestBody GetWarehouseRequest request) {
+		Long id = request.getWarehouseSeq(); 
+		var vo = this.masterService.getWarehouseVo(id);
+		return WarehouseResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 倉庫更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/warehouse/update")
+	public void updateWarehouse(@RequestBody UpdateWarehouseRequest request) {
+		this.masterService.updateWarehouse(request.mapTo());
+	}
+	
 	
 	/**
 	 * ロット作成用のエントリーポイント
