@@ -12,7 +12,7 @@
           label-width="90px"
         >
           <id-search
-          style=" width:50%;"
+          style="width:50%;"
           label="倉庫Seq"
           :targetId.sync="targetWarehouseSeq" />
 

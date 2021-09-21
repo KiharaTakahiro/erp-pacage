@@ -128,13 +128,13 @@ const systemRoutes: RouteConfig = {
           component: () => import('@/views/system/warehouse/save-warehouse.vue'),
           name: 'save-warehouse',
           meta: { title: 'newWarehouse' }
+        },
+        {
+          path: 'edit-warehouse',
+          component: () => import('@/views/system/warehouse/edit-warehouse.vue'),
+          name: 'edit-warehouse',
+          meta: { title: 'editWarehouse', hidden: true }
         }
-        // {
-        //   path: 'edit-warehouse',
-        //   component: () => import('@/views/system/warehouse/edit-warehouse.vue'),
-        //   name: 'edit-warehouse',
-        //   meta: { title: 'editWarehouse', hidden: true }
-        // }
       ]
     }
   ]
