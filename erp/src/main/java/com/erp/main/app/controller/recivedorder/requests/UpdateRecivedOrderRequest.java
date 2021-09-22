@@ -104,7 +104,9 @@ public class UpdateRecivedOrderRequest {
 		//
 		recivedOrder.setDepartmentSeq(this.getDepartmentSeq());
 		//
-		recivedOrder.setQuotationSeq(this.quotationSeq);
+		recivedOrder.setQuotationSeq(this.getQuotationSeq());
+		//
+		recivedOrder.setRecivedOrderDate(this.getRecivedOrderDate());
 		//
 		recivedOrder.setTax(this.getTax());
 		//
