@@ -10,6 +10,7 @@ import com.erp.main.domain.common.enums.BaseEnum;
 import com.erp.main.domain.common.enums.RacivedOrderStatus;
 import com.erp.main.domain.objects.entity.fields.RecivedOrderDetailEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
+import com.erp.main.domain.objects.valueobjects.UpdateRecivedOrderVo.UpdateRecivedOrderDetailVo;
 
 import lombok.Getter;
 
@@ -46,6 +47,42 @@ public class RecivedOrderDetailEntity extends RecivedOrderDetailEntityFileds {
 		entity.setQuantity(vo.getQuantity());
 		// 状態
 		entity.setStatus(BaseEnum.of(RacivedOrderStatus.class, 1));	
+		return entity;
+		
+	}
+	
+	public void update(UpdateRecivedOrderDetailVo vo) {
+		var detailVo = vo.getDetail();
+		// 商品SEQ
+		this.setDeriveryDate(detailVo.getDeriveryDate());
+		// 値引
+		this.setDiscount(detailVo.getDiscount());
+		// ロットSEQ
+		this.setLotSeq(detailVo.getLotSeq());
+		// 商品SEQ
+		this.setProductSeq(detailVo.getProductSeq());
+		// 数量
+		this.setQuantity(detailVo.getQuantity());
+		// 状態
+		this.setStatus(detailVo.getStatus());	
+	}
+	
+	public static RecivedOrderDetailEntity add(UpdateRecivedOrderDetailVo vo) {
+
+		var entity = new RecivedOrderDetailEntity();
+		var detail = vo.getDetail();
+		// 商品SEQ
+		entity.setDeriveryDate(detail.getDeriveryDate());
+		// 値引
+		entity.setDiscount(detail.getDiscount());
+		// ロットSEQ
+		entity.setLotSeq(detail.getLotSeq());
+		// 商品SEQ
+		entity.setProductSeq(detail.getProductSeq());
+		// 数量
+		entity.setQuantity(detail.getQuantity());
+		// 状態
+		entity.setStatus(detail.getStatus());	
 		return entity;
 		
 	}

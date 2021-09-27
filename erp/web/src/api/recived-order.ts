@@ -13,3 +13,17 @@ export const createRecivedOrder = (data: any) =>
     method: 'post',
     data
   })
+
+  export const getRecivedOrder = (data: any) =>
+  request({
+    url: '/recivedOrder/edit',
+    method: 'post',
+    data
+  })
+
+  export const updateRecivedOrder = (data: any) =>
+  request({
+    url: '/recivedOrder/update',
+    method: 'post',
+    data
+  })

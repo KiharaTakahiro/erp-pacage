@@ -50,8 +50,8 @@
             {{ subTotalValue.toLocaleString() }}
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <div class="complete-btn">
+        <el-col :span="3">
+          <div class="complete-btn right">
             <el-button type="danger" icon="el-icon-delete" @click.native.prevent="minusBtnClick" circle />
           </div>
         </el-col>
@@ -76,6 +76,7 @@ import { pullDownProduct, getProduct } from '@/api/product'
 import DateForm from '@/views/components/date-form.vue'
 import money from '@/views/components/money.vue'
 import DeliveryStatus from '@/views/components/delivery-status.vue'
+import { RecivedOrderModule } from '@/store/modules/recived-order'
 
 @Component({
   name: 'productsPullDown',
@@ -125,13 +126,13 @@ export default class extends Vue {
   @PropSync('date', { type: String }) dateValue!: string
 
   // 商品の情報問合せ
-  private async getProductDetail(productSeq: any) {
+  public async getProductDetail(productSeq: any) {
     let { data } = await getProduct({ productSeq: productSeq })
     this.price = data.unitPrice
   }
 
   // 商品情報変更時の処理
-  private changeProduct(value: any) {
+  changeProduct(value: any) {
     this.getProductDetail(value)
     this.productSeqVal = value
   }
@@ -147,6 +148,15 @@ export default class extends Vue {
   // 作成時
   created() {
     this.getList()
+    /**
+     * 編集画面の際金額が表示されないので
+     * 該当のdetailKeyの商品Seqを確認
+     * 値が入っていたら金額の取得のAPIをたたく。
+     */
+    const productSeq = RecivedOrderModule.details[this.detailKey].productSeq
+    if(productSeq != '') {
+      this.getProductDetail(productSeq)
+    }
   }
 
   // 商品プルダウン
@@ -165,5 +175,9 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .container {
   display: inline-flex;
+}
+
+.right {
+  float: right;
 }
 </style>

@@ -27,10 +27,13 @@ import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo;
 import com.erp.main.domain.objects.valueobjects.CreateRecivedOrderVo.CreateRecivedOrderDetailVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetRecivedOrderVo;
+import com.erp.main.domain.objects.valueobjects.GetRecivedOrdersVo;
+import com.erp.main.domain.objects.valueobjects.UpdateRecivedOrderVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.ProductRepository;
+import com.erp.main.domain.repository.RecivedOrderDetailRepository;
 import com.erp.main.domain.repository.RecivedOrderRepository;
 import com.erp.main.domain.specification.RecivedOederSpec;
 
@@ -45,6 +48,12 @@ public class RecivedOrderService {
 	 */
 	@Autowired
 	private RecivedOrderRepository recivedOrderRepository; 
+	
+	/*
+	 * 受注詳細レポジトリ
+	 */
+	@Autowired
+	private RecivedOrderDetailRepository recivedOrderDetailRepository;
 	
 	/**
 	 * 見積リポジトリ
@@ -190,14 +199,14 @@ public class RecivedOrderService {
 	 * 受注一覧取得
 	 */
 	@Transactional
-	public GetRecivedOrderVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
+	public GetRecivedOrdersVo getRecivedOrderVo(GetRecivedOrderConditionsVo condition) {
 		
 		// nullの場合は1ページ目として取得する
 		if(condition.getPageNo() == null) {
 			condition.setPageNo(0);
 		}
 		
-		//
+		//検索条件
 		Specification<RecivedOrderEntity> spec = Specification.where(
 			RecivedOederSpec.recivedOrderSeqEquals(condition.getRecivedOrderSeq()))
 				.and(RecivedOederSpec.clientsSeqEquals(condition.getClientsSeq()))
@@ -260,17 +269,157 @@ public class RecivedOrderService {
 		}).collect(Collectors.toList());
 		
 		//詰めるVo生成
-		var vo = new GetRecivedOrderVo();
+		var vo = new GetRecivedOrdersVo();
 		//総アイテム数
 		vo.setTotalItemsNum(pages.getTotalElements());
 		//受注一覧
 		vo.setRecivedOder(orders);
 		
 		return vo;
+		}
+	
+	@Transactional
+	public GetRecivedOrderVo getRecivedOrderVo(Long recivedOrderSeq) {
+		//該当受注を検索
+		Optional<RecivedOrderEntity> order = recivedOrderRepository.findById(recivedOrderSeq);
+		if(order.isEmpty()) {
+			throw new AppException(String.format("該当の受注を取得できませんでした。 recivedOrderSeq: %s", recivedOrderSeq));
+		}
+		//マッピング
+		var vo = GetRecivedOrderVo.mapTo(order.get());
+		return vo;
+	}
+
+	public void updateRecivedOrder(UpdateRecivedOrderVo vo) {
+		Optional<RecivedOrderEntity> recivedOrder = recivedOrderRepository.findById(vo.getRecivedOrder().getRecivedOrderSeq());
+		if(recivedOrder.isEmpty()) {
+			throw new AppException(String.format("該当の受注票を取得できませんでした。 recivedOrder: %s", recivedOrder));
+		}
+		//取引先の有無の確認		
+		Optional<ClientsEntity> clients = this.clientsRepository.findById(vo.getRecivedOrder().getClientsSeq());
+		if(clients.isEmpty()) {
+			throw new AppException(String.format("対象の取引先が取得できません。companySeq: %s",vo.getRecivedOrder().getClientsSeq()));
+		}
+		//会社の有無の確認
+		Optional<CompanyEntity> company = this.companyRepository.findById(vo.getRecivedOrder().getCompanySeq());
+		if(company.isEmpty()) {
+			throw new AppException(String.format("対象の会社が取得できません。companySeq: %s",vo.getRecivedOrder().getCompanySeq()));
+		}
 		
+		//部署の有無の確認
+		Optional<DepartmentEntity> department = this.departmentRepository.findById(vo.getRecivedOrder().getDepartmentSeq());
+		if(department.isEmpty()) {
+			throw new AppException(String.format("対象の部署が取得できません。companySeq: %s",vo.getRecivedOrder().getDepartmentSeq()));
+		}
 		
+		// 受注詳細の作成
+		Set<RecivedOrderDetailEntity> detailEntities = new HashSet<>();
+
+		// 詳細の入力確認
+		if(vo.getDetails().isEmpty()) {
+			throw new AppException("受注詳細が入力されていません");
+		}
+		// 合計金額
+		var totalPrice = 0L;
+		// 値引合計
+		var discountTotal = 0L;
 		
-				
-				}
+		// 消費税合計
+		var taxTotal = 0L;
+		for(var detail: vo.getDetails()) {
+			// モデル取得
+			var detailVo = detail.getDetail();
+			// 見積の取得
+			Optional<RecivedOrderDetailEntity> detailEntity = this.recivedOrderDetailRepository.findById(detailVo.getRecicedOrderDetailSeq());
+			if(detailEntity.isEmpty()) {
+				throw new AppException(String.format("対象の受注詳細が取得できません。recviedOrderDetailSeq: %s",detailVo.getRecicedOrderDetailSeq()));
+//				Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+//				if(product.isEmpty()) {
+//					throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+//				}
+//				
+//				// 値引がマイナスの場合はエラー
+//				if(detailVo.getDiscount() < 0) {
+//					throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+//				}
+//				
+//				// 数量がマイナスの場合はエラー
+//				if(detailVo.getQuantity() < 0) {
+//					throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+//				}
+//				
+//				
+//				// 合計金額を加算する
+//				totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
+//				// 値引を加算する
+//				discountTotal += detailVo.getDiscount();
+//				
+//				// 金額 (単金 × 数量 - 値引)
+//				long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
+//				
+//				//商品ごとの税金タイプ
+//				var taxTaype = product.get().getTaxType();
+//				
+//				//税金の合計を加算
+//				taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+//				
+//				
+//				// 受注詳細用のエンティティ生成
+//				var entity = RecivedOrderDetailEntity.add(detail);
+//
+//				// 見積詳細の追加
+//				detailEntities.add(entity);
+			}
+			
+			
+			// 商品の取得
+			Optional<ProductEntity> product = this.productRepository.findById(detailVo.getProductSeq());
+			if(product.isEmpty()) {
+				throw new AppException(String.format("対象の商品が取得できません。productSeq: %s",detailVo.getProductSeq()));
+			}
+			
+			// 値引がマイナスの場合はエラー
+			if(detailVo.getDiscount() < 0) {
+				throw new AppException(String.format("値引額は正の整数で入力してください。discount: %s",detailVo.getDiscount()));
+			}
+			
+			// 数量がマイナスの場合はエラー
+			if(detailVo.getQuantity() < 0) {
+				throw new AppException(String.format("数量は正の整数で入力してください。quantity: %s",detailVo.getQuantity()));
+			}
+			
+			
+			// 合計金額を加算する
+			totalPrice += product.get().getUnitPrice() * detailVo.getQuantity();	
+			// 値引を加算する
+			discountTotal += detailVo.getDiscount();			
+			// 金額 (単金 × 数量 - 値引)
+			long price = product.get().getUnitPrice() * detailVo.getQuantity() - detailVo.getDiscount();
+			
+			//商品ごとの税金タイプ
+			var taxTaype = product.get().getTaxType();
+			
+			//税金の合計を加算
+			taxTotal += this.moneyComponent.computeTax(price, taxTaype);
+			
+			//
+			detailEntity.get().update(detail);
+			//
+			detailEntities.add(detailEntity.get());		
+		}
+
+		// 値引適応
+		totalPrice -= discountTotal;
+		
+		//
+		vo.getRecivedOrder().setTotal(totalPrice + taxTotal);
+		//
+		vo.getRecivedOrder().setTax(taxTotal);
+		
+		//エンティティ更新
+		recivedOrder.get().update(vo);
+		recivedOrder.get().setRecivedOrderDetailEntity(detailEntities);
+		this.recivedOrderRepository.save(recivedOrder.get());
+	}
 
 }

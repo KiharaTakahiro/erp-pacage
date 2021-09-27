@@ -30,4 +30,5 @@ public class RecivedOrderModel {
 	private Long tax;
 	//合計金額
 	private Long total;
+	
 }

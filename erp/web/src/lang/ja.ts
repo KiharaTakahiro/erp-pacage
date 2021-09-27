@@ -4,7 +4,8 @@ export default {
     sales: '販売管理',
     recivedOrder: '受注管理',
     quotation: '見積管理',
-    newRecievedOrder: '受注表作成',
+    newRecivedOrder: '受注表作成',
+    editRecivedOrder: '受注票編集',
     recivedOrderList: '受注一覧',
     OrderDetail: '注文詳細',
     invoice: '請求管理',
@@ -134,6 +135,8 @@ export default {
   recivedOrder: {
     add: '受注表作成',
     complete: '完了',
+    check0: '受注票が選択されていません',
+    check2: '会受注票が二つ以上選択されています'
   },
   supplierProduct: {
     title: '仕入商品管理',
