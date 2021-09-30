@@ -116,13 +116,24 @@
         >
         </el-pagination>
       </div>
+      <div class="left">
+        <back-btn />
+      </div>
+      <div class="right">
+        <el-button
+          type="primary"
+          style="width:100%; margin-bottom:30px; margin-top:30px; "
+          @click.native.prevent="editBtn"
+        >
+          {{ $t('route.edit') }}
+        </el-button>
+      </div>
     </el-card>
   </div>
-
-  
 </template>
 
 <script lang="ts">
+import { RecivedOrderModule } from '@/store/modules/recived-order'
 import { Component, Vue } from 'vue-property-decorator'
 import { RecivedOrderListModule } from '@/store/modules/recived-order-list'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
@@ -130,16 +141,18 @@ import companyPullDown from '@/views/components/company-pulldown.vue'
 import DateForm from '@/views/components/date-form.vue'
 import money from '@/views/components/money.vue'
 import idSearch from '@/views/components/id-search.vue'
+import backBtn from '@/views/components/back-button.vue'
 import '@/assets/custom-theme/index.css'
 
 @Component({
-  name: 'RecievedOrder',
+  name: 'RecivedOrder',
   components: {
     clientsPullDown,
     companyPullDown,
     DateForm,
     money,
-    idSearch
+    idSearch,
+    backBtn
   }
 })
 export default class extends Vue {
@@ -149,8 +162,16 @@ export default class extends Vue {
   created() {
     this.getList()
   }
+
+  recivedOrder = {
+    recivedOrderSeq: ''
+  }
+
   // ページング条件
   pageNo = 1
+
+  // チェックのバリデーション用の数字
+  checkLength = 0
 
   //
   idLabel = '受注ID'
@@ -256,8 +277,35 @@ export default class extends Vue {
    * チェックボックスのカラムの値
    */
   checkNo(value: any){
-    console.log(value)
+    this.recivedOrder.recivedOrderSeq = value[0]['recivedOrderSeq']
+    this.checkLength = value.length
   }
+
+  editBtn() {
+    if (this.checkLength === 0) {
+      this.$message({
+        message: this.$t('recivedOrder.check0').toString(),
+        type: 'error'
+      })
+      return false
+    } else if (this.checkLength >= 2) {
+      this.$message({
+        message: this.$t('recivedOrder.check2').toString(),
+        type: 'error'
+      })
+      return false
+    }
+    RecivedOrderModule.GetRecivedOrder(this.recivedOrder)
+    this.$router
+      .push({
+        path: 'edit-recived-order'
+      })
+      .catch(err => {
+        console.warn(err)
+      })
+  }
+
+
 }
 </script>
 
@@ -282,6 +330,10 @@ export default class extends Vue {
 
 .right {
   float: right;
+}
+
+.left {
+  float: left;
 }
 
 .page {

@@ -5,9 +5,9 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-import { createRecivedOrder } from '@/api/recived-order'
+import { createRecivedOrder, getRecivedOrder, updateRecivedOrder } from '@/api/recived-order'
 import store from '@/store'
-export interface IRecievedOrderState {
+export interface IRecivedOrderState {
   recivedOrderSeq: string
   clientsSeq: string
   companySeq: string
@@ -27,8 +27,19 @@ interface RecivedOrderDetail {
   lotSeq: number
   status: string
 }
+
+interface RecivedOrderDetailEdit {
+  recivedOrderDetailSeq: string
+  recivedOrderSeq: string
+  productSeq: string
+  quantity: string
+  discount: number
+  deriveryDate: string
+  lotSeq: number
+  status: string
+}
 @Module({ dynamic: true, store, name: 'recivedOrder' })
-class RecievedOrder extends VuexModule implements IRecievedOrderState {
+class RecivedOrder extends VuexModule implements IRecivedOrderState {
   public recivedOrderSeq = ''
   public clientsSeq = ''
   public companySeq = ''
@@ -38,6 +49,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   public recivedOrderDate = ''
   public tax = 0
   public total = 0
+
 
   @Mutation
   private SET_RECIEVED_ORDER_ID(id: any) {
@@ -59,7 +71,7 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.departmentSeq = departmentSeq
   }
   @Mutation
-  private SET_DETAILS(detail: RecivedOrderDetail) {
+  private SET_DETAILS(detail: RecivedOrderDetail | RecivedOrderDetailEdit) {
     this.details.push(detail)
   }
   @Mutation
@@ -88,6 +100,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
     this.recivedOrderDate = date
   }
 
+  @Mutation
+  private SET_EDIT_DRTAILS(details: any){
+    this.details = details
+  }
+
   @Action
   public setClientsID(id: any) {
     this.SET_CLIENT_ID(id)
@@ -104,12 +121,12 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   }
 
   @Action
-  public pushDetail(detail: RecivedOrderDetail) {
+  public pushDetail(detail: RecivedOrderDetail | RecivedOrderDetailEdit) {
     this.SET_DETAILS(detail)
   }
 
   @Action
-  public setRecievedOrderDate(date: any) {
+  public setRecivedOrderDate(date: any) {
     this.SET_RECIEVED_ORDER_DATE(date)
   }
 
@@ -122,6 +139,11 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
   public removeDetails(key: number) {
     this.REMOVE_DETAILS(key)
   }
+
+  @Action
+  public setEditDetail(details: any) {{
+    this.SET_EDIT_DRTAILS(details)
+  }}
 
   @Action
   public reset() {
@@ -166,6 +188,60 @@ class RecievedOrder extends VuexModule implements IRecievedOrderState {
       total: total
     })
   }
+
+  @Action({ rawError: true})
+  public async GetRecivedOrder(orderInfo: { recivedOrderSeq: string }) {
+    let { recivedOrderSeq } = orderInfo
+    const { data } = await getRecivedOrder({ recivedOrderSeq: recivedOrderSeq })
+    const recivedOrder = data
+
+    this.SET_RECIEVED_ORDER_ID(recivedOrder.recivedOrderSeq)
+    this.SET_CLIENT_ID(recivedOrder.clientsSeq)
+    this.SET_COMPANY_ID(recivedOrder.companySeq)
+    this.SET_DEPARTMENT_ID(recivedOrder.departmentSeq)
+    this.SET_RECIEVED_ORDER_DATE(recivedOrder.recivedOrderDate)
+    this.SET_TAX(recivedOrder.tax)
+    this.SET_TOTAL(recivedOrder.total)
+    const details = data.details
+    this.SET_EDIT_DRTAILS(details)
+  }
+
+  @Action
+  public async UpdateRecivedOrder(orderInfo: {
+    recivedOrderSeq: string
+    clientsSeq: string
+    companySeq: string
+    departmentSeq: string
+    details: any[]
+    quotationSeq: string
+    recivedOrderDate: string
+    tax: number
+    total: number
+  }){
+    let {
+      recivedOrderSeq,
+      clientsSeq,
+      companySeq,
+      departmentSeq,
+      details,
+      quotationSeq,
+      recivedOrderDate,
+      tax,
+      total
+    } = orderInfo
+    await updateRecivedOrder({
+      recivedOrderSeq: recivedOrderSeq,
+      clientsSeq: clientsSeq,
+      companySeq: companySeq,
+      departmentSeq: departmentSeq,
+      details: details,
+      quotationSeq: quotationSeq,
+      recivedOrderDate: recivedOrderDate,
+      tax: tax,
+      total: total
+    })
+    console.log("test")
+  }
 }
 
-export const RecievedOrderModule = getModule(RecievedOrder)
+export const RecivedOrderModule = getModule(RecivedOrder)

@@ -71,6 +71,7 @@ import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
 import { RecivedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
+
 @Component({
   name: 'save-recived-order',
   components: {
@@ -83,6 +84,7 @@ import DateForm from '@/views/components/date-form.vue'
 export default class extends Vue {
   // フォームのモデル
   private recivedOrder = {
+    recivedOrderSeq: RecivedOrderModule.recivedOrderSeq,
     clientsSeq: RecivedOrderModule.clientsSeq,
     companySeq: RecivedOrderModule.companySeq,
     departmentSeq: RecivedOrderModule.departmentSeq,
@@ -93,31 +95,35 @@ export default class extends Vue {
     total: RecivedOrderModule.total
   }
 
-  beforeCreate() {
-    // 初期表示時にはモデルをリセットする
-    RecivedOrderModule.reset()
+  // beforeCreate() {
+  //   // 初期表示時にはモデルをリセットする
+  //   RecivedOrderModule.reset()
+  // }
+
+  // // 作成時（仮）
+  created() {
+    
   }
 
-  // 作成時（仮）
-  created() {
-    //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
-    RecivedOrderModule.setQuotationId(2)
-    // 初期表示時にpushする
-    RecivedOrderModule.pushDetail({
-      productSeq: '',
-      quantity: '',
-      discount: 0,
-      deriveryDate: '',
-      lotSeq: 2, //仮
-      status: ''
-  })
-  }
+  //   //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
+  //   RecivedOrderModule.setQuotationId(2)
+  //   // 初期表示時にpushする
+  //   RecivedOrderModule.pushDetail({
+  //     productSeq: '',
+  //     quantity: '',
+  //     discount: 0,
+  //     deriveryDate: '',
+  //     lotSeq: 2, //仮
+  //     status: ''
+  // })
+  // }
 
   // 登録処理
   private submit() {
     (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
+      console.log(this.recivedOrder)
       if (valid) {
-        await RecivedOrderModule.createReciverdOrder(this.recivedOrder)
+        await RecivedOrderModule.UpdateRecivedOrder(this.recivedOrder)
         this.$router
           .push({
             path: 'recived-order-list'
@@ -143,6 +149,7 @@ export default class extends Vue {
     RecivedOrderModule.setDepartmentId('')
     this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
   }
+
   //詳細の消去
   minusBtnClick(key: number) {
     RecivedOrderModule.removeDetails(key)
@@ -151,6 +158,8 @@ export default class extends Vue {
   // 詳細の追加
   addBtnClick() {
     RecivedOrderModule.pushDetail({
+        recivedOrderDetailSeq: "",
+        recivedOrderSeq: "",
         productSeq: '',
         quantity: '',
         discount: 0,
