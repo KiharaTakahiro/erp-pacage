@@ -22,14 +22,16 @@
           @resetDepart="resetDepart"
           />
           <el-row>
-            <el-col :span="5">
+            <el-col :span="10">
               <date-form
+              style="width:90%;"
               :label="deriFrom"
               :date="target.fromDate"
               />
             </el-col>
-            <el-col :span="5">
+            <el-col :span="10">
               <date-form
+              style="width:90%;"
               :label="deriTo"
               :date="target.toDate"
               />
@@ -122,7 +124,7 @@
       <div class="right">
         <el-button
           type="primary"
-          style="width:100%; margin-bottom:30px; margin-top:30px; "
+          style="width:45%; margin-bottom:30px; margin-top:30px; margin-left:50%"
           @click.native.prevent="editBtn"
         >
           {{ $t('route.edit') }}
@@ -330,6 +332,7 @@ export default class extends Vue {
 
 .right {
   float: right;
+  width: 25%;
 }
 
 .left {
