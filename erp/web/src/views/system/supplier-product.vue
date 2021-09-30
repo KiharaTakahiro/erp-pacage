@@ -1,14 +1,34 @@
 <template>
   <div class="app-container">
     <div>{{ $t('route.supplierProduct') }}</div>
+    <el-button
+      type="primary"
+      style="width:13%; margin-bottom:30px; margin-top:30px;"
+      @click.native.prevent="createSupplierProductBtn"
+    >
+      {{ $t('supplierProduct.add') }}
+    </el-button>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
-        <id-search
-          style=" width:50%;"
-          label="商品Seq"
-          :targetId.sync="targetProductSeq" />
-        </div>
+        <span class="input-label">ID:</span>
+        <el-input
+          placeholder=""
+          v-model="targetSupplierProductSeq"
+          style="margin-top:10px; width:5%; margin-right:20px;"
+          clearable
+        >
+        </el-input>
+        <span class="input-label">Name:</span>
+        <el-input
+          placeholder=""
+          prefix-icon="el-icon-search"
+          v-model="searchName"
+          style="margin-top:10px; width:40%;"
+          clearable
+        >
+        </el-input>
+      </div>
       <div class="right">
         <el-button
           size="small"
