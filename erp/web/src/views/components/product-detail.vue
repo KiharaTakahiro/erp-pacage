@@ -58,10 +58,10 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="10">
+        <el-col :span="9">
           <date-form :date.sync="dateValue" label="配送日" />
         </el-col>
-        <el-col :span="10">
+        <el-col :span="9">
           <delivery-status
             :status.sync="statusVal"/>
         </el-col>
