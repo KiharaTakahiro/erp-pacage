@@ -19,9 +19,21 @@ INTO PUBLIC.clients(clients_seq, name) VALUES
 
 --部署テストデータ
 INSERT 
-INTO PUBLIC.department(department_seq, name) 
-VALUES (1, '人事部'), 
-(2, '総務部'), 
-(3, '経理部'), 
-(4, '営業部')
+INTO PUBLIC.department(department_seq, company_seq, name) 
+VALUES (1, 1, '人事部'), 
+(2, 1, '総務部'), 
+(3, 1, '経理部'), 
+(4, 1, '営業部'), 
+(5, 2, '人事部'), 
+(6, 2, '総務部'), 
+(7, 2, '経理部'), 
+(8, 2, '営業部'),
+(9, 3, '人事部'), 
+(10, 3, '総務部'), 
+(11, 3, '経理部'), 
+(12, 3, '営業部'),
+(13, 4, '人事部'), 
+(14, 4, '総務部'), 
+(15, 4, '経理部'), 
+(16, 4, '営業部')
 ;
