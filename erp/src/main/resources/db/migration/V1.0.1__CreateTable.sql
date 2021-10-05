@@ -18,3 +18,53 @@ CREATE TABLE public.system
     value character varying(100) NOT NULL 
     
 );
+
+-- クライアントテーブル
+-- DROP TABLE public.clients;
+create table public.clients (
+  clients_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , name character varying(255) not null
+  , primary key (clients_seq)
+);
+
+-- 会社テーブル
+-- DROP TABLE public.company;
+create table public.company (
+  company_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , address character varying(255) not null
+  , name character varying(255) not null
+  , phone character varying(255) not null
+  , zip character varying(255) not null
+  , primary key (company_seq)
+);
+
+-- 商品テーブル
+create table public.product (
+  product_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , name character varying(255) not null
+  , purchase_unit_price bigint not null
+  , tax_type integer not null
+  , unit_price bigint not null
+  , primary key (product_seq)
+);
+
+-- 部署テーブル
+create table public.department (
+  department_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , company_seq bigint
+  , name character varying(255)
+  , parent_department_seq bigint
+  , primary key (department_seq)
+);

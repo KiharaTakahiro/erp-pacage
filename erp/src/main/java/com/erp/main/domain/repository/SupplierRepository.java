@@ -1,6 +1,7 @@
 package com.erp.main.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.erp.main.domain.objects.entity.SupplierEntity;
@@ -12,6 +13,6 @@ import com.erp.main.domain.objects.entity.SupplierEntity;
  *
  */
 @Repository
-public interface SupplierRepository extends JpaRepository<SupplierEntity, Long> {
+public interface SupplierRepository extends JpaRepository<SupplierEntity, Long>  , JpaSpecificationExecutor<SupplierEntity>{
 	
 }

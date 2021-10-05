@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.recivedorder.requests.GetSupplierRequest;
+import com.erp.main.app.controller.recivedorder.requests.UpdateSupplierRequest;
+import com.erp.main.app.controller.recivedorder.response.SupplierResponse;
+import com.erp.main.app.controller.recivedorder.response.SuppliersResponse;
+import com.erp.main.app.controller.sales.requests.UpdateWarehouseRequest;
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateClientsRequest;
@@ -25,6 +30,7 @@ import com.erp.main.app.controller.system.request.GetClientsRequest;
 import com.erp.main.app.controller.system.request.GetCodeRequest;
 import com.erp.main.app.controller.system.request.GetProductRequest;
 import com.erp.main.app.controller.system.request.GetProductsRequest;
+import com.erp.main.app.controller.system.request.GetWarehouseRequest;
 import com.erp.main.app.controller.system.request.UpdateClientRequest;
 import com.erp.main.app.controller.system.request.UpdateProductsRequest;
 import com.erp.main.app.controller.system.response.ClientResponse;
@@ -35,6 +41,8 @@ import com.erp.main.app.controller.system.response.GetCodeResponse;
 import com.erp.main.app.controller.system.response.ProductResponse;
 import com.erp.main.app.controller.system.response.ProductsResponse;
 import com.erp.main.app.controller.system.response.ProductsTableResponse;
+import com.erp.main.app.controller.system.response.WarehouseResponse;
+import com.erp.main.app.controller.system.response.WarehousesResponse;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.services.SystemService;
 import com.erp.main.domain.services.UserService;
@@ -151,8 +159,54 @@ public class SystemController {
 	}
 	
 	/*
+	 * 仕入先プルダウンのエントリーポイント
+	 */
+	@GetMapping("/supplier/pulldown")
+	public SuppliersResponse pullDownpSupplier( ) {
+		var vo = this.masterService.pullDownSupplier();
+		var response = new SuppliersResponse();
+		response.setSupplier(vo.getSupplier());
+		return response;
+	}
+	
+	/*
+	 * 仕入先一覧処理のエントリーポイント
+	 */
+	@PostMapping("/supplier/info")
+	public SuppliersResponse infoSupplier(@RequestBody GetSupplierRequest request) {
+		var vo = this.masterService.getSupplierVo(request.mapTo());
+		var response = new SuppliersResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setSupplier(vo.getSupplier());
+		return response;
+
+	}
+	
+	/*
+	 * 仕入先詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/supplier/edit")
+	public SupplierResponse getClient(@RequestBody GetSupplierRequest request) {
+		Long id = request.getSupplierSeq(); 
+		var vo = this.masterService.getSupplierVo(id);
+		return SupplierResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 仕入先更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/supplier/update")
+	public void updateSupplier(@RequestBody UpdateSupplierRequest request) {
+		this.masterService.updateSupplier(request.mapTo());
+	}
+	
+
+	/*
 	 * 仕入商品作成用のエントリーポイント
-	 * @param req
+	 * @param request
 	 */
 	@PostMapping("/supplier-product/register")
 	public void createSupplierProduct(@RequestBody CreateSupplierProductRequest request) {
@@ -161,7 +215,7 @@ public class SystemController {
 	
 	/**
 	 * 取引先作成用のエントリーポイント
-	 * @param req
+	 * @param request
 	 */
 	@PostMapping("/clients/register")
 	public void createClients( @RequestBody CreateClientsRequest request) {
@@ -267,6 +321,53 @@ public class SystemController {
 		this.masterService.createWarehouse(request.mapTo());
 	}
 	
+	/*
+	 * 倉庫プルダウンのエントリーポイント
+	 * 
+	 */
+	@GetMapping("/warehouse/pulldown")
+	public WarehousesResponse pullDownpWarehouse( ) {
+		var vo = this.masterService.pullDownWarehouse();
+		var response = new WarehousesResponse();
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+	}
+	
+	/*
+	 * 倉庫一覧処理のエントリーポイント
+	 */
+	@PostMapping("/warehouse/info")
+	public WarehousesResponse infoWarehouse(@RequestBody GetWarehouseRequest request) {
+		var vo = this.masterService.getWarehouseVo(request.mapTo());
+		var response = new WarehousesResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setWarehouse(vo.getWarehouse());
+		return response;
+
+	}
+	
+	/*
+	 * 倉庫詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/warehouse/edit")
+	public WarehouseResponse getClient(@RequestBody GetWarehouseRequest request) {
+		Long id = request.getWarehouseSeq(); 
+		var vo = this.masterService.getWarehouseVo(id);
+		return WarehouseResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 倉庫更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/warehouse/update")
+	public void updateWarehouse(@RequestBody UpdateWarehouseRequest request) {
+		this.masterService.updateWarehouse(request.mapTo());
+	}
+	
+	
 	/**
 	 * ロット作成用のエントリーポイント
 	 * @param req
@@ -275,6 +376,7 @@ public class SystemController {
 	public void createLot(@RequestBody CreateLotRequest request) {
 		this.masterService.createLot(request.mapTo());
 	}
+
 	
 	/**
 	 * コード取得用のエントリーポイント

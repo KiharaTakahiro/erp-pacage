@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class UpdateProductVo {
-	// 取引先
+	// 商品
 	private ProductModel product;
 
 }

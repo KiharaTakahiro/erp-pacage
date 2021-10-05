@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-row>
-        <el-col :span="5">
+        <el-col :span="6">
           <el-form-item label="商品名">
             <el-select
               :value="productSeqVal"
@@ -10,6 +10,7 @@
               filterable
               clearable
               placeholder="商品"
+              style="width:90%;"
             >
               <el-option
                 v-for="product in products"
@@ -21,20 +22,20 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item label="単価：￥">
             {{ price.toLocaleString() }}
           </el-form-item>
         </el-col>
 
-        <el-col :span="4">
+        <el-col :span="5">
           <el-form-item label="個数">
             <el-input-number
               v-model="countVal"
               :step="1"
               :min="0"
               :max="100"
-              style="width:60%;"
+              style="width:90%;"
             />
           </el-form-item>
         </el-col>
@@ -42,25 +43,25 @@
           <money
             :label="label"
             :priceValue.sync="discountVal"
-            style="width:70%;"
+            style="width:90%;"
           />
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item label="小計：￥">
             {{ subTotalValue.toLocaleString() }}
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="2">
           <div class="complete-btn right">
             <el-button type="danger" icon="el-icon-delete" @click.native.prevent="minusBtnClick" circle />
           </div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="5">
+        <el-col :span="9">
           <date-form :date.sync="dateValue" label="配送日" />
         </el-col>
-        <el-col :span="5">
+        <el-col :span="9">
           <delivery-status
             :status.sync="statusVal"/>
         </el-col>

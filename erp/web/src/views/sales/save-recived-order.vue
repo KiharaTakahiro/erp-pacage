@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.newRecivedOrder') }}</div>
+    <div>{{ $t('route.newRecievedOrder') }}</div>
     <br />
     <div class="app-container">見積番号：{{ recivedOrder.quotationSeq }}</div>
     <br />
@@ -9,25 +9,30 @@
       :model="recivedOrder"
       autocomplete="on"
       label-position="left"
-      label-width="80px"
     >
-    <clients-pull-down
-      :clientsSeq.sync="recivedOrder.clientsSeq"
-      :required="true"
-    />
-    <company-pull-down
-      :companySeq.sync="recivedOrder.companySeq"
-      :departmentSeq.sync="recivedOrder.departmentSeq"
-      :required="true"
-      @resetDepart="resetDepart"
-    />
-    <date-form
-      label="受注日"
-      :date.sync="recivedOrder.recivedOrderDate"
-    />
+      <clients-pull-down
+        :clientsSeq.sync="recivedOrder.clientsSeq"
+      />
+      <company-pull-down
+        :companySeq.sync="recivedOrder.companySeq"
+        :departmentSeq.sync="recivedOrder.departmentSeq"
+      />
+
+      <div class="app-container">
+        <date-form
+          label="受注日"
+          :date.sync="recivedOrder.recivedOrderDate"
+        />
+      </div>
 
       <div>{{ $t('route.OrderDetail') }}</div>
-      
+      <div class="complete-btn">
+        <el-button
+          type="info"
+          icon="el-icon-plus"
+          @click.native.prevent="addBtnClick"
+        />
+      </div>
 
       <product-detail
         v-for="(detail, index) in recivedOrder.details"
@@ -39,17 +44,9 @@
         :status.sync="detail.status"
         :date.sync="detail.deriveryDate"
         @clickMinusBtn="minusBtnClick"
-        
       />
-      <div class="add-btn">
-        <el-button
-          type="success"
-          icon="el-icon-plus"
-          @click.native.prevent="addBtnClick"
-        >
-        詳細追加
-        </el-button>
-      </div>
+      <div class="detail"></div>
+
       <div class="complete-btn">
         <el-button
           type="primary"
@@ -69,7 +66,7 @@ import { Form as ElForm } from 'element-ui'
 import clientsPullDown from '@/views/components/clients-pulldown.vue'
 import companyPullDown from '@/views/components/company-pulldown.vue'
 import productDetail from '@/views/components/product-detail.vue'
-import { RecivedOrderModule } from '@/store/modules/recived-order'
+import { RecievedOrderModule } from '@/store/modules/recived-order'
 import DateForm from '@/views/components/date-form.vue'
 @Component({
   name: 'save-recived-order',
@@ -83,45 +80,43 @@ import DateForm from '@/views/components/date-form.vue'
 export default class extends Vue {
   // フォームのモデル
   private recivedOrder = {
-    clientsSeq: RecivedOrderModule.clientsSeq,
-    companySeq: RecivedOrderModule.companySeq,
-    departmentSeq: RecivedOrderModule.departmentSeq,
-    details: RecivedOrderModule.details,
-    quotationSeq: RecivedOrderModule.quotationSeq,
-    recivedOrderDate: RecivedOrderModule.recivedOrderDate,
-    tax: RecivedOrderModule.tax,
-    total: RecivedOrderModule.total
-  }
-
-  beforeCreate() {
-    // 初期表示時にはモデルをリセットする
-    RecivedOrderModule.reset()
+    clientsSeq: RecievedOrderModule.clientsSeq,
+    companySeq: RecievedOrderModule.companySeq,
+    departmentSeq: RecievedOrderModule.departmentSeq,
+    details: RecievedOrderModule.details,
+    quotationSeq: RecievedOrderModule.quotationSeq,
+    recivedOrderDate: RecievedOrderModule.recivedOrderDate,
+    tax: RecievedOrderModule.tax,
+    total: RecievedOrderModule.total
   }
 
   // 作成時（仮）
   created() {
+    // 初期表示時にはモデルをリセットする
+    // TODO: 必要な処理だが初回起動時にうまく動かないのでコメントアウト
+    // RecievedOrderModule.reset()
     //TODO: 見積処理を作成し、その情報をもとに作る際に消去すべし
-    RecivedOrderModule.setQuotationId(2)
+    RecievedOrderModule.setQuotationId(2)
     // 初期表示時にpushする
-    RecivedOrderModule.pushDetail({
+    RecievedOrderModule.pushDetail({
       productSeq: '',
       quantity: '',
       discount: 0,
       deriveryDate: '',
       lotSeq: 2, //仮
-      status: ''
+      status: ''    
   })
   }
 
-  // 登録処理
+  //デバック用
   private submit() {
-    console.log(this.recivedOrder);
     (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
+      console.log(this.recivedOrder)
       if (valid) {
-        await RecivedOrderModule.createReciverdOrder(this.recivedOrder)
+        await RecievedOrderModule.createReciverdOrder(this.recivedOrder)
         this.$router
           .push({
-            path: 'recived-order-list'
+            path: 'recived-order'
           })
           .catch(err => {
             console.warn(err)
@@ -139,25 +134,19 @@ export default class extends Vue {
       }
     })
   }
-  //部署リセット
-  resetDepart(){
-    RecivedOrderModule.setDepartmentId('')
-    this.recivedOrder.departmentSeq = RecivedOrderModule.departmentSeq
-  }
-  //詳細の消去
+
   minusBtnClick(key: number) {
-    RecivedOrderModule.removeDetails(key)
+    RecievedOrderModule.removeDetails(key)
   }
 
-  // 詳細の追加
   addBtnClick() {
-    RecivedOrderModule.pushDetail({
+    RecievedOrderModule.pushDetail({
         productSeq: '',
         quantity: '',
         discount: 0,
         deriveryDate: '',
         lotSeq: 2, //仮
-        status: ''
+        status: ''    
     })
   }
 }
@@ -188,8 +177,5 @@ export default class extends Vue {
 
 .complete-btn {
   float: right;
-}
-.add-btn{
-  float: left;
 }
 </style>

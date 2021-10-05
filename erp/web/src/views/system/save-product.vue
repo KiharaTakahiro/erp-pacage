@@ -1,17 +1,15 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.editProduct') }}</div>
+    <div>{{ $t('route.newProduct') }}</div>
     <br />
     <br />
     <el-form
-      ref="product"
       :model="product"
+      ref="product"
       autocomplete="on"
       label-position="left"
     >
-      <product-name
-      :required="true"
-      :productName.sync="product.productName" />
+      <product-name :productName.sync="product.productName" />
       <tax-type-pulldown :taxTypeValue.sync="product.taxType" />
       <money
         label="仕入料金"
@@ -31,7 +29,7 @@
         <el-button
           type="primary"
           style="width:100%;"
-          @click.native.prevent="updateProduct"
+          @click.native.prevent="createProduct"
         >
           {{ $t('product.complete') }}
         </el-button>
@@ -42,15 +40,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { ProductModule } from '@/store/modules/product'
+import { Form as ElForm } from 'element-ui'
 import '@/assets/custom-theme/index.css'
 import productName from '@/views/components/product-name.vue'
-import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
+import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import money from '@/views/components/money.vue'
-import { Form as ElForm } from 'element-ui'
+import { ProductModule } from '@/store/modules/product'
 
 @Component({
-  name: 'Product-save',
+  name: 'product-save',
   components: {
     productName,
     taxTypePulldown,
@@ -59,20 +57,19 @@ import { Form as ElForm } from 'element-ui'
 })
 export default class extends Vue {
   product = {
-    id: ProductModule.id,
-    productName: ProductModule.productName,
-    taxType: ProductModule.taxType,
-    purchaseUnitPrice: ProductModule.purchaseUnitPrice,
-    unitPrice: ProductModule.unitPrice
+    productName: '',
+    taxType: 1,
+    purchaseUnitPrice: 0,
+    unitPrice: 0
   }
 
-  private updateProduct() {
+  private createProduct() {
     (this.$refs.product as ElForm).validate(async (valid: boolean) => {
       if (valid) {
-        await ProductModule.UpdateProduct(this.product)
+        await ProductModule.CreateProduct(this.product)
         this.$router
           .push({
-            path: 'product-list'
+            path: 'product'
           })
           .catch(err => {
             console.warn(err)
@@ -81,6 +78,7 @@ export default class extends Vue {
           message: this.$t('components.createProduct').toString(),
           type: 'success'
         })
+        console.log(this.product)
       } else {
         this.$message({
           message: this.$t('components.validation').toString(),

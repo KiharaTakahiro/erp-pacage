@@ -24,6 +24,10 @@ export default {
     productList: '商品一覧',
     newProduct: '商品追加',
     editProduct: '商品編集',
+    warehouse: '倉庫管理',
+    newWarehouse: '倉庫追加',
+    warehouseList: '倉庫一覧',
+    editWarehouse: '倉庫編集',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -164,6 +168,16 @@ export default {
     check0: '商品が選択されていません',
     check2: '商品が二つ以上選択されています'
   },
+  warehouse: {
+    title: '倉庫管理',
+    add: '倉庫新規登録',
+    edit: '倉庫編集',
+    complete: '完了',
+    id: "倉庫Seq",
+    name: '倉庫名',
+    check0: '倉庫が選択されていません',
+    check2: '倉庫が二つ以上選択されています'
+  },
   permission: {
     createRole: 'ロール追加',
     editPermission: 'ロール変更',
@@ -189,6 +203,7 @@ export default {
     createClients :'取引先の登録に成功',
     createRecive: '受注票の作成に成功',
     createProduct :'商品の登録に成功',
+    createWarehouse :'倉庫の登録に成功',
     validation :'入力内容を確認してください'
   },
   table: {

@@ -9,9 +9,7 @@
       autocomplete="on"
       label-position="left"
     >
-      <product-name
-      :required="true"
-      :productName.sync="product.productName" />
+      <product-name :productName.sync="product.productName" />
       <tax-type-pulldown :taxTypeValue.sync="product.taxType" />
       <money
         label="仕入料金"
@@ -45,7 +43,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { ProductModule } from '@/store/modules/product'
 import '@/assets/custom-theme/index.css'
 import productName from '@/views/components/product-name.vue'
-import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
+import taxTypePulldown from '../components/tax-type-pulldown.vue'
 import money from '@/views/components/money.vue'
 import { Form as ElForm } from 'element-ui'
 
@@ -72,7 +70,7 @@ export default class extends Vue {
         await ProductModule.UpdateProduct(this.product)
         this.$router
           .push({
-            path: 'product-list'
+            path: 'product'
           })
           .catch(err => {
             console.warn(err)
