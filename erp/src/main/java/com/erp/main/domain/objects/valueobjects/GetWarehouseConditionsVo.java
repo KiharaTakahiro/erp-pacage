@@ -3,7 +3,7 @@ package com.erp.main.domain.objects.valueobjects;
 import lombok.Data;
 
 /**
- * 商品取得用の検索条件
+ * 倉庫取得用の検索条件
  * 
  */
 

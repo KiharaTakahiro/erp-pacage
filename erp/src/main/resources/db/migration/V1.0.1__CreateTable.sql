@@ -43,3 +43,28 @@ create table public.company (
   , zip character varying(255) not null
   , primary key (company_seq)
 );
+
+-- 商品テーブル
+create table public.product (
+  product_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , name character varying(255) not null
+  , purchase_unit_price bigint not null
+  , tax_type integer not null
+  , unit_price bigint not null
+  , primary key (product_seq)
+);
+
+-- 部署テーブル
+create table public.department (
+  department_seq bigint not null
+  , insert_date timestamp(6) without time zone
+  , update_date timestamp(6) without time zone
+  , version bigint
+  , company_seq bigint
+  , name character varying(255)
+  , parent_department_seq bigint
+  , primary key (department_seq)
+);

@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.erp.main.domain.objects.entity.fields.SupplierEntityFileds;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
+import com.erp.main.domain.objects.valueobjects.UpdateSupplierVo;
 
 
 /**
@@ -30,5 +31,19 @@ public class SupplierEntity extends SupplierEntityFileds {
 		entity.setName(vo.getSupplierName());
 		
 		return entity;
+	}
+	
+	/**
+	 * 仕入先エンティティの更新
+	 * @param vo
+	 * @return
+	 */
+	public void update(UpdateSupplierVo vo) {
+		
+		var model = vo.getSupplier();
+		
+		// 仕入先名
+		this.setName(model.getSupplierName());
+
 	}
 }

@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erp.main.app.controller.recivedorder.requests.GetSupplierRequest;
+import com.erp.main.app.controller.recivedorder.requests.UpdateSupplierRequest;
+import com.erp.main.app.controller.recivedorder.response.SupplierResponse;
+import com.erp.main.app.controller.recivedorder.response.SuppliersResponse;
 import com.erp.main.app.controller.sales.requests.UpdateWarehouseRequest;
 import com.erp.main.app.controller.sales.response.GetDepartmentsRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
@@ -155,8 +159,54 @@ public class SystemController {
 	}
 	
 	/*
+	 * 仕入先プルダウンのエントリーポイント
+	 */
+	@GetMapping("/supplier/pulldown")
+	public SuppliersResponse pullDownpSupplier( ) {
+		var vo = this.masterService.pullDownSupplier();
+		var response = new SuppliersResponse();
+		response.setSupplier(vo.getSupplier());
+		return response;
+	}
+	
+	/*
+	 * 仕入先一覧処理のエントリーポイント
+	 */
+	@PostMapping("/supplier/info")
+	public SuppliersResponse infoSupplier(@RequestBody GetSupplierRequest request) {
+		var vo = this.masterService.getSupplierVo(request.mapTo());
+		var response = new SuppliersResponse();
+		response.setTotalItemsNum(vo.getTotalItemsNum());
+		response.setSupplier(vo.getSupplier());
+		return response;
+
+	}
+	
+	/*
+	 * 仕入先詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/supplier/edit")
+	public SupplierResponse getClient(@RequestBody GetSupplierRequest request) {
+		Long id = request.getSupplierSeq(); 
+		var vo = this.masterService.getSupplierVo(id);
+		return SupplierResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 仕入先更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/supplier/update")
+	public void updateSupplier(@RequestBody UpdateSupplierRequest request) {
+		this.masterService.updateSupplier(request.mapTo());
+	}
+	
+
+	/*
 	 * 仕入商品作成用のエントリーポイント
-	 * @param req
+	 * @param request
 	 */
 	@PostMapping("/supplier-product/register")
 	public void createSupplierProduct(@RequestBody CreateSupplierProductRequest request) {
@@ -165,7 +215,7 @@ public class SystemController {
 	
 	/**
 	 * 取引先作成用のエントリーポイント
-	 * @param req
+	 * @param request
 	 */
 	@PostMapping("/clients/register")
 	public void createClients( @RequestBody CreateClientsRequest request) {
@@ -326,6 +376,7 @@ public class SystemController {
 	public void createLot(@RequestBody CreateLotRequest request) {
 		this.masterService.createLot(request.mapTo());
 	}
+
 	
 	/**
 	 * コード取得用のエントリーポイント

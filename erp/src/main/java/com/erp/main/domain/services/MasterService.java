@@ -28,6 +28,7 @@ import com.erp.main.domain.objects.model.CompanyModel;
 import com.erp.main.domain.objects.model.DepartmentModel;
 import com.erp.main.domain.objects.model.ProductModel;
 import com.erp.main.domain.objects.model.ProductTableModel;
+import com.erp.main.domain.objects.model.SupplierModel;
 import com.erp.main.domain.objects.model.WarehouseModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
@@ -47,12 +48,16 @@ import com.erp.main.domain.objects.valueobjects.GetProductConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsTableVo;
 import com.erp.main.domain.objects.valueobjects.GetProductsVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierConditionsVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierVo;
+import com.erp.main.domain.objects.valueobjects.GetSuppliersVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehousesVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
+import com.erp.main.domain.objects.valueobjects.UpdateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.UpdateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
@@ -66,6 +71,7 @@ import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
 import com.erp.main.domain.specification.DepartmentSpec;
 import com.erp.main.domain.specification.ProductSpec;
+import com.erp.main.domain.specification.SupplierSpec;
 import com.erp.main.domain.specification.WarehouseSpec;
 
 /**
@@ -648,6 +654,112 @@ public class MasterService {
 		this.warehouseRepository.save(warehouseEntity);
 	}
 	
+	/**
+	 * 仕入先詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetSupplierVo getSupplierVo(Long supplierSeq){
+		Optional<SupplierEntity> supplier = supplierRepository.findById(supplierSeq);
+		if(supplier.isEmpty()) {
+			throw new AppException(String.format("該当の仕入先を取得できませんでした。 supplierSeq: %s", supplierSeq));
+		}
+		
+		return GetSupplierVo.mapTo(supplier.get());
+	
+	}
+	
+	
+	/**
+	 * 仕入先一覧取得
+	 * @param vo
+	 */
+	@Transactional
+	public GetSuppliersVo getSupplierVo(GetSupplierConditionsVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<SupplierEntity> spec = Specification.where(
+				SupplierSpec.supplierSeqEquals(condition.getSupplierSeq()))
+				.and(SupplierSpec.supplierNameEquals(condition.getSupplierName()));
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "supplierSeq");
+		
+		Page<SupplierEntity> pages = this.supplierRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		List<SupplierModel> suppliers = pages.get().map(e -> {
+			var supplier = new SupplierModel();
+			// 仕入先seq
+			supplier.setSupplierSeq(e.getSupplierSeq());
+			// 仕入先名
+			supplier.setSupplierName(e.getName());
+			return supplier;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetSuppliersVo();
+		// トータルぺ―ジ
+		vo.setTotalItemsNum(pages.getTotalElements());
+		// 取引先リストの設定
+		vo.setSupplier(suppliers);
+		
+		return vo;
+	}
+	
+	/*
+	 * 仕入先一覧のプルダウン
+	 * @params vo
+	 */
+	@Transactional
+	public GetSuppliersVo pullDownSupplier() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "supplierSeq");
+		
+		// 取引先一覧取得
+		List<SupplierEntity> entitys = this.supplierRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<SupplierModel> suppliers =  new ArrayList<>();
+		
+		for(SupplierEntity entity: entitys) {		
+			var supplier = new SupplierModel();
+			// 仕入先seq
+			supplier.setSupplierSeq(entity.getSupplierSeq());
+			// 仕入先名
+			supplier.setSupplierName(entity.getName());
+			
+			suppliers.add(supplier);
+			
+		}
+	
+		var vo = new GetSuppliersVo();
+		// 取引先リストの設定
+		vo.setSupplier(suppliers);
+		
+		return vo;
+	}
+	
+	/**
+	 * 仕入先更新処理
+	 * @param vo
+	 */
+	@Transactional
+	public void updateSupplier(UpdateSupplierVo vo) {
+		// 仕入先を取得
+		var supplier= this.supplierRepository.findById(vo.getSupplier().getSupplierSeq());
+		
+		// 対象の仕入先が取得できない場合はエラー
+		if(supplier.isEmpty()) {
+			throw new AppException(String.format("該当の仕入先を取得できませんでした。 supplierSeq: %s", vo.getSupplier().getSupplierSeq()));			
+		}
+		
+		var supplierEntity = supplier.get();
+		supplierEntity.update(vo);
+		this.supplierRepository.save(supplierEntity);
+	}
 			
 }
 

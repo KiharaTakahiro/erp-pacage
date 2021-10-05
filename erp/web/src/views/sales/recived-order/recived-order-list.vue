@@ -119,12 +119,13 @@
         </el-pagination>
       </div>
       <div class="left">
-        <back-btn />
+        <back-btn
+        style="width:45%; margin-top:30px;" />
       </div>
       <div class="right">
         <el-button
           type="primary"
-          style="width:45%; margin-bottom:30px; margin-top:30px; margin-left:50%"
+          style="width:45%; margin-top:30px; margin-left:50%"
           @click.native.prevent="editBtn"
         >
           {{ $t('route.edit') }}
@@ -337,6 +338,7 @@ export default class extends Vue {
 
 .left {
   float: left;
+  width: 25%;
 }
 
 .page {

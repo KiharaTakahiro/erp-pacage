@@ -115,6 +115,7 @@ export default class extends Vue {
 
   // 登録処理
   private submit() {
+    console.log(this.recivedOrder);
     (this.$refs.recivedOrder as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         await RecivedOrderModule.createReciverdOrder(this.recivedOrder)
