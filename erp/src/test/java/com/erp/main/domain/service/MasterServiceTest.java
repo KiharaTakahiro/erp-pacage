@@ -14,6 +14,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.objects.entity.ClientsEntity;
@@ -25,6 +28,7 @@ import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
 import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
+import com.erp.main.domain.objects.model.WarehouseModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
 import com.erp.main.domain.objects.valueobjects.CreateCompanyVo;
 import com.erp.main.domain.objects.valueobjects.CreateDepartmentVo;
@@ -34,7 +38,9 @@ import com.erp.main.domain.objects.valueobjects.CreateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.CreateWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.GetClientVo;
+import com.erp.main.domain.objects.valueobjects.GetClientsConditionsVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
+import com.erp.main.domain.objects.valueobjects.UpdateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
 import com.erp.main.domain.repository.CompanyRepository;
 import com.erp.main.domain.repository.DepartmentRepository;
@@ -45,6 +51,7 @@ import com.erp.main.domain.repository.SupplierProductsRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.services.MasterService;
+import com.erp.main.domain.specification.ClientsSpec;
 
 /**
  * MasterServiceのパターン網羅用のテスト
@@ -294,6 +301,7 @@ public class MasterServiceTest {
 		Mockito.verify(this.clientsRepository, times(1)).save(entity);
 	}
 	
+	
 	/**
 	 * 取引先詳細のテスト
 	 * 通常パターン
@@ -318,8 +326,88 @@ public class MasterServiceTest {
 		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
 		Assertions.assertThrows(AppException.class, () -> masterService.getClientVo(2L));
 	}
+	/**
+	 * 取引先編集処理用のテスト
+	 * 成功例
+	 */
+	@Test
+	void updateClientSuccessCase1() {
 		
+		// 実行用のデータ作成
+		UpdateClientVo vo = new UpdateClientVo();
+		// 取得処理をモック化
+		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData2();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		
+		var client = new ClientModel();
+		// 取引先名
+		client.setClientsName("TEST");	
+		// 取引先Seq
+		client.setClientsSeq(2L);		
+		// クライアントモデルセット
+		vo.setClient(client);
+		
+		
+		// 処理実行
+		this.masterService.updateClient(vo);
+		
+		// 検証用のデータ作成
+		ClientsEntity entity = new ClientsEntity();
+		// 会社Seq
+		entity.setClientsSeq(2L);
+		// 部署名
+		entity.setName("TEST");
+		
+		Mockito.verify(this.clientsRepository, times(1)).save(entity);
+	}
 	
+	/**
+	 * 取引先編集テスト
+	 * 失敗例
+	 */
+	@Test
+	void updateClientErrorCase1() {
+		
+		// 実行用のデータ作成
+		UpdateClientVo vo = new UpdateClientVo();
+		// 取得処理をモック化
+		Optional<ClientsEntity> clientsOpt = this.createErrorClientsData();
+		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		
+		var client = new ClientModel();
+		// 取引先名
+		client.setClientsName("TEST");	
+		// 取引先Seq
+		client.setClientsSeq(1L);		
+		// クライアントモデルセット
+		vo.setClient(client);
+		
+		Assertions.assertThrows(AppException.class, () -> masterService.updateClient(vo));
+		
+
+	}
+		
+	/*
+	 * 取引先一覧取 成功例
+	 * @param condition
+	 * @return
+	 */
+	@Test
+	public void getClientsSuccessCase2() {
+		GetClientsConditionsVo vo = new GetClientsConditionsVo();
+		vo.setPageNo(1);
+		Mockito.when(vo.getPageNo());
+		Specification<ClientsEntity> spec = Specification.where(
+				ClientsSpec.clientsSeqEquals(vo.getClientsSeq()))
+				.and(ClientsSpec.clientsNameEquals(vo.getClientsName()));
+		
+		// ソートの設定
+				var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
+				
+
+		Mockito.when(this.clientsRepository.findAll(spec, PageRequest.of(vo.getPageNo(), 15, sort)));
+		Assertions.assertEquals(vo, this.masterService.getClientsVo(vo));
+	}
 	/**
 	 * 会社作成用のテスト
 	 * 成功例
@@ -385,63 +473,63 @@ public class MasterServiceTest {
 		Mockito.verify(this.departmentRepository, times(1)).save(entity);
 	}
 	
+	
 	/**
-	 * 取引先編集処理用のテスト
+	 * 倉庫編集処理用のテスト
 	 * 成功例
 	 */
 	@Test
-	void updateClientSuccessCase1() {
+	void updateWarehouseSuccessCase1() {
 		
 		// 実行用のデータ作成
-		UpdateClientVo vo = new UpdateClientVo();
+		UpdateWarehouseVo vo = new UpdateWarehouseVo();
 		// 取得処理をモック化
-		Optional<ClientsEntity> clientsOpt = this.createDefaultClientsData2();
-		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		Optional<WarehouseEntity> warehouseOpt = this.createDefaultWarehouseData2();
+		Mockito.when(this.warehouseRepository.findById(2L)).thenReturn(warehouseOpt);
 		
-		var client = new ClientModel();
-		// 取引先名
-		client.setClientsName("TEST");	
-		// 取引先Seq
-		client.setClientsSeq(2L);		
-		// クライアントモデルセット
-		vo.setClient(client);
+		var warehouse = new WarehouseModel();
+		// 倉庫名
+		warehouse.setWarehouseName("TEST");	
+		// 倉庫Seq
+		warehouse.setWarehouseSeq(2L);		
+		vo.setWarehouse(warehouse);
 		
 		
 		// 処理実行
-		this.masterService.updateClient(vo);
+		this.masterService.updateWarehouse(vo);
 		
 		// 検証用のデータ作成
-		ClientsEntity entity = new ClientsEntity();
-		// 会社Seq
-		entity.setClientsSeq(2L);
-		// 部署名
+		WarehouseEntity entity = new WarehouseEntity();
+		// 倉庫Seq
+		entity.setWarehouseSeq(2L);
+		// 倉庫名名
 		entity.setName("TEST");
 		
-		Mockito.verify(this.clientsRepository, times(1)).save(entity);
+		Mockito.verify(this.warehouseRepository, times(1)).save(entity);
 	}
 	
 	/**
-	 * 取引先編集テスト
+	 * 倉庫編集テスト
 	 * 失敗例
 	 */
 	@Test
-	void updateClientErrorCase1() {
+	void updateWarehouseErrorCase1() {
 		
 		// 実行用のデータ作成
-		UpdateClientVo vo = new UpdateClientVo();
+		UpdateWarehouseVo vo = new UpdateWarehouseVo();
 		// 取得処理をモック化
-		Optional<ClientsEntity> clientsOpt = this.createErrorClientsData();
-		Mockito.when(this.clientsRepository.findById(2L)).thenReturn(clientsOpt);
+		Optional<WarehouseEntity> warehouseOpt = this.createErrorWarehouseData();
+		Mockito.when(this.warehouseRepository.findById(2L)).thenReturn(warehouseOpt);
 		
-		var client = new ClientModel();
-		// 取引先名
-		client.setClientsName("TEST");	
-		// 取引先Seq
-		client.setClientsSeq(1L);		
+		var warehouse = new WarehouseModel();
+		// 倉庫名
+		warehouse.setWarehouseName("TEST");	
+		// 倉庫Seq
+		warehouse.setWarehouseSeq(1L);		
 		// クライアントモデルセット
-		vo.setClient(client);
+		vo.setWarehouse(warehouse);
 		
-		Assertions.assertThrows(AppException.class, () -> masterService.updateClient(vo));
+		Assertions.assertThrows(AppException.class, () -> masterService.updateWarehouse(vo));
 		
 
 	}
@@ -557,6 +645,17 @@ public class MasterServiceTest {
 	}
 	
 	/**
+	 * デフォルトの倉庫編集データ生成
+	 */
+	private Optional<WarehouseEntity> createDefaultWarehouseData2() {
+		// 	取得する倉庫Seqの設定
+		WarehouseEntity warehouse = new WarehouseEntity();
+		warehouse.setWarehouseSeq(2L);
+		warehouse.setName("TEST");
+		return Optional.of(warehouse);
+	}
+	
+	/**
 	 * エラー用の取引先編集データ生成
 	 * @return
 	 */
@@ -574,5 +673,16 @@ public class MasterServiceTest {
 		return Optional.empty();
 		
 	}
+	
+	/**
+	 * エラー用の倉庫編集データ生成
+	 */
+	private Optional<WarehouseEntity> createErrorWarehouseData() {
+		// 	取得する倉庫Seqの設定
+		return Optional.empty();
+		
+	}
+	
+
 	
 }
