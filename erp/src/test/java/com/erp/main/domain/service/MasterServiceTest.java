@@ -51,7 +51,9 @@ import com.erp.main.domain.objects.valueobjects.GetClientsVo;
 import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
+import com.erp.main.domain.objects.valueobjects.GetProductVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierVo;
+import com.erp.main.domain.objects.valueobjects.GetSuppliersVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
 import com.erp.main.domain.objects.valueobjects.UpdateSupplierVo;
@@ -159,6 +161,31 @@ public class MasterServiceTest {
 		entity.setUnitPrice(1000L);
 		
 		Mockito.verify(this.productRepository, times(1)).save(entity);
+	}
+	
+	/**
+	 * 商品詳細のテスト
+	 * 通常パターン
+	 */
+	@Test
+	public void getProductSuccessCase1() {
+		Optional<ProductEntity> productOpt = this.createDefaultProductData();
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		this.masterService.getProductVo(2L);
+		GetProductVo vo = GetProductVo.mapTo(productOpt.get());
+		Assertions.assertEquals(vo, this.masterService.getProductVo(2L));
+	}
+	
+	/**
+	 * 商品詳細のテスト
+	 * 失敗パターン
+	 * 取得されたIDが無かった場合
+	 */
+	@Test
+	public void getProductErrorCase1() {
+		Optional<ProductEntity> productOpt = this.createErrorProductData();
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		Assertions.assertThrows(AppException.class, () -> masterService.getProductVo(2L));
 	}
 	
 	/**
@@ -360,6 +387,37 @@ public class MasterServiceTest {
 
 	}
 	
+	/*
+	 * 仕入先一覧プルダウン取得 成功例
+	 * @param condition
+	 * @return
+	 */
+	@Test
+	public void getSuppliersSuccessCase3() {
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "supplierSeq");
+		List<SupplierEntity> entitys = this.createDefaultSupplierData3();
+		Mockito.when(this.supplierRepository.findAll(sort)).thenReturn(entitys);
+		
+		// 値格納用のリスト作成
+		List<SupplierModel> suppliers =  new ArrayList<>();
+	
+		var supplier = new SupplierModel();
+		// 仕入先SEQ
+		supplier.setSupplierSeq(1L);
+		// 仕入先名
+		supplier.setSupplierName("test");
+		// リストに追加
+		suppliers.add(supplier);
+	
+		var vo = new GetSuppliersVo();
+		// 仕入先リストの設定
+		vo.setSupplier(suppliers);
+		
+		Assertions.assertEquals(vo, this.masterService.pullDownSupplier());
+	}
+
+	
 	/**
 	 * ロット作成用のテスト
 	 */
@@ -483,8 +541,6 @@ public class MasterServiceTest {
 		vo.setClient(client);
 		
 		Assertions.assertThrows(AppException.class, () -> masterService.updateClient(vo));
-		
-
 	}
 		
 	/*
@@ -496,10 +552,9 @@ public class MasterServiceTest {
 	public void getClientsSuccessCase2() {
 		// 検索条件
 		GetClientsConditionsVo condition = new GetClientsConditionsVo();
-		condition.setPageNo(1);
+		condition.setPageNo(0);
 		condition.setClientsName("TEST");
 		condition.setClientsSeq(2L);
-		Mockito.when(condition.getPageNo());
 		
 		Specification<ClientsEntity> spec = Specification.where(
 				ClientsSpec.clientsSeqEquals(condition.getClientsSeq()))
@@ -508,10 +563,9 @@ public class MasterServiceTest {
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		Page<ClientsEntity> pages = this.createDefaultClientsData3();
-		Mockito.when(this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15
-				, sort)))
-		.thenReturn(pages);
+		Mockito.when(this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort))).thenReturn(pages);
 		
+		// 検証用データ作成
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
 			// 取引先Seq
@@ -543,7 +597,6 @@ public class MasterServiceTest {
 		condition.setPageNo(null);
 		condition.setClientsName("TEST");
 		condition.setClientsSeq(2L);
-		Mockito.when(condition.getPageNo());
 		Assertions.assertThrows(AppException.class, () -> masterService.getClientsVo(condition));
 	}
 	
@@ -618,7 +671,7 @@ public class MasterServiceTest {
 	@Test
 	public void getCompanysSuccessCase3() {
 		// ソートの設定
-		var sort = Sort.by(Sort.Direction.ASC, "companysSeq");
+		var sort = Sort.by(Sort.Direction.ASC, "companySeq");
 		List<CompanyEntity> entitys = this.createDefaultCompanysData2();
 		Mockito.when(this.companyRepository.findAll(sort)).thenReturn(entitys);
 		
@@ -692,7 +745,7 @@ public class MasterServiceTest {
 				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName())));
 					
 		// ソートの設定
-		var sort = Sort.by(Sort.Direction.ASC, "departmentsSeq");
+		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
 		List<DepartmentEntity> entitys = this.createDefaultDepartmentsData2();
 		Mockito.when(this.departmentRepository.findAll(spec, sort)).thenReturn(entitys);
 		
@@ -806,7 +859,7 @@ public class MasterServiceTest {
 	@Test
 	public void getWarehousesSuccessCase3() {
 		// ソートの設定
-		var sort = Sort.by(Sort.Direction.ASC, "warehousesSeq");
+		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
 		List<WarehouseEntity> entitys = this.createDefaultWarehousesData3();
 		Mockito.when(this.warehouseRepository.findAll(sort)).thenReturn(entitys);
 		
@@ -880,6 +933,44 @@ public class MasterServiceTest {
 		entity.setSupplierSeq(2L);
 		return Optional.of(entity);
 	}
+	
+	/**
+	 * デフォルトの商品データ作成
+	 * 
+	 */
+	private Optional<ProductEntity> createDefaultProductData(){
+		ProductEntity entity = new ProductEntity();
+		entity.setProductSeq(2L);
+		return Optional.of(entity);
+	}
+	
+	/**
+	 * エラー時の商品データ作成
+	 * 
+	 */
+	private Optional<ProductEntity> createErrorProductData(){
+		return Optional.empty();
+	}
+
+	
+	/**
+	 * デフォルトの仕入先一覧プルダウンデータ生成
+	 * @return
+	 */
+	private List<SupplierEntity> createDefaultSupplierData3() {
+		// 	取得する仕入先Seqの設定
+		List<SupplierEntity> suppliers = new ArrayList<>();
+		var supplier = new SupplierEntity();
+		// 仕入先SEQ
+		supplier.setSupplierSeq(1L);
+		// 仕入先名
+		supplier.setName("test");
+		// リストに追加
+		suppliers.add(supplier);
+		return suppliers;
+	}
+	
+	
 	/**
 	 * デフォルトの仕入商品データ生成
 	 * @return 
@@ -944,6 +1035,13 @@ public class MasterServiceTest {
 	private Page<ClientsEntity> createDefaultClientsData3() {
 		// 	取得する取引先Seqの設定
 		List<ClientsEntity> clients = new ArrayList<>();
+		var client = new ClientsEntity();
+		// 取引先SEQ
+		client.setClientsSeq(2L);
+		// 取引先名
+		client.setName("TEST");
+		// リストに追加
+		clients.add(client);
 		Page<ClientsEntity> pages = new PageImpl<ClientsEntity>(clients);
 		return pages;
 	}
