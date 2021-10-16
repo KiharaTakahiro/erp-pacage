@@ -498,7 +498,7 @@ public class MasterService {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
 		
-		// 取引先一覧取得
+		// 商品一覧取得
 		List<ProductEntity> entitys = this.productRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
@@ -522,7 +522,7 @@ public class MasterService {
 		}
 	
 		var vo = new GetProductsVo();
-		// 取引先リストの設定
+		// 商品リストの設定
 		vo.setProduct(products);
 		
 		return vo;

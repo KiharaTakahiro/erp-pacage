@@ -35,6 +35,7 @@ import com.erp.main.domain.objects.entity.WarehouseEntity;
 import com.erp.main.domain.objects.model.ClientModel;
 import com.erp.main.domain.objects.model.CompanyModel;
 import com.erp.main.domain.objects.model.DepartmentModel;
+import com.erp.main.domain.objects.model.ProductModel;
 import com.erp.main.domain.objects.model.SupplierModel;
 import com.erp.main.domain.objects.model.WarehouseModel;
 import com.erp.main.domain.objects.valueobjects.CreateClientsVo;
@@ -52,10 +53,14 @@ import com.erp.main.domain.objects.valueobjects.GetCompanysVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetDepartmentsVo;
 import com.erp.main.domain.objects.valueobjects.GetProductVo;
+import com.erp.main.domain.objects.valueobjects.GetProductsVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierVo;
 import com.erp.main.domain.objects.valueobjects.GetSuppliersVo;
+import com.erp.main.domain.objects.valueobjects.GetWarehouseConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetWarehouseVo;
+import com.erp.main.domain.objects.valueobjects.GetWarehousesVo;
 import com.erp.main.domain.objects.valueobjects.UpdateClientVo;
+import com.erp.main.domain.objects.valueobjects.UpdateProductVo;
 import com.erp.main.domain.objects.valueobjects.UpdateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.UpdateWarehouseVo;
 import com.erp.main.domain.repository.ClientsRepository;
@@ -70,6 +75,7 @@ import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.services.MasterService;
 import com.erp.main.domain.specification.ClientsSpec;
 import com.erp.main.domain.specification.DepartmentSpec;
+import com.erp.main.domain.specification.WarehouseSpec;
 
 /**
  * MasterServiceのパターン網羅用のテスト
@@ -186,6 +192,96 @@ public class MasterServiceTest {
 		Optional<ProductEntity> productOpt = this.createErrorProductData();
 		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
 		Assertions.assertThrows(AppException.class, () -> masterService.getProductVo(2L));
+	}
+	
+	/**
+	 * 商品編集処理用のテスト
+	 * 成功例
+	 */
+	@Test
+	void updateProductsSuccessCase1() {
+		
+		// 実行用のデータ作成
+		UpdateProductVo vo = new UpdateProductVo();
+		// 取得処理をモック化
+		Optional<ProductEntity> productOpt = this.createDefaultProductData2();
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		
+		var product = new ProductModel();
+		// 商品名
+		product.setProductName("TEST");	
+		// 商品Seq
+		product.setProductSeq(2L);		
+		vo.setProduct(product);
+		
+		
+		// 処理実行
+		this.masterService.updateProducts(vo);
+		
+		// 検証用のデータ作成
+		ProductEntity entity = new ProductEntity();
+		// 商品Seq
+		entity.setProductSeq(2L);
+		// 商品名名
+		entity.setName("TEST");
+		
+		Mockito.verify(this.productRepository, times(1)).save(entity);
+	}
+	
+	/*
+	 * 商品一覧プルダウン取得 成功例
+	 * @param condition
+	 * @return
+	 */
+	@Test
+	public void getProductsSuccessCase3() {
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
+		List<ProductEntity> entitys = this.createDefaultProductsData4();
+		Mockito.when(this.productRepository.findAll(sort)).thenReturn(entitys);
+		
+		// 値格納用のリスト作成
+		List<ProductModel> products =  new ArrayList<>();
+	
+		var product = new ProductModel();
+		// 商品SEQ
+		product.setProductSeq(1L);
+		// 商品名
+		product.setProductName("test");
+		// リストに追加
+		products.add(product);
+	
+		var vo = new GetProductsVo();
+		// 商品リストの設定
+		vo.setProduct(products);
+		
+		Assertions.assertEquals(vo, this.masterService.pullDownProduct());
+	}
+	
+	/**
+	 * 商品編集テスト
+	 * 失敗例
+	 */
+	@Test
+	void updateProductErrorCase1() {
+		
+		// 実行用のデータ作成
+		UpdateProductVo vo = new UpdateProductVo();
+		// 取得処理をモック化
+		Optional<ProductEntity> productOpt = this.createErrorProductData();
+		Mockito.when(this.productRepository.findById(2L)).thenReturn(productOpt);
+		
+		var product = new ProductModel();
+		// 商品名
+		product.setProductName("TEST");	
+		// 商品Seq
+		product.setProductSeq(1L);		
+		// クライアントモデルセット
+		vo.setProduct(product);
+		
+		Assertions.assertThrows(AppException.class, () -> masterService.updateProducts(vo));
+		
+
 	}
 	
 	/**
@@ -563,14 +659,13 @@ public class MasterServiceTest {
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		Page<ClientsEntity> pages = this.createDefaultClientsData3();
-		Mockito.when(this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort))).thenReturn(pages);
-		
+		Mockito.when(this.clientsRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort))).thenReturn(pages);		
 		// 検証用データ作成
 		List<ClientModel> clients = pages.get().map(e -> {
 			var client = new ClientModel();
 			// 取引先Seq
 			client.setClientsSeq(e.getClientsSeq());
-			// 取引先名
+			// 取引先名;
 			client.setClientsName(e.getName());
 			return client;
 		}).collect(Collectors.toList());
@@ -737,15 +832,16 @@ public class MasterServiceTest {
 		GetDepartmentConditionsVo condition = new GetDepartmentConditionsVo();
 		condition.setPageNo(1);
 		condition.setDepartmentName("TEST");
-		condition.setDepartmentSeq(2L);
+		condition.setDepartmentSeq(1L);
 		// 検索条件の設定
 		Specification<DepartmentEntity> spec = Specification.where(
-			DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq())
+			DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq()))
 				.and(DepartmentSpec.companySeqEquals(condition.getCompanySeq()))
-				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName())));
-					
+				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName()));
+		
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
+		
 		List<DepartmentEntity> entitys = this.createDefaultDepartmentsData2();
 		Mockito.when(this.departmentRepository.findAll(spec, sort)).thenReturn(entitys);
 		
@@ -757,6 +853,8 @@ public class MasterServiceTest {
 		department.setDepartmentSeq(1L);
 		// 部署名
 		department.setDepartmentName("test");
+		// 会社SEQ
+		department.setCompanySeq(1L);
 		// リストに追加
 		departments.add(department);
 	
@@ -852,6 +950,47 @@ public class MasterServiceTest {
 	}
 	
 	/*
+	 * 倉庫一覧取得 成功例
+	 * @param condition
+	 * @return
+	 */
+	@Test
+	public void getWarehousesSuccessCase2() {
+		// 検索条件
+		GetWarehouseConditionsVo condition = new GetWarehouseConditionsVo();
+		condition.setPageNo(0);
+		condition.setWarehouseName("test");
+		condition.setWarehouseSeq(2L);
+		
+		Specification<WarehouseEntity> spec = Specification.where(
+				WarehouseSpec.warehouseSeqEquals(condition.getWarehouseSeq()))
+				.and(WarehouseSpec.warehouseNameEquals(condition.getWarehouseName()));
+		
+		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
+		
+		Page<WarehouseEntity> pages = this.createDefaultWarehouseData3();
+		Mockito.when(this.warehouseRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort))).thenReturn(pages);
+		// 検証用データ作成
+		List<WarehouseModel> warehouses = pages.get().map(e -> {
+			var warehouse = new WarehouseModel();
+			// 倉庫Seq
+			warehouse.setWarehouseSeq(e.getWarehouseSeq());
+			// 倉庫名
+			warehouse.setWarehouseName(e.getName());
+			return warehouse;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetWarehousesVo();
+		// 総データ数
+		vo.setTotalItemsNum(pages.getTotalElements());
+		// 倉庫リストの設定
+		vo.setWarehouse(warehouses);
+
+		Assertions.assertEquals(vo, this.masterService.getWarehouseVo(condition));
+	}
+	
+	/*
 	 * 倉庫一覧プルダウン取得 成功例
 	 * @param condition
 	 * @return
@@ -860,7 +999,7 @@ public class MasterServiceTest {
 	public void getWarehousesSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
-		List<WarehouseEntity> entitys = this.createDefaultWarehousesData3();
+		List<WarehouseEntity> entitys = this.createDefaultWarehousesData4();
 		Mockito.when(this.warehouseRepository.findAll(sort)).thenReturn(entitys);
 		
 		// 値格納用のリスト作成
@@ -874,9 +1013,9 @@ public class MasterServiceTest {
 		// リストに追加
 		warehouses.add(warehouse);
 	
-		var vo = new GetWarehouseVo();
+		var vo = new GetWarehousesVo();
 		// 倉庫リストの設定
-		vo.setWarehouse(warehouse);
+		vo.setWarehouse(warehouses);
 		
 		Assertions.assertEquals(vo, this.masterService.pullDownWarehouse());
 	}
@@ -950,6 +1089,34 @@ public class MasterServiceTest {
 	 */
 	private Optional<ProductEntity> createErrorProductData(){
 		return Optional.empty();
+	}
+	
+	/**
+	 * デフォルトの商品一覧プルダウンデータ生成
+	 * @return
+	 */
+	private List<ProductEntity> createDefaultProductsData4() {
+		// 	取得する商品Seqの設定
+		List<ProductEntity> products = new ArrayList<>();
+		var product = new ProductEntity();
+		// 商品SEQ
+		product.setProductSeq(1L);
+		// 商品名
+		product.setName("test");
+		// リストに追加
+		products.add(product);
+		return products;
+	}
+	
+	/**
+	 * デフォルトの商品編集データ生成
+	 */
+	private Optional<ProductEntity> createDefaultProductData2() {
+		// 	取得する商品Seqの設定
+		ProductEntity product = new ProductEntity();
+		product.setProductSeq(2L);
+		product.setName("TEST");
+		return Optional.of(product);
 	}
 
 	
@@ -1084,7 +1251,7 @@ public class MasterServiceTest {
 	 * デフォルトの倉庫一覧プルダウンデータ生成
 	 * @return
 	 */
-	private List<WarehouseEntity> createDefaultWarehousesData3() {
+	private List<WarehouseEntity> createDefaultWarehousesData4() {
 		// 	取得する倉庫Seqの設定
 		List<WarehouseEntity> warehouses = new ArrayList<>();
 		var warehouse = new WarehouseEntity();
@@ -1122,6 +1289,24 @@ public class MasterServiceTest {
 	}
 	
 	/**
+	 * デフォルトの倉庫一覧データ生成
+	 * @return
+	 */
+	private Page<WarehouseEntity> createDefaultWarehouseData3() {
+		// 	取得する倉庫Seqの設定
+		List<WarehouseEntity> warehouse = new ArrayList<>();
+		var client = new WarehouseEntity();
+		// 倉庫SEQ
+		client.setWarehouseSeq(2L);
+		// 倉庫名
+		client.setName("TEST");
+		// リストに追加
+		warehouse.add(client);
+		Page<WarehouseEntity> pages = new PageImpl<WarehouseEntity>(warehouse);
+		return pages;
+	}
+	
+	/**
 	 * デフォルトの部署一覧プルダウンデータ生成
 	 * @return
 	 */
@@ -1131,6 +1316,8 @@ public class MasterServiceTest {
 		var department = new DepartmentEntity();
 		// 部署SEQ
 		department.setDepartmentSeq(1L);
+		// 会社SEQ
+		department.setCompanySeq(1L);
 		// 部署名
 		department.setName("test");
 		// リストに追加
