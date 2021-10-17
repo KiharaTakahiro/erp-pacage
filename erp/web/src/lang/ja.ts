@@ -28,6 +28,10 @@ export default {
     newWarehouse: '倉庫追加',
     warehouseList: '倉庫一覧',
     editWarehouse: '倉庫編集',
+    supplier: '仕入先管理',
+    newSupplier: '仕入先追加',
+    supplierList: '仕入先一覧',
+    editSupplier: '仕入先編集',
     documentation: 'ドキュメント',
     guide: 'ガイド',
     permission: '権限',
@@ -177,6 +181,16 @@ export default {
     name: '倉庫名',
     check0: '倉庫が選択されていません',
     check2: '倉庫が二つ以上選択されています'
+  },
+  supplier: {
+    title: '仕入先管理',
+    add: '仕入先新規登録',
+    edit: '仕入先編集',
+    complete: '完了',
+    id: "仕入先Seq",
+    name: '仕入先名',
+    check0: '仕入先が選択されていません',
+    check2: '仕入先が二つ以上選択されています'
   },
   permission: {
     createRole: 'ロール追加',

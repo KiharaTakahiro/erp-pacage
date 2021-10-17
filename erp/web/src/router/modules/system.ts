@@ -136,6 +136,32 @@ const systemRoutes: RouteConfig = {
           meta: { title: 'editWarehouse', hidden: true }
         }
       ]
+    },
+    {
+      path: 'supplier',
+      component: () => import('@/views/system/supplier/supplier.vue'),
+      name: 'supplier',
+      meta: { title: 'supplier' },
+      children: [
+        {
+          path: 'supplier-list',
+          component: () => import('@/views/system/supplier/supplier-list.vue'),
+          name: 'supplier-list',
+          meta: { title: 'supplierList' }
+        },
+        {
+          path: 'save-supplier',
+          component: () => import('@/views/system/supplier/save-supplier.vue'),
+          name: 'save-supplier',
+          meta: { title: 'newSupplier' }
+        },
+        {
+          path: 'edit-supplier',
+          component: () => import('@/views/system/supplier/edit-supplier.vue'),
+          name: 'edit-supplier',
+          meta: { title: 'editSupplier', hidden: true }
+        }
+      ]
     }
   ]
 }
