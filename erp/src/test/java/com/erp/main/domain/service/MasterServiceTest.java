@@ -237,8 +237,8 @@ public class MasterServiceTest {
 	public void getProductsSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
-		List<ProductEntity> entitys = this.createDefaultProductsData4();
-		Mockito.when(this.productRepository.findAll(sort)).thenReturn(entitys);
+		List<ProductEntity> entities = this.createDefaultProductsData4();
+		Mockito.when(this.productRepository.findAll(sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<ProductModel> products =  new ArrayList<>();
@@ -492,8 +492,8 @@ public class MasterServiceTest {
 	public void getSuppliersSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "supplierSeq");
-		List<SupplierEntity> entitys = this.createDefaultSupplierData3();
-		Mockito.when(this.supplierRepository.findAll(sort)).thenReturn(entitys);
+		List<SupplierEntity> entities = this.createDefaultSupplierData3();
+		Mockito.when(this.supplierRepository.findAll(sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<SupplierModel> suppliers =  new ArrayList<>();
@@ -704,8 +704,8 @@ public class MasterServiceTest {
 	public void getClientsSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
-		List<ClientsEntity> entitys = this.createDefaultClientsData4();
-		Mockito.when(this.clientsRepository.findAll(sort)).thenReturn(entitys);
+		List<ClientsEntity> entities = this.createDefaultClientsData4();
+		Mockito.when(this.clientsRepository.findAll(sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<ClientModel> clients =  new ArrayList<>();
@@ -767,8 +767,8 @@ public class MasterServiceTest {
 	public void getCompanysSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "companySeq");
-		List<CompanyEntity> entitys = this.createDefaultCompanysData2();
-		Mockito.when(this.companyRepository.findAll(sort)).thenReturn(entitys);
+		List<CompanyEntity> entities = this.createDefaultCompanysData2();
+		Mockito.when(this.companyRepository.findAll(sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<CompanyModel> companys =  new ArrayList<>();
@@ -835,15 +835,15 @@ public class MasterServiceTest {
 		condition.setDepartmentSeq(1L);
 		// 検索条件の設定
 		Specification<DepartmentEntity> spec = Specification.where(
-			DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq()))
-				.and(DepartmentSpec.companySeqEquals(condition.getCompanySeq()))
-				.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName()));
-		
+				DepartmentSpec.departmentSeqEquals(condition.getDepartmentSeq()))
+					.and(DepartmentSpec.companySeqEquals(condition.getCompanySeq()))
+					.and(DepartmentSpec.departmentNameEquals(condition.getDepartmentName()));
+			
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
-		
-		List<DepartmentEntity> entitys = this.createDefaultDepartmentsData2();
-		Mockito.when(this.departmentRepository.findAll(spec, sort)).thenReturn(entitys);
+			
+		List<DepartmentEntity> entities = this.createDefaultDepartmentsData2();
+		Mockito.when(this.departmentRepository.findAll(spec, sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<DepartmentModel> departments =  new ArrayList<>();
@@ -999,8 +999,8 @@ public class MasterServiceTest {
 	public void getWarehousesSuccessCase3() {
 		// ソートの設定
 		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
-		List<WarehouseEntity> entitys = this.createDefaultWarehousesData4();
-		Mockito.when(this.warehouseRepository.findAll(sort)).thenReturn(entitys);
+		List<WarehouseEntity> entities = this.createDefaultWarehousesData4();
+		Mockito.when(this.warehouseRepository.findAll(sort)).thenReturn(entities);
 		
 		// 値格納用のリスト作成
 		List<WarehouseModel> warehouses =  new ArrayList<>();

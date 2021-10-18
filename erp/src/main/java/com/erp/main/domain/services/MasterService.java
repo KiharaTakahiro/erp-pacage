@@ -325,12 +325,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "clientsSeq");
 		
 		// 取引先一覧取得
-		List<ClientsEntity> entitys = this.clientsRepository.findAll(sort);
+		List<ClientsEntity> entities = this.clientsRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
 		List<ClientModel> clients =  new ArrayList<>();
 		
-		for(ClientsEntity entity: entitys) {		
+		for(ClientsEntity entity: entities) {		
 			var client = new ClientModel();
 			// 取引先SEQ
 			client.setClientsSeq(entity.getClientsSeq());
@@ -359,12 +359,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "companySeq");
 		
 		// 取引先一覧取得
-		List<CompanyEntity> entitys = this.companyRepository.findAll(sort);
+		List<CompanyEntity> entities = this.companyRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
 		List<CompanyModel> companys =  new ArrayList<>();
 		
-		for(CompanyEntity entity: entitys) {		
+		for(CompanyEntity entity: entities) {		
 			var company = new CompanyModel();
 			// 取引先SEQ
 			company.setCompanySeq(entity.getCompanySeq());
@@ -398,12 +398,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "departmentSeq");
 		
 		// 取引先一覧取得
-		List<DepartmentEntity> entitys = this.departmentRepository.findAll(spec, sort);
+		List<DepartmentEntity> entities = this.departmentRepository.findAll(spec, sort);
 		
 		// 値格納用のリスト作成
 		List<DepartmentModel> departments =  new ArrayList<>();
 		
-		for(DepartmentEntity entity: entitys) {		
+		for(DepartmentEntity entity: entities) {		
 			var department = new DepartmentModel();
 			//
 			department.setDepartmentSeq(entity.getDepartmentSeq());
@@ -499,12 +499,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "productSeq");
 		
 		// 商品一覧取得
-		List<ProductEntity> entitys = this.productRepository.findAll(sort);
+		List<ProductEntity> entities = this.productRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
 		List<ProductModel> products =  new ArrayList<>();
 		
-		for(ProductEntity entity: entitys) {		
+		for(ProductEntity entity: entities) {		
 			var product = new ProductModel();
 			// 商品seq
 			product.setProductSeq(entity.getProductSeq());
@@ -612,12 +612,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "warehouseSeq");
 		
 		// 取引先一覧取得
-		List<WarehouseEntity> entitys = this.warehouseRepository.findAll(sort);
+		List<WarehouseEntity> entities = this.warehouseRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
 		List<WarehouseModel> warehouses =  new ArrayList<>();
 		
-		for(WarehouseEntity entity: entitys) {		
+		for(WarehouseEntity entity: entities) {		
 			var warehouse = new WarehouseModel();
 			// 倉庫seq
 			warehouse.setWarehouseSeq(entity.getWarehouseSeq());
@@ -719,12 +719,12 @@ public class MasterService {
 		var sort = Sort.by(Sort.Direction.ASC, "supplierSeq");
 		
 		// 取引先一覧取得
-		List<SupplierEntity> entitys = this.supplierRepository.findAll(sort);
+		List<SupplierEntity> entities = this.supplierRepository.findAll(sort);
 		
 		// 値格納用のリスト作成
 		List<SupplierModel> suppliers =  new ArrayList<>();
 		
-		for(SupplierEntity entity: entitys) {		
+		for(SupplierEntity entity: entities) {		
 			var supplier = new SupplierModel();
 			// 仕入先seq
 			supplier.setSupplierSeq(entity.getSupplierSeq());
