@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 仕入れ商品一覧
+ * 仕入商品一覧
  * @author 高山
  *
  */
@@ -16,8 +16,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 public class SupplierProductsResponse extends BaseResponse {
 	// 最大ページ数
-	private Integer maxpage;
+	private Long totalItemsNum;
 	
 	// 仕入れ商品リスト
-	List<SupplierProductModel> supplierProducts;
+	List<SupplierProductModel> supplierProduct;
 }

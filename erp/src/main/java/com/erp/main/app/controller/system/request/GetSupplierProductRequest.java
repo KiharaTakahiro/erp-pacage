@@ -1,6 +1,6 @@
 package com.erp.main.app.controller.system.request;
 
-import com.erp.main.domain.objects.valueobjects.GetSupplierProductsConditionVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductConditionVo;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @author 高山
  */
 @Data
-public class GetSupplierProductsRequest {
+public class GetSupplierProductRequest {
 	// page no.
 	private Integer pageNo;
 	// 商品名seq
@@ -21,8 +21,8 @@ public class GetSupplierProductsRequest {
      * @return vo
      */
 	
-	public GetSupplierProductsConditionVo mapTo() {
-		var vo = new GetSupplierProductsConditionVo();
+	public GetSupplierProductConditionVo mapTo() {
+		var vo = new GetSupplierProductConditionVo();
 		// page no.
 		vo.setPageNo(this.getPageNo());
 		// 商品名seq

@@ -6,10 +6,15 @@ import com.erp.main.domain.objects.model.SupplierProductModel;
 
 import lombok.Data;
 
+/*
+ * 仕入商品の取得VO
+ * @author ngt
+ */
 @Data
-public class GetSupplierProductsVo {
-	// 仕入先リスト
-	List<SupplierProductModel> supplierProduct;
+public class GetSupplierProductVo {
+	
+	// 仕入商品リスト
+	List<SupplierProductModel> SupplierProduct;
 	// 全体のページ数
 	Long totalItemsNum;
 }
