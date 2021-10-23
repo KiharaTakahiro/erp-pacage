@@ -251,6 +251,8 @@ public class SupplierService {
 			supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
 			// 仕入商品名
 			supplierProduct.setSupplierProductName(e.getName());
+			// 仕入価格
+			supplierProduct.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
 			return supplierProduct;
 		}).collect(Collectors.toList());
 		

@@ -51,9 +51,9 @@ public class SupplierController{
 	}
 	
 	/*
-	 * 仕入れ商品一覧処理
+	 * 仕入商品一覧処理
 	 */
-	@PostMapping("/supplier-products/info")
+	@PostMapping("/supplier-product/info")
 	public SupplierProductsResponse infosupplierSerrvice(@RequestBody GetSupplierProductRequest request) {
 		var vo = this.supplierService.getSupplierProductsVo(request.mapTo());
 		var response = new SupplierProductsResponse();

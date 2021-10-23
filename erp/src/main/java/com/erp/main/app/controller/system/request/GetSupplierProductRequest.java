@@ -15,6 +15,10 @@ public class GetSupplierProductRequest {
 	private Long supplierProductSeq;
 	// 商品名
 	private String supplierProductName;
+	// 仕入価格From
+	private Long purchaseUnitPriceFrom;
+	// 仕入価格To
+	private Long purchaseUnitPriceTo;
 	
     /**
      * リクエスト空ValueObjectへのマッピング
@@ -29,6 +33,11 @@ public class GetSupplierProductRequest {
 		vo.setSupplierProductSeq(this.getSupplierProductSeq());
 		// 商品名
 		vo.setSupplierProductName(this.getSupplierProductName());
+		// 仕入価格From
+		vo.setPurchaseUnitPriceFrom(this.getPurchaseUnitPriceFrom());
+		// 仕入価格To
+		vo.setPurchaseUnitPriceTo(this.getPurchaseUnitPriceTo());
+				
 		return vo;
 	}
 }

@@ -13,7 +13,7 @@
         >
           <id-search
           style="width:50%;"
-          label="倉庫Seq"
+          label="仕入先Seq"
           :targetId.sync="targetSupplierSeq" />
 
           <supplier-name 
@@ -41,7 +41,7 @@
       </div>
     </el-card>
     <el-card class="box-card">
-      <h5>倉庫一覧</h5>
+      <h5>仕入先一覧</h5>
       <el-table
         ref="supplierTable"
         :data="supplierData"
