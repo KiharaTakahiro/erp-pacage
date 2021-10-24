@@ -30,10 +30,12 @@ import com.erp.main.domain.objects.valueobjects.CreateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.CreateSupplierVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierConditionsVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierProductConditionVo;
+import com.erp.main.domain.objects.valueobjects.GetSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierProductsVo;
 import com.erp.main.domain.objects.valueobjects.GetSupplierVo;
 import com.erp.main.domain.objects.valueobjects.GetSuppliersVo;
 import com.erp.main.domain.objects.valueobjects.SupplierProductRelationVo;
+import com.erp.main.domain.objects.valueobjects.UpdateSupplierProductVo;
 import com.erp.main.domain.objects.valueobjects.UpdateSupplierVo;
 import com.erp.main.domain.repository.OrderRepository;
 import com.erp.main.domain.repository.SupplierProductRelationRepository;
@@ -251,7 +253,7 @@ public class SupplierService {
 			supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
 			// 仕入商品名
 			supplierProduct.setSupplierProductName(e.getName());
-			// 仕入価格
+			// 仕入価格名
 			supplierProduct.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
 			return supplierProduct;
 		}).collect(Collectors.toList());
@@ -265,6 +267,77 @@ public class SupplierService {
 		
 		return vo;
 
+	}
+	
+	/*
+	 * 仕入商品一覧のプルダウン
+	 * @params vo
+	 */
+	@Transactional
+	public GetSupplierProductsVo pullDownSupplierProduct() {
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
+		
+		// 取引商品一覧取得
+		List<SupplierProductEntity> entitys = this.supplierProductRepository.findAll(sort);
+		
+		// 値格納用のリスト作成
+		List<SupplierProductModel> supplierProductProducts =  new ArrayList<>();
+		
+		for(SupplierProductEntity entity: entitys) {		
+			var supplierProduct = new SupplierProductModel();
+			// 仕入商品seq
+			supplierProduct.setSupplierProductSeq(entity.getSupplierProductSeq());
+			// 仕入商品名
+			supplierProduct.setSupplierProductName(entity.getName());
+			// 仕入価格名
+			supplierProduct.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
+			
+			supplierProductProducts.add(supplierProduct);
+			
+		}
+	
+		var vo = new GetSupplierProductsVo();
+		// 取引商品リストの設定
+		vo.setSupplierProduct(supplierProductProducts);
+		
+		return vo;
+	}
+	
+	/**
+	 * 仕入商品更新処理
+	 * @param vo
+	 */
+	@Transactional
+	public void updateSupplierProduct(UpdateSupplierProductVo vo) {
+		// 仕入商品を取得
+		var supplierProduct= this.supplierProductRepository.findById(vo.getSupplierProduct().getSupplierProductSeq());
+		
+		// 対象の仕入商品が取得できない場合はエラー
+		if(supplierProduct.isEmpty()) {
+			throw new AppException(String.format("該当の仕入商品を取得できませんでした。 supplierProductSeq: %s", vo.getSupplierProduct().getSupplierProductSeq()));			
+		}
+		
+		var supplierProductEntity = supplierProduct.get();
+		supplierProductEntity.update(vo);
+		this.supplierProductRepository.save(supplierProductEntity);
+	}
+	
+
+	/**
+	 * 仕入商品詳細画面のレスポンス
+	 * @param vo
+	 */
+	@Transactional
+	public GetSupplierProductVo getSupplierProductVo(Long supplierProductSeq){
+		Optional<SupplierProductEntity> supplierProduct = supplierProductRepository.findById(supplierProductSeq);
+		if(supplierProduct.isEmpty()) {
+			throw new AppException(String.format("該当の仕入商品を取得できませんでした。 supplierProductSeq: %s", supplierProductSeq));
+		}
+		
+		return GetSupplierProductVo.mapTo(supplierProduct.get());
+	
 	}
 	
 

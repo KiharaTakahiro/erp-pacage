@@ -12,6 +12,8 @@ import com.erp.main.app.controller.recivedorder.response.SupplierResponse;
 import com.erp.main.app.controller.recivedorder.response.SuppliersResponse;
 import com.erp.main.app.controller.supplier.request.CreateOrderRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
+import com.erp.main.app.controller.supplier.request.SupplierProductResponse;
+import com.erp.main.app.controller.supplier.request.UpdateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.GetSupplierProductRequest;
 import com.erp.main.app.controller.system.response.SupplierProductsResponse;
@@ -61,6 +63,40 @@ public class SupplierController{
 		response.setSupplierProduct(vo.getSupplierProduct());
 		return response;
 	}
+	
+	/*
+	 * 仕入商品プルダウンのエントリーポイント
+	 */
+	@GetMapping("/supplier-product/pulldown")
+	public SupplierProductsResponse pullDownpSupplierProduct( ) {
+		var vo = this.supplierService.pullDownSupplierProduct();
+		var response = new SupplierProductsResponse();
+		response.setSupplierProduct(vo.getSupplierProduct());
+		return response;
+	}
+
+		
+	/*
+	 * 仕入商品詳細取得のエントリーポイント
+	 * @param responce
+	 */
+	@PostMapping("/supplier-product/edit")
+	public SupplierProductResponse getClient(@RequestBody GetSupplierProductRequest request) {
+		Long id = request.getSupplierProductSeq(); 
+		var vo = this.supplierService.getSupplierProductVo(id);
+		return SupplierProductResponse.mapTo(vo);
+		
+	}
+	
+	/**
+	 * 仕入商品更新処理のエントリーポイント
+	 * @param request
+	 */
+	@PostMapping("/supplier-product/update")
+	public void updateSupplierProduct(@RequestBody UpdateSupplierProductRequest request) {
+		this.supplierService.updateSupplierProduct(request.mapTo());
+	}
+	
 
 
 	/**
