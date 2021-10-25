@@ -19,6 +19,8 @@ public class GetSupplierProductRequest {
 	private Long purchaseUnitPriceFrom;
 	// 仕入価格To
 	private Long purchaseUnitPriceTo;
+	// 税区分
+	private Integer taxType;
 	
     /**
      * リクエスト空ValueObjectへのマッピング
@@ -37,7 +39,8 @@ public class GetSupplierProductRequest {
 		vo.setPurchaseUnitPriceFrom(this.getPurchaseUnitPriceFrom());
 		// 仕入価格To
 		vo.setPurchaseUnitPriceTo(this.getPurchaseUnitPriceTo());
-				
+    	// 税区分
+    	vo.setTaxType(this.getTaxType());
 		return vo;
 	}
 }

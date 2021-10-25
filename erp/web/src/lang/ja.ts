@@ -19,6 +19,7 @@ export default {
     editClient: '取引先編集',
     supplierProduct: '仕入商品管理',
     supplierProductList: '仕入商品一覧',
+    editSupplierProduct: '仕入商品編集',
     saveSupplierProduct: '仕入商品追加',
     product: '商品管理',
     productList: '商品一覧',

@@ -19,6 +19,9 @@ public class SupplierProductResponse extends BaseResponse {
     
     // 仕入商品名
     private String supplierProductName;
+    
+    // 
+    private Long purchaseUnitPrice;
 
     /**
      * Voからレスポンスへのマッピング
@@ -32,7 +35,9 @@ public class SupplierProductResponse extends BaseResponse {
     	response.setSupplierProductSeq(model.getSupplierProductSeq());
     	// 仕入商品名
     	response.setSupplierProductName(model.getSupplierProductName());
-		return response;
+    	// 仕入価格
+    	response.setPurchaseUnitPrice(model.getPurchaseUnitPrice());
+    	return response;
 	}
 
 

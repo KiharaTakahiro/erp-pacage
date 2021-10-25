@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.erp.main.domain.objects.entity.SupplierProductEntity;
 
 /*
- * 取引先用のSpecification
+ * 仕入商品用のSpecification
  * @author 高山
  */
 public class SupplierProductSpec {
@@ -29,7 +29,7 @@ public class SupplierProductSpec {
 	}
 	
 	/**
-	 * 仕入れ価格Fromで検索
+	 * 仕入価格Fromで検索
 	 * @param purchaseUnitPrice
 	 * @return
 	 */
@@ -38,7 +38,7 @@ public class SupplierProductSpec {
 	}
 	
 	/**
-	 * 仕入れ価格Toで検索
+	 * 仕入価格Toで検索
 	 * @param purchaseUnitPrice
 	 * @return
 	 */

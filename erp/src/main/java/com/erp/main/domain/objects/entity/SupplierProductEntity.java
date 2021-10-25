@@ -38,12 +38,12 @@ public class SupplierProductEntity extends SupplierProductEntityFileds {
 	}
 
 	/*
-	 * 取引先編集処理のEntity
+	 * 仕入商品編集処理のEntity
 	 * @param vo
 	 */
 	
 	public void update(UpdateSupplierProductVo vo) {
-		// 取引先名入れ替え
+		// 仕入商品名入れ替え
 		this.setName(vo.getSupplierProduct().getSupplierProductName());
 	}
 }

@@ -1,25 +1,23 @@
 package com.erp.main.domain.objects.model;
 
-import com.erp.main.domain.common.enums.TaxType;
-
 import lombok.Data;
 
 /**
  * 仕入商品のモデル
- * @author takah
+ * @author 高山
  *
  */
 @Data
-public class SupplierProductModel {
+public class SupplierProductTableModel {
 	// 仕入商品Seq
 	private Long supplierProductSeq;
 	
 	// 仕入商品名
 	private String supplierProductName;
 	
-	// 仕入価格
+	// 仕入れ単価
 	private Long purchaseUnitPrice;
 	
 	// 税区分
-	private TaxType taxType;
+	private String taxType;
 }

@@ -90,7 +90,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
-import { SupplierProductModule } from '@/store/modules/supplier-product-list'
+import { SupplierProductModule } from '@/store/modules/supplier-product'
 
 @Component({
   name: 'SupplierProduct',

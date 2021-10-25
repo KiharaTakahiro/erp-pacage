@@ -11,7 +11,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-  name: 'RecivedOrder'
+  name: 'supplierProduct'
 })
 export default class extends Vue {}
 </script>

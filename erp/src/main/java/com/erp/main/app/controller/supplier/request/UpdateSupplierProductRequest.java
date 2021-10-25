@@ -19,6 +19,8 @@ public class UpdateSupplierProductRequest {
 	// 仕入商品名
 	private String supplierProductName;
 	
+    // 仕入れ価格
+    private Long purchaseUnitPrice;
 	/**
 	 * Voへのマッピング
 	 * @return
@@ -29,7 +31,9 @@ public class UpdateSupplierProductRequest {
 		model.setSupplierProductSeq(this.getSupplierProductSeq());
 		// 仕入商品名
 		model.setSupplierProductName(this.getSupplierProductName());
-
+		// 仕入価格
+    	model.setPurchaseUnitPrice(model.getPurchaseUnitPrice());
+    	
 		// Voの生成
 		var vo = new UpdateSupplierProductVo();
 		vo.setSupplierProduct(model);

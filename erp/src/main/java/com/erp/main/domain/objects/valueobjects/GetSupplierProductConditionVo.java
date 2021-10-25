@@ -14,4 +14,6 @@ public class GetSupplierProductConditionVo {
 	private Long purchaseUnitPriceFrom;
 	// 仕入れ料金To
 	private Long purchaseUnitPriceTo;
+	// 税区分
+	private Integer taxType;
 }
