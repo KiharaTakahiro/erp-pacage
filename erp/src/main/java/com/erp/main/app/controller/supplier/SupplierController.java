@@ -17,6 +17,7 @@ import com.erp.main.app.controller.supplier.request.UpdateSupplierProductRequest
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
 import com.erp.main.app.controller.system.request.GetSupplierProductRequest;
 import com.erp.main.app.controller.system.response.SupplierProductsResponse;
+import com.erp.main.app.controller.system.response.SupplierProductsTableResponse;
 import com.erp.main.domain.services.SupplierService;
 
 
@@ -56,9 +57,9 @@ public class SupplierController{
 	 * 仕入商品一覧処理
 	 */
 	@PostMapping("/supplier-product/info")
-	public SupplierProductsResponse infosupplierSerrvice(@RequestBody GetSupplierProductRequest request) {
+	public SupplierProductsTableResponse infoSupplierService(@RequestBody GetSupplierProductRequest request) {
 		var vo = this.supplierService.getSupplierProductsVo(request.mapTo());
-		var response = new SupplierProductsResponse();
+		var response = new SupplierProductsTableResponse();
 		response.setTotalItemsNum(vo.getTotalItemsNum());
 		response.setSupplierProduct(vo.getSupplierProduct());
 		return response;

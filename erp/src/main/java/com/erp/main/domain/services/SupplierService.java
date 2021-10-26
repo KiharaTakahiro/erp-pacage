@@ -201,6 +201,8 @@ public class SupplierService {
 		var supplierEntity = supplier.get();
 		supplierEntity.update(vo);
 		this.supplierRepository.save(supplierEntity);
+		
+		this.createSupplierProduct(vo.getSupplierProduct());
 	}
 	
 	/**

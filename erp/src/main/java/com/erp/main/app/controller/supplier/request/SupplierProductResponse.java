@@ -22,6 +22,10 @@ public class SupplierProductResponse extends BaseResponse {
     
     // 
     private Long purchaseUnitPrice;
+    
+    // 税区分
+    private Integer taxType;
+    
 
     /**
      * Voからレスポンスへのマッピング
@@ -37,6 +41,9 @@ public class SupplierProductResponse extends BaseResponse {
     	response.setSupplierProductName(model.getSupplierProductName());
     	// 仕入価格
     	response.setPurchaseUnitPrice(model.getPurchaseUnitPrice());
+    	// 税区分
+    	response.setTaxType(model.getTaxType().getCode());
+
     	return response;
 	}
 

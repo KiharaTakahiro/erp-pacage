@@ -27,6 +27,11 @@ public class GetSupplierProductVo {
 		model.setSupplierProductSeq(entity.getSupplierProductSeq());
 		// 仕入商品名
 		model.setSupplierProductName(entity.getName());
+		// 税区分
+		model.setTaxType(entity.getTaxType());
+		// 仕入価格
+		model.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
+		
 
 		// Voのセット
 		var vo = new GetSupplierProductVo();
