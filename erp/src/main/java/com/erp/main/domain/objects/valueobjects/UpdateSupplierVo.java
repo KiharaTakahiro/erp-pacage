@@ -12,5 +12,8 @@ import lombok.Data;
 public class UpdateSupplierVo {
 	// 仕入先
 	private SupplierModel supplier;
+	
+	// 仕入商品
+	private CreateSupplierProductVo supplierProduct;
 
 }

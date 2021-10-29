@@ -2,29 +2,23 @@ package com.erp.main.domain.objects.valueobjects;
 
 import lombok.Data;
 
-/**
- * 仕入先取得用の検索条件
- * 
- */
-
 @Data
-public class GetSupplierConditionsVo {
+public class GetSupplierProductConditionVo {
 	// ページ番号
 	private Integer pageNo;
-	// 仕入先Seq
-	private Long supplierSeq;
-	// 仕入先名
-	private String supplierName;
-	
-	// 商品名seq
+    // 仕入先SEQ
+    private Long supplierSeq;
+    // 仕入先名
+    private String supplierName;
+    
+	// 仕入商品Seq
 	private Long supplierProductSeq;
-	// 商品名
+	// 仕入商品名
 	private String supplierProductName;
-	// 仕入価格From
+	// 仕入れ料金From
 	private Long purchaseUnitPriceFrom;
-	// 仕入価格To
+	// 仕入れ料金To
 	private Long purchaseUnitPriceTo;
 	// 税区分
 	private Integer taxType;
-
 }

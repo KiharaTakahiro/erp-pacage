@@ -65,7 +65,7 @@ import com.erp.main.domain.repository.DepartmentRepository;
 import com.erp.main.domain.repository.LotRepository;
 import com.erp.main.domain.repository.ProductRepository;
 import com.erp.main.domain.repository.SupplierProductRelationRepository;
-import com.erp.main.domain.repository.SupplierProductsRepository;
+import com.erp.main.domain.repository.SupplierProductRepository;
 import com.erp.main.domain.repository.SupplierRepository;
 import com.erp.main.domain.repository.WarehouseRepository;
 import com.erp.main.domain.specification.ClientsSpec;
@@ -89,19 +89,19 @@ public class MasterService {
 	private ProductRepository productRepository;
 	
 	/**
-	 * 仕入れ先マスタのリポジトリ
+	 * 仕入先マスタのリポジトリ
 	 */
 	@Autowired
 	private SupplierRepository supplierRepository;
 	
 	/**
-	 * 仕入れ商品マスタのリポジトリ
+	 * 仕入商品マスタのリポジトリ
 	 */
 	@Autowired
-	private SupplierProductsRepository supplierProductsRepository;
+	private SupplierProductRepository supplierProductsRepository;
 	
 	/**
-	 * 仕入れ商品関連マスタのリポジトリ
+	 * 仕入商品関連マスタのリポジトリ
 	 */
 	@Autowired
 	private SupplierProductRelationRepository supplierProductRelationRepository;
@@ -149,14 +149,13 @@ public class MasterService {
 	}
 	
 	/**
-	 * 仕入れ先マスタ作成処理
+	 * 仕入先マスタ作成処理
 	 * @param vo
 	 */
 	@Transactional
 	public void createSupplier(CreateSupplierVo vo) {
 		SupplierEntity entity = SupplierEntity.create(vo);
 		this.supplierRepository.save(entity);
-		
 	}
 	
 	/**
@@ -274,6 +273,7 @@ public class MasterService {
 		this.clientsRepository.save(clientEntity);
 	}
 	
+
 	/*
 	 * 取引先一覧取
 	 * @param condition
@@ -469,7 +469,7 @@ public class MasterService {
 			product.setProductSeq(e.getProductSeq());
 			// 商品名
 			product.setProductName(e.getName());
-			// 仕入れ料金
+			// 仕入料金
 			product.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
 			// 税区分
 			product.setTaxType(e.getTaxType().getDisplayName());
@@ -510,7 +510,7 @@ public class MasterService {
 			product.setProductSeq(entity.getProductSeq());
 			// 商品名
 			product.setProductName(entity.getName());
-			// 仕入れ料金
+			// 仕入料金
 			product.setPurchaseUnitPrice(entity.getPurchaseUnitPrice());
 			// 税区分
 			product.setTaxType(entity.getTaxType());

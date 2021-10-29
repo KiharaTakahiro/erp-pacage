@@ -2,6 +2,7 @@ package com.erp.main.domain.objects.valueobjects;
 
 import com.erp.main.domain.objects.entity.SupplierEntity;
 import com.erp.main.domain.objects.model.SupplierModel;
+import com.erp.main.domain.objects.model.SupplierProductModel;
 
 import lombok.Data;
 
@@ -14,6 +15,9 @@ public class GetSupplierVo {
 	
 	// 仕入先
 	private SupplierModel supplier;
+	
+	// 仕入商品
+	private SupplierProductModel supplierProduct;
 	
 	/**
 	 * エンティティからVoへのマッピング

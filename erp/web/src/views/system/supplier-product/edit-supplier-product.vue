@@ -1,25 +1,32 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.editClient') }}</div>
+    <div>{{ $t('route.editSupplierProduct') }}</div>
     <br />
     <br />
     <el-form
-      ref="client"
-      :model="client"
+      ref="supplierProduct"
+      :model="supplierProduct"
       autocomplete="on"
       label-position="left"
     >
-      <company-name
-        :companyName="client.name"
-        @conpanyNameValue="conpanyName"
+      <product-name
+      :required="true"
+      :supplierProductName.sync="supplierProduct.supplierProductName" />
+      <tax-type-pulldown :taxTypeValue.sync="supplierProduct.taxType" />
+      <money
+        label="仕入料金"
+        prop="purchaseUnitPrice"
+        :required="true"
+        :placeholder="$t('supplierProduct.purchaseUnitPrice')"
+        :priceValue.sync="supplierProduct.purchaseUnitPrice"
       />
       <div class="complete-btn">
         <el-button
           type="primary"
           style="width:100%;"
-          @click.native.prevent="updateClient"
+          @click.native.prevent="updateSupplierProduct"
         >
-          {{ $t('client.complete') }}
+          {{ $t('supplierProduct.complete') }}
         </el-button>
       </div>
     </el-form>
@@ -28,40 +35,42 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form as ElForm } from 'element-ui'
-import { ClientModule } from '@/store/modules/client'
-import CompanyName from '@/views/components/company-name.vue'
+import { SupplierProductModule } from '@/store/modules/supplier-product'
 import '@/assets/custom-theme/index.css'
+import productName from '@/views/components/product-name.vue'
+import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
+import money from '@/views/components/money.vue'
+import { Form as ElForm } from 'element-ui'
 
 @Component({
-  name: 'Client-save',
+  name: 'SupplierProduct-save',
   components: {
-    CompanyName
+    productName,
+    taxTypePulldown,
+    money
   }
 })
 export default class extends Vue {
-  client = {
-    id: ClientModule.id,
-    name: ClientModule.name
+  supplierProduct = {
+    id: SupplierProductModule.id,
+    supplierProductName: SupplierProductModule.supplierProductName,
+    taxType: SupplierProductModule.taxType,
+    purchaseUnitPrice: SupplierProductModule.purchaseUnitPrice
   }
 
-  private conpanyName(name: any): void {
-    this.client.name = name
-  }
-
-  private updateClient() {
-    (this.$refs.client as ElForm).validate(async (valid: boolean) => {
+  private updateSupplierProduct() {
+    (this.$refs.supplierProduct as ElForm).validate(async (valid: boolean) => {
       if (valid) {
-        await ClientModule.UpdateClient(this.client)
+        await SupplierProductModule.UpdateSupplierProduct(this.supplierProduct)
         this.$router
           .push({
-            path: 'clinet'
+            path: 'supplier-product-list'
           })
           .catch(err => {
             console.warn(err)
           })
         this.$message({
-          message: this.$t('components.createClients').toString(),
+          message: this.$t('components.createSupplierProduct').toString(),
           type: 'success'
         })
       } else {

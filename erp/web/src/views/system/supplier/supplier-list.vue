@@ -1,46 +1,25 @@
 <template>
   <div class="app-container">
-    <div>{{ $t('route.supplierProductList') }}</div>
+    <div>{{ $t('route.supplierList') }}</div>
     <el-card class="box-card">
       <h5>検索フォーム</h5>
       <div class="border">
         <el-form
-          :model="supplierProduct"
-          ref="supplierProduct"
+          :model="supplier"
+          ref="supplier"
           autocomplete="on"
           label-position="left"
           label-width="90px"
         >
           <id-search
-          style=" width:50%;"
-          label="商品Seq"
-          :targetId.sync="targetSupplierProductSeq" />
-
-          <product-name 
           style="width:50%;"
-          :supplierProductName.sync="searchName" />
+          label="仕入先Seq"
+          :targetId.sync="targetSupplierSeq" />
 
-          <el-row>
-            <el-col :span="5">
-              <money
-              label="原価FROM"
-              style="width:90%;"
-              :placeholder="$t('supplierProduct.PurchaseUnitPriceFrom')"
-              :priceValue.sync="searchPurchaseUnitPriceFrom"
-              />
-            </el-col>
-            <el-col :span="5">
-              <money
-              label="原価TO"
-              style="width:90%;"
-              :placeholder="$t('supplierProduct.PurchaseUnitPriceTo')"
-              :priceValue.sync="searchPurchaseUnitPriceTo"
-              />
-            </el-col>
-          </el-row>
-
-          <tax-type-pulldown :taxTypeValue.sync="searchTaxType" />
-        </el-form>
+          <supplier-name 
+          style="width:50%;"
+          :supplierName.sync="searchName" />
+          </el-form>
       </div>
       <div class="right">
         <el-button
@@ -62,10 +41,10 @@
       </div>
     </el-card>
     <el-card class="box-card">
-      <h5>商品一覧</h5>
+      <h5>仕入先一覧</h5>
       <el-table
-        ref="supplierProductTable"
-        :data="supplierProductData"
+        ref="supplierTable"
+        :data="supplierData"
         @selection-change="testLog"
         style="width: 100%"
       >
@@ -75,13 +54,10 @@
           width="180">
         </el-table-column> -->
         <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column prop="supplierProductSeq" label="ID" width="180">
+        <el-table-column prop="supplierSeq" label="ID" width="180">
         </el-table-column>
-        <el-table-column prop="supplierProductName" label="名前"> </el-table-column>
-        <el-table-column prop="purchaseUnitPrice" label="仕入れ価格">
-        </el-table-column>
-        <el-table-column prop="taxType" label="税区分"> </el-table-column>
-      </el-table>
+        <el-table-column prop="supplierName" label="名前"> </el-table-column>
+        </el-table>
       <div class="page">
         <el-pagination
           background
@@ -100,7 +76,7 @@
         <el-button
           type="primary"
           style="width:100%; margin-bottom:30px; margin-top:30px; "
-          @click.native.prevent="editSupplierProductBtn"
+          @click.native.prevent="editSupplierBtn"
         >
           {{ $t('route.edit') }}
         </el-button>
@@ -111,28 +87,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { SupplierProductModule } from '@/store/modules/supplier-product'
+import { SupplierModule } from '@/store/modules/supplier'
 import '@/assets/custom-theme/index.css'
 import backBtn from '@/views/components/back-button.vue'
 import { getCode } from '@/api/system'
-import money from '@/views/components/money.vue'
-import productName from '@/views/components/product-name.vue'
-import taxTypePulldown from '@/views/components/tax-type-pulldown.vue'
+import supplierName from '@/views/components/supplier-name.vue'
 import IdSearch from '@/views/components/id-search.vue'
 
 
 @Component({
-  name: 'SupplierProduct',
+  name: 'Supplier',
   components: {
     backBtn,
-    productName,
-    taxTypePulldown,
-    money,
+    supplierName,
     IdSearch
   }
 })
 export default class extends Vue {
-  supplierProduct = {
+  supplier = {
     id: ''
   }
   checkLength = 0
@@ -142,8 +114,10 @@ export default class extends Vue {
   internalPage: any
 
   // 検索条件
-  targetSupplierProductSeq = ''
+  targetSupplierSeq = ''
   searchName = ''
+  searchUnitPriceFrom = ''
+  searchUnitPriceTo = ''
   searchPurchaseUnitPriceFrom = ''
   searchPurchaseUnitPriceTo = ''
   searchTaxType = null
@@ -156,14 +130,14 @@ export default class extends Vue {
    * ストアが更新されたら件数を算出
    */
   get totalItemsNum() {
-    return SupplierProductModule.totalItem
+    return SupplierModule.totalItem
   }
 
   /**
    * ストアが更新されたらクライアントを算出
    */
-  get supplierProductData() {
-    return SupplierProductModule.list
+  get supplierData() {
+    return SupplierModule.list
   }
   /**
    * APIへリスト取得処理
@@ -172,15 +146,17 @@ export default class extends Vue {
     // 検索パラメタを生成する
     let searchData = {
       pageNo: this.pageNo - 1,
-      supplierProductSeq: this.targetSupplierProductSeq === '' ? null : this.targetSupplierProductSeq,
-      supplierProductName: this.searchName === '' ? null : this.searchName,
+      supplierSeq: this.targetSupplierSeq === '' ? null : this.targetSupplierSeq,
+      supplierName: this.searchName === '' ? null : this.searchName,
+      unitPriceFrom: this.searchUnitPriceFrom === '' ? null : this.searchUnitPriceFrom,
+      unitPriceTo: this.searchUnitPriceTo === '' ? null : this.searchUnitPriceTo,
       purchaseUnitPriceFrom: this.searchPurchaseUnitPriceFrom === '' ? null : this.searchPurchaseUnitPriceFrom,
       purchaseUnitPriceTo: this.searchPurchaseUnitPriceTo === '' ? null : this.searchPurchaseUnitPriceTo,
       taxType: this.searchTaxType === '' ? null : this.searchTaxType
     }
 
     // APIの取得結果をもとにModelを更新する
-    await SupplierProductModule.SupplierProductList(searchData)
+    await SupplierModule.SupplierList(searchData)
   }
 
   /**
@@ -188,7 +164,7 @@ export default class extends Vue {
    */
   // TODO: 適切な名前に変更する
   private testLog(val: any) {
-    this.supplierProduct.id = val[0]['supplierProductSeq']
+    this.supplier.id = val[0]['supplierSeq']
     this.checkLength = val.length
   }
 
@@ -196,8 +172,10 @@ export default class extends Vue {
    * リセットボタン押下時の処理
    */
   resetBtn() {
-    this.targetSupplierProductSeq = ''
+    this.targetSupplierSeq = ''
     this.searchName = ''
+    this.searchUnitPriceFrom = ''
+    this.searchUnitPriceTo = ''
     this.searchPurchaseUnitPriceFrom = ''
     this.searchPurchaseUnitPriceTo = ''
     this.searchTaxType = null
@@ -213,25 +191,25 @@ export default class extends Vue {
     this.getList()
   }
 
-  editSupplierProductBtn() {
+  editSupplierBtn() {
     // ボタンが押されたときの処理
     if (this.checkLength === 0) {
       this.$message({
-        message: this.$t('supplierProduct.check0').toString(),
+        message: this.$t('supplier.check0').toString(),
         type: 'error'
       })
       return false
     } else if (this.checkLength >= 2) {
       this.$message({
-        message: this.$t('supplierProduct.check2').toString(),
+        message: this.$t('supplier.check2').toString(),
         type: 'error'
       })
       return false
     }
-    SupplierProductModule.EditSupplierProduct(this.supplierProduct)
+    SupplierModule.EditSupplier(this.supplier)
     this.$router
       .push({
-        path: 'edit-supplier-product'
+        path: 'edit-supplier'
       })
       .catch(err => {
         console.warn(err)
