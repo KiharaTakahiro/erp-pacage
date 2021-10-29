@@ -12,6 +12,7 @@ import com.erp.main.app.controller.recivedorder.response.SupplierResponse;
 import com.erp.main.app.controller.recivedorder.response.SuppliersResponse;
 import com.erp.main.app.controller.supplier.request.CreateOrderRequest;
 import com.erp.main.app.controller.supplier.request.CreateSupplierProductRequest;
+import com.erp.main.app.controller.supplier.request.GetSupplierRelationRequest;
 import com.erp.main.app.controller.supplier.request.SupplierProductResponse;
 import com.erp.main.app.controller.supplier.request.UpdateSupplierProductRequest;
 import com.erp.main.app.controller.system.request.CreateSupplierRequest;
@@ -138,9 +139,8 @@ public class SupplierController{
 	 * @param responce
 	 */
 	@PostMapping("/supplier/edit")
-	public SupplierResponse getClient(@RequestBody GetSupplierRequest request) {
-		Long id = request.getSupplierSeq(); 
-		var vo = this.supplierService.getSupplierVo(id);
+	public SupplierResponse getClient(@RequestBody GetSupplierRelationRequest request) {
+		var vo = this.supplierService.getSupplierVo(request);
 		return SupplierResponse.mapTo(vo);
 		
 	}

@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.erp.main.app.controller.supplier.request.GetSupplierRelationRequest;
 import com.erp.main.domain.common.exception.AppException;
 import com.erp.main.domain.component.MoneyComponent;
 import com.erp.main.domain.objects.entity.OrderDetailEntity;
@@ -94,19 +95,22 @@ public class SupplierService {
 		SupplierEntity entity = SupplierEntity.create(vo);
 		this.supplierRepository.save(entity);
 	}
-	
 
 	/**
 	 * 仕入先詳細画面のレスポンス
 	 * @param vo
 	 */
 	@Transactional
-	public GetSupplierVo getSupplierVo(Long supplierSeq){
-		Optional<SupplierEntity> supplier = supplierRepository.findById(supplierSeq);
+	public GetSupplierVo getSupplierVo(GetSupplierRelationRequest request){
+		Optional<SupplierEntity> supplier = supplierRepository.findById(request.getSupplierSeq());
+
 		if(supplier.isEmpty()) {
-			throw new AppException(String.format("該当の仕入先を取得できませんでした。 supplierSeq: %s", supplierSeq));
+			throw new AppException(String.format("該当の仕入先を取得できませんでした。 supplierSeq: %s", request.getSupplierSeq()));
 		}
 		
+//		Optional<SupplierProductRelationRepository> supplierProductRelation = supplierProductRelationRepository.findAll(request.getSupplierSeq());
+		
+		var vo = this.getSupplierProductsVo(request.mapTo());
 		return GetSupplierVo.mapTo(supplier.get());
 	
 	}
@@ -201,8 +205,7 @@ public class SupplierService {
 		var supplierEntity = supplier.get();
 		supplierEntity.update(vo);
 		this.supplierRepository.save(supplierEntity);
-		
-		this.createSupplierProduct(vo.getSupplierProduct());
+
 	}
 	
 	/**
@@ -348,7 +351,55 @@ public class SupplierService {
 		return GetSupplierProductVo.mapTo(supplierProduct.get());
 	
 	}
+	/*
+	 * 仕入先紐づけ用一覧取得
+	 * @param condition
+	 * @return
+	 */
 	
+	public  GetSupplierProductsTableVo relationSupplier(GetSupplierProductConditionVo condition) {
+		// nullの場合は1ページ目として取得する
+		if(condition.getPageNo() == null) {
+			condition.setPageNo(0);
+		}
+		
+		// 検索条件の設定
+		Specification<SupplierProductEntity> spec = Specification.where(
+					 SupplierProductSpec.supplierProductSeqEquals(condition.getSupplierProductSeq()))
+				.and(SupplierProductSpec.supplierProductNameEquals(condition.getSupplierProductName())
+//				.and(SupplierProductSpec.purchaseUnitPriceFrom(condition.getPurchaseUnitPriceFrom()))
+//				.and(SupplierProductSpec.purchaseUnitPriceTo(condition.getPurchaseUnitPriceTo()))
+				);
+		
+		// ソートの設定
+		var sort = Sort.by(Sort.Direction.ASC, "supplierProductSeq");
+	
+		Page<SupplierProductEntity> pages = this.supplierProductRepository.findAll(spec, PageRequest.of(condition.getPageNo(), 15, sort));
+		List<SupplierProductTableModel> supplierProducts = pages.get().map(e -> {
+			var supplierProduct = new SupplierProductTableModel();
+			// 仕入商品seq
+			supplierProduct.setSupplierProductSeq(e.getSupplierProductSeq());
+			// 仕入商品名
+			supplierProduct.setSupplierProductName(e.getName());
+			// 仕入価格
+			supplierProduct.setPurchaseUnitPrice(e.getPurchaseUnitPrice());
+			// 税区分
+			supplierProduct.setTaxType(e.getTaxType().getDisplayName());
+			return supplierProduct;
+		}).collect(Collectors.toList());
+		
+		// 返却用のVo生成
+		var vo = new GetSupplierProductsTableVo();
+		// トータルぺ―ジ
+		vo.setTotalItemsNum(pages.getTotalElements());
+		// 仕入先リストの設定
+		vo.setSupplierProduct(supplierProducts);
+		
+		return vo;
+
+	}
+	
+
 
 	/**
 	 * 発注作成処理
